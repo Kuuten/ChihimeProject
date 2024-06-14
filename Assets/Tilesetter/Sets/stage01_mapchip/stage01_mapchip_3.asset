@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: stage01_mapchip_3
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300006, guid: 7fbf7aa47a02bf75de929c408d9595d5, type: 3}
+  m_Sprite: {fileID: 21300006, guid: bc01b4fc7d7dcfd58d1850154e4538d3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
