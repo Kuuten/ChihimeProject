@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2362f12f59b72ed40861e2f8ff9e05b1
+guid: d11225ad5020c9f499ccd7a0c99e3519
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -123,64 +123,127 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PlayerBullet_0
+      name: explosion_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 60
-        width: 64
-        height: 64
+        x: 15
+        y: 76
+        width: 34
+        height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eb93482a3adb53d4c99325d9cf96412d
-      internalID: -1556597307
+      spriteID: 790c2d8d049612a46a764201701c8cf4
+      internalID: 202547506
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerBullet_1
+      name: explosion_1
       rect:
         serializedVersion: 2
-        x: 64
-        y: 60
-        width: 64
-        height: 64
+        x: 75
+        y: 74
+        width: 42
+        height: 44
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9b06b6afe5b75a84fa6ed2f27f2ab4a0
-      internalID: -1969122585
+      spriteID: 761c2bbac31a1364faf5639cf03a6b73
+      internalID: 1942403179
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerBullet_2
+      name: explosion_2
       rect:
         serializedVersion: 2
-        x: 128
-        y: 60
-        width: 64
-        height: 64
+        x: 137
+        y: 74
+        width: 45
+        height: 45
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a8177724a1adca94a94745c48b4db064
-      internalID: 398919042
+      spriteID: 979fa33914d37124aa6fba5fc56d56c2
+      internalID: 1681361530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explosion_3
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 11
+        width: 42
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f526ab64ec16f96418538cab19faf619
+      internalID: -378454775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explosion_4
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 12
+        width: 38
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71098171ac3d27745965dbd27e44a364
+      internalID: 285910143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: explosion_5
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 13
+        width: 38
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c495b50ac30c1454d80feaf7b79285a4
+      internalID: -1155325454
       vertices: []
       indices: 
       edges: []
@@ -196,9 +259,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      PlayerBullet_0: -1556597307
-      PlayerBullet_1: -1969122585
-      PlayerBullet_2: 398919042
+      explosion_0: 202547506
+      explosion_1: 1942403179
+      explosion_2: 1681361530
+      explosion_3: -378454775
+      explosion_4: 285910143
+      explosion_5: -1155325454
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

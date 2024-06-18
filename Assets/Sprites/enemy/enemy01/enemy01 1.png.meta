@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2362f12f59b72ed40861e2f8ff9e05b1
+guid: 53a329c5875278d46b88db316857a170
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -123,11 +123,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PlayerBullet_0
+      name: enemy01 1_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 60
+        y: 0
         width: 64
         height: 64
       alignment: 0
@@ -137,18 +137,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eb93482a3adb53d4c99325d9cf96412d
-      internalID: -1556597307
+      spriteID: ccb90e6473bc807449b955f1f2e47613
+      internalID: -1804903792
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerBullet_1
+      name: enemy01 1_1
       rect:
         serializedVersion: 2
         x: 64
-        y: 60
+        y: 0
         width: 64
         height: 64
       alignment: 0
@@ -158,29 +158,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9b06b6afe5b75a84fa6ed2f27f2ab4a0
-      internalID: -1969122585
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerBullet_2
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 60
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a8177724a1adca94a94745c48b4db064
-      internalID: 398919042
+      spriteID: 49ad0bb7f177c6b4bab35288ecfab901
+      internalID: -774478166
       vertices: []
       indices: 
       edges: []
@@ -196,9 +175,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      PlayerBullet_0: -1556597307
-      PlayerBullet_1: -1969122585
-      PlayerBullet_2: 398919042
+      enemy01 1_0: -1804903792
+      enemy01 1_1: -774478166
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
