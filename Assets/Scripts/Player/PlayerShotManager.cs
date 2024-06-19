@@ -103,19 +103,19 @@ public class PlayerShotManager : MonoBehaviour
     //-------------------------------------------
     private IEnumerator NormalShot()
     {
-        Instantiate( bulletPrefab[(int)SHOT_TYPE.HORMING], firePoint.position, bulletPrefab[(int)SHOT_TYPE.NORMAL].transform.rotation);
+        Instantiate( bulletPrefab[(int)SHOT_TYPE.NORMAL], firePoint.position, bulletPrefab[(int)SHOT_TYPE.NORMAL].transform.rotation);
 
         yield return new WaitForSeconds(bulletInterval);
 
-        Instantiate( bulletPrefab[(int)SHOT_TYPE.HORMING], firePoint.position, bulletPrefab[(int)SHOT_TYPE.NORMAL].transform.rotation);
+        Instantiate( bulletPrefab[(int)SHOT_TYPE.NORMAL], firePoint.position, bulletPrefab[(int)SHOT_TYPE.NORMAL].transform.rotation);
 
         yield return new WaitForSeconds(bulletInterval);
 
-        Instantiate( bulletPrefab[(int)SHOT_TYPE.HORMING], firePoint.position, bulletPrefab[(int)SHOT_TYPE.NORMAL].transform.rotation);
+        Instantiate( bulletPrefab[(int)SHOT_TYPE.NORMAL], firePoint.position, bulletPrefab[(int)SHOT_TYPE.NORMAL].transform.rotation);
 
         yield return new WaitForSeconds(bulletInterval);
 
-        Instantiate( bulletPrefab[(int)SHOT_TYPE.HORMING], firePoint.position, bulletPrefab[(int)SHOT_TYPE.NORMAL].transform.rotation);
+        Instantiate( bulletPrefab[(int)SHOT_TYPE.NORMAL], firePoint.position, bulletPrefab[(int)SHOT_TYPE.NORMAL].transform.rotation);
 
         yield return null;
     }

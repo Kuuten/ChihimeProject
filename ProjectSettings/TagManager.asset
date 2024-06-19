@@ -6,6 +6,7 @@ TagManager:
   tags:
   - WALL
   - ENEMY
+  - BULLET
   layers:
   - Default
   - TransparentFX
@@ -13,8 +14,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - Wall
   - 
   - 
   - 
