@@ -1,0 +1,56 @@
+{
+    "name": "System",
+    "maps": [
+        {
+            "name": "Screen",
+            "id": "477c9f94-dea3-4714-8289-0e3384eeb8cf",
+            "actions": [
+                {
+                    "name": "FullScreen",
+                    "type": "Button",
+                    "id": "d49c5f24-d11b-4eac-bdab-dcd09758d149",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "One Modifier",
+                    "id": "364d7688-30bb-4a62-a42a-8cf770fba5ee",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FullScreen",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "0ddeccc6-1129-444d-bc37-45d8cfa94724",
+                    "path": "<Keyboard>/alt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FullScreen",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "13634c3b-c89c-45d7-8935-26774bcdf1e5",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FullScreen",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

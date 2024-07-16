@@ -4,9 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - WALL
-  - ENEMY
-  - BULLET
+  - Wall
+  - Enemy
+  - EnemyBullet
+  - NormalBullet
+  - ConverterBullet
+  - LevelUpItem
   layers:
   - Default
   - TransparentFX
