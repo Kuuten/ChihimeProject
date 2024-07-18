@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveType: 0
-  enemyType: 2
+  enemyType: 3
   moveSpeed: 3
   explosion: {fileID: 7776138344345479518, guid: 52acdfda6d1144543858be1f9c7c6a56, type: 3}
 --- !u!114 &-4069407151855377676

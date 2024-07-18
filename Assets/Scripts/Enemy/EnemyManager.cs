@@ -15,8 +15,8 @@ using UnityEngine.AddressableAssets;
 public enum EnemyPattern
 {
     //  ‚P–Ê
-    E01_3x1,    //  c‚R‚˜‰¡‚P
-    E01_3x1B,   //  c‚R‚˜‰¡‚PB
+    E01_3,    //  c‚R
+    E01_3B,   //  c‚RB
 
     Max
 }
@@ -67,12 +67,6 @@ public class EnemyManager : MonoBehaviour
 
     }
 
-    private void OnDestroy()
-    {
-        // ‰ğ•ú
-        Addressables.Release(enemySetting);
-    }
-
     void Update()
     {
         AppearEnemy_Stage01();
@@ -121,19 +115,19 @@ public class EnemyManager : MonoBehaviour
         {
             case 0:
                 SetEnemy(
-                        enemyPrefab[(int)EnemyPattern.E01_3x1B],
+                        enemyPrefab[(int)EnemyPattern.E01_3B],
                         new Vector3(GetRandomX(),appearY,0));
                 appearStep++;
                 break;
             case 1:
                 if(Timer(3))appearStep++;
                 break;
-            //case 2:
-            //    SetEnemy(
-            //        enemyPrefab[(int)EnemyPattern.E01_3x1],
-            //        new Vector3(GetRandomX(),appearY,0));
-            //    appearStep++;
-            //    break;
+            case 2:
+                SetEnemy(
+                        enemyPrefab[(int)EnemyPattern.E01_3],
+                        new Vector3(GetRandomX(),appearY,0));
+                appearStep++;
+                break;
             //case 3:
             //    if(Timer(3))appearStep++;
             //    break;

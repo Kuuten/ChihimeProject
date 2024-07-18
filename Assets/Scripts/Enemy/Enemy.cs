@@ -56,12 +56,8 @@ public class Enemy : MonoBehaviour
 
     private bool visible = false;
 
-    //  ステータス-----------------------------------------------------------
-    private string id;    //  ID
-    private float hp;     //  HP
-    private float attack; //  攻撃力
-    private int money;    //  落とす金額（魂）
-    //-----------------------------------------------------------------------
+    //  EnemyDataクラスからの情報取得用
+    EnemyData enemyData;
 
 
     private async UniTask Start()
@@ -74,21 +70,24 @@ public class Enemy : MonoBehaviour
         //  寿命を設定
         Destroy(this.gameObject, period);
 
-        //  ステータスを設定(EnemySettingから取得)
-        id = "none";
-        hp = 1f;
-        attack = 1f;
-        money = -1;
+        //  敵情報のアサーション（満たさなければいけない条件）
+        Assert.IsTrue(enemyType.ToString() != ENEMY_TYPE.None.ToString(),
+            "EnemyTypeがインスペクターで設定されていません！");
 
         //  敵データを取得
         enemySetting = await Addressables.LoadAssetAsync<EnemySetting>("EnemySetting");
+        enemyData = enemySetting.DataList
+            .FirstOrDefault(enemy => enemy.Id == enemyType.ToString() );
+        //Debug.Log($"ID：{enemyData.Id}");
+        //Debug.Log($"HP：{enemyData.Hp}");
+        //Debug.Log($"攻撃力：{enemyData.Attack}");
+        //Debug.Log($"落魂：{enemyData.Money}");
+    }
 
-        //var EnemyData = enemySetting.DataList
-        //    .FirstOrDefault(enemy => enemy.Id == "Kooni");
-        //Debug.Log($"ID：{EnemyData.Id}");
-        //Debug.Log($"HP：{EnemyData.Hp}");
-        //Debug.Log($"攻撃力：{EnemyData.Attack}");
-        //Debug.Log($"落魂：{EnemyData.Money}");
+    private void OnDestroy()
+    {
+                // 解放
+        Addressables.Release(enemySetting);
     }
 
     void Update()
@@ -123,14 +122,6 @@ public class Enemy : MonoBehaviour
     //----------------------------------------------------------------------
     //  プロパティ
     //----------------------------------------------------------------------
-    public string GetId(){ return id; }
-    public void SetId(string id){ this.id = id; }
-    public float GetHp(){ return this.hp; }
-    public void SetHp(float hp){ this.hp = hp; }
-    public float GetAttack(){ return this.attack; }
-    public void SetAttack(float attack){  this.attack = attack; }
-    public int GetMoney(){ return this.money; }
-    public void SetMoney(int money){ this.money = money; }
 
 
     //  敵に当たったら爆発する
@@ -152,52 +143,60 @@ public class Enemy : MonoBehaviour
         }
         else if(collision.CompareTag("NormalBullet"))
         {
+            //  点滅させる
+
+            //  ダメージ処理
+
+            
+            //  やられエフェクト
+            Instantiate(explosion, transform.position, transform.rotation);
+
+            //  オブジェクトを削除
+            Destroy(this.gameObject);
+
             //  DropItemsがある場合はアイテムドロップ
             DropItems drop = this.GetComponent<DropItems>();
             if(drop)drop.DropPowerupItem();
 
             //  お金を生成
-            DropMoneyItems();
-
-            //  プレイヤーのお金を加算
-            //scoreManager.AddMoney(100);
-
-            
-
-
+            DropMoneyItems(enemyData.Money);
         }
         else if(collision.CompareTag("ConverterBullet"))
         {
+            //  点滅させる
+
+            //  ダメージ処理
+
+            //  やられエフェクト
+            Instantiate(explosion, transform.position, transform.rotation);
+
+            //  オブジェクトを削除
+            Destroy(this.gameObject);
+
             //  DropItemsがある場合はアイテムドロップ
             DropItems drop = this.GetComponent<DropItems>();
             if(drop)drop.DropPowerupItem();
 
-            //  お金を生成
-            DropMoneyItems();
-
-            //  プレイヤーのお金を加算
-            //scoreManager.AddMoney(100);
-
+            //  お金を生成(魂バートの時は2倍)
+            int dropMoney = enemyData.Money;
+            DropMoneyItems(2 * dropMoney);
         }
         else return;
-
-        //  爆発
-        Instantiate(explosion, transform.position, transform.rotation);
         
-        Destroy(this.gameObject);
+        
+
+        //  プレイヤーの仮やられ演出
         Destroy(collision.gameObject);
     }
 
     //  お金を生成
-    private void DropMoneyItems()
+    private void DropMoneyItems(int money)
     {
         DropItems drop = this.GetComponent<DropItems>();
         if(!drop)return;
 
-        //  敵の落とす金額を取得
-        drop.DropKon(100);
-
         //  魂アイテムをドロップさせる
+        drop.DropKon(money);
     }
 
     //  Wave移動

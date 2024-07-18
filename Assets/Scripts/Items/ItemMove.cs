@@ -33,6 +33,8 @@ public class ItemMove : MonoBehaviour
 
     void Update()
     {
+
+
         //  吸魂フィールドに触れない限りは常に流れる
         if(bField)MoveToPlayer();
         else Flowing();
@@ -73,7 +75,7 @@ public class ItemMove : MonoBehaviour
         //  タグが吸魂フィールド以外ならreturn
         if(!collision.CompareTag("PlayerField"))return;
 
-        //  回収フィールド
+        //  回収フィールド吸引ON
         bField = true;
     }
 }
