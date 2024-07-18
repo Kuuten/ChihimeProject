@@ -16,30 +16,45 @@ public class ItemMove : MonoBehaviour
 
     private SHOT_TYPE shotType;
     private MoneyManager moneyManager = null;
-    [SerializeField] private GameObject player;
+    private GameObject player;
+    private bool bField;
+    private float speed;
+    private float acceleration;
 
     void Start()
     {
         moneyManager = GameObject.Find("MoneyManager").GetComponent<MoneyManager>();
         Assert.IsTrue(moneyManager,"MoneyManagerオブジェクトがありません！");
+
+        bField = false;
+        speed = 1.0f;
+        acceleration = 1.0f;
     }
 
     void Update()
     {
         //  吸魂フィールドに触れない限りは常に流れる
-        Flowing();
+        if(bField)MoveToPlayer();
+        else Flowing();
     }
 
     //  魂バート弾時にプレイヤーに加速しながら移動
     public void MoveToPlayer()
     {
         //  アイテムからプレイヤーへのベクトル
+        player = GameManager.Instance.GetPlayer();
         Vector3 vec = player.transform.position - this.transform.position;
+        float distance = vec.magnitude;
         vec.Normalize();
 
         Vector3 pos = this.transform.position;
-        float speed = 1.0f;
-        pos += vec * speed * Time.deltaTime;
+        const float d = 0.01f;   //  近づく距離の閾値
+
+        if(distance > d )
+        {
+            speed += acceleration;
+            pos += vec * speed * Time.deltaTime;
+        }
 
         this.transform.position = pos;
     }
@@ -48,5 +63,17 @@ public class ItemMove : MonoBehaviour
     private void Flowing()
     {
         this.transform.position += new Vector3(0, flowSpeed, 0);
+    }
+
+    //-------------------------------------------------------
+    //  吸魂フィールドと当たったらプレイヤーに加速する
+    //-------------------------------------------------------
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //  タグが吸魂フィールド以外ならreturn
+        if(!collision.CompareTag("PlayerField"))return;
+
+        //  回収フィールド
+        bField = true;
     }
 }

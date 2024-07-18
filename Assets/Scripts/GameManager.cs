@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
 
 
     //  シングルトンなインスタンス
-    public static GameManager _Instance
+    public static GameManager Instance
     {
         get; private set;
     }
@@ -57,6 +57,21 @@ public class GameManager : MonoBehaviour
     public void SetGameState(int state)
     {
         gameState = state;
+    }
+
+    public GameObject GetPlayer(){ return player; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     void Start()

@@ -60,22 +60,10 @@ public class EnemyManager : MonoBehaviour
     private int waveNum = 0;    //  １ステージあたりの敵ウェーブ数
 
 
-    private async UniTask Start()
+    void Start()
     {
         appearStep = 0;
         timer = 0;
-
-         //  敵データを取得
-        enemySetting = await Addressables.LoadAssetAsync<EnemySetting>("EnemySetting");
-
-        var EnemyData = enemySetting.DataList
-            .FirstOrDefault(enemy => enemy.Id == "Kooni");
-        Debug.Log($"ID：{EnemyData.Id}");
-        Debug.Log($"HP：{EnemyData.Hp}");
-        Debug.Log($"攻撃力：{EnemyData.Attack}");
-        Debug.Log($"落魂：{EnemyData.Money}");
-     
-
 
     }
 

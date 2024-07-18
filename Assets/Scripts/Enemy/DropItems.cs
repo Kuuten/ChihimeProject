@@ -53,7 +53,11 @@ public class DropItems : MonoBehaviour
     public void DropSmallKon()
     {
         //  “G‚ª‚â‚ç‚ê‚½êŠ‚É¶¬‚·‚é
+        float bias = 5.0f;
         Vector3 pos = this.transform.position;
+        pos.y = this.transform.position.y + 1.0f;
+        pos.x = Random.Range( transform.position.x-bias, transform.position.x + bias );
+
         Instantiate(dropItems[(int)Items.smallKon], pos, Quaternion.identity);
     }
 
@@ -63,7 +67,19 @@ public class DropItems : MonoBehaviour
     public void DropLargeKon()
     {
         //  “G‚ª‚â‚ç‚ê‚½êŠ‚É¶¬‚·‚é
+        float bias = 5.0f;
         Vector3 pos = this.transform.position;
+        pos.y = this.transform.position.y + 1.0f;
+        pos.x = Random.Range( transform.position.x-bias, transform.position.x + bias );
+
         Instantiate(dropItems[(int)Items.largeKon], pos, Quaternion.identity);
+    }
+
+    //------------------------------------------------------------
+    //  —‚Æ‚·°‚Ì‹àŠz‚©‚çŒvZ‚µ‚Ä°‚ğ¶¬‚·‚é
+    //------------------------------------------------------------
+    public void DropKon(int money)
+    {
+        
     }
 }

@@ -23,6 +23,214 @@ MonoBehaviour:
     m_SerializedLabels:
     - EnemySetting
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fadd788ca1ab9724cbebdc537962bc2b
+    m_Address: Sprites
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2362f12f59b72ed40861e2f8ff9e05b1
+    m_Address: Sprites/PlayerBullet.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e25f91006d267b0469d9c1af683c0092
+    m_Address: Sprites/item_powerup4_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f2fc65013661a69458ca4df4486ad99e
+    m_Address: Sprites/item_powerup4.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ec428757ef7a3b242a8090398d2c6c82
+    m_Address: Sprites/item_powerup4.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ee2a699c69d3260478f68f7d61cbbd8f
+    m_Address: Sprites/explosion_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d11225ad5020c9f499ccd7a0c99e3519
+    m_Address: Sprites/explosion.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c9301cb60fe1958458f2c0b749c1a10d
+    m_Address: Sprites/explosion.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 25fb8616f41e666428c18b2b39de1693
+    m_Address: Sprites/EnemyBullet.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 643b7a3f46a39c548a38dbceb7e97a3a
+    m_Address: Sprites/cursor.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9c752db80e1787d43bb68344ed2c9d9e
+    m_Address: Sprites/enemy
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d29fd17e6351c4542a4d056adaf9305c
+    m_Address: Sprites/player.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5223d0b1b0bcf03499141934d6816715
+    m_Address: Sprites/enemy/enemy01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3c709065fbb222c4db35d97ad735d9ca
+    m_Address: Sprites/enemy/enemy02
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3b5606a82218553448d4f27b50d5adfd
+    m_Address: Sprites/enemy/enemy01/enemy01.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0212db9219e81d644a09478554141358
+    m_Address: Sprites/enemy/enemy01/enemy01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 64646b2706ae8844c8711331b40704cc
+    m_Address: Sprites/enemy/enemy01/enemy01 1_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 53a329c5875278d46b88db316857a170
+    m_Address: Sprites/enemy/enemy01/enemy01 1.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1795f64d1c223514f9389e4be7f0f033
+    m_Address: Sprites/enemy/enemy02/enemy02.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c6e28e7de9123464f93e105792f5cbb8
+    m_Address: Sprites/enemy/enemy02/hitodama.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 789ea9695c79f8f48b3158f3f680b8bb
+    m_Address: Sprites/enemy/enemy02/hitodama_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5f305f97e2842d54d831eae187411a86
+    m_Address: Sounds
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sounds
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6b3a00b0aa60a474e8a26babd66785b8
+    m_Address: Sounds/SFX
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sounds
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 153551f2ef429b94ab34b01b681da97f
+    m_Address: Sounds/Music
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sounds
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eeeb2e11cde5e8d468a3f6ccea406acb
+    m_Address: Sounds/Music/title_bgm.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sounds
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 397d2b1260ce6a5439fa01b0fe4efd03
+    m_Address: Sounds/SFX/brake.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sounds
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f6e810bd031977f4e8a030ca0cb11b67
+    m_Address: Sounds/SFX/dash.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sounds
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 22c255ee21466954bb01075cf3bdcdc4
+    m_Address: Sounds/SFX/se_decision_button.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sounds
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f736ffe4b8be9024c88a3a0913da1de1
+    m_Address: Sounds/SFX/se_cursor_move.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sounds
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ccdcb25eb9172444daab3351cb5ace23
+    m_Address: Sounds/SFX/se_hyoushigi.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sounds
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9f425253c748a494382265b83d794252
+    m_Address: Sounds/SFX/se_normal_shot.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sounds
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c7b6157966c873b41b3bd6741901ee5c
+    m_Address: Sounds/SFX/se_scroll.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sounds
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6d6fdbc3b20341b44abc3671a1a68634
+    m_Address: Sounds/SFX/se_scroll2.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sounds
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 373cc5d2a66bdce41acac19f2e34b8d8
+    m_Address: UI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 94719bca0a616754fa428231a9f45bd0
+    m_Address: UI/ingame_mainUI.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 5b3e9bf9194140840b980876631db859, type: 2}
   m_SchemaSet:

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
+using System.Linq;
+using Cysharp.Threading.Tasks;
 
 //--------------------------------------------------------------
 //
@@ -13,6 +15,7 @@ public class Enemy : MonoBehaviour
 {
     // 動きの種類
     public enum MOVE_TYPE {
+        None,                       // 未設定
         Clamp,                      // カクカク移動
         ChargeToPlayer,             // プレイヤーに突進
         Straight,                   // 直線移動
@@ -20,18 +23,29 @@ public class Enemy : MonoBehaviour
         Curve                       // 放物線
     }
     // 動きの種類
-    public MOVE_TYPE type = MOVE_TYPE.Clamp;
+    public MOVE_TYPE moveType = MOVE_TYPE.None;
 
-    //  出現ポイント
-    [SerializeField] private GameObject[] spawner;
-    //  制御点
-    [SerializeField] private GameObject[] controlPoint;
+    // ザコ敵の種類(名前をEnemySettingのIdと同じにする)
+    public enum ENEMY_TYPE {
+        None,                       //  未設定
+        Kooni,                      //  子鬼
+        Onibi,                      //  鬼火
+        Ibarakidouji,               //  茨木童子
+        Douji                       //  ドウジ
+    }
+    // 動きの種類
+    public ENEMY_TYPE enemyType = ENEMY_TYPE.None;
+
+    //  敵情報
+    EnemySetting enemySetting;
+
+    //  出現ポイント(GameManagerからGetterで受け取る)
+    private GameObject[] spawner;
+    //  制御点(GameManagerからGetterで受け取る)
+    private GameObject[] controlPoint;
     
     [SerializeField] private float moveSpeed = 1.0f;
     [SerializeField] private GameObject explosion;
-
-    //  もらえるお金
-    [SerializeField] private int money = 50;
 
     private float period = 20;  //  敵の寿命（秒）
 
@@ -42,14 +56,15 @@ public class Enemy : MonoBehaviour
 
     private bool visible = false;
 
-    //  ステータス
-    private int Id;     //  ID
-    private int Hp;     //  HP
-    private int Attack; //  攻撃力
-    private int Money;  //  落とす金額（魂）
+    //  ステータス-----------------------------------------------------------
+    private string id;    //  ID
+    private float hp;     //  HP
+    private float attack; //  攻撃力
+    private int money;    //  落とす金額（魂）
+    //-----------------------------------------------------------------------
 
 
-    void Start()
+    private async UniTask Start()
     {
         visible = false;
 
@@ -60,13 +75,13 @@ public class Enemy : MonoBehaviour
         Destroy(this.gameObject, period);
 
         //  ステータスを設定(EnemySettingから取得)
-        Id = -1;
-        Hp = -1;
-        Attack = -1;
-        Money = -1;
+        id = "none";
+        hp = 1f;
+        attack = 1f;
+        money = -1;
 
-        ////  敵データを取得
-        //enemySetting = await Addressables.LoadAssetAsync<EnemySetting>("EnemySetting");
+        //  敵データを取得
+        enemySetting = await Addressables.LoadAssetAsync<EnemySetting>("EnemySetting");
 
         //var EnemyData = enemySetting.DataList
         //    .FirstOrDefault(enemy => enemy.Id == "Kooni");
@@ -105,6 +120,19 @@ public class Enemy : MonoBehaviour
         visible = true;
     }
 
+    //----------------------------------------------------------------------
+    //  プロパティ
+    //----------------------------------------------------------------------
+    public string GetId(){ return id; }
+    public void SetId(string id){ this.id = id; }
+    public float GetHp(){ return this.hp; }
+    public void SetHp(float hp){ this.hp = hp; }
+    public float GetAttack(){ return this.attack; }
+    public void SetAttack(float attack){  this.attack = attack; }
+    public int GetMoney(){ return this.money; }
+    public void SetMoney(int money){ this.money = money; }
+
+
     //  敵に当たったら爆発する
     //  当たり判定の基礎知識：
     //  当たり判定を行うには、
@@ -128,8 +156,6 @@ public class Enemy : MonoBehaviour
             DropItems drop = this.GetComponent<DropItems>();
             if(drop)drop.DropPowerupItem();
 
-            //  魂は常にドロップ
-
             //  お金を生成
             DropMoneyItems();
 
@@ -147,6 +173,7 @@ public class Enemy : MonoBehaviour
             if(drop)drop.DropPowerupItem();
 
             //  お金を生成
+            DropMoneyItems();
 
             //  プレイヤーのお金を加算
             //scoreManager.AddMoney(100);
@@ -164,7 +191,11 @@ public class Enemy : MonoBehaviour
     //  お金を生成
     private void DropMoneyItems()
     {
+        DropItems drop = this.GetComponent<DropItems>();
+        if(!drop)return;
+
         //  敵の落とす金額を取得
+        drop.DropKon(100);
 
         //  魂アイテムをドロップさせる
     }

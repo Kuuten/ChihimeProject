@@ -12,8 +12,8 @@ using UnityEngine;
 public class EnemyData
 {
     public string Id;
-    public int Hp;
-    public int Attack;
+    public float Hp;
+    public float Attack;
     public int Money;
 }
 

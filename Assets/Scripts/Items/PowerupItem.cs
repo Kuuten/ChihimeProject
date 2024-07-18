@@ -11,11 +11,11 @@ using UnityEngine;
 public class PowerupItem : MonoBehaviour
 {
     //  プレイヤーのクラスを取得
-    //[SerializeField] private 
+    private GameObject player;
 
     void Start()
     {
-        
+        player = GameManager.Instance.GetPlayer();
     }
 
     void Update()
