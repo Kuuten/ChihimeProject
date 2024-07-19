@@ -13,15 +13,22 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 //
 //--------------------------------------------------------------
 
-// ドロップアイテムの種類 
-public enum Items
+// 魂アイテムの種類 
+public enum KonItems
 {
     smallKon,
     largeKon,
+    
+    Max
+}
+
+// パワーアップアイテムの種類 
+public enum powerupItems
+{
     PowerUp,     //  弾のレベルアップ
     SpeedUp,     //  自機のスピードアップ
     
-    Max,
+    Max
 }
 
 public class DropItems : MonoBehaviour
@@ -36,11 +43,16 @@ public class DropItems : MonoBehaviour
     };
     
     //  アイテムのプレハブ格納用
-    List<GameObject> Prefabs = new List<GameObject>();
+    List<GameObject> konPrefabs = new List<GameObject>();
+    List<GameObject> powerupPrefabs = new List<GameObject>();
+
+    //  パワーアップアイテムを落とすかどうか
+    [SerializeField] EnemyManager.DROP_TYPE dropType;
 
     private void Start()
     {
-        Prefabs = EnemyManager.Instance.GetDropItems();
+        konPrefabs = EnemyManager.Instance.GetKonItems();
+        powerupPrefabs = EnemyManager.Instance.GetPowerupItems();
     }
 
     //------------------------------------------------------------
@@ -50,16 +62,16 @@ public class DropItems : MonoBehaviour
     public void DropPowerupItem()
     {
         //  ドロップなしならリターン
-        if(EnemyManager.Instance.GetDropType() == EnemyManager.DROP_TYPE.None)return;
+        if(dropType == EnemyManager.DROP_TYPE.None)return;
 
         //  ランダムなアイテムを生成する
         int rand = Random.Range(
-            (int)Items.PowerUp,
-            (int)Items.Max);
+            (int)powerupItems.PowerUp,
+            (int)powerupItems.Max);
 
         //  敵がやられた場所に生成する
         Vector3 pos = this.transform.position;
-        Instantiate(Prefabs[rand], pos, Quaternion.identity);
+        Instantiate(powerupPrefabs[rand], pos, Quaternion.identity);
     }
 
     //------------------------------------------------------------
@@ -103,7 +115,7 @@ public class DropItems : MonoBehaviour
             //  smallKonの数だけ小魂を生成
             int smallKon = money;
             Debug.Log("小魂の数でばっぐ :" + smallKon);
-            DropKonPrefab(Prefabs[(int)Items.smallKon], smallKon);
+            DropKonPrefab(konPrefabs[(int)KonItems.smallKon], smallKon);
         }
         else // moneyがlargeKon以上の場合
         {
@@ -117,10 +129,10 @@ public class DropItems : MonoBehaviour
             Debug.Log("小魂の数 :" + remainder);
 
             //  largeKonNumの数だけ大魂を生成
-            DropKonPrefab(Prefabs[(int)Items.largeKon], largeKonNum);
+            DropKonPrefab(konPrefabs[(int)KonItems.largeKon], largeKonNum);
 
             //  remainderの数だけ小魂を生成
-            DropKonPrefab(Prefabs[(int)Items.smallKon], remainder);
+            DropKonPrefab(konPrefabs[(int)KonItems.smallKon], remainder);
         }
     }
 }

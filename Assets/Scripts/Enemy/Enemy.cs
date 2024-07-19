@@ -147,7 +147,7 @@ public class Enemy : MonoBehaviour
             //  オブジェクトを削除
             Destroy(this.gameObject);
 
-            //  DropItemsがある場合はアイテムドロップ
+            //  アイテムドロップ判定
             DropItems drop = this.GetComponent<DropItems>();
             if(drop)drop.DropPowerupItem();
 
@@ -166,7 +166,7 @@ public class Enemy : MonoBehaviour
             //  オブジェクトを削除
             Destroy(this.gameObject);
 
-            //  DropItemsがある場合はアイテムドロップ
+            //  アイテムドロップ判定
             DropItems drop = this.GetComponent<DropItems>();
             if(drop)drop.DropPowerupItem();
 

@@ -11,7 +11,6 @@ using UnityEngine.SceneManagement;
 //--------------------------------------------------------------
 public class ItemMove : MonoBehaviour
 {
-    [SerializeField] private Items itemType;
     private float flowSpeed = 0.005f;
 
     private SHOT_TYPE shotType;

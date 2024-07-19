@@ -50,17 +50,6 @@ public class EnemyManager : MonoBehaviour
         Drop,                //  あり
     }
 
-    void Awake()
-    {
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
-
     [SerializeField] private GameObject[] enemyPrefab;
     private const float appearY = -5.5f;
 
@@ -71,14 +60,28 @@ public class EnemyManager : MonoBehaviour
     private int enemyGenerateNum = 0;       //  生成された敵数
     private int enemyDestroyNum = 0;         //  破壊された敵数
 
-    //  ドロップするアイテムのプレハブ達
-    private List<GameObject> dropItems;
+    //  ドロップする魂のプレハブ達
+    private List<GameObject> konItems;
+    AsyncOperationHandle<IList<GameObject>> loadHandleKon;
 
-    AsyncOperationHandle<IList<GameObject>> loadHandle;
+    //  パワーアイテムのプレハブ達
+    private List<GameObject> powerupItems;
+    AsyncOperationHandle<IList<GameObject>> loadHandlePowerup;
 
     //  パワーアップアイテムを落とすかどうか
-    private DROP_TYPE dropType = DROP_TYPE.None;
+    private List<DROP_TYPE> dropType = new List<DROP_TYPE>();
 
+    void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+    }
 
     private async void Start()
     {
@@ -96,53 +99,61 @@ public class EnemyManager : MonoBehaviour
     //-----------------------------------------------------------------
     private async UniTask LoadPrefab()
     {
-        dropItems = new List<GameObject>();
-
-        //  一応リストをリセットしておく
-        dropItems.Clear();
-
-        // ロードする為のキー
-        List<string> keys = new List<string>();
-        List<string> keys1 = new List<string>() {"KonItems"};
-        List<string> keys2 = new List<string>() {"KonItems", "PowerupItems"};
-
-        //  ドロップなしならパワーアップアイテムのロードはなし
-        if(dropType == DROP_TYPE.None)
-        {
-            keys = keys1;
-        }
-        else // ドロップあり
-        {
-            keys = keys2;
-        }
+        konItems = new List<GameObject>();
+        powerupItems = new List<GameObject>();
 
         //  キーによるプレハブロード
-        await LoadAssetsByAdrressablesKey(keys);
+        await LoadAssetsByAdrressablesKey();
     }
 
     //------------------------------------------------
     //  キーによるプレハブロード
     //------------------------------------------------
-    private async UniTask LoadAssetsByAdrressablesKey(List<string> keys)
+    private async UniTask LoadAssetsByAdrressablesKey()
     {
-        //  アイテムをロード
-        loadHandle = Addressables.LoadAssetsAsync<GameObject>
+        // ロードする為のキー
+        List<string> keys1 = new List<string>() {"KonItems"};
+        List<string> keys2 = new List<string>() {"PowerupItems"};
+
+        //  ドロップアイテムをロード
+        loadHandleKon = Addressables.LoadAssetsAsync<GameObject>
             (
-                keys,
+                keys1,
                 null,
                 Addressables.MergeMode.Union,
                 false
             );
 
         //  ロードの完了を待つ
-        await loadHandle.Task;
+        await loadHandleKon.Task;
+
+        //  パワーアップアイテムをロード
+        loadHandlePowerup = Addressables.LoadAssetsAsync<GameObject>
+            (
+                keys2,
+                null,
+                Addressables.MergeMode.Union,
+                false
+            );
+
+        //  ロードの完了を待つ
+        await loadHandlePowerup.Task;
 
         //  要素の数だけリストに追加
-        foreach (var addressable in loadHandle.Result)
+        foreach (var addressable in loadHandleKon.Result)
         {
             if (addressable != null)
             {
-                dropItems.Add( addressable );
+                konItems.Add( addressable );
+            }
+        }
+
+        //  ドロップ要素の数だけリストに追加
+        foreach (var addressable in loadHandlePowerup.Result)
+        {
+            if (addressable != null)
+            {
+                powerupItems.Add( addressable );
             }
         }
     }
@@ -150,7 +161,8 @@ public class EnemyManager : MonoBehaviour
     private void OnDestroy()
     {
          // 解放
-        Addressables.Release(loadHandle);
+        Addressables.Release(loadHandleKon);
+        Addressables.Release(loadHandlePowerup);
     }
 
     void Update()
@@ -164,8 +176,9 @@ public class EnemyManager : MonoBehaviour
     //------------------------------------------------
     public int GetDestroyNum(){return enemyDestroyNum;}
     public void SetDestroyNum(int num){enemyDestroyNum = num;}
-    public DROP_TYPE GetDropType(){ return dropType; }
-    public List<GameObject> GetDropItems(){ return dropItems; }
+    public List<DROP_TYPE> GetDropType(){ return dropType; }
+    public List<GameObject> GetKonItems(){ return konItems; }
+    public List<GameObject> GetPowerupItems(){ return powerupItems; }
 
     //------------------------------------------------
     //  ランダムなX座標を返す
