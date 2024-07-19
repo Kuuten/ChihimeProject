@@ -14,7 +14,7 @@ using Cysharp.Threading.Tasks;
 public class Enemy : MonoBehaviour
 {
     // 動きの種類
-    public enum MOVE_TYPE {
+    [SerializeField] private enum MOVE_TYPE {
         None,                       // 未設定
         Clamp,                      // カクカク移動
         ChargeToPlayer,             // プレイヤーに突進
@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour
         Curve                       // 放物線
     }
     // 動きの種類
-    public MOVE_TYPE moveType = MOVE_TYPE.None;
+    [SerializeField] private MOVE_TYPE moveType = MOVE_TYPE.None;
 
     // ザコ敵の種類(名前をEnemySettingのIdと同じにする)
     public enum ENEMY_TYPE {
@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour
         Ibarakidouji,               //  茨木童子
         Douji                       //  ドウジ
     }
-    // 動きの種類
+    // ザコ敵の種類
     public ENEMY_TYPE enemyType = ENEMY_TYPE.None;
 
     //  敵情報
@@ -49,11 +49,6 @@ public class Enemy : MonoBehaviour
 
     private float period = 20;  //  敵の寿命（秒）
 
-    private float cycleCount = 0.1f; // １秒間に往復する回数
-    private float curveLength = 1;   // カーブの最大距離
-    private float cycleRadian = 0;   // サインに渡す値
-    private float centerX;           // X座標の中心
-
     private bool visible = false;
 
     //  EnemyDataクラスからの情報取得用
@@ -63,9 +58,6 @@ public class Enemy : MonoBehaviour
     private async UniTask Start()
     {
         visible = false;
-
-        // 初期Y座標を「X座標の中心」として保存
-        centerX = transform.position.x;
 
         //  寿命を設定
         Destroy(this.gameObject, period);
@@ -86,23 +78,23 @@ public class Enemy : MonoBehaviour
 
     private void OnDestroy()
     {
-                // 解放
-        Addressables.Release(enemySetting);
+        //  破壊された敵数を+1
+        int destroyNum = EnemyManager.Instance.GetDestroyNum();
+        destroyNum++;
+        EnemyManager.Instance.SetDestroyNum(destroyNum);
+        Debug.Log("破壊された敵数 : " + destroyNum);
+
+         // 解放
+         if(enemySetting != null)
+        {
+            Addressables.Release(enemySetting);
+            enemySetting = null;
+        }
     }
 
     void Update()
     {
         Vector3 pos = transform.position;
-
-        //// 上下にカーブ
-        //if (type == MOVE_TYPE.CURVE)
-        //{
-        //    if (cycleCount > 0)
-        //    {
-        //        cycleRadian += (cycleCount * 2 * Mathf.PI) / 50;
-        //        pos.x = Mathf.Sin(cycleRadian) * curveLength + centerX;
-        //    }
-        //}
 
         //  前進
         pos += new Vector3(
@@ -135,6 +127,7 @@ public class Enemy : MonoBehaviour
 
         if(collision.CompareTag("Player"))
         {
+            //  やられエフェクト
             Instantiate(
                     explosion,
                     collision.transform.position,
@@ -198,18 +191,4 @@ public class Enemy : MonoBehaviour
         //  魂アイテムをドロップさせる
         drop.DropKon(money);
     }
-
-    //  Wave移動
-    //private void WaveMove()
-    //{
-    //    // 左右にウェーブ
-    //    if (type == MOVE_TYPE.Wave)
-    //    {
-    //        if (cycleCount > 0)
-    //        {
-    //            cycleRadian += (cycleCount * 2 * Mathf.PI) / 50;
-    //            pos.x = Mathf.Sin(cycleRadian) * curveLength + centerX;
-    //        }
-    //    }
-    //}
 }

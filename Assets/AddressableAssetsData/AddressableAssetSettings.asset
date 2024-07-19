@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 5c6a852aa12016045ac54e0de5fdb950
   m_currentHash:
     serializedVersion: 2
-    Hash: 7db045652bb7ff2e3c4e9fd011bcaf4d
+    Hash: a7c30f8be122bd60b957fc47db2f4de6
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -90,6 +90,9 @@ MonoBehaviour:
     - EnemySetting
     - Sprites
     - Sounds
+    - Prefabs
+    - KonItems
+    - PowerupItems
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 1806e32b19d88d2498f73719e0c3a02c, type: 2}

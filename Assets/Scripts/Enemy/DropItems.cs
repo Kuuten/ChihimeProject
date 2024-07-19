@@ -1,7 +1,11 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 //--------------------------------------------------------------
 //
@@ -22,17 +26,21 @@ public enum Items
 
 public class DropItems : MonoBehaviour
 {
-    //  ドロップするアイテムのプレハブ達
-    [SerializeField] private GameObject[] dropItems;
-    //  小魂で得られる魂の数
-    private const int konNumGainedFromSmallKon = 1;
-    //  大魂で得られる魂の数
-    private const int konNumGainedFromLargelKon = 10;
-
-    void Start()
+    //  プレハブのアドレス
+    private string[] adress =
     {
-        Assert.IsFalse((int)Items.Max != dropItems.GetLength(0),
-            "配列の要素数と列挙の数が合いません！");
+        "item_smallKon",    //  Items.smallKon
+        "item_largeKon",    //  Items.largeKon
+        "item_powerup",     //  Items.PowerUp
+        "item_speedup"      //  Items.SpeedUp
+    };
+    
+    //  アイテムのプレハブ格納用
+    List<GameObject> Prefabs = new List<GameObject>();
+
+    private void Start()
+    {
+        Prefabs = EnemyManager.Instance.GetDropItems();
     }
 
     //------------------------------------------------------------
@@ -41,6 +49,9 @@ public class DropItems : MonoBehaviour
     //------------------------------------------------------------
     public void DropPowerupItem()
     {
+        //  ドロップなしならリターン
+        if(EnemyManager.Instance.GetDropType() == EnemyManager.DROP_TYPE.None)return;
+
         //  ランダムなアイテムを生成する
         int rand = Random.Range(
             (int)Items.PowerUp,
@@ -48,22 +59,21 @@ public class DropItems : MonoBehaviour
 
         //  敵がやられた場所に生成する
         Vector3 pos = this.transform.position;
-        Instantiate(dropItems[rand], pos, Quaternion.identity);
+        Instantiate(Prefabs[rand], pos, Quaternion.identity);
     }
 
     //------------------------------------------------------------
-    //  小魂をドロップする
+    //  num個分魂をドロップする
     //------------------------------------------------------------
-    public void DropSmallKon(int num)
+    public void DropKonPrefab(GameObject Prefab, int num)
     {
         //  敵がやられた場所に生成する
-        float bias = 5.0f;
         Vector3 pos = this.transform.position;
 
         for(int i=0;i<num;i++)
         {
             GameObject obj = Instantiate(
-                dropItems[(int)Items.smallKon],
+                Prefab,
                 pos,
                 Quaternion.identity);
 
@@ -72,8 +82,8 @@ public class DropItems : MonoBehaviour
             float spriteWidth = sprite.bounds.size.x;
             
             //  横幅分ずつずらして配置する
-            pos.y = this.transform.position.y + 1.0f;
-            pos.x = ((transform.position.x - spriteWidth * i / 2) + i * spriteWidth );
+            pos.y = this.transform.position.y + Random.Range(-2,2);
+            pos.x = (transform.position.x - num * spriteWidth / 2) + i * spriteWidth;
 
             //  再配置
             obj.transform.position = pos;
@@ -81,32 +91,19 @@ public class DropItems : MonoBehaviour
     }
 
     //------------------------------------------------------------
-    //  大魂をドロップする
-    //------------------------------------------------------------
-    public void DropLargeKon()
-    {
-        //  敵がやられた場所に生成する
-        float bias = 5.0f;
-        Vector3 pos = this.transform.position;
-        pos.y = this.transform.position.y + 1.0f;
-        pos.x = Random.Range( transform.position.x-bias, transform.position.x + bias );
-
-        Instantiate(dropItems[(int)Items.largeKon], pos, Quaternion.identity);
-    }
-
-    //------------------------------------------------------------
     //  落とす魂の金額から計算して魂を生成する
     //------------------------------------------------------------
     public void DropKon(int money)
     {
-        int largeKon = konNumGainedFromLargelKon;
-        int smallKon = konNumGainedFromSmallKon;
+        //  大魂１個あたりの魂獲得量を取得
+        int largeKon = MoneyManager.Instance.GetKonNumGainedFromLarge();
 
         if (money < largeKon)
         {
             //  smallKonの数だけ小魂を生成
-            smallKon = money;
-            DropSmallKon(smallKon);
+            int smallKon = money;
+            Debug.Log("小魂の数でばっぐ :" + smallKon);
+            DropKonPrefab(Prefabs[(int)Items.smallKon], smallKon);
         }
         else // moneyがlargeKon以上の場合
         {
@@ -116,19 +113,14 @@ public class DropItems : MonoBehaviour
             //  余りで小魂を計算する
             int remainder = money % largeKon;
 
+            Debug.Log("大魂の数 :" + largeKonNum);
             Debug.Log("小魂の数 :" + remainder);
 
             //  largeKonNumの数だけ大魂を生成
-            for(int i=0;i<largeKonNum;i++)
-            {
-                DropLargeKon();
-            }
+            DropKonPrefab(Prefabs[(int)Items.largeKon], largeKonNum);
 
             //  remainderの数だけ小魂を生成
-            for(int i=0;i<remainder;i++)
-            {
-                DropSmallKon(i);
-            }
+            DropKonPrefab(Prefabs[(int)Items.smallKon], remainder);
         }
     }
 }

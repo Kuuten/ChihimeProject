@@ -13,6 +13,11 @@ public class MoneyManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     private int money = 0;
 
+    //  大魂で得られる魂の数
+    private const int konNumGainedFromLarge = 10;
+    //  小魂で得られる魂の数
+    private const int konNumGainedFromSmall = 1;
+
     //  シングルトンなインスタンス
     public static MoneyManager Instance
     {
@@ -48,4 +53,10 @@ public class MoneyManager : MonoBehaviour
         money += value;
         scoreText.text = "" + money;
     }
+
+    //------------------------------------------------
+    //  プロパティ
+    //------------------------------------------------
+    public int GetKonNumGainedFromLarge(){ return konNumGainedFromLarge; }
+    public int GetKonNumGainedFromSmall(){ return konNumGainedFromSmall; }
 }

@@ -14,10 +14,10 @@ GameObject:
   - component: {fileID: -6456918231507496724}
   - component: {fileID: -3534323077064876794}
   - component: {fileID: -4069407151855377676}
-  - component: {fileID: -4572805285305913581}
-  - component: {fileID: 4246218562999161365}
+  - component: {fileID: 6835293649258351850}
+  - component: {fileID: 7259069586578885932}
   m_Layer: 0
-  m_Name: hitodamaDrop
+  m_Name: hitodama
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: -1869199221, guid: c6e28e7de9123464f93e105792f5cbb8, type: 3}
-  m_Color: {r: 1, g: 0.6839622, b: 0.6839622, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -174,24 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5f49040186a00045b08d3d0437f1a0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-4572805285305913581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 567640649506363673}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2a26fcd5ce69984187211e3f5a54df3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dropItems:
-  - {fileID: 6615189957316477137, guid: 41d1a3023c369944383309ad49e3ec6f, type: 3}
-  - {fileID: 6615189957316477137, guid: 131bc6a0655585a4493bedfcd9808087, type: 3}
-  - {fileID: 6615189957316477137, guid: c81038ab1e5168c48aa13f4d1653d415, type: 3}
-  - {fileID: 6615189957316477137, guid: 18b64f45e100e074a9266e37374678a4, type: 3}
---- !u!114 &4246218562999161365
+--- !u!114 &6835293649258351850
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -201,5 +184,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d562de92d05e87449aba073ff834833a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7259069586578885932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567640649506363673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2a26fcd5ce69984187211e3f5a54df3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

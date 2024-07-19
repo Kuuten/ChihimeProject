@@ -2128,8 +2128,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab:
-  - {fileID: 1356604452853464067, guid: 5071a4a3226f9484997eea123cc32e6f, type: 3}
-  - {fileID: 6122536088634555429, guid: d90f27c276142664dac4c8120bea8d4c, type: 3}
+  - {fileID: 567640649506363673, guid: f1f1e1124b576b246b5d7652237f9679, type: 3}
+  - {fileID: 567640649506363673, guid: a177bf8ee0721ba4cbec64d208fc3730, type: 3}
 --- !u!114 &681002959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2690,7 +2690,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: d29fd17e6351c4542a4d056adaf9305c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

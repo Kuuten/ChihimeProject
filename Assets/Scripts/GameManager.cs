@@ -138,8 +138,8 @@ public class GameManager : MonoBehaviour
         //ResetAllCharacters();
 
         //  ゲーム開始前メッセージ（ステージ名がアルファのアニメーション）
-        float msg_alpha_speed = 1.0f; //  ステージ名のアルファが最大になるのにかかる時間
-        float msg_wait  = 3.0f;       //  メッセージの表示時間
+        //float msg_alpha_speed = 1.0f; //  ステージ名のアルファが最大になるのにかかる時間
+        //float msg_wait  = 3.0f;       //  メッセージの表示時間
         //yield return StartCoroutine(PreGameMessage
         //                            (
         //                                msg1speed, msg1wait

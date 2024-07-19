@@ -11,6 +11,7 @@ TagManager:
   - ConverterBullet
   - LevelUpItem
   - PlayerField
+  - Kon
   layers:
   - Default
   - TransparentFX

@@ -231,6 +231,121 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6d0146f8c5a5e084aa970a7a6c5aaf95
+    m_Address: Prefabs
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 20a8969bec9c24240b950148e0bdd8b3
+    m_Address: Prefabs/BombIcon.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1301e82ad744b8b468da77e90debaee9
+    m_Address: Prefabs/Target.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9682b190aa435a24ea6c54a641935a03
+    m_Address: Assets/Resources_moved/Prefabs/NormalPlayerBullet.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ac76b1a12a9ce3c4d83c900da79ac922
+    m_Address: Assets/Resources_moved/Prefabs/DoujiPlayerBullet.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b514ce1637337a44798198b78893ecd9
+    m_Address: Assets/Resources_moved/Prefabs/KuramaPlayerBullet.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c37dbbb086172fb49ad6a0c317baab70
+    m_Address: Assets/Resources_moved/Prefabs/KuchinawaPlayerBullet.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: afa7c8a2d69811645961a781afe80306
+    m_Address: Assets/Resources_moved/Prefabs/Laser.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ddc8f457e27f62043a7c712c453da581
+    m_Address: Assets/Resources_moved/Prefabs/WadatsumiPlayerBullet.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 392e3a50084deba468520badcddd59f1
+    m_Address: Assets/Resources_moved/Prefabs/HakumenPlayerBullet.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2a86b97b64eb9ae4b84b5dd1ec6d831e
+    m_Address: Assets/Resources_moved/Prefabs/HeartFrame.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 52acdfda6d1144543858be1f9c7c6a56
+    m_Address: Assets/Resources_moved/Prefabs/explosion.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 999f59af4223ef243966fb67701a23f5
+    m_Address: Assets/Resources_moved/Prefabs/TsukumoPlayerBullet.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 75615eaca6c80fe4b97d0c70c100ce0a
+    m_Address: Assets/Resources_moved/Prefabs/item_powerup.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5ada2e2cb2a384f4d9d97a0e68eef7f1
+    m_Address: Prefabs/Manager
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 28205191643636a4fbdde89b52ad876e
+    m_Address: Prefabs/Items
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2a807c1d64b8c5543a3d0e78700d1f12
+    m_Address: Prefabs/enemy
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 41d1a3023c369944383309ad49e3ec6f
+    m_Address: item_smallKon
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - KonItems
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 131bc6a0655585a4493bedfcd9808087
+    m_Address: item_largeKon
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - KonItems
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c81038ab1e5168c48aa13f4d1653d415
+    m_Address: item_powerup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PowerupItems
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 18b64f45e100e074a9266e37374678a4
+    m_Address: item_speedup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PowerupItems
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 5b3e9bf9194140840b980876631db859, type: 2}
   m_SchemaSet:

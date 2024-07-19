@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 8120478058563874432}
   - component: {fileID: 4795737728170828681}
   - component: {fileID: 4563613631376801037}
-  - component: {fileID: -3599912350984901752}
-  - component: {fileID: -7587762679191515516}
+  - component: {fileID: 1407801192080539371}
+  - component: {fileID: 1517683543735398807}
   m_Layer: 0
-  m_Name: KuramaPlayerBullet
+  m_Name: DoujiPlayerBullet
   m_TagString: NormalBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 6013692122004912179}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 0.005, y: 3.2, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -1556597307, guid: 2362f12f59b72ed40861e2f8ff9e05b1, type: 3}
-  m_Color: {r: 1, g: 0.504717, b: 0.87116563, a: 1}
+  m_Color: {r: 1, g: 0.033018887, b: 0.033018887, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -146,7 +146,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.18, y: 1}
   m_EdgeRadius: 0
---- !u!50 &-3599912350984901752
+--- !u!50 &1407801192080539371
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -173,7 +173,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &-7587762679191515516
+--- !u!114 &1517683543735398807
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
