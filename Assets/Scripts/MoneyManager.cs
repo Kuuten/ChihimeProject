@@ -14,9 +14,11 @@ public class MoneyManager : MonoBehaviour
     private int money = 0;
 
     //  大魂で得られる魂の数
-    private const int konNumGainedFromLarge = 10;
+    private const int konNumGainedFromLarge = 500;
     //  小魂で得られる魂の数
-    private const int konNumGainedFromSmall = 1;
+    private const int konNumGainedFromSmall = 100;
+    //  最大強化時に強化アイテムで得られる魂の数
+    private const int konNumGainedFromPowerup = 300;
 
     //  シングルトンなインスタンス
     public static MoneyManager Instance
@@ -57,4 +59,5 @@ public class MoneyManager : MonoBehaviour
     //------------------------------------------------
     public int GetKonNumGainedFromLarge(){ return konNumGainedFromLarge; }
     public int GetKonNumGainedFromSmall(){ return konNumGainedFromSmall; }
+    public int GetKonNumGainedFromPowerup(){ return konNumGainedFromPowerup; }
 }

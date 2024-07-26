@@ -224,7 +224,7 @@ public class EnemyManager : MonoBehaviour
         {
             case 0:
                 SetEnemy(
-                        enemyPrefab[(int)EnemyPattern.E01_3],
+                        enemyPrefab[(int)EnemyPattern.E01_3B],
                         new Vector3(GetRandomX(),appearY,0));
                 appearStep++;
                 break;
@@ -237,41 +237,42 @@ public class EnemyManager : MonoBehaviour
                         new Vector3(GetRandomX(),appearY,0));
                 appearStep++;
                 break;
-            //case 3:
-            //    if(Timer(3))appearStep++;
-            //    break;
-            //case 4:
-            //    SetEnemy(
-            //            enemyPrefab[(int)EnemyPattern.E01_3x1],
-            //            new Vector3(GetRandomX(),appearY,0));
-            //    break;
-            //case 5:
-            //    if(Timer(3))appearStep++;
-            //    break;
-            //case 6:
-            //    SetEnemy(
-            //            enemyPrefab[(int)EnemyPattern.E01_3x1B],
-            //            new Vector3(GetRandomX(),appearY,0));
-            //    break;
-            //case 7:
-            //    if(Timer(3))appearStep++;
-            //    break;
-            //case 8:
-            //    SetEnemy(
-            //            enemyPrefab[(int)EnemyPattern.E01_3x1],
-            //            new Vector3(GetRandomX(),appearY,0));
-            //    break;
-            //case 9:
-            //    if(Timer(3))appearStep++;
-            //    break;
-            //case 10:
-            //    SetEnemy(
-            //            enemyPrefab[(int)EnemyPattern.E01_3x1],
-            //            new Vector3(GetRandomX(),appearY,0));
-            //    break;
-            //case 11:
-            //    if(Timer(3))appearStep++;
-            //    break;
+            case 3:
+                if (Timer(3)) appearStep++;
+                break;
+            case 4:
+                SetEnemy(
+                        enemyPrefab[(int)EnemyPattern.E01_3B],
+                        new Vector3(GetRandomX(), appearY, 0));
+                appearStep++;
+                break;
+            case 5:
+                if (Timer(3)) appearStep++;
+                break;
+                //case 6:
+                //    SetEnemy(
+                //            enemyPrefab[(int)EnemyPattern.E01_3x1B],
+                //            new Vector3(GetRandomX(),appearY,0));
+                //    break;
+                //case 7:
+                //    if(Timer(3))appearStep++;
+                //    break;
+                //case 8:
+                //    SetEnemy(
+                //            enemyPrefab[(int)EnemyPattern.E01_3x1],
+                //            new Vector3(GetRandomX(),appearY,0));
+                //    break;
+                //case 9:
+                //    if(Timer(3))appearStep++;
+                //    break;
+                //case 10:
+                //    SetEnemy(
+                //            enemyPrefab[(int)EnemyPattern.E01_3x1],
+                //            new Vector3(GetRandomX(),appearY,0));
+                //    break;
+                //case 11:
+                //    if(Timer(3))appearStep++;
+                //    break;
         }
     }
 }

@@ -12,6 +12,8 @@ TagManager:
   - LevelUpItem
   - PlayerField
   - Kon
+  - DeadWall
+  - DeadWallBottom
   layers:
   - Default
   - TransparentFX

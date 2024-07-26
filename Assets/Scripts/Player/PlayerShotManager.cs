@@ -1,5 +1,8 @@
+using DG.Tweening.Core.Easing;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,14 +15,24 @@ using UnityEngine.InputSystem;
 public enum SHOT_TYPE
 {
     NORMAL,
-    POWER,         // ドウジ
-    WIDE,          // クラマ
-    PENETRATION,   // クチナワ
-    HORMING,       // ツクモ
-    SHIELD,        // ワダツミ
-    ALMIGHT,       // ハクメン
+    DOUJI,         // ドウジ
+    TSUKUMO,       // ツクモ
+    KUCHINAWA,     // クチナワ
+    KURAMA,        // クラマ
+    WADATSUMI,     // ワダツミ
+    HAKUMEN,       // ハクメン
 
     TYPE_MAX
+}
+
+//  ノーマル弾のレベルリスト
+enum eNormalShotLevel
+{
+    Lv1 = 1,
+    Lv2,
+    Lv3,
+
+    LvMax
 }
 
 public class PlayerShotManager : MonoBehaviour
@@ -36,8 +49,6 @@ public class PlayerShotManager : MonoBehaviour
     //  弾のプレハブ
     [SerializeField]private GameObject[] bulletPrefab;
 
-    //  弾の方向
-    private Quaternion shotRotation;
     //  弾の移動ベクトル
     private Vector3 velocity;
     //  ノーマル弾のショット可能フラグ
@@ -50,70 +61,139 @@ public class PlayerShotManager : MonoBehaviour
     private int normalShotLevel;
     //  ノーマル弾の移動量
     private const float normalSpeed = -20f; 
+    //  ノーマル弾の攻撃力
+    private float normalShotPower;
 
-    public int gamestatus = 0;
+    //  プレイヤーのスプライト画像
+    [SerializeField] Sprite frontSprite;
+    [SerializeField] Sprite backSprite;
+    //  AnimatorController
+    [SerializeField] AnimatorController frontController;
+    [SerializeField] AnimatorController backController;
 
+    //  テスト用
+    public int gamestatus;
+    InputAction test;
+    bool b;
 
     //  入力
     InputAction shot;
+
 
     void Start()
     {
         // InputActionにMoveを設定
         PlayerInput playerInput = GetComponent<PlayerInput>();
         shot = playerInput.actions["Shot"];
+        test = playerInput.actions["TestButton2"]; 
 
+        normalShotPower = 1.0f;
         shotCount = 0;
         canShot = true;
         normalShotLevel = 1; // 最初はレベル１
+
+        //  テスト用
+        gamestatus = (int)eGameState.Zako;
+        b = true;
+
         //  弾の向きはとりあえず通常弾に合わせる
-        shotRotation = bulletPrefab[(int)SHOT_TYPE.NORMAL].transform.rotation;
         velocity = new Vector3(0,normalSpeed,0);   //  最初は下方向へ撃つ
     }
 
     void Update()
     {
         //  GameManagerから状態を取得
-        int gamestatus = gameManager.GetGameState();
+        //gamestatus = gameManager.GetGameState();
 
-        //  通常弾
-        NormalShot(gamestatus);
-        
+        //  Enterでザコボス切り替え
+        if(test.WasPressedThisFrame())
+        {
+            b = !b;
+            Debug.Log("切り替えフラグ:"+ b);
+
+            if(b)gamestatus = (int)eGameState.Zako;
+            else gamestatus = (int)eGameState.Boss;
+            
+            Debug.Log("gamestatus:"+ gamestatus);
+        }
+
+        //  ゲーム段階別処理
+        switch(gamestatus)
+        {
+            case (int)eGameState.Zako:
+                ChangePlayerSpriteToFront(true);     //  手前向き
+                NormalShot(true);                    //  通常弾
+                break;
+            case (int)eGameState.Boss:
+                ChangePlayerSpriteToFront(false);    //  奥向き
+                NormalShot(false);                   //  通常弾
+                break;
+            case (int)eGameState.Event:
+                ChangePlayerSpriteToFront(false);    //  奥向き
+                break;
+        }
+
     }
 
     //---------------------------------------------------------
     //  プロパティ
     //---------------------------------------------------------
+    public int GetNormalShotLevel(){ return normalShotLevel; }
+    public void SetNormalShotLevel(int level)
+    {
+        Debug.Assert(normalShotLevel >= (int)eNormalShotLevel.Lv1 &&
+            normalShotLevel <= (int)eNormalShotLevel.Lv3,
+            "通常弾レベルの設定値が範囲外になっています！");
+        if(normalShotLevel != level)normalShotLevel = level;
+    }
+    public float GetNormalShotPower(){ return normalShotPower; }
+    public void SetNormalShotPower(float power) { normalShotPower = power; }
 
-    //  弾の画像の向きと移動ベクトルを反転する
-    public void Reverse(int state)
+    //  弾の移動ベクトルを反転する
+    public Vector3 GetReverseVelocity(int state)
     {
         //  ザコ戦中はデフォルト設定にする
         if( state == (int)eGameState.Zako )
         {
-            shotRotation = Quaternion.Euler(0,0,180);
-
             //  移動ベクトル設定
-            velocity = new Vector3(0, normalSpeed, 0);
+            velocity.y = normalSpeed;
+            return velocity;
         }
-        else // ボス戦か会話イベント中なら反転
+        else if( state == (int)eGameState.Boss ) // ボス戦中なら反転
         {
-            //  弾の移動ベクトルが下向きなら
-            if(velocity.y == normalSpeed)
-            {
-                //  画像の向き反転
-                shotRotation = Quaternion.Euler(0,0,0);
+            //  移動ベクトル設定
+            velocity.y = 20f;
+            return velocity;
+        }
+        else if( state == (int)eGameState.Event ) // 会話イベント中なら撃てない
+        {
+            velocity.y = 0.0f;
+            canShot = false;
+            shotCount = 0;
+        }
 
-                //  移動ベクトル設定
-                velocity.y = -normalSpeed;
-            }
+        return Vector3.zero;
+    }
+
+   //  プレイヤーのスプライトを差し替える
+   private void ChangePlayerSpriteToFront(bool front)
+    {
+        if(front)
+        {
+            this.GetComponent<Animator>().runtimeAnimatorController =
+                frontController;
+        }
+        else
+        {
+            this.GetComponent<Animator>().runtimeAnimatorController =
+                backController;
         }
     }
 
     //-------------------------------------------
     //  通常弾
     //-------------------------------------------
-    private void NormalShot(int state)
+    private void NormalShot(bool flipY)
     {
         //  通常弾を撃つ
         if (!canShot)
@@ -133,77 +213,123 @@ public class PlayerShotManager : MonoBehaviour
                 //  フラグリセット
                 canShot = false;
 
-                //  弾の画像の向き反転
-                Reverse(state);
+                //  オブジェクト一時格納用
+                GameObject obj = null;
+
+                //  通常弾の速度設定用
+                NormalBullet n = null;;
+
+                //  Velocity格納用
+                Vector3 v = Vector3.zero;
+
+                //  Y反転用のSpriteRenderer
+                SpriteRenderer sr = null;
+
+                //  Y反転時の発射口のY座標バイアス
+                const float biasY = 0.44f;
 
                 switch(normalShotLevel)
                 {
                     case 1: //  レベル１
-                        NormalBullet n = Instantiate(
+                        obj = Instantiate(
                         bulletPrefab[(int)SHOT_TYPE.NORMAL],
                         firePoint1.position,
-                        shotRotation).GetComponent<NormalBullet>();
+                        Quaternion.identity);
+
+                        //  Yを反転するかどうか設定する
+                        sr = obj.GetComponent<SpriteRenderer>(); 
+                        sr.flipY = flipY;
+
+                        //  反転時に座標を調整
+                        if(!sr.flipY)
+                        {
+                            obj.transform.position = 
+                                new Vector3(firePoint1.position.x,
+                                firePoint1.position.y + biasY,
+                                firePoint1.position.z);
+                        }
+
+                        //  ボス戦かどうかでVelocityを取得して設定
+                        v = GetReverseVelocity(gamestatus);
+                        velocity = v;
+                        n = obj.GetComponent<NormalBullet>();
                         n.SetVelocity(velocity);
-                        n.SetRotation(shotRotation);
-                        
+
                         break;
                     case 2: //  レベル２
-                        NormalBullet n2 = Instantiate(
-                        bulletPrefab[(int)SHOT_TYPE.NORMAL],
-                        firePoint1.position,
-                        shotRotation).GetComponent<NormalBullet>();
-                        n2.SetVelocity(velocity);
-                        n2.SetRotation(shotRotation);
+                        const int lv2BulletNum = 3; //  一度に出る弾の数
 
-                        NormalBullet n3 = Instantiate(
-                        bulletPrefab[(int)SHOT_TYPE.NORMAL],
-                        firePoint2_L.position,
-                        shotRotation).GetComponent<NormalBullet>();
-                        n3.SetVelocity(velocity);
-                        n3.SetRotation(shotRotation);
+                        //  弾の数分のリストを確保
+                        List<Transform> firePointLv2= new List<Transform>(lv2BulletNum);
+                        firePointLv2.Add(firePoint1.transform);
+                        firePointLv2.Add(firePoint2_L.transform);
+                        firePointLv2.Add(firePoint2_R.transform);
 
-                        NormalBullet n4 = Instantiate(
-                        bulletPrefab[(int)SHOT_TYPE.NORMAL],
-                        firePoint2_R.position,
-                        shotRotation).GetComponent<NormalBullet>();
-                        n4.SetVelocity(velocity);
-                        n4.SetRotation(shotRotation);
+                        for(int i=0;i<firePointLv2.Count;i++)
+                        {
+                            obj = Instantiate(
+                            bulletPrefab[(int)SHOT_TYPE.NORMAL],
+                            firePointLv2[i].position,
+                            Quaternion.identity);
+
+                            //  Yを反転するかどうか設定する
+                            sr = obj.GetComponent<SpriteRenderer>(); 
+                            sr.flipY = flipY;
+
+                            //  反転時に座標を調整
+                            if(!sr.flipY)
+                            {
+                                obj.transform.position = 
+                                    new Vector3(
+                                        firePointLv2[i].position.x,
+                                        firePointLv2[i].position.y + biasY,
+                                        firePointLv2[i].position.z);
+                            }
+
+                            //  ボス戦かどうかでVelocityを取得して設定
+                            v = GetReverseVelocity(gamestatus);
+                            velocity = v;
+                            n = obj.GetComponent<NormalBullet>();
+                            n.SetVelocity(velocity);
+                        }
                         break;
                     case 3: //  レベル３
-                        NormalBullet n5 = Instantiate(
-                        bulletPrefab[(int)SHOT_TYPE.NORMAL],
-                        firePoint1.position,
-                        shotRotation).GetComponent<NormalBullet>();
-                        n5.SetVelocity(velocity);
-                        n5.SetRotation(shotRotation);
+                        const int lv3BulletNum = 5; //  一度に出る弾の数
 
-                        NormalBullet n6 = Instantiate(
-                        bulletPrefab[(int)SHOT_TYPE.NORMAL],
-                        firePoint2_L.position,
-                        shotRotation).GetComponent<NormalBullet>();
-                        n6.SetVelocity(velocity);
-                        n6.SetRotation(shotRotation);
+                        //  弾の数分のリストを確保
+                        List<Transform> firePointLv3 = new List<Transform>(lv3BulletNum);
+                        firePointLv3.Add(firePoint1.transform);
+                        firePointLv3.Add(firePoint2_L.transform);
+                        firePointLv3.Add(firePoint2_R.transform);
+                        firePointLv3.Add(firePoint3_L.transform);
+                        firePointLv3.Add(firePoint3_R.transform);
 
-                        NormalBullet n7 = Instantiate(
-                        bulletPrefab[(int)SHOT_TYPE.NORMAL],
-                        firePoint2_R.position,
-                        shotRotation).GetComponent<NormalBullet>();
-                        n7.SetVelocity(velocity);
-                        n7.SetRotation(shotRotation);
+                        for(int i=0;i<firePointLv3.Count;i++)
+                        {
+                            obj = Instantiate(
+                            bulletPrefab[(int)SHOT_TYPE.NORMAL],
+                            firePointLv3[i].position,
+                            Quaternion.identity);
 
-                        NormalBullet n8 = Instantiate(
-                        bulletPrefab[(int)SHOT_TYPE.NORMAL],
-                        firePoint3_L.position,
-                        shotRotation).GetComponent<NormalBullet>();
-                        n8.SetVelocity(velocity);
-                        n8.SetRotation(shotRotation);
+                            //  Yを反転するかどうか設定する
+                            sr = obj.GetComponent<SpriteRenderer>(); 
+                            sr.flipY = flipY;
 
-                        NormalBullet n9 = Instantiate(
-                        bulletPrefab[(int)SHOT_TYPE.NORMAL],
-                        firePoint3_R.position,
-                        shotRotation).GetComponent<NormalBullet>();
-                        n9.SetVelocity(velocity);
-                        n9.SetRotation(shotRotation);
+                            //  反転時に座標を調整
+                            if(!sr.flipY)
+                            {
+                                obj.transform.position = 
+                                    new Vector3(firePointLv3[i].position.x,
+                                    firePointLv3[i].position.y + biasY,
+                                    firePointLv3[i].position.z);
+                            }
+
+                            //  ボス戦かどうかでVelocityを取得して設定
+                            v = GetReverseVelocity(gamestatus);
+                            velocity = v;
+                            n = obj.GetComponent<NormalBullet>();
+                            n.SetVelocity(velocity);
+                        }
                         break;
                 }
 
@@ -245,6 +371,23 @@ public class PlayerShotManager : MonoBehaviour
         //        shotIntervalCount = 0;
         //    }
         //}
+    }
+
+    //---------------------------------------------------
+    //  通常弾のレベルアップ
+    //---------------------------------------------------
+    public void LevelupNormalShot()
+    {
+        if(normalShotLevel < (int)eNormalShotLevel.Lv3)normalShotLevel++;
+    }
+
+
+    //---------------------------------------------------
+    //  通常弾のレベルダウン
+    //---------------------------------------------------
+    public void LeveldownNormalShot()
+    {
+        if(normalShotLevel > (int)eNormalShotLevel.Lv1)normalShotLevel--;
     }
 
 }

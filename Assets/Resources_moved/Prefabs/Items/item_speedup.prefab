@@ -10,12 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1848543939618956345}
   - component: {fileID: 8991710713602472960}
+  - component: {fileID: -5809663189909990352}
   - component: {fileID: 3537319371469020159}
   - component: {fileID: 3240863606928313508}
   - component: {fileID: 2092419792710561481}
   - component: {fileID: -2300669685463699407}
   - component: {fileID: 3199677774254033681}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: item_speedup
   m_TagString: LevelUpItem
   m_Icon: {fileID: 0}
@@ -78,8 +79,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0.6552875, g: 1, b: 0.015686274, a: 1}
+  m_Sprite: {fileID: 1313983253, guid: 1d9e7c66813916748b9de5d48d27e9d4, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -89,6 +90,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &-5809663189909990352
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6615189957316477137}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a3bdc636369b28d4a92635a6d0dc8aa8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!61 &3537319371469020159
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -125,7 +147,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.2, y: 0.2}
+    oldSize: {x: 0.64, y: 0.64}
     newSize: {x: 0.64, y: 0.64}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -158,7 +180,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d32010350efffcd4f98a3665bac379f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 3
 --- !u!114 &-2300669685463699407
 MonoBehaviour:
   m_ObjectHideFlags: 0

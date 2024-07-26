@@ -5,6 +5,8 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using System;
+using UnityEngine.Experimental.GlobalIllumination;
 
 //--------------------------------------------------------------
 //
@@ -44,32 +46,61 @@ public class Enemy : MonoBehaviour
     //  制御点(GameManagerからGetterで受け取る)
     private GameObject[] controlPoint;
     
+    //  パラメータ
     [SerializeField] private float moveSpeed = 1.0f;
+    private float hp;
+    private bool bDeath;        //  死亡フラグ
+    private bool bSuperMode;    //  無敵モードフラグ
+    
+    //  やられエフェクト
     [SerializeField] private GameObject explosion;
 
-    private float period = 20;  //  敵の寿命（秒）
-
+    //  カメラに写っているかの判定用
     private bool visible = false;
 
     //  EnemyDataクラスからの情報取得用
     EnemyData enemyData;
 
+    //  点滅させるためのSpriteRenderer
+    SpriteRenderer sp;
+    //  点滅の間隔
+    private float flashInterval;
+    //  点滅させるときのループカウント
+    private int loopCount;
+
 
     private async UniTask Start()
     {
+        //  カメラに写っていない
         visible = false;
-
-        //  寿命を設定
-        Destroy(this.gameObject, period);
+        //  死亡フラグOFF
+        bDeath = false;
+        //  最初は無敵モードOFF
+        bSuperMode = false;
+        //  ループカウントを設定
+        loopCount = 1;
+        //  点滅の間隔を設定
+        flashInterval = 0.01f;
 
         //  敵情報のアサーション（満たさなければいけない条件）
         Assert.IsTrue(enemyType.ToString() != ENEMY_TYPE.None.ToString(),
             "EnemyTypeがインスペクターで設定されていません！");
 
+        //GameObjectが破棄された時にキャンセルを飛ばすトークンを作成
+        var token = this.GetCancellationTokenOnDestroy();
+
+        //  SpriteRenderを取得
+        sp = GetComponent<SpriteRenderer>();
+
         //  敵データを取得
-        enemySetting = await Addressables.LoadAssetAsync<EnemySetting>("EnemySetting");
+        enemySetting = await Addressables.LoadAssetAsync<EnemySetting>("EnemySetting")
+            .WithCancellation(token);
         enemyData = enemySetting.DataList
             .FirstOrDefault(enemy => enemy.Id == enemyType.ToString() );
+
+        //  体力を設定
+        hp = enemyData.Hp;
+
         //Debug.Log($"ID：{enemyData.Id}");
         //Debug.Log($"HP：{enemyData.Hp}");
         //Debug.Log($"攻撃力：{enemyData.Attack}");
@@ -114,72 +145,60 @@ public class Enemy : MonoBehaviour
     //----------------------------------------------------------------------
     //  プロパティ
     //----------------------------------------------------------------------
-
+    public EnemyData GetEnemyData(){ return enemyData; }
+    public void SetHp(float health){ hp = health; }
+    public float GetHp(){ return hp; }
 
     //  敵に当たったら爆発する
     //  当たり判定の基礎知識：
     //  当たり判定を行うには、
     //  ・両者にColliderがついている
     //  ・どちらかにRigidBodyがついている
-    private void OnTriggerEnter2D(Collider2D collision)
+    private async void OnTriggerEnter2D(Collider2D collision)
     {
-        if(!visible)return;
+        if(!visible || bSuperMode || bDeath)return;
 
-        if(collision.CompareTag("Player"))
+        if (collision.CompareTag("DeadWall"))
         {
-            //  やられエフェクト
-            Instantiate(
-                    explosion,
-                    collision.transform.position,
-                    collision.transform.rotation
-                );
+            Destroy(this.gameObject);
         }
-        else if(collision.CompareTag("NormalBullet"))
+        else if (collision.CompareTag("NormalBullet"))
         {
-            //  点滅させる
+            //  弾の消去
+            Destroy(collision.gameObject);
 
             //  ダメージ処理
+            float d = GameManager.Instance.GetPlayer()
+                .GetComponent<PlayerShotManager>().GetNormalShotPower();
+            Damage(d);
 
-            
-            //  やられエフェクト
-            Instantiate(explosion, transform.position, transform.rotation);
+            //  点滅演出
+            var task = Blink();
+            await task;
 
-            //  オブジェクトを削除
-            Destroy(this.gameObject);
-
-            //  アイテムドロップ判定
-            DropItems drop = this.GetComponent<DropItems>();
-            if(drop)drop.DropPowerupItem();
-
-            //  お金を生成
-            DropMoneyItems(enemyData.Money);
+            //  死亡フラグON
+            if(hp <= 0)
+            {
+                bDeath = true;
+                Death();       //  やられ演出
+            }
         }
-        else if(collision.CompareTag("ConverterBullet"))
+        else if (collision.CompareTag("ConverterBullet"))
         {
-            //  点滅させる
-
             //  ダメージ処理
 
-            //  やられエフェクト
-            Instantiate(explosion, transform.position, transform.rotation);
+            //  点滅演出
+            var task = Blink();
+            await task;
 
-            //  オブジェクトを削除
-            Destroy(this.gameObject);
-
-            //  アイテムドロップ判定
-            DropItems drop = this.GetComponent<DropItems>();
-            if(drop)drop.DropPowerupItem();
-
-            //  お金を生成(魂バートの時は2倍)
-            int dropMoney = enemyData.Money;
-            DropMoneyItems(2 * dropMoney);
+            //  死亡フラグON
+            if(hp <= 0)
+            {
+                bDeath = true;
+                Death2();       //  やられ演出2
+            }
         }
-        else return;
-        
-        
 
-        //  プレイヤーの仮やられ演出
-        Destroy(collision.gameObject);
     }
 
     //  お金を生成
@@ -191,4 +210,96 @@ public class Enemy : MonoBehaviour
         //  魂アイテムをドロップさせる
         drop.DropKon(money);
     }
+
+    //-------------------------------------------
+    //  ダメージ処理
+    //-------------------------------------------
+    public void Damage(float value)
+    {
+        if(hp > 0.0f)
+        {
+            hp -= value;
+        }
+        else
+        {
+            hp = 0.0f;
+        }
+    }
+
+    //-------------------------------------------
+    //  ダメージ時の点滅演出
+    //-------------------------------------------
+    private async UniTask Blink()
+    {
+        //  無敵モードON
+        bSuperMode = true;
+
+        //GameObjectが破棄された時にキャンセルを飛ばすトークンを作成
+        var token = this.GetCancellationTokenOnDestroy();
+
+        //点滅ループ開始
+        for (int i = 0; i < loopCount; i++)
+        {
+            //flashInterval待ってから
+            await UniTask.Delay (TimeSpan.FromSeconds(flashInterval))
+                .AttachExternalCancellation(token);
+
+            //spriteRendererをオフ
+            sp.enabled = false;
+
+            //flashInterval待ってから
+            await UniTask.Delay(TimeSpan.FromSeconds(flashInterval))
+                .AttachExternalCancellation(token);
+
+            //spriteRendererをオン
+            sp.enabled = true;
+        }
+        //  無敵モードOFF
+        bSuperMode = false;
+    }
+
+    //-------------------------------------------
+    //  やられ演出(通常弾)
+    //-------------------------------------------
+    private void Death()
+    {
+        //  やられエフェクト
+        Instantiate(explosion, transform.position, transform.rotation);
+
+        //  アイテムドロップ判定
+        DropItems drop = this.GetComponent<DropItems>();
+        if (drop) drop.DropPowerupItem();
+
+        Debug.Log("アイテムドロップ判定");
+
+        //  お金を生成
+        DropMoneyItems(enemyData.Money);
+
+        Debug.Log("お金を生成");
+
+        //  オブジェクトを削除
+        Destroy(this.gameObject);
+    }
+
+    //-------------------------------------------
+    //  やられ演出(魂バート)
+    //-------------------------------------------
+    private void Death2()
+    {
+        //  やられエフェクト
+        Instantiate(explosion, transform.position, transform.rotation);
+
+        //  アイテムドロップ判定
+        DropItems drop = this.GetComponent<DropItems>();
+        if (drop) drop.DropPowerupItem();
+
+        //  お金を生成(魂バートの時は2倍)
+        int dropMoney = enemyData.Money;
+        DropMoneyItems(2 * dropMoney);
+
+        //  オブジェクトを削除
+        Destroy(this.gameObject);
+    }
+
+
 }

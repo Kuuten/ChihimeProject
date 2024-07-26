@@ -11,11 +11,11 @@ using UnityEngine;
 public class SpeedupItem : MonoBehaviour
 {
     //  プレイヤーのクラスを取得
-    //[SerializeField] private 
+    private GameObject player;
 
     void Start()
     {
-        
+        player = GameManager.Instance.GetPlayer();
     }
 
     void Update()
@@ -31,12 +31,25 @@ public class SpeedupItem : MonoBehaviour
         //  タグがプレイヤー以外ならreturn
         if(!collision.CompareTag("Player"))return;
 
-        //  スピードアップ
-        Debug.Log("自機がスピードアップしました！");
+        PlayerMovement pm = player.GetComponent<PlayerMovement>();
+        if(pm == null)return;
+
+        //  スピードレベルが最大じゃなければレベルアップ
+        if(pm.GetSpeedLevel() < (int)eSpeedLevel.Lv3 )
+        {
+            //  スピードアップ
+            pm.LevelupMoveSpeed();
+            Debug.Log("自機がスピードレベル" + pm.GetSpeedLevel() + "になりました！");
+        }
+        else
+        {
+            //  最大レベルの時取ると魂獲得
+            int money = MoneyManager.Instance.GetKonNumGainedFromPowerup();
+            MoneyManager.Instance.AddMoney( money );
+            Debug.Log("自機スピードが最大レベルなので魂" + money + "を獲得しました！");
+        }
         
         //  アイテムを消去
         Destroy(this.gameObject);
-
-
     }
 }

@@ -6,6 +6,10 @@ using UnityEngine.InputSystem;
 using System;
 using DG.Tweening;
 using Unity.VisualScripting;
+using System.ComponentModel;
+using Cysharp.Threading.Tasks;
+using static Unity.Collections.AllocatorManager;
+using System.Threading;
 
 //--------------------------------------------------------------
 //
@@ -21,19 +25,50 @@ public class PlayerHealth : MonoBehaviour
     private int currentMaxHealth;
     private int currentHealth;
     private const int limitHealth = 12;
+    private bool bSuperMode;
+    private bool bDeath;
 
-    [SerializeField]private GameObject enemyGenerator;
+    //  点滅させるためのSpriteRenderer
+    SpriteRenderer sp;
 
+    //  点滅の間隔
+    private float flashInterval;
+
+    //  点滅させるときのループカウント
+    private int loopCount;
+
+    //  プレイヤーの死亡エフェクト
+    [SerializeField] private GameObject playerDeathEffect;
+    //  ディレクショナルライト
+    [SerializeField] private GameObject directionalLight;
 
 
     void Start()
     {
+        //  最初はハート３個分
         currentMaxHealth = 6;
         currentHealth = 6;
+
+        //  SpriteRenderを取得
+        sp = GetComponent<SpriteRenderer>();
+
+        //  ループカウントを設定
+        loopCount = 30;
+
+        //  点滅の間隔を設定
+        flashInterval = 0.02f;
+
+        //  死亡フラグOFF
+        bDeath = false;
+
+        //  最初は無敵モードOFF
+        bSuperMode = false;
     }
 
     void Update()
-    {
+    {      
+
+
         //if (test.WasPressedThisFrame())
         //{
         //    testSwitch = !testSwitch;
@@ -56,6 +91,81 @@ public class PlayerHealth : MonoBehaviour
         //}
     }
 
+    //----------------------------------------------------------------
+    //  プレイヤーの当たり判定
+    //----------------------------------------------------------------
+    private async void OnTriggerEnter2D(Collider2D collision)
+    {
+        //  無敵か死亡しているなら飛ばす
+        if(bSuperMode || bDeath)return;
+
+        if(collision.CompareTag("Enemy") ||         //  敵自体
+            collision.CompareTag("EnemyBullet"))    //  敵弾
+        {
+            //  プレイヤーのダメージ処理
+            EnemyData ed = collision.GetComponent<Enemy>().GetEnemyData();
+            Damage( ed.Attack );
+
+            //  死亡フラグON
+            if(currentHealth <= 0)
+            {
+                bDeath = true;
+                StartCoroutine(Death());       //  やられ演出
+                return;
+            }
+
+            //  全強化１段階ダウン
+            PlayerShotManager ps = this.GetComponent<PlayerShotManager>();
+            ps.LeveldownNormalShot();
+            PlayerMovement pm = this.GetComponent<PlayerMovement>();
+            pm.LeveldownMoveSpeed();
+
+            //  デバッグ表示
+            Debug.Log("全強化１段階ダウン！");
+            Debug.Log("ショット強化 :" + ps.GetNormalShotLevel() 
+                +"" + "スピード強化" + pm.GetSpeedLevel());
+            Debug.Log("Playerの体力 :" + currentHealth);
+
+            //  点滅演出
+            var task = Blink();
+            await task;
+
+        }
+    }
+
+    //-------------------------------------------
+    //  ダメージ時の点滅演出
+    //-------------------------------------------
+    private async UniTask Blink()
+    {
+        //  無敵モードON
+        bSuperMode = true;
+
+        //GameObjectが破棄された時にキャンセルを飛ばすトークンを作成
+        var token = this.GetCancellationTokenOnDestroy();
+
+        //点滅ループ開始
+        for (int i = 0; i < loopCount; i++)
+        {
+            //flashInterval待ってから
+            await UniTask.Delay (TimeSpan.FromSeconds(flashInterval))
+                .AttachExternalCancellation(token);
+
+            //spriteRendererをオフ
+            sp.enabled = false;
+            
+            //flashInterval待ってから
+            await UniTask.Delay (TimeSpan.FromSeconds(flashInterval))
+                .AttachExternalCancellation(token);
+
+            //spriteRendererをオン
+            sp.enabled = true;
+        }
+
+        //  無敵モードOFF
+        bSuperMode = false;
+    }
+
     //-------------------------------------------
     //  ダメージ処理
     //-------------------------------------------
@@ -68,14 +178,6 @@ public class PlayerHealth : MonoBehaviour
         else
         {
             currentHealth = 0;
-
-            //  プレイヤーを止める
-            this.GetComponent<PlayerMovement>().enabled = false;
-            this.GetComponent<PlayerShotManager>().enabled = false;
-            this.GetComponent<BoxCollider2D>().enabled = false;
-
-            //  やられ演出
-            StartCoroutine(Death());
         }
         
     }
@@ -97,7 +199,7 @@ public class PlayerHealth : MonoBehaviour
     }
 
     //-------------------------------------------
-    //  体力のプロパティ
+    //  プロパティ
     //-------------------------------------------
     public void SetCurrentHealth(int value)
     {
@@ -130,6 +232,26 @@ public class PlayerHealth : MonoBehaviour
     //-------------------------------------------
     private IEnumerator Death()
     {
+        //  ライトOFF
+        directionalLight.gameObject.SetActive(false);
+
+        //  子オブジェクトの吸魂フィールドを非アクティブに
+        this.gameObject.transform.Find("Field").gameObject.SetActive(false);
+
+        //  プレイヤーを止める
+        this.GetComponent<CircleCollider2D>().enabled = false;
+        this.GetComponent<SpriteRenderer>().enabled = false;
+        this.GetComponent<PlayerMovement>().enabled = false;
+        this.GetComponent<PlayerShotManager>().enabled = false;
+
+        //  プレイヤーのアニメ終了を待つ(最悪秒数で待つawaitとか)
+
+        //  プレイヤーのやられエフェクト
+        GameObject obj = Instantiate(
+            playerDeathEffect, 
+            this.transform.position,
+            Quaternion.identity);
+
         //  Pauserが付いたオブジェクトをポーズ
         Pauser.Pause();
 

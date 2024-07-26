@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4563613631376801037}
   - component: {fileID: -5118061199590484915}
   - component: {fileID: -6964132721849495488}
+  - component: {fileID: 7258025986518885642}
   m_Layer: 0
   m_Name: KuchinawaPlayerBullet
   m_TagString: NormalBullet
@@ -31,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -77,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1556597307, guid: 2362f12f59b72ed40861e2f8ff9e05b1, type: 3}
+  m_Sprite: {fileID: 1480162931, guid: 25fb8616f41e666428c18b2b39de1693, type: 3}
   m_Color: {r: 0.5518868, g: 0.96964055, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -137,7 +138,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.64, y: 0.64}
     newSize: {x: 17, y: 64}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -183,5 +184,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d562de92d05e87449aba073ff834833a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7258025986518885642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6013692122004912179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5f49040186a00045b08d3d0437f1a0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -42,8 +42,12 @@ public class ItemMove : MonoBehaviour
     //  魂バート弾時にプレイヤーに加速しながら移動
     public void MoveToPlayer()
     {
-        //  アイテムからプレイヤーへのベクトル
         player = GameManager.Instance.GetPlayer();
+
+        //  プレイヤーの体力がなければリターン
+        if(player == null)return;
+
+        //  アイテムからプレイヤーへのベクトル
         Vector3 vec = player.transform.position - this.transform.position;
         float distance = vec.magnitude;
         vec.Normalize();

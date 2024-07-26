@@ -13,7 +13,7 @@ public class EnemyData
 {
     public string Id;
     public float Hp;
-    public float Attack;
+    public int Attack;
     public int Money;
 }
 

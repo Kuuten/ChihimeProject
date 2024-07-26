@@ -29,12 +29,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Sprites
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2362f12f59b72ed40861e2f8ff9e05b1
-    m_Address: Sprites/PlayerBullet.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Sprites
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e25f91006d267b0469d9c1af683c0092
     m_Address: Sprites/item_powerup4_0.controller
     m_ReadOnly: 0
@@ -85,12 +79,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9c752db80e1787d43bb68344ed2c9d9e
     m_Address: Sprites/enemy
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Sprites
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d29fd17e6351c4542a4d056adaf9305c
-    m_Address: Sprites/player.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - Sprites
@@ -284,11 +272,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2a86b97b64eb9ae4b84b5dd1ec6d831e
-    m_Address: Assets/Resources_moved/Prefabs/HeartFrame.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 52acdfda6d1144543858be1f9c7c6a56
     m_Address: Assets/Resources_moved/Prefabs/explosion.prefab
     m_ReadOnly: 0
@@ -296,11 +279,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 999f59af4223ef243966fb67701a23f5
     m_Address: Assets/Resources_moved/Prefabs/TsukumoPlayerBullet.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 75615eaca6c80fe4b97d0c70c100ce0a
-    m_Address: Assets/Resources_moved/Prefabs/item_powerup.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

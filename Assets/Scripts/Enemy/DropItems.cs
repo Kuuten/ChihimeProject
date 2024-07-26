@@ -109,13 +109,14 @@ public class DropItems : MonoBehaviour
     {
         //  ‘å°‚PŒÂ‚ ‚½‚è‚Ì°Šl“¾—Ê‚ğæ“¾
         int largeKon = MoneyManager.Instance.GetKonNumGainedFromLarge();
+        int smallKon = MoneyManager.Instance.GetKonNumGainedFromSmall();
 
         if (money < largeKon)
         {
             //  smallKon‚Ì”‚¾‚¯¬°‚ğ¶¬
-            int smallKon = money;
-            Debug.Log("¬°‚Ì”‚Å‚Î‚Á‚® :" + smallKon);
-            DropKonPrefab(konPrefabs[(int)KonItems.smallKon], smallKon);
+            int small = money / smallKon;
+            Debug.Log("¬°‚Ì”‚Å‚Î‚Á‚® :" + small);
+            DropKonPrefab(konPrefabs[(int)KonItems.smallKon], small);
         }
         else // money‚ªlargeKonˆÈã‚Ìê‡
         {
@@ -124,15 +125,16 @@ public class DropItems : MonoBehaviour
 
             //  —]‚è‚Å¬°‚ğŒvZ‚·‚é
             int remainder = money % largeKon;
+            int small = remainder / smallKon;
 
             Debug.Log("‘å°‚Ì” :" + largeKonNum);
-            Debug.Log("¬°‚Ì” :" + remainder);
+            Debug.Log("¬°‚Ì” :" + small);
 
             //  largeKonNum‚Ì”‚¾‚¯‘å°‚ğ¶¬
             DropKonPrefab(konPrefabs[(int)KonItems.largeKon], largeKonNum);
 
             //  remainder‚Ì”‚¾‚¯¬°‚ğ¶¬
-            DropKonPrefab(konPrefabs[(int)KonItems.smallKon], remainder);
+            DropKonPrefab(konPrefabs[(int)KonItems.smallKon], small);
         }
     }
 }

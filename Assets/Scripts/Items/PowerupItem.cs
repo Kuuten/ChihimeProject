@@ -31,9 +31,24 @@ public class PowerupItem : MonoBehaviour
         //  タグがプレイヤー以外ならreturn
         if(!collision.CompareTag("Player"))return;
 
-        //  パワーアップ
-        Debug.Log("弾がパワーアップしました！");
-        
+        PlayerShotManager ps = player.GetComponent<PlayerShotManager>();
+        if(ps == null)return;
+
+        //  ショットレベルが最大じゃなければレベルアップ
+        if(ps.GetNormalShotLevel() < (int)eNormalShotLevel.Lv3 )
+        {
+            //  パワーアップ
+            ps.LevelupNormalShot();
+            Debug.Log("通常弾のパワーレベルが" + ps.GetNormalShotLevel() + "になりました！");
+        }
+        else
+        {
+            //  最大レベルの時取ると魂獲得
+            int money = MoneyManager.Instance.GetKonNumGainedFromPowerup();
+            MoneyManager.Instance.AddMoney( money );
+            Debug.Log("ショットが最大レベルなので魂" + money + "を獲得しました！");
+        }
+
         //  アイテムを消去
         Destroy(this.gameObject);
 

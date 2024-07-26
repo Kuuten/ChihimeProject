@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3537319371469020159}
   - component: {fileID: 4452136027379491503}
   - component: {fileID: 7063435945652042618}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: item_largeKon
   m_TagString: Kon
   m_Icon: {fileID: 0}
@@ -113,7 +113,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d32010350efffcd4f98a3665bac379f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 1
 --- !u!61 &3537319371469020159
 BoxCollider2D:
   m_ObjectHideFlags: 0
