@@ -10,6 +10,8 @@ using System.ComponentModel;
 using Cysharp.Threading.Tasks;
 using static Unity.Collections.AllocatorManager;
 using System.Threading;
+using UnityEditor.Animations;
+using DG.Tweening.Core.Easing;
 
 //--------------------------------------------------------------
 //
@@ -22,11 +24,27 @@ using System.Threading;
 //  最小単位の半ハート換算でプログラムする
 public class PlayerHealth : MonoBehaviour
 {
-    private int currentMaxHealth;
-    private int currentHealth;
+    //  ハートのタイプ
+    enum HeartType
+    {
+        Half,   //  半分
+        Full,   //  ハート１個分
+
+        Max
+    }
+
+    [SerializeField] private int currentMaxHealth;  //  必ず偶数
+    [SerializeField] private int currentHealth;
     private const int limitHealth = 12;
     private bool bSuperMode;
     private bool bDeath;
+    private bool bDamage;
+
+    //  ダメージ演出用のAnimator
+    [SerializeField] private AnimatorController animPlayerFront;
+    [SerializeField] private AnimatorController animPlayerFrontDamage;
+    [SerializeField] private AnimatorController animPlayerBack;
+    [SerializeField] private AnimatorController animPlayerBackDamage;
 
     //  点滅させるためのSpriteRenderer
     SpriteRenderer sp;
@@ -41,13 +59,29 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private GameObject playerDeathEffect;
     //  ディレクショナルライト
     [SerializeField] private GameObject directionalLight;
+    //  ハート画像の親オブジェクトの位置取得用
+    [SerializeField] private GameObject heartRootObj;
+    //  ハートフレームのプレハブ
+    [SerializeField] private GameObject heartFrameObj;
+    //  ハートフレームオブジェクトのリスト
+    private List<GameObject> heartList = new List<GameObject>();
 
+    void Awake()
+    {
+ 
+    }
 
     void Start()
     {
-        //  最初はハート３個分
-        currentMaxHealth = 6;
-        currentHealth = 6;
+        //  PlayerInfoManagerから初期化
+        currentMaxHealth = PlayerInfoManager.g_MAXHP;
+        if(currentMaxHealth > limitHealth)
+            Debug.LogError("最大体力値が制限を超過しています！");
+        if(currentMaxHealth % 2 !=0)
+            Debug.LogError("currentMaxHealthは必ず偶数でなければいけません！");
+        currentHealth = PlayerInfoManager.g_CURRENTHP;
+        if(currentHealth > currentMaxHealth)
+            Debug.LogError("現在体力値が最大体力値を超過しています！");
 
         //  SpriteRenderを取得
         sp = GetComponent<SpriteRenderer>();
@@ -58,37 +92,47 @@ public class PlayerHealth : MonoBehaviour
         //  点滅の間隔を設定
         flashInterval = 0.02f;
 
+        //  ダメージフラグOFF
+        bDamage = false;
+
         //  死亡フラグOFF
         bDeath = false;
 
         //  最初は無敵モードOFF
         bSuperMode = false;
+
+        //  親オブジェクトの子オブジェクトとしてハートフレームを生成
+        for( int i=0; i<currentMaxHealth/2;i++ )
+        {
+            GameObject obj = Instantiate(heartFrameObj);
+            obj.transform.parent = heartRootObj.transform;
+            obj.transform.GetChild((int)HeartType.Half).gameObject.SetActive(true);
+            obj.transform.GetChild((int)HeartType.Full).gameObject.SetActive(true);
+
+
+            heartList.Add( obj );   //  リストに追加
+        }
     }
 
     void Update()
-    {      
+    {
+        //  ゲーム段階別でAnimatorの切り替え
+       int gamestatus = GameManager.Instance.GetGameState();
+        switch(gamestatus)
+        {
+            case (int)eGameState.Zako:
+                ChangePlayerSpriteToFront(true);     //  手前向き
+                break;
+            case (int)eGameState.Boss:
+                ChangePlayerSpriteToFront(false);    //  奥向き
+                break;
+            case (int)eGameState.Event:
+                ChangePlayerSpriteToFront(false);    //  奥向き
+                break;
+        }
 
-
-        //if (test.WasPressedThisFrame())
-        //{
-        //    testSwitch = !testSwitch;
-
-        //    //  敵のジェネレーターを無効化
-        //    SetGeneratorActive(testSwitch);
-
-        //    if(testSwitch == false)
-        //    {
-        //        //  Pauserが付いたオブジェクトをポーズ
-        //        Pauser.Pause();
-        //        //  ポーズ後に入力がきかなくなるのでリセット
-        //        this.GetComponent<PlayerInput>().enabled = true;
-        //    }
-        //    else
-        //    {
-        //        //  Pauserが付いたオブジェクトをポーズ
-        //        Pauser.Resume(); 
-        //    }
-        //}
+        //  ハート画像を更新
+        CalculateHealthUI(currentHealth);
     }
 
     //----------------------------------------------------------------
@@ -109,7 +153,10 @@ public class PlayerHealth : MonoBehaviour
             //  死亡フラグON
             if(currentHealth <= 0)
             {
+                bDamage = false;
                 bDeath = true;
+                //  HitCircleを非表示にする
+                this.transform.GetChild(6).gameObject.SetActive(false);
                 StartCoroutine(Death());       //  やられ演出
                 return;
             }
@@ -126,15 +173,36 @@ public class PlayerHealth : MonoBehaviour
                 +"" + "スピード強化" + pm.GetSpeedLevel());
             Debug.Log("Playerの体力 :" + currentHealth);
 
-            //  点滅演出
-            var task = Blink();
-            await task;
+            //  ダメージ時の赤くなる点滅演出開始
+            var task1 = DamageAnimation();
+            await task1;
+
+            //  無敵演出開始
+            var task2 = Blink();
+            await task2;
 
         }
     }
 
     //-------------------------------------------
-    //  ダメージ時の点滅演出
+    //  ダメージ時の赤くなる点滅演出
+    //-------------------------------------------
+    private async UniTask DamageAnimation()
+    {
+        //GameObjectが破棄された時にキャンセルを飛ばすトークンを作成
+        var token = this.GetCancellationTokenOnDestroy();
+
+        //  一瞬色が変わる
+        await UniTask.Delay (TimeSpan.FromSeconds(0.3f))
+        .AttachExternalCancellation(token);
+
+        //  ダメージフラグOFF
+        bDamage = false;
+
+    }
+
+    //-------------------------------------------
+    //  ダメージ時の無敵点滅演出
     //-------------------------------------------
     private async UniTask Blink()
     {
@@ -167,18 +235,67 @@ public class PlayerHealth : MonoBehaviour
     }
 
     //-------------------------------------------
+    //  プレイヤーのスプライトを差し替える
+    //-------------------------------------------
+   private void ChangePlayerSpriteToFront(bool front)
+    {
+        if(front)   //  ザコ戦中
+        {
+            if(bDamage) //  ダメージ中！
+            {
+                this.GetComponent<Animator>().runtimeAnimatorController =
+                    animPlayerFrontDamage;
+            }
+            else // 通常
+            {
+                this.GetComponent<Animator>().runtimeAnimatorController =
+                    animPlayerFront;
+            }
+
+        }
+        else        //  ボス戦中
+        {
+            if(bDamage) //  ダメージ中！
+            {
+                this.GetComponent<Animator>().runtimeAnimatorController =
+                    animPlayerBackDamage;
+            }
+            else // 通常
+            {
+                this.GetComponent<Animator>().runtimeAnimatorController =
+                    animPlayerBack;
+            }
+        }
+    }
+
+    //-------------------------------------------
     //  ダメージ処理
     //-------------------------------------------
     public void Damage(int value)
     {
-        if(currentHealth > 0)
-        {
-            currentHealth -= value;
-        }
-        else
+        //  ダメージ！
+        bDamage = true;
+
+        int target = currentHealth - value;
+        //  最低体力で止める
+        if (target <= 0)
         {
             currentHealth = 0;
         }
+
+        currentHealth = target;
+
+        //// 数値の変更
+        //DOTween.To(
+        //    () => currentHealth,          // 何を対象にするのか
+        //    num => currentHealth = num,   // 値の更新
+        //    target,                       // 最終的な値
+        //    value/2                       // アニメーション時間
+        //);
+
+        //  デバッグ表示
+        Debug.Log($"プレイヤーの体力が{value}減少して\n" +
+            $"{currentHealth}になりました！");
         
     }
 
@@ -188,14 +305,52 @@ public class PlayerHealth : MonoBehaviour
     public void Heal(int value)
     {
         int target = currentHealth + value;
+        //  最大体力で止める
+        if (target >= currentMaxHealth)
+        {
+            target = currentMaxHealth;
+        }
 
-        // 数値の変更
-        DOTween.To(
-            () => currentHealth,          // 何を対象にするのか
-            num => currentHealth = num,   // 値の更新
-            target,                       // 最終的な値
-            value/2                       // アニメーション時間
-        );
+        currentHealth = target;
+
+        //// 数値の変更
+        //DOTween.To(
+        //    () => currentHealth,          // 何を対象にするのか
+        //    num => currentHealth = num,   // 値の更新
+        //    target,                       // 最終的な値
+        //    value/2                       // アニメーション時間
+        //);
+
+        //  デバッグ表示
+        Debug.Log($"プレイヤーの体力が{value}回復して\n" +
+            $"{currentHealth}になりました！");
+    }
+
+    //-------------------------------------------
+    //  最大体力増加処理
+    //-------------------------------------------
+    public void IncreaseHP(int value)
+    {
+        int target = currentMaxHealth + value;
+        //  最大体力で止める
+        if (target >= limitHealth)
+        {
+            target = limitHealth;
+        }
+
+        currentMaxHealth = target;
+
+        //// 数値の変更
+        //DOTween.To(
+        //    () => currentMaxHealth,         // 何を対象にするのか
+        //    num => currentMaxHealth = num,  // 値の更新
+        //    target,                         // 最終的な値
+        //    value                           // アニメーション時間
+        //);
+
+        //  デバッグ表示
+        Debug.Log($"プレイヤーの最大体力が{value}増加して\n" +
+            $"{currentMaxHealth}になりました！");
     }
 
     //-------------------------------------------
@@ -227,6 +382,16 @@ public class PlayerHealth : MonoBehaviour
         return currentMaxHealth;
     }
 
+    public void SetDamageFlag(bool flag)
+    {
+        bDamage = flag;
+    }
+
+    public bool GetDamageFlag()
+    {
+        return  bDamage;
+    }
+
     //-------------------------------------------
     //  やられ演出
     //-------------------------------------------
@@ -252,9 +417,16 @@ public class PlayerHealth : MonoBehaviour
             this.transform.position,
             Quaternion.identity);
 
-        //  Pauserが付いたオブジェクトをポーズ
-        Pauser.Pause();
+        //  やられエフェクトの終了を待つ
+        yield return new WaitForSeconds(0.583f);
 
+        //  GameOver演出を待つ
+
+        //  GameOverへシーン遷移
+        LoadingScene.Instance.LoadNextScene("GameOver");
+
+        //  Pauserが付いたオブジェクトをポーズ
+        //Pauser.Pause();
 
         yield return null;
     }
@@ -296,5 +468,79 @@ public class PlayerHealth : MonoBehaviour
 
         //  完了まで待つ
         yield return new WaitUntil(() => complete == true);
+    }
+
+    //---------------------------------------------------
+    //  現在体力を受け取って体力UIを計算する
+    //---------------------------------------------------
+    private void CalculateHealthUI(int health)
+    {
+        if(health < 0)Debug.LogError("healthにマイナスの値が入っています！");
+
+        //  体力0ならハートを全部非表示にする
+        if(health == 0)
+        {
+            for(int i=0;i<heartList.Count;i++)
+            {
+                heartList[i].transform.GetChild((int)HeartType.Half)
+                    .gameObject.SetActive(false);
+                heartList[i].transform.GetChild((int)HeartType.Full)
+                    .gameObject.SetActive(false);
+            }
+        }
+        else if(health == 1)
+        {
+            for(int i=0;i<heartList.Count;i++)
+            {
+                if(i==0)
+                {
+                    heartList[i].transform.GetChild((int)HeartType.Half)
+                        .gameObject.SetActive(true);
+                    heartList[i].transform.GetChild((int)HeartType.Full)
+                        .gameObject.SetActive(false);
+                }
+
+                //  残りを非表示にする
+                for(int j=1;j<heartList.Count;j++)
+                {
+                    heartList[j].transform.GetChild((int)HeartType.Half)
+                        .gameObject.SetActive(false);
+                    heartList[j].transform.GetChild((int)HeartType.Full)
+                        .gameObject.SetActive(false);
+                }
+
+            } 
+        }
+        else // 体力が２以上の時
+        {
+            //  一旦現在体力のとこまで全部フルで埋める
+            int fullNum = health / 2;
+            for(int i=0;i<fullNum;i++)
+            {
+                heartList[i].transform.GetChild((int)HeartType.Half)
+                    .gameObject.SetActive(true);
+                heartList[i].transform.GetChild((int)HeartType.Full)
+                    .gameObject.SetActive(true);
+            }
+
+            //  奇数だった場合は最後の番号だけハーフにする
+            int taegetNum = health - fullNum;
+            if(health % 2 != 0)
+            {
+                heartList[taegetNum-1].transform.GetChild((int)HeartType.Half)
+                    .gameObject.SetActive(true);
+                heartList[taegetNum-1].transform.GetChild((int)HeartType.Full)
+                    .gameObject.SetActive(false);
+            }
+
+            //  残りを非表示にする
+            for(int i=taegetNum;i<heartList.Count;i++)
+            {
+                heartList[i].transform.GetChild((int)HeartType.Half)
+                    .gameObject.SetActive(false);
+                heartList[i].transform.GetChild((int)HeartType.Full)
+                    .gameObject.SetActive(false);
+            }
+        }
     }
 }

@@ -66,7 +66,6 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -105,6 +104,10 @@ public class GameManager : MonoBehaviour
             {
                 //  Pauserが付いたオブジェクトをポーズ
                 Pauser.Pause();
+
+                //  止める
+                Time.timeScale = 0;
+
                 //  ポーズ後に入力がきかなくなるのでリセット
                 player.GetComponent<PlayerInput>().enabled = true;
             }
@@ -116,8 +119,11 @@ public class GameManager : MonoBehaviour
 
             if(testSwitch == true)
             {
+                //  再開する
+                Time.timeScale = 1;
+
                 //  Pauserが付いたオブジェクトをポーズ
-                Pauser.Resume(); 
+                Pauser.Resume();
             }
         }
     }
@@ -151,7 +157,7 @@ public class GameManager : MonoBehaviour
         yield return null;
     }
 
-   //-----------------------------------------------------------------
+    //-----------------------------------------------------------------
     //  ゲーム中
     //-----------------------------------------------------------------
     private IEnumerator GamePlaying()
@@ -160,16 +166,6 @@ public class GameManager : MonoBehaviour
 
         //  Inputsystemをプレイヤーモードに
         //EnableCharacterControl();
-
-        //  プレイヤーのHPが0になるまで
-
-        //while (!OneBaseLeft())
-        //{
-        //    //  死んでいるキャラはリストから削除
-        //    DeleteDeadObjectFromList(_Players);
-        //    DeleteDeadObjectFromList(_Enemies)
-        //    yield return null;
-        //}
 
         //************以降はプレイヤー死亡************
 
@@ -183,23 +179,6 @@ public class GameManager : MonoBehaviour
         //    yield return null;
         //}
 
-        //  コンティニューのUIを有効化する
-        //_InGameUI.SetActive(false);
-
-        //  ポーズ処理
-
-        //  InputsystemをUIモードに
-        //DisableCharacterControl();
-
-        //  BGMストップ
-        //_AudioSource[(int)AudioType.BGM].Stop();
-
-        //  「つづける」が押された場合
-        //  ポーズ解除
-        //  BGMを再開
-        //  プレイヤーを初期状態へリセット（体力・ボムも回復）
-
-        //  「あきらめる」が押された場合
         //  ゲームオーバーシーンへ
 
         yield return null;

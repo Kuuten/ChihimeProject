@@ -27,6 +27,8 @@ public enum powerupItems
 {
     PowerUp,     //  弾のレベルアップ
     SpeedUp,     //  自機のスピードアップ
+    Heal,        //  ハートを回復
+    Bomb,        //  ボムが１UP
     
     Max
 }
@@ -39,7 +41,9 @@ public class DropItems : MonoBehaviour
         "item_smallKon",    //  Items.smallKon
         "item_largeKon",    //  Items.largeKon
         "item_powerup",     //  Items.PowerUp
-        "item_speedup"      //  Items.SpeedUp
+        "item_speedup",     //  Items.SpeedUp
+        "item_heart",       //  Items.Heal
+        "item_bomb"         //  Items.Bomb
     };
     
     //  アイテムのプレハブ格納用

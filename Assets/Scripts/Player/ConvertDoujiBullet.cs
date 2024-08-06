@@ -23,6 +23,9 @@ public class ConvertDoujiBullet : MonoBehaviour
 
         //  ShotManager側で設定するようにする
         this.GetComponent<SpriteRenderer>().flipY = true;
+
+        //  ↓が１ならアニメーションが終了している(0はレイヤー番号:BaseLayer)
+        //animator.GetCurrentAnimatorStateInfo(0).normalizedTime
     }
 
     void Update()

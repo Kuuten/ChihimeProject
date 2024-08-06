@@ -48,6 +48,8 @@ public class PlayerMovement : MonoBehaviour
     private float horizontalInput, verticalInput;
     InputAction move;
 
+    bool bCanMove;
+
     void Start()
     {
         // InputActionÇ…MoveÇê›íË
@@ -61,6 +63,8 @@ public class PlayerMovement : MonoBehaviour
 
         //  ç≈èâÇÕLv.1
         speedLevel = (int)eSpeedLevel.Lv1;
+
+        bCanMove = true;
     }
 
     void Update()
@@ -135,21 +139,38 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 moveVector = new Vector3(horizontalInput, verticalInput, 0);
         moveVector.Normalize();
-        transform.position += moveVector * moveSpeed[speedLevel] * Time.deltaTime;
 
-        transform.position = new Vector3(
-                Mathf.Clamp(
-                    transform.position.x,
-                    wallLeft.transform.position.x,
-                    wallRight.transform.position.x
-                ),
-                Mathf.Clamp(
-                    transform.position.y,
-                    wallBottom.transform.position.y,
-                    wallTop.transform.position.y
-                ),
-                transform.position.z
-            );
+        // Raycast
+        Debug.DrawRay(transform.position + moveVector * 0.2f, moveVector, Color.red);
+        var hit = Physics2D.Raycast(transform.position + moveVector * 0.2f, moveVector, 1.0f);
+        if (hit.collider.CompareTag("Wall"))
+        {
+            bCanMove = false;
+            return;
+        }
+        else
+        {
+            bCanMove = true;
+        }
+
+        
+
+
+        if(bCanMove)transform.position += moveVector * moveSpeed[speedLevel] * Time.deltaTime;
+
+        //transform.position = new Vector3(
+        //        Mathf.Clamp(
+        //            transform.position.x,
+        //            wallLeft.transform.position.x,
+        //            wallRight.transform.position.x
+        //        ),
+        //        Mathf.Clamp(
+        //            transform.position.y,
+        //            wallBottom.transform.position.y,
+        //            wallTop.transform.position.y
+        //        ),
+        //        transform.position.z
+        //    );
     }
 
     //-------------------------------------------

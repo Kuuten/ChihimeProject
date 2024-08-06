@@ -13,6 +13,21 @@ public class LoadingScene : MonoBehaviour
     [SerializeField] private GameObject _loadingUI;
     [SerializeField] private Slider _slider;
 
+    //  シングルトンなインスタンス
+    public static LoadingScene Instance
+    {
+        get; private set;
+    }
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
 
     public void LoadNextScene(string scene)
     {

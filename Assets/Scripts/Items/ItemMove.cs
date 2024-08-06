@@ -13,7 +13,6 @@ public class ItemMove : MonoBehaviour
 {
     private float flowSpeed = 0.005f;
 
-    private SHOT_TYPE shotType;
     private MoneyManager moneyManager = null;
     private GameObject player;
     private bool bField;

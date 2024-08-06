@@ -8,7 +8,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 //--------------------------------------------------------------
 //
@@ -17,14 +16,14 @@ using UnityEngine.UIElements;
 //--------------------------------------------------------------
 public class TitleManager : MonoBehaviour
 {
-    [SerializeField] private SoundManager Sound;
     [SerializeField] private FadeIO Fade;
     [SerializeField] private ScrollAnimation Scroll;
+    [SerializeField] private SoundManager Sound;
+
     [SerializeField] private LogoEasing logoEasing;
     [SerializeField] private LogoScaling logoScaling;
     [SerializeField] private GameObject Buttons;
     [SerializeField] private GameObject Cursor;
-    [SerializeField] private GameObject ConfigPanel;
     [SerializeField] private GameObject[] DisableObject;
 
     private int Pos = 1;                    //  一番上
@@ -35,7 +34,32 @@ public class TitleManager : MonoBehaviour
     InputAction nevigate;
     float verticalInput;
 
-    IEnumerator Start()
+    enum TitleMode
+    {
+        Normal,
+        Config,
+
+        Max
+    }
+    TitleMode titleMode;
+
+    //[SerializeField] private EventSystem eventSystem;
+
+    //--------------------------------------------------------------
+    //  Config
+    //--------------------------------------------------------------
+    [SerializeField] private GameObject ConfigPanel;
+    [SerializeField] private GameObject KeyConfigButton;
+
+    void Start()
+    {
+        //  最初は通常モード
+        titleMode = TitleMode.Normal;
+
+        StartCoroutine(StartInit());
+    }
+
+    IEnumerator StartInit()
     {
         //  フェードイン
         yield return StartCoroutine(WaitingForFadeIn());
@@ -59,6 +83,10 @@ public class TitleManager : MonoBehaviour
         Buttons.SetActive(true);
 
         //  タイトルBGM再生
+        if(Sound == null)
+        {
+            Sound = GameObject.Find("SoundManager").GetComponent<SoundManager>();
+        }
         Sound.Play((int)AudioChannel.MUSIC, (int)MusicList.BGM_TITLE);
 
         yield return null;
@@ -66,48 +94,16 @@ public class TitleManager : MonoBehaviour
 
     void Update()
     {
-        UnityEngine.Vector2 inputNavigateAxis = nevigate.ReadValue<UnityEngine.Vector2>();
-        verticalInput = inputNavigateAxis.y;
+        switch(titleMode)
+        {
+            case TitleMode.Normal:  //  通常モード
+                MoveTitleMenuCursor();  //  カーソル移動
+                break;
 
-        //  入力がない場合は弾く
-        if(!nevigate.WasPressedThisFrame())return;
-        else
-        {
-            //  セレクトBGM再生
-            Sound.Play((int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_SELECT);
+            case TitleMode.Config:  //  コンフィグモード
+                break;
         }
-
-        if (verticalInput < 0 && nevigate.WasPressedThisFrame())
-        {
-            if (Pos != menuNum)
-            {
-                Cursor.GetComponent<RectTransform>().position += 
-                new UnityEngine.Vector3(0,-lineHeight,0);
-                Pos += 1;
-            }
-            else
-            {
-                Cursor.GetComponent<RectTransform>().position += 
-                new UnityEngine.Vector3(0,lineHeight*(menuNum-1),0);
-                Pos = 1;
-            }
-            
-        }
-        else if (verticalInput > 0 && nevigate.WasPressedThisFrame())
-        {
-            if (Pos != 1)
-            {
-                Cursor.GetComponent<RectTransform>().position +=
-                    new UnityEngine.Vector3(0, lineHeight, 0);
-                Pos -= 1;
-            }
-            else
-            {
-                Cursor.GetComponent<RectTransform>().position +=
-                new UnityEngine.Vector3(0, -lineHeight * (menuNum - 1), 0);
-                Pos = menuNum;
-            }
-        }
+        
 
     }
 
@@ -116,7 +112,7 @@ public class TitleManager : MonoBehaviour
     //----------------------------------------------------------------
     private void OnEnable()
     {
-        // InputActionにMoveを設定
+        // InputActionにNavigateを設定
         _input = GetComponent<PlayerInput>();
         nevigate = _input.actions["Navigate"];
 
@@ -191,10 +187,17 @@ public class TitleManager : MonoBehaviour
 
         //  コンフィグパネルをアクティブにする
         ConfigPanel.SetActive(true);
+
+        //  キーコンフィグボタンを選択状態にする
+        EventSystem.current.SetSelectedGameObject(KeyConfigButton.gameObject);
+
+
+        //  実行モードをコンフィグモードにする
+        titleMode = TitleMode.Config;
     }
 
-     //  コンフィグ画面でもどるが押された時の処理
-    public void OnPressedBack()
+     //  コンフィグ画面でセーブして戻るが押された時の処理
+    public void OnPressedSave()
     {
         //  背景以外をアクティブにする
         for(int i=0;i<DisableObject.Length;i++)
@@ -204,5 +207,104 @@ public class TitleManager : MonoBehaviour
 
         //  コンフィグパネルを非アクティブにする
         ConfigPanel.SetActive(false);
+
+        //  スタートボタンを選択状態にする
+        EventSystem.current.SetSelectedGameObject(Buttons.transform.GetChild(0).gameObject);
+
+        //  実行モードを通常モードにする
+        titleMode = TitleMode.Normal;
     }
+
+     //  コンフィグ画面でもどるが押された時の処理
+    public void OnPressedCancel()
+    {
+        //  背景以外をアクティブにする
+        for(int i=0;i<DisableObject.Length;i++)
+        {
+            DisableObject[i].SetActive(true);
+        }
+
+        //  コンフィグパネルを非アクティブにする
+        ConfigPanel.SetActive(false);
+
+        //  スタートボタンを選択状態にする
+        EventSystem.current.SetSelectedGameObject(Buttons.transform.GetChild(0).gameObject);
+
+        //  実行モードを通常モードにする
+        titleMode = TitleMode.Normal;
+    }
+
+    //  終了が押された時の処理
+    public void OnPressedExit()
+    {
+#if UNITY_EDITOR
+        //ゲームプレイ終了
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        //ゲームプレイ終了
+        Application.Quit();
+#endif
+    }
+
+    //---------------------------------------------------
+    //  タイトル画面でのカーソル移動
+    //---------------------------------------------------
+    private void MoveTitleMenuCursor()
+    {
+        UnityEngine.Vector2 inputNavigateAxis = nevigate.ReadValue<UnityEngine.Vector2>();
+        verticalInput = inputNavigateAxis.y;
+
+        //  入力がない場合は弾く
+        if(!nevigate.WasPressedThisFrame())return;
+        else
+        {
+            //  セレクトSE再生
+            Sound.Play((int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_SELECT);
+        }
+
+        if (verticalInput < 0 && nevigate.WasPressedThisFrame())
+        {
+            if (Pos != menuNum)
+            {
+                Cursor.GetComponent<RectTransform>().position += 
+                new UnityEngine.Vector3(0,-lineHeight,0);
+                Pos += 1;
+            }
+            else
+            {
+                Cursor.GetComponent<RectTransform>().position += 
+                new UnityEngine.Vector3(0,lineHeight*(menuNum-1),0);
+                Pos = 1;
+            }
+            
+        }
+        else if (verticalInput > 0 && nevigate.WasPressedThisFrame())
+        {
+            if (Pos != 1)
+            {
+                Cursor.GetComponent<RectTransform>().position +=
+                    new UnityEngine.Vector3(0, lineHeight, 0);
+                Pos -= 1;
+            }
+            else
+            {
+                Cursor.GetComponent<RectTransform>().position +=
+                new UnityEngine.Vector3(0, -lineHeight * (menuNum - 1), 0);
+                Pos = menuNum;
+            }
+        } 
+    }
+
+    //  キーコンフィグボタンが押された時
+    public void OnPressedKeyConfig()
+    {
+    
+    }
+
+    //  サウンドコンフィグボタンが押された時
+    public void OnPressedSoundConfig()
+    {
+    
+    }
+
 }

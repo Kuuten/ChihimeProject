@@ -15,12 +15,18 @@ using UnityEngine.InputSystem;
 public enum SHOT_TYPE
 {
     NORMAL,
-    DOUJI,         // ドウジ
-    TSUKUMO,       // ツクモ
-    KUCHINAWA,     // クチナワ
-    KURAMA,        // クラマ
-    WADATSUMI,     // ワダツミ
-    HAKUMEN,       // ハクメン
+    DOUJI,              // ドウジ
+    DOUJI_BURST,        // ドウジ魂バースト
+    TSUKUMO,            // ツクモ
+    TSUKUMO_BURST,      // ツクモ魂バースト
+    KUCHINAWA,          // クチナワ
+    KUCHINAWA_BURST,    // クチナワ魂バースト
+    KURAMA,             // クラマ
+    KURAMA_BURST,       // クラマ魂バースト
+    WADATSUMI,          // ワダツミ
+    WADATSUMI_BURST,    // ワダツミ魂バースト
+    HAKUMEN,            // ハクメン
+    HAKUMEN_BURST,      // ハクメン魂バースト
 
     TYPE_MAX
 }
@@ -64,13 +70,6 @@ public class PlayerShotManager : MonoBehaviour
     //  ノーマル弾の攻撃力
     private float normalShotPower;
 
-    //  プレイヤーのスプライト画像
-    [SerializeField] Sprite frontSprite;
-    [SerializeField] Sprite backSprite;
-    //  AnimatorController
-    [SerializeField] AnimatorController frontController;
-    [SerializeField] AnimatorController backController;
-
     //  テスト用
     public int gamestatus;
     InputAction test;
@@ -113,6 +112,8 @@ public class PlayerShotManager : MonoBehaviour
 
             if(b)gamestatus = (int)eGameState.Zako;
             else gamestatus = (int)eGameState.Boss;
+
+            GameManager.Instance.SetGameState(gamestatus);
             
             Debug.Log("gamestatus:"+ gamestatus);
         }
@@ -121,15 +122,12 @@ public class PlayerShotManager : MonoBehaviour
         switch(gamestatus)
         {
             case (int)eGameState.Zako:
-                ChangePlayerSpriteToFront(true);     //  手前向き
                 NormalShot(true);                    //  通常弾
                 break;
             case (int)eGameState.Boss:
-                ChangePlayerSpriteToFront(false);    //  奥向き
                 NormalShot(false);                   //  通常弾
                 break;
             case (int)eGameState.Event:
-                ChangePlayerSpriteToFront(false);    //  奥向き
                 break;
         }
 
@@ -173,21 +171,6 @@ public class PlayerShotManager : MonoBehaviour
         }
 
         return Vector3.zero;
-    }
-
-   //  プレイヤーのスプライトを差し替える
-   private void ChangePlayerSpriteToFront(bool front)
-    {
-        if(front)
-        {
-            this.GetComponent<Animator>().runtimeAnimatorController =
-                frontController;
-        }
-        else
-        {
-            this.GetComponent<Animator>().runtimeAnimatorController =
-                backController;
-        }
     }
 
     //-------------------------------------------

@@ -282,17 +282,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5ada2e2cb2a384f4d9d97a0e68eef7f1
-    m_Address: Prefabs/Manager
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Prefabs
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 28205191643636a4fbdde89b52ad876e
     m_Address: Prefabs/Items
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Prefabs
+    - PowerupItems
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2a807c1d64b8c5543a3d0e78700d1f12
     m_Address: Prefabs/enemy
@@ -320,6 +314,18 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 18b64f45e100e074a9266e37374678a4
     m_Address: item_speedup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PowerupItems
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cd90ca791c227704d9303cd75347b653
+    m_Address: item_bomb
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PowerupItems
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c6b161f3127d827438f54ef54f5f5a8e
+    m_Address: item_heart
     m_ReadOnly: 0
     m_SerializedLabels:
     - PowerupItems

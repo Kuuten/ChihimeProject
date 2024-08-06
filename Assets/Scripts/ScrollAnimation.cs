@@ -11,8 +11,6 @@ using System.Numerics;
 //--------------------------------------------------------------
 public class ScrollAnimation : MonoBehaviour
 {
-    [SerializeField] private SoundManager Sound;
-
     //  シングルトンなインスタンス
     public static ScrollAnimation Instance
     {
@@ -48,9 +46,9 @@ public class ScrollAnimation : MonoBehaviour
         .OnStart(
         () =>
         {
-            Sound.Play( (int)AudioChannel.SFX, (int)SFXList.SFX_HYOUSIGI);
-            Sound.Play( (int)AudioChannel.SFX_ENEMY, (int)SFXList.SFX_SCROLL_MOVE);
-            Sound.Play( (int)AudioChannel.SFX_SYSTEM, (int)SFXList.SFX_SCROLL_MOVE2);
+            SoundManager.Instance.Play( (int)AudioChannel.SFX, (int)SFXList.SFX_HYOUSIGI);
+            SoundManager.Instance.Play( (int)AudioChannel.SFX_ENEMY, (int)SFXList.SFX_SCROLL_MOVE);
+            SoundManager.Instance.Play( (int)AudioChannel.SFX_SYSTEM, (int)SFXList.SFX_SCROLL_MOVE2);
         })
         .OnComplete(() =>{  });
 

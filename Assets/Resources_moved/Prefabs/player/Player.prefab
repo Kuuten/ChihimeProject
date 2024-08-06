@@ -35,7 +35,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1, y: 5.35, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8556779842453533947}
@@ -87,12 +87,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: d29fd17e6351c4542a4d056adaf9305c, type: 3}
+  m_Sprite: {fileID: 560654879, guid: 70b61c4caa35835439e0005605c813f6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.64, y: 0.64}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -110,7 +110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 158924d1bcac46c4daee9319b6b539a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
   wallLeft: {fileID: 0}
   wallRight: {fileID: 0}
   wallTop: {fileID: 0}
@@ -141,6 +140,10 @@ MonoBehaviour:
   - {fileID: 7261212287317507201, guid: afa7c8a2d69811645961a781afe80306, type: 3}
   - {fileID: 6013692122004912179, guid: ddc8f457e27f62043a7c712c453da581, type: 3}
   - {fileID: 6013692122004912179, guid: 392e3a50084deba468520badcddd59f1, type: 3}
+  frontSprite: {fileID: 0}
+  backSprite: {fileID: 0}
+  frontController: {fileID: 0}
+  backController: {fileID: 0}
   gamestatus: 0
 --- !u!114 &5757520278068835431
 MonoBehaviour:
@@ -258,7 +261,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d911123d4940eeb44b11435e362ffe9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyGenerator: {fileID: 0}
+  playerDeathEffect: {fileID: 0}
+  directionalLight: {fileID: 0}
 --- !u!114 &5702756163802858048
 MonoBehaviour:
   m_ObjectHideFlags: 0

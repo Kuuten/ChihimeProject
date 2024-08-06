@@ -270,12 +270,8 @@ public class Enemy : MonoBehaviour
         DropItems drop = this.GetComponent<DropItems>();
         if (drop) drop.DropPowerupItem();
 
-        Debug.Log("アイテムドロップ判定");
-
         //  お金を生成
         DropMoneyItems(enemyData.Money);
-
-        Debug.Log("お金を生成");
 
         //  オブジェクトを削除
         Destroy(this.gameObject);

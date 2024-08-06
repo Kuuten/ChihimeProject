@@ -79,8 +79,6 @@ public class EnemyManager : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
-
     }
 
     private async void Start()
@@ -185,7 +183,7 @@ public class EnemyManager : MonoBehaviour
     //------------------------------------------------
     private float GetRandomX()
     {
-        return Random.Range(-8.5f,-0.5f);
+        return Random.Range(-7.7f,6.07f);
     }
 
     //------------------------------------------------
