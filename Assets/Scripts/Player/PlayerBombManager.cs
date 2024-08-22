@@ -1,27 +1,88 @@
+using DG.Tweening;
+using DG.Tweening.Core.Easing;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 //--------------------------------------------------------------
 //
-//  プレイヤーのボム管理クラス
+//  プレイヤーのボム・魂バースト管理クラス
 //
 //--------------------------------------------------------------
 public class PlayerBombManager : MonoBehaviour
 {
+    [SerializeField] FadeIO Fade;
+    [SerializeField] GameObject bombFadePrefab;
+    [SerializeField] GameObject CanvasObject;
+    [SerializeField] GameObject MainCanvasObject;
+    [SerializeField] GameObject bombCollision;
+    [SerializeField] GameObject konBurstCollision;
+    private GameObject FadeObj;
+    [SerializeField] BombFade bombFade;
+
+    //  魂バーストゲージの値取得用
+    [SerializeField] Slider konBurstSlider;
+    //  ドウジの魂バーストプレハブ
+    [SerializeField] GameObject doujiKonburstPrefab;
+    //  魂バーストカットイン画像プレハブ
+    [SerializeField] GameObject[] konburstCutinPrefab;
+    //  魂バーストの威力
+    private float[] konburstShotPower = new float[(int)SHOT_TYPE.TYPE_MAX];
+
+
     //  BOMBに表示されるテキスト
     [SerializeField] private TextMeshProUGUI bombText;
     private int bombNum;
     private const int bombMaxNum = 9;
+    private float bombPower = 50f; //  ボム1発の威力
+
+    InputAction inputBomb;
+    bool bCanBomb;      //  ボムが発動できるかどうか
 
     void Start()
     {
-        bombNum = 3;
+        // InputActionにMoveを設定
+        PlayerInput playerInput = GetComponent<PlayerInput>();
+        inputBomb = playerInput.actions["Bomb"];
+
+        //  PlayerInfoManagerから個数をセット
+        bombNum = PlayerInfoManager.g_BOMBNUM;
+
+        //  最初はnull
+        FadeObj = null;
+
+        //  最初は発動できる
+        bCanBomb = true;
+
+        //  魂バート弾ごとの弾の威力
+        konburstShotPower[(int)SHOT_TYPE.DOUJI]     = 100f;
+        konburstShotPower[(int)SHOT_TYPE.TSUKUMO]   = 1f;
+        konburstShotPower[(int)SHOT_TYPE.KUCHINAWA] = 5f;
+        konburstShotPower[(int)SHOT_TYPE.KURAMA]    = 40f;
+        konburstShotPower[(int)SHOT_TYPE.WADATSUMI] = 1f;   //  ハート回復量
+        konburstShotPower[(int)SHOT_TYPE.HAKUMEN]   = 10f;
     }
 
     void Update()
     {
+        //  GameManagerから状態を取得
+        int gamestatus = GameManager.Instance.GetGameState();
+
+        //  ゲーム段階別処理
+        switch(gamestatus)
+        {
+            case (int)eGameState.Zako:
+                BombAndKonBurstUpdate(true);    //  ボム・魂バーストの更新
+                break;
+            case (int)eGameState.Boss:
+                BombAndKonBurstUpdate(false);   //  ボム・魂バーストの更新
+                break;
+            case (int)eGameState.Event:
+                break;
+        }
+
         //  ボムのテキストを更新
         bombText.text = $"{bombNum}";
     }
@@ -43,7 +104,356 @@ public class PlayerBombManager : MonoBehaviour
         {
             bombNum--;
         }
-        else bombNum = 0;
+        else
+        {
+            bombNum = 0;
+        }
+    }
+
+    //-------------------------------------------
+    //  ボム・魂バーストを発動する
+    //-------------------------------------------
+    private void BombAndKonBurstUpdate(bool fripY)
+    {
+        //  魂バーストゲージがMAXだったら
+        if( konBurstSlider.value >= 1.0f )
+        {
+            //  魂バーストゲージを点滅Animatorに切り替え
+
+            if(inputBomb.WasPressedThisFrame()) //  ボムボタンが押された！
+            {
+                //  ボムを発動不可能にする
+                bCanBomb = false;
+
+                //  ゲージを0にセット
+                konBurstSlider.value = 0.0f;
+
+                //  魂バーストゲージを通常Animatorに切り替え
+
+                //  魂バースト演出を開始する
+                if(PlayerInfoManager.g_CONVERTSHOT == SHOT_TYPE.DOUJI)
+                    StartCoroutine(DoujiKonBurst(fripY));
+                else if(PlayerInfoManager.g_CONVERTSHOT == SHOT_TYPE.TSUKUMO)
+                    StartCoroutine(TsukumoKonBurst(fripY));
+                else if(PlayerInfoManager.g_CONVERTSHOT == SHOT_TYPE.KUCHINAWA)
+                    StartCoroutine(KuchinawaKonBurst(fripY));
+                else if(PlayerInfoManager.g_CONVERTSHOT == SHOT_TYPE.KURAMA)
+                    StartCoroutine(KuramaKonBurst(fripY));
+                else if(PlayerInfoManager.g_CONVERTSHOT == SHOT_TYPE.WADATSUMI)
+                    StartCoroutine(WadatsumiKonBurst(fripY));
+                else if(PlayerInfoManager.g_CONVERTSHOT == SHOT_TYPE.HAKUMEN)
+                    StartCoroutine(HakumenKonBurst(fripY));
+            }
+        }
+        else // ボムが魂バーストではない時
+        {
+            if( bCanBomb )  //  ボム発動が可能な時
+            {
+                if(inputBomb.WasPressedThisFrame()) //  ボムボタンが押された！
+                {
+                    bCanBomb = false;
+
+                    Debug.Log("ボム演出開始！");
+
+                    //  ボムを1個減らす
+                    SubBomb();
+
+                    //  ボム演出を開始する
+                    StartCoroutine( BombAnimation() );
+                }
+            }
+            else // 発動中かボムの残弾がない時
+            {
+                if( inputBomb.WasPressedThisFrame() ) //  ボムボタンが押された！
+                {
+                    //  何もしない
+                }
+            }
+        }
+
+        //  ボムが0なら発動できない
+        if(bombNum <= 0)bCanBomb = false; 
+    }
+
+    //-------------------------------------------
+    //  ボム演出
+    //-------------------------------------------
+    private IEnumerator BombAnimation()
+    {
+        //  ボムの当たり判定オブジェクトを有効化
+        bombCollision.SetActive(true);
+
+        //  プレイヤーを無敵にする
+        PlayerHealth ph = this.GetComponent<PlayerHealth>();
+        ph.SetSuperMode(true);
+
+        //  弾を全て消す用のフェード板を生成
+        GameObject FadeObj = Instantiate( bombFadePrefab );
+        FadeObj.gameObject.transform.SetParent( CanvasObject.transform );
+        FadeObj.gameObject.transform.SetAsFirstSibling();   //  ヒエラルキーの一番上に
+        FadeObj.GetComponent<RectTransform>().transform.localPosition = Vector3.zero;
+
+        //  小さい光がキンッ！って光る
+
+        //  0.3秒待つ
+        yield return new WaitForSeconds(0.3f);
+
+        //  小さい光オブジェクト削除
+
+        //  画面がホワイトでフェードアウトする
+        BombFade bombFade = FadeObj.GetComponent<BombFade>();
+        yield return StartCoroutine(bombFade.StartFadeOut(FadeObj, 0.2f));
+
+        //  0.2秒待つ
+        yield return new WaitForSeconds(0.2f);
+
+        //  爆発アニメオブジェクト再生
+
+        //  再生終了を待つ
+        yield return new WaitForSeconds(1.5f);
+
+        //  爆発アニメオブジェクト削除
+
+        //  画面がホワイトでフェードインする
+        yield return StartCoroutine(bombFade.StartFadeIn(FadeObj, 0.2f));
+
+        //  フェードオブジェクトを削除
+        Destroy( FadeObj );
+        FadeObj = null;
+
+        //  ボムの当たり判定オブジェクトを無効化
+        bombCollision.SetActive(false);
+
+        //  プレイヤーの無敵を解除
+        ph.SetSuperMode(false);
+
+        //  ボム発動可能に戻す
+        bCanBomb = true;
+
+
+        Debug.Log("ボム演出終了！");
+
+        yield return null;
+    }
+
+    //-------------------------------------------
+    //  魂バースト開始演出
+    //-------------------------------------------
+    private IEnumerator StartingKonBurst(PlayerHealth ph)
+    {
+        //  魂バーストの弾消し用の当たり判定オブジェクトを有効化
+        konBurstCollision.SetActive(true);
+
+        //  プレイヤーを無敵にする
+        ph = this.GetComponent<PlayerHealth>();
+        ph.SetSuperMode(true);
+
+        //  弾を全て消す用のフェード板を生成
+        FadeObj = Instantiate( bombFadePrefab );
+        FadeObj.gameObject.transform.SetParent( CanvasObject.transform );
+        FadeObj.gameObject.transform.SetAsFirstSibling();   //  ヒエラルキーの一番上に
+        FadeObj.GetComponent<RectTransform>().transform.localPosition = Vector3.zero;
+
+        //  カットイン再生
+        GameObject obj =
+            Instantiate(konburstCutinPrefab[(int)PlayerInfoManager.g_CONVERTSHOT]);
+        obj.transform.SetParent( MainCanvasObject.transform, false );
+
+        //  カットインSE再生
+        SoundManager.Instance.PlaySFX(
+            (int)AudioChannel.SFX_BOMB,
+            (int)SFXList.SFX_CONCURST_CUTIN);
+
+        //  画面がホワイトでフェードアウトする
+        bombFade = FadeObj.GetComponent<BombFade>();
+        yield return StartCoroutine(bombFade.StartFadeOut(FadeObj, 0.2f));
+    }
+
+    //-------------------------------------------
+    //  魂バースト終了演出
+    //-------------------------------------------
+    private IEnumerator EndingKonBurst(PlayerHealth ph)
+    {
+        //  画面がホワイトでフェードインする
+        yield return StartCoroutine(bombFade.StartFadeIn(FadeObj, 0.2f));
+
+        //  フェードオブジェクトを削除
+        Destroy( FadeObj );
+        FadeObj = null;
+
+        //  魂バーストの弾消し用の当たり判定オブジェクトを無効化
+        bombCollision.SetActive(false);
+
+        //  プレイヤーの無敵を解除
+        ph.SetSuperMode(false);
+
+        //  ボム発動可能に戻す
+        bCanBomb = true;
+    }
+
+    //-------------------------------------------
+    //  ドウジの魂バースト演出
+    //-------------------------------------------
+    private IEnumerator DoujiKonBurst(bool fripY)
+    {
+        PlayerHealth ph = this.GetComponent<PlayerHealth>();
+
+        //  魂バースト開始演出
+        yield return StartCoroutine(StartingKonBurst(ph));
+
+        //  魂バーストオブジェクト生成
+        GameObject obj = Instantiate( doujiKonburstPrefab,
+                                    this.transform.position,
+                                    Quaternion.identity );
+
+        //  Yを反転するかどうか設定する
+        SpriteRenderer sr = obj.GetComponent<SpriteRenderer>(); 
+        sr.flipY = fripY;
+
+        //  5秒待つ
+        yield return new WaitForSeconds(5);
+
+        //  魂バースト終了演出
+        yield return StartCoroutine(EndingKonBurst(ph));
+
+        Debug.Log("ドウジの魂バースト演出終了！");
+
+        yield return null;
+    }
+
+    //-------------------------------------------
+    //  ツクモの魂バースト演出
+    //-------------------------------------------
+    private IEnumerator TsukumoKonBurst(bool fripY)
+    {
+        PlayerHealth ph = this.GetComponent<PlayerHealth>();
+
+        //  魂バースト開始演出
+        yield return StartCoroutine(StartingKonBurst(ph));
+
+        //  魂バーストオブジェクト生成
+        GameObject obj = null;
+
+        //  威力を設定
+
+        //  Yを反転するかどうか設定する
+        SpriteRenderer sr = obj.GetComponent<SpriteRenderer>(); 
+        sr.flipY = fripY;
+
+        //  魂バースト終了演出
+        yield return StartCoroutine(EndingKonBurst(ph));
+
+        Debug.Log("ツクモの魂バースト演出終了！");
+
+        yield return null;
+    }
+
+    //-------------------------------------------
+    //  クチナワの魂バースト演出
+    //-------------------------------------------
+    private IEnumerator KuchinawaKonBurst(bool fripY)
+    {
+        PlayerHealth ph = this.GetComponent<PlayerHealth>();
+
+        //  魂バースト開始演出
+        yield return StartCoroutine(StartingKonBurst(ph));
+
+        //  魂バーストオブジェクト生成
+        GameObject obj = null;
+
+        //  威力を設定
+
+        //  Yを反転するかどうか設定する
+        SpriteRenderer sr = obj.GetComponent<SpriteRenderer>(); 
+        sr.flipY = fripY;
+
+        //  魂バースト終了演出
+        yield return StartCoroutine(EndingKonBurst(ph));
+
+        Debug.Log("クチナワの魂バースト演出終了！");
+
+        yield return null;
+    }
+
+    //-------------------------------------------
+    //  クラマの魂バースト演出
+    //-------------------------------------------
+    private IEnumerator KuramaKonBurst(bool fripY)
+    {
+         PlayerHealth ph = this.GetComponent<PlayerHealth>();
+
+        //  魂バースト開始演出
+        yield return StartCoroutine(StartingKonBurst(ph));
+
+        //  魂バーストオブジェクト生成
+        GameObject obj = null;
+
+        //  威力を設定
+
+        //  Yを反転するかどうか設定する
+        SpriteRenderer sr = obj.GetComponent<SpriteRenderer>(); 
+        sr.flipY = fripY;
+
+        //  魂バースト終了演出
+        yield return StartCoroutine(EndingKonBurst(ph));
+
+        Debug.Log("クラマの魂バースト演出終了！");
+
+        yield return null;
+    }
+
+    //-------------------------------------------
+    //  ワダツミの魂バースト演出
+    //-------------------------------------------
+    private IEnumerator WadatsumiKonBurst(bool fripY)
+    {
+        PlayerHealth ph = this.GetComponent<PlayerHealth>();
+
+        //  魂バースト開始演出
+        yield return StartCoroutine(StartingKonBurst(ph));
+
+        //  魂バーストオブジェクト生成
+        GameObject obj = null;
+
+        //  威力を設定
+
+        //  Yを反転するかどうか設定する
+        SpriteRenderer sr = obj.GetComponent<SpriteRenderer>(); 
+        sr.flipY = fripY;
+
+        //  魂バースト終了演出
+        yield return StartCoroutine(EndingKonBurst(ph));
+
+        Debug.Log("ワダツミの魂バースト演出終了！");
+
+        yield return null;
+    }
+
+    //-------------------------------------------
+    //  ハクメンの魂バースト演出
+    //-------------------------------------------
+    private IEnumerator HakumenKonBurst(bool fripY)
+    {
+        PlayerHealth ph = this.GetComponent<PlayerHealth>();
+
+        //  魂バースト開始演出
+        yield return StartCoroutine(StartingKonBurst(ph));
+
+        //  魂バーストオブジェクト生成
+        GameObject obj = null;
+
+        //  威力を設定
+
+        //  Yを反転するかどうか設定する
+        SpriteRenderer sr = obj.GetComponent<SpriteRenderer>(); 
+        sr.flipY = fripY;
+
+        //  魂バースト終了演出
+        yield return StartCoroutine(EndingKonBurst(ph));
+
+        Debug.Log("ハクメンの魂バースト演出終了！");
+
+        yield return null;
     }
 
     //------------------------------------------------
@@ -51,4 +461,8 @@ public class PlayerBombManager : MonoBehaviour
     //------------------------------------------------
     public int GetBombNum(){ return bombNum; }
     public int GetBombMaxNum(){ return bombMaxNum; }
+    public void SetCanBomb(bool b){ bCanBomb = b; }
+    public bool GetCanBomb(){ return bCanBomb; }
+    public float GetBombPower(){ return bombPower; }
+    public float GetKonburstShotPower(){ return konburstShotPower[(int)PlayerInfoManager.g_CONVERTSHOT]; }
 }

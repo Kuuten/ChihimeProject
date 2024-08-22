@@ -14,18 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DataList:
   - Id: Kooni
-    Hp: 2
+    Hp: 3
     Attack: 1
     Money: 100
   - Id: Onibi
-    Hp: 10
+    Hp: 20
     Attack: 1
     Money: 300
   - Id: Ibarakidouji
-    Hp: 30
+    Hp: 100
     Attack: 2
     Money: 1300
   - Id: Douji
-    Hp: 100
+    Hp: 300
     Attack: 3
     Money: 3800

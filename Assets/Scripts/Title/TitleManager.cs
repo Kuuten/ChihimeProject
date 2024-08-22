@@ -69,7 +69,7 @@ public class TitleManager : MonoBehaviour
         //  巻物アニメーション
         yield return StartCoroutine(WaitingForOpeningScroll());
 
-        yield return new WaitForSeconds(1); //  1秒待つ
+        yield return new WaitForSeconds(2.0f); //  2秒待つ
 
         //  タイトルロゴイーズイン
         yield return StartCoroutine(WaitingForEasingTitlelogo());
@@ -87,7 +87,7 @@ public class TitleManager : MonoBehaviour
         {
             Sound = GameObject.Find("SoundManager").GetComponent<SoundManager>();
         }
-        Sound.Play((int)AudioChannel.MUSIC, (int)MusicList.BGM_TITLE);
+        Sound.PlayBGM((int)MusicList.BGM_TITLE);
 
         yield return null;
     }
@@ -164,10 +164,22 @@ public class TitleManager : MonoBehaviour
         yield return StartCoroutine(Fade.StartFadeOut());
     }
 
-    //  巻物アニメーションの完了を待つ
+    //  巻物を開くアニメーションの完了を待つ
     IEnumerator WaitingForOpeningScroll()
     {
         yield return StartCoroutine(Scroll.OpenScroll());
+    }
+
+    //  巻物を閉じるアニメーションの完了を待つ
+    IEnumerator WaitingForClosingScroll()
+    {
+        yield return StartCoroutine(Scroll.CloseScroll());
+
+        yield return new WaitForSeconds(2.0f); //  2.0秒待つ
+
+        //  BGMを止めてタイトルへ
+        StopBGM();
+        LoadingScene.Instance.LoadNextScene("Main");
     }
 
     //  タイトルロゴのイーズインを待つ
@@ -194,6 +206,12 @@ public class TitleManager : MonoBehaviour
 
         //  実行モードをコンフィグモードにする
         titleMode = TitleMode.Config;
+    }
+
+     //  コンフィグ画面でセーブして戻るが押された時の処理
+    public void OnPressedStart()
+    {
+        StartCoroutine( WaitingForClosingScroll() );
     }
 
      //  コンフィグ画面でセーブして戻るが押された時の処理
@@ -259,7 +277,7 @@ public class TitleManager : MonoBehaviour
         else
         {
             //  セレクトSE再生
-            Sound.Play((int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_SELECT);
+            Sound.PlaySFX((int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_SELECT);
         }
 
         if (verticalInput < 0 && nevigate.WasPressedThisFrame())

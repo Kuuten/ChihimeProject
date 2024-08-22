@@ -134,7 +134,7 @@ PrefabInstance:
     - target: {fileID: 2196273057407428853, guid: 52aa9f3f596a63f49aba5952ba61c981, type: 3}
       propertyPath: Sound
       value: 
-      objectReference: {fileID: 1232942972910747701}
+      objectReference: {fileID: 0}
     - target: {fileID: 5470602848136937225, guid: 52aa9f3f596a63f49aba5952ba61c981, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -926,9 +926,9 @@ MonoBehaviour:
   - {fileID: 240610442659793050, guid: 2b565d9aab220a0488c0259ca8d7ab40, type: 3}
   - {fileID: 3607174672421436894, guid: be56625cf3063bd43b616f31e6f66caa, type: 3}
   pressAnyButton: {fileID: 289705338}
-  Sound: {fileID: 1232942972910747701}
   Fade: {fileID: 903859288851394532, guid: 25cdde146db1e4f4b9624e8e64883c31, type: 3}
   Scroll: {fileID: 604402199}
+  soundManager: {fileID: 8891523626060527144, guid: 18e413331985cbf49b0901ee22d65e29, type: 3}
 --- !u!4 &1213265575
 Transform:
   m_ObjectHideFlags: 0

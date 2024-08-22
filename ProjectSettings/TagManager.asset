@@ -8,12 +8,24 @@ TagManager:
   - Enemy
   - EnemyBullet
   - NormalBullet
-  - ConverterBullet
   - LevelUpItem
   - PlayerField
   - Kon
   - DeadWall
   - DeadWallBottom
+  - Bomb
+  - DoujiConvert
+  - DoujiKonburst
+  - TsukumoConvert
+  - TsukumoKonburst
+  - KuchinawaConvert
+  - KuchinawaKonburst
+  - KuramaConvert
+  - KuramaKonburst
+  - WadatsumiConvert
+  - WadatsumiKonburst
+  - HakumenConvert
+  - HakumenKonburst
   layers:
   - Default
   - TransparentFX
@@ -48,6 +60,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: KonField
+    uniqueID: 1543788887
+    locked: 0
+  - name: BombFade
+    uniqueID: 497059549
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

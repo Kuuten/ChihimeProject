@@ -25,9 +25,9 @@ public class GameOverManager : MonoBehaviour
     InputAction anykey;
 
     //  その他
-    [SerializeField] private SoundManager Sound;        //  SoundManager
     [SerializeField] private FadeIO Fade;               //  FadeIO
     [SerializeField] private ScrollAnimation Scroll;    //  巻物
+    [SerializeField] private GameObject soundManager;   //  SoundManager
 
     IEnumerator Start()
     {
@@ -46,6 +46,13 @@ public class GameOverManager : MonoBehaviour
         //  アクションマップを設定
         InputActionMap title_ui = input.actions.FindActionMap("TITLE_UI");
 
+        //  StageIdManagerがない時は生成する
+        if (!GameObject.Find("SoundManager"))
+        {
+            Debug.Log("SoundManagerがないので生成します");
+            Instantiate(soundManager);
+        }
+
         /* ～～～～～～～～～～～演出の開始～～～～～～～～～～～ */
 
         //  フェードイン
@@ -53,15 +60,15 @@ public class GameOverManager : MonoBehaviour
 
         yield return new WaitForSeconds(1); //  1秒待つ
 
-        //  巻物アニメーション
+        //  巻物を開くアニメーション
         yield return StartCoroutine(WaitingForOpeningScroll());
 
+        yield return new WaitForSeconds(2.0f); //  2秒待つ
+
         //  ゲームオーバーBGM再生
-        if(Sound == null)
-        {
-            Sound = GameObject.Find("SoundManager").GetComponent<SoundManager>();
-        }
-        Sound.Play((int)AudioChannel.MUSIC, (int)MusicList.BGM_GAMEOVER);
+        SoundManager.Instance.PlayBGM((int)MusicList.BGM_GAMEOVER);
+
+
 
         yield return new WaitForSeconds(3); //  3秒待つ
 
@@ -81,9 +88,9 @@ public class GameOverManager : MonoBehaviour
             if(anykey.triggered)
             {
                 bInputFlag = false;
-                //  BGMを止めてタイトルへ
-                StopBGM();
-                LoadingScene.Instance.LoadNextScene("Title");
+                
+                //  巻物を閉じるアニメーション
+                StartCoroutine(WaitingForClosingScroll());
             }
         }
     }
@@ -91,7 +98,7 @@ public class GameOverManager : MonoBehaviour
     //  ゲームオーバーのBGMを止める
     public void StopBGM()
     {
-        Sound.Stop((int)AudioChannel.MUSIC);
+        SoundManager.Instance.Stop((int)AudioChannel.MUSIC);
     }
 
     // フェードインの完了を待つ
@@ -106,9 +113,21 @@ public class GameOverManager : MonoBehaviour
         yield return StartCoroutine(Fade.StartFadeOut());
     }
 
-    //  巻物アニメーションの完了を待つ
+    //  巻物を開くアニメーションの完了を待つ
     IEnumerator WaitingForOpeningScroll()
     {
         yield return StartCoroutine(Scroll.OpenScroll());
+    }
+
+    //  巻物を閉じるアニメーションの完了を待つ
+    IEnumerator WaitingForClosingScroll()
+    {
+        yield return StartCoroutine(Scroll.CloseScroll());
+
+        yield return new WaitForSeconds(2.0f); //  2.0秒待つ
+
+        //  BGMを止めてタイトルへ
+        StopBGM();
+        LoadingScene.Instance.LoadNextScene("Title");
     }
 }

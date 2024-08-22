@@ -191,12 +191,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Sounds
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9f425253c748a494382265b83d794252
-    m_Address: Sounds/SFX/se_normal_shot.wav
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Sounds
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c7b6157966c873b41b3bd6741901ee5c
     m_Address: Sounds/SFX/se_scroll.wav
     m_ReadOnly: 0
@@ -329,6 +323,17 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - PowerupItems
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cdde7c0de12a72149be9b50384fbce51
+    m_Address: Assets/Resources_moved/Materials
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 18e413331985cbf49b0901ee22d65e29
+    m_Address: Prefabs/SoundManager.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 5b3e9bf9194140840b980876631db859, type: 2}

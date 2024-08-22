@@ -7,6 +7,7 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using System;
 using UnityEngine.Experimental.GlobalIllumination;
+using System.Threading;
 
 //--------------------------------------------------------------
 //
@@ -38,8 +39,8 @@ public class Enemy : MonoBehaviour
     // ザコ敵の種類
     public ENEMY_TYPE enemyType = ENEMY_TYPE.None;
 
-    //  敵情報
-    EnemySetting enemySetting;
+    //  EnemyDataクラスからの情報取得用
+    EnemyData enemyData;
 
     //  出現ポイント(GameManagerからGetterで受け取る)
     private GameObject[] spawner;
@@ -58,9 +59,6 @@ public class Enemy : MonoBehaviour
     //  カメラに写っているかの判定用
     private bool visible = false;
 
-    //  EnemyDataクラスからの情報取得用
-    EnemyData enemyData;
-
     //  点滅させるためのSpriteRenderer
     SpriteRenderer sp;
     //  点滅の間隔
@@ -68,8 +66,14 @@ public class Enemy : MonoBehaviour
     //  点滅させるときのループカウント
     private int loopCount;
 
+    //----------------------------------------------------
+    //  移動経路用スポナー＆制御点のトランスフォーム
+    //----------------------------------------------------
+    private Transform[] spawners;       //  スポナー
+    private Transform[] controlPoints;  //  制御点
 
-    private async UniTask Start()
+
+    private void Start()
     {
         //  カメラに写っていない
         visible = false;
@@ -80,26 +84,28 @@ public class Enemy : MonoBehaviour
         //  ループカウントを設定
         loopCount = 1;
         //  点滅の間隔を設定
-        flashInterval = 0.01f;
+        flashInterval = 0.1f;
 
         //  敵情報のアサーション（満たさなければいけない条件）
         Assert.IsTrue(enemyType.ToString() != ENEMY_TYPE.None.ToString(),
             "EnemyTypeがインスペクターで設定されていません！");
 
-        //GameObjectが破棄された時にキャンセルを飛ばすトークンを作成
-        var token = this.GetCancellationTokenOnDestroy();
-
         //  SpriteRenderを取得
         sp = GetComponent<SpriteRenderer>();
+    }
 
-        //  敵データを取得
-        enemySetting = await Addressables.LoadAssetAsync<EnemySetting>("EnemySetting")
-            .WithCancellation(token);
-        enemyData = enemySetting.DataList
+    //  敵のデータを設定 
+    public void SetEnemyData(EnemySetting es)
+    {
+        //  敵のデータを設定 
+        enemyData = es.DataList
             .FirstOrDefault(enemy => enemy.Id == enemyType.ToString() );
 
         //  体力を設定
         hp = enemyData.Hp;
+
+        Debug.Log( "タイプ: " + enemyType.ToString() + "\nHP: " + hp );
+        Debug.Log( enemyType.ToString() + "の設定完了" );
 
         //Debug.Log($"ID：{enemyData.Id}");
         //Debug.Log($"HP：{enemyData.Hp}");
@@ -114,13 +120,6 @@ public class Enemy : MonoBehaviour
         destroyNum++;
         EnemyManager.Instance.SetDestroyNum(destroyNum);
         Debug.Log("破壊された敵数 : " + destroyNum);
-
-         // 解放
-         if(enemySetting != null)
-        {
-            Addressables.Release(enemySetting);
-            enemySetting = null;
-        }
     }
 
     void Update()
@@ -146,17 +145,20 @@ public class Enemy : MonoBehaviour
     //  プロパティ
     //----------------------------------------------------------------------
     public EnemyData GetEnemyData(){ return enemyData; }
+    public void SetEnemyData(EnemyData ed){ enemyData = ed; }
     public void SetHp(float health){ hp = health; }
     public float GetHp(){ return hp; }
+    public void SetSuperMode(bool flag){ bSuperMode = flag; }
+    public bool GetSuperMode(){ return bSuperMode; }
 
     //  敵に当たったら爆発する
     //  当たり判定の基礎知識：
     //  当たり判定を行うには、
     //  ・両者にColliderがついている
     //  ・どちらかにRigidBodyがついている
-    private async void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(!visible || bSuperMode || bDeath)return;
+        if(!visible || bDeath)return;
 
         if (collision.CompareTag("DeadWall"))
         {
@@ -167,14 +169,16 @@ public class Enemy : MonoBehaviour
             //  弾の消去
             Destroy(collision.gameObject);
 
+            //  無敵モードなら弾だけ消して返す
+            if(bSuperMode)return;
+
             //  ダメージ処理
             float d = GameManager.Instance.GetPlayer()
                 .GetComponent<PlayerShotManager>().GetNormalShotPower();
             Damage(d);
 
             //  点滅演出
-            var task = Blink();
-            await task;
+            StartCoroutine(Blink(false,loopCount,flashInterval));
 
             //  死亡フラグON
             if(hp <= 0)
@@ -183,13 +187,15 @@ public class Enemy : MonoBehaviour
                 Death();       //  やられ演出
             }
         }
-        else if (collision.CompareTag("ConverterBullet"))
+        else if (collision.CompareTag("DoujiConvert"))
         {
             //  ダメージ処理
+            float d = GameManager.Instance.GetPlayer()
+                .GetComponent<PlayerShotManager>().GetConvertShotPower();
+            Damage(d);
 
             //  点滅演出
-            var task = Blink();
-            await task;
+            StartCoroutine(Blink(false,loopCount,flashInterval));
 
             //  死亡フラグON
             if(hp <= 0)
@@ -198,17 +204,41 @@ public class Enemy : MonoBehaviour
                 Death2();       //  やられ演出2
             }
         }
+        else if (collision.CompareTag("DoujiKonburst"))
+        {
+            //  ダメージ処理
+            float d = GameManager.Instance.GetPlayer()
+                .GetComponent<PlayerBombManager>().GetKonburstShotPower();
+            Damage(d);
 
-    }
+            //  点滅演出
+            StartCoroutine(Blink(false,loopCount,flashInterval));
 
-    //  お金を生成
-    private void DropMoneyItems(int money)
-    {
-        DropItems drop = this.GetComponent<DropItems>();
-        if(!drop)return;
+            //  死亡フラグON
+            if(hp <= 0)
+            {
+                bDeath = true;
+                Death2();       //  やられ演出2
+            }
+        }
+        else if (collision.CompareTag("Bomb"))
+        {
+            //  ダメージ処理
+            float d = GameManager.Instance.GetPlayer()
+                .GetComponent<PlayerBombManager>().GetBombPower();
+            Damage(d);
 
-        //  魂アイテムをドロップさせる
-        drop.DropKon(money);
+            //  点滅演出
+            StartCoroutine(Blink(false,loopCount,flashInterval));
+
+            //  死亡フラグON
+            if(hp <= 0)
+            {
+                bDeath = true;
+                Death();       //  やられ演出
+            }
+        }
+
     }
 
     //-------------------------------------------
@@ -229,33 +259,28 @@ public class Enemy : MonoBehaviour
     //-------------------------------------------
     //  ダメージ時の点滅演出
     //-------------------------------------------
-    private async UniTask Blink()
+    public IEnumerator Blink(bool super, int loop_count, float flash_interval)
     {
         //  無敵モードON
-        bSuperMode = true;
-
-        //GameObjectが破棄された時にキャンセルを飛ばすトークンを作成
-        var token = this.GetCancellationTokenOnDestroy();
+        if(super)bSuperMode = true;
 
         //点滅ループ開始
-        for (int i = 0; i < loopCount; i++)
+        for (int i = 0; i < loop_count; i++)
         {
             //flashInterval待ってから
-            await UniTask.Delay (TimeSpan.FromSeconds(flashInterval))
-                .AttachExternalCancellation(token);
+            yield return new WaitForSeconds(flash_interval);
 
             //spriteRendererをオフ
-            sp.enabled = false;
+            if(sp)sp.enabled = false;
 
             //flashInterval待ってから
-            await UniTask.Delay(TimeSpan.FromSeconds(flashInterval))
-                .AttachExternalCancellation(token);
+            yield return new WaitForSeconds(flash_interval);
 
             //spriteRendererをオン
-            sp.enabled = true;
+            if(sp)sp.enabled = true;
         }
         //  無敵モードOFF
-        bSuperMode = false;
+        if(super)bSuperMode = false;
     }
 
     //-------------------------------------------
@@ -271,7 +296,7 @@ public class Enemy : MonoBehaviour
         if (drop) drop.DropPowerupItem();
 
         //  お金を生成
-        DropMoneyItems(enemyData.Money);
+        drop.DropKon(enemyData.Money);
 
         //  オブジェクトを削除
         Destroy(this.gameObject);
@@ -291,11 +316,39 @@ public class Enemy : MonoBehaviour
 
         //  お金を生成(魂バートの時は2倍)
         int dropMoney = enemyData.Money;
-        DropMoneyItems(2 * dropMoney);
+        drop.DropKon(2 * dropMoney);
 
         //  オブジェクトを削除
         Destroy(this.gameObject);
     }
 
+    //******************************************************************
+    //
+    //  敵の移動パターン
+    //
+    //******************************************************************
 
+    //------------------------------------------------------------------
+    //  クランプ移動（スタート位置を左右切り替え可能）
+    //------------------------------------------------------------------
+
+    //------------------------------------------------------------------
+    //  一定距離まで直進の後、自機狙いで突っ込む
+    //------------------------------------------------------------------
+
+    //------------------------------------------------------------------
+    //  直線移動(スポナーから反対側のスポナーへ移動)
+    //------------------------------------------------------------------
+
+    //------------------------------------------------------------------
+    //  直線移動中にプレイヤーとXで軸かY軸が合えば自機に突撃
+    //------------------------------------------------------------------
+
+    //------------------------------------------------------------------
+    //  放物線移動
+    //------------------------------------------------------------------
+
+    //------------------------------------------------------------------
+    //  放物線移動の後弾を撃って放物線移動で消えていく(中級ザコ)
+    //------------------------------------------------------------------
 }

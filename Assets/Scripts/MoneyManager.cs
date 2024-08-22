@@ -70,7 +70,11 @@ public class MoneyManager : MonoBehaviour
         //scoreText.text = "" + money;
 
         //  目標値を更新
-        targetMoney += value;
+        if(targetMoney >= 99999999)
+        {
+            targetMoney = 99999999;
+        }
+        else targetMoney += value;
     }
 
     private IEnumerator CountMoney()
@@ -105,4 +109,5 @@ public class MoneyManager : MonoBehaviour
     public int GetKonNumGainedFromLarge(){ return konNumGainedFromLarge; }
     public int GetKonNumGainedFromSmall(){ return konNumGainedFromSmall; }
     public int GetKonNumGainedFromPowerup(){ return konNumGainedFromPowerup; }
+    public int GetKonNum(){ return money; }
 }

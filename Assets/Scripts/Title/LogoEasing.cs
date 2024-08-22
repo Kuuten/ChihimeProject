@@ -11,9 +11,6 @@ using UnityEngine;
 //--------------------------------------------------------------
 public class LogoEasing : MonoBehaviour
 {
-
-    [SerializeField] private SoundManager Sound;
-
     void Start()
     {
 
@@ -39,7 +36,7 @@ public class LogoEasing : MonoBehaviour
                         new UnityEngine.Vector2(-100f,0f),0.5f)
                     .SetEase(Ease.InOutQuint)
                     .OnStart(() => {
-                        Sound.Play( (int)AudioChannel.SFX, (int)SFXList.SFX_DASH);
+                        SoundManager.Instance.PlaySFX( (int)AudioChannel.SFX, (int)SFXList.SFX_DASH);
                     })
                     .OnComplete(() =>{
 
@@ -51,7 +48,7 @@ public class LogoEasing : MonoBehaviour
                 transform.DOLocalRotate(new UnityEngine.Vector3(0, 0, 45f), 1f)  
                 .SetEase(Ease.OutExpo)  
                 .OnStart(() => {
-                    Sound.Play( (int)AudioChannel.SFX, (int)SFXList.SFX_BRAKE);
+                    SoundManager.Instance.PlaySFX( (int)AudioChannel.SFX, (int)SFXList.SFX_BRAKE);
                 })
                 .OnComplete(() =>{
 

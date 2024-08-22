@@ -119,7 +119,7 @@ public class DropItems : MonoBehaviour
         {
             //  smallKon‚Ì”‚¾‚¯¬°‚ğ¶¬
             int small = money / smallKon;
-            Debug.Log("¬°‚Ì”‚Å‚Î‚Á‚® :" + small);
+            Debug.Log("¬°‚Ì” :" + small);
             DropKonPrefab(konPrefabs[(int)KonItems.smallKon], small);
         }
         else // money‚ªlargeKonˆÈã‚Ìê‡

@@ -10,14 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 2057930908481729092}
   - component: {fileID: 8120478058563874432}
-  - component: {fileID: 8356266684332413975}
+  - component: {fileID: 4795737728170828681}
   - component: {fileID: 4563613631376801037}
-  - component: {fileID: 7617928581634426159}
-  - component: {fileID: 2573611656227303435}
-  - component: {fileID: -4630814300728058656}
+  - component: {fileID: 2238557077852092288}
+  - component: {fileID: 8288805686402655967}
+  - component: {fileID: 3971344637194511955}
   m_Layer: 0
-  m_Name: TsukumoPlayerBullet
-  m_TagString: NormalBullet
+  m_Name: WadatsumiPlayerBullet
+  m_TagString: WadatsumiConvert
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -77,8 +77,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -1131799572, guid: c46dd428457d15246a09fa26acc28273, type: 3}
+  m_SortingOrder: 3
+  m_Sprite: {fileID: -1607180893, guid: c46dd428457d15246a09fa26acc28273, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -89,7 +89,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8356266684332413975
+--- !u!114 &4795737728170828681
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,11 +98,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6013692122004912179}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80551c1bbbde08344b5dfceb33f68e4d, type: 3}
+  m_Script: {fileID: 11500000, guid: e5aab35fd252da04692cd97bb571221a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  period: 0
+  lifetime: 180
 --- !u!61 &4563613631376801037
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -139,7 +138,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.75, y: 0.765625}
+    oldSize: {x: 1.90625, y: 1.875}
     newSize: {x: 17, y: 64}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -148,7 +147,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.18, y: 1}
   m_EdgeRadius: 0
---- !u!50 &7617928581634426159
+--- !u!50 &2238557077852092288
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -175,7 +174,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &2573611656227303435
+--- !u!114 &8288805686402655967
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -187,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d562de92d05e87449aba073ff834833a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-4630814300728058656
+--- !u!114 &3971344637194511955
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

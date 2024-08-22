@@ -46,6 +46,10 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private AnimatorController animPlayerBack;
     [SerializeField] private AnimatorController animPlayerBackDamage;
 
+    //  死亡演出用のAnimator
+    [SerializeField] private AnimatorController animPlayerDeath1;
+    [SerializeField] private AnimatorController animPlayerDeath2;
+
     //  点滅させるためのSpriteRenderer
     SpriteRenderer sp;
 
@@ -105,9 +109,11 @@ public class PlayerHealth : MonoBehaviour
         for( int i=0; i<currentMaxHealth/2;i++ )
         {
             GameObject obj = Instantiate(heartFrameObj);
-            obj.transform.parent = heartRootObj.transform;
+            obj.transform.SetParent( heartRootObj.transform );
             obj.transform.GetChild((int)HeartType.Half).gameObject.SetActive(true);
             obj.transform.GetChild((int)HeartType.Full).gameObject.SetActive(true);
+            obj.transform.localScale = Vector3.one;
+            obj.GetComponent<RectTransform>().transform.localPosition = Vector3.zero;
 
 
             heartList.Add( obj );   //  リストに追加
@@ -116,6 +122,9 @@ public class PlayerHealth : MonoBehaviour
 
     void Update()
     {
+        //  プレイヤーが死んでいたら処理しない
+        if(bDeath)return;
+
         //  ゲーム段階別でAnimatorの切り替え
        int gamestatus = GameManager.Instance.GetGameState();
         switch(gamestatus)
@@ -127,7 +136,6 @@ public class PlayerHealth : MonoBehaviour
                 ChangePlayerSpriteToFront(false);    //  奥向き
                 break;
             case (int)eGameState.Event:
-                ChangePlayerSpriteToFront(false);    //  奥向き
                 break;
         }
 
@@ -143,8 +151,7 @@ public class PlayerHealth : MonoBehaviour
         //  無敵か死亡しているなら飛ばす
         if(bSuperMode || bDeath)return;
 
-        if(collision.CompareTag("Enemy") ||         //  敵自体
-            collision.CompareTag("EnemyBullet"))    //  敵弾
+        if(collision.CompareTag("Enemy") )    //  敵本体にHIT！
         {
             //  プレイヤーのダメージ処理
             EnemyData ed = collision.GetComponent<Enemy>().GetEnemyData();
@@ -181,6 +188,49 @@ public class PlayerHealth : MonoBehaviour
             var task2 = Blink();
             await task2;
 
+        }
+        else if(collision.CompareTag("EnemyBullet"))    //  敵弾にHIT！
+        {
+            //  プレイヤーのダメージ処理
+
+            /* ここで弾にEnemyが付いてないのでエラーが出るハズ */
+            /* 敵の弾用のクラスを作成して外部で弾生成時に威力を設定して */
+            /* それをゲッターでここで取得できるようにしたい↓　*/
+            //EnemyData ed = collision.GetComponent<Enemy>().GetEnemyData();
+            //Damage( ed.Attack );
+            Damage( 2 );    //  仮ダメージ処理
+
+
+            //  死亡フラグON
+            if(currentHealth <= 0)
+            {
+                bDamage = false;
+                bDeath = true;
+                //  HitCircleを非表示にする
+                this.transform.GetChild(6).gameObject.SetActive(false);
+                StartCoroutine(Death());       //  やられ演出
+                return;
+            }
+
+            //  全強化１段階ダウン
+            PlayerShotManager ps = this.GetComponent<PlayerShotManager>();
+            ps.LeveldownNormalShot();
+            PlayerMovement pm = this.GetComponent<PlayerMovement>();
+            pm.LeveldownMoveSpeed();
+
+            //  デバッグ表示
+            Debug.Log("全強化１段階ダウン！");
+            Debug.Log("ショット強化 :" + ps.GetNormalShotLevel() 
+                +"" + "スピード強化" + pm.GetSpeedLevel());
+            Debug.Log("Playerの体力 :" + currentHealth);
+
+            //  ダメージ時の赤くなる点滅演出開始
+            var task1 = DamageAnimation();
+            await task1;
+
+            //  無敵演出開始
+            var task2 = Blink();
+            await task2;
         }
     }
 
@@ -392,11 +442,18 @@ public class PlayerHealth : MonoBehaviour
         return  bDamage;
     }
 
+    public void SetSuperMode( bool flag ){ bSuperMode = flag; }
+
+    public bool GetSuperMode(){ return bSuperMode; }
+
     //-------------------------------------------
     //  やられ演出
     //-------------------------------------------
     private IEnumerator Death()
     {
+        //  デバッグ表示
+        Debug.Log("プレイヤーが死亡しました！");
+
         //  ライトOFF
         directionalLight.gameObject.SetActive(false);
 
@@ -405,11 +462,25 @@ public class PlayerHealth : MonoBehaviour
 
         //  プレイヤーを止める
         this.GetComponent<CircleCollider2D>().enabled = false;
-        this.GetComponent<SpriteRenderer>().enabled = false;
         this.GetComponent<PlayerMovement>().enabled = false;
         this.GetComponent<PlayerShotManager>().enabled = false;
 
-        //  プレイヤーのアニメ終了を待つ(最悪秒数で待つawaitとか)
+        //  Animatorを「death1」に差し替え
+        this.GetComponent<Animator>().runtimeAnimatorController =
+            animPlayerDeath1;
+
+        //  0.8秒待つ
+        yield return new WaitForSeconds(0.8f);
+
+        //  Animatorを「death2」に差し替え
+        this.GetComponent<Animator>().runtimeAnimatorController =
+            animPlayerDeath2;
+
+        //  1秒待つ
+        yield return new WaitForSeconds(1.0f);
+
+        //  プレイヤーを非表示にする
+        this.GetComponent<SpriteRenderer>().enabled = false;
 
         //  プレイヤーのやられエフェクト
         GameObject obj = Instantiate(
@@ -420,7 +491,7 @@ public class PlayerHealth : MonoBehaviour
         //  やられエフェクトの終了を待つ
         yield return new WaitForSeconds(0.583f);
 
-        //  GameOver演出を待つ
+        //  GameOver表示を待つ
 
         //  GameOverへシーン遷移
         LoadingScene.Instance.LoadNextScene("GameOver");
@@ -429,45 +500,6 @@ public class PlayerHealth : MonoBehaviour
         //Pauser.Pause();
 
         yield return null;
-    }
-
-
-    private IEnumerator Death2()
-    {
-        //-------------------------------------------
-        //  上へ飛び上がった後、下へ落ちていく
-        //-------------------------------------------
-        DG.Tweening.Sequence sequence = DOTween.Sequence();
-        bool complete = false;
-
-        //  指定位置へ移動
-        sequence.Append
-            (
-                    transform.DOLocalMoveY(2,0.5f)
-                    .SetEase(Ease.OutCubic)
-                    .SetRelative(true)  //  相対値移動
-                    .OnStart(() => {
-                        //Sound.Play( (int)AudioChannel.SFX, (int)SFXList.SFX_DASH);
-                    })
-                    .OnComplete(() =>{
-
-                    })
-
-            )
-            .Append
-            (
-                transform.DOMoveY(-13,1.5f)
-                .SetEase(Ease.InSine)  
-                .OnStart(() => {
-                    
-                })
-                .OnComplete(() =>{
-
-                })
-            );
-
-        //  完了まで待つ
-        yield return new WaitUntil(() => complete == true);
     }
 
     //---------------------------------------------------

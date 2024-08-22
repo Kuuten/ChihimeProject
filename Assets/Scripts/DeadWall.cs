@@ -30,6 +30,11 @@ public class DeadWall : MonoBehaviour
             Destroy(other.gameObject);
         }
 
+        if(other.gameObject.CompareTag("Kon"))
+        {
+            Debug.Log("KonÇ…Ç†ÇΩÇ¡ÇΩÅI");
+        }
+
         if(other.gameObject.CompareTag("Player"))
         {
             Debug.Log("PlayerÇ…Ç†ÇΩÇ¡ÇΩÅI");

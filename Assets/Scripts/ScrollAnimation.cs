@@ -46,9 +46,23 @@ public class ScrollAnimation : MonoBehaviour
         .OnStart(
         () =>
         {
-            SoundManager.Instance.Play( (int)AudioChannel.SFX, (int)SFXList.SFX_HYOUSIGI);
-            SoundManager.Instance.Play( (int)AudioChannel.SFX_ENEMY, (int)SFXList.SFX_SCROLL_MOVE);
-            SoundManager.Instance.Play( (int)AudioChannel.SFX_SYSTEM, (int)SFXList.SFX_SCROLL_MOVE2);
+            SoundManager.Instance.PlaySFX( (int)AudioChannel.SFX, (int)SFXList.SFX_HYOUSIGI);
+        })
+        .OnComplete(() =>{  });
+
+        yield return null;
+    }
+
+
+    //  Šª•¨‚ð•Â‚¶‚é
+    public IEnumerator CloseScroll()
+    {
+        transform.DOMoveX(1240,2)
+        .SetEase(Ease.OutCubic)
+        .OnStart(
+        () =>
+        {
+            SoundManager.Instance.PlaySFX( (int)AudioChannel.SFX, (int)SFXList.SFX_HYOUSIGI);
         })
         .OnComplete(() =>{  });
 

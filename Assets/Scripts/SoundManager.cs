@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
     //  オーディオソースリスト
@@ -10,6 +11,9 @@ using UnityEngine;
         SFX_ENEMY,
         SFX_DAMAGE,
         SFX_SYSTEM,
+        SFX_NORMAL_SHOT,
+        SFX_CONVERT_SHOT,
+        SFX_BOMB,
 
         CHANNEL_MAX
     };
@@ -41,8 +45,6 @@ using UnityEngine;
     {
         //  タイトル
         SFX_HYOUSIGI,         //  拍子木の音
-        SFX_SCROLL_MOVE,      //  巻物が動く時の音
-        SFX_SCROLL_MOVE2,     //  巻物が動く時の音２（琴）
         SFX_DASH,             //  ダッシュ
         SFX_BRAKE,            //  ブレーキ
         SFX_TITLE_SELECT,     //  カーソル音
@@ -53,10 +55,19 @@ using UnityEngine;
         //  ゲーム中・ショップ
         SFX_GAMESTART,
         SFX_NORMAL_SHOT,
-        SFX_POWER_SHOT,
-        SFX_WIDE_SHOT,
-        SFX_PENETRATION_SHOT,
-        SFX_HORMINGSHOT,
+        SFX_CONVERT_SHOT_GAUGE1,
+        SFX_CONVERT_SHOT_GAUGE2,
+        SFX_CONVERT_SHOT_FAIL,
+        SFX_DOUJI_CONVERT_SHOT_MIDDLE,
+        SFX_DOUJI_CONVERT_SHOT_FULL,
+        SFX_CONCURST_CUTIN,
+
+        SFX_DOUJI_SHOT,
+        SFX_TSUKUMO_SHOT,
+        SFX_KUCHINAWA_SHOT,
+        SFX_KURAMA_SHOT,
+        SFX_WADATSUMI_SHOT,
+        SFX_HAKUMEN_SHOT,
 
         //  ゲームクリア
         SFX_VICTORY,
@@ -74,7 +85,6 @@ using UnityEngine;
 //--------------------------------------------------------------
 public class SoundManager : MonoBehaviour
 {
-
     // オーディオクリップリスト
     [SerializeField] private List<AudioClip> _MusicClipList;
     [SerializeField] private List<AudioClip> _SFXClipList;
@@ -102,6 +112,7 @@ public class SoundManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+
     void Start()
     {
         //  コンポーネントの取得
@@ -109,32 +120,40 @@ public class SoundManager : MonoBehaviour
     }
 
     //--------------------------------------------------------
-    //  オーディオの再生
+    //  BGMの再生
     //--------------------------------------------------------
-    public void Play(int channelType, int clipId)
+    public void PlayBGM(int clipId)
     {
 #if UNITY_EDITOR
         Debug.Assert(
-            channelType < (int)AudioChannel.CHANNEL_MAX && channelType >= 0,
-            "AudioSourceIDが範囲外の値です！"
-        );
-        Debug.Assert(
             clipId < (int)MusicList.CLIP_MAX && clipId >= 0,
             "MusicClipIDが範囲外の値です！"
+        );
+
+#endif
+        //  出力先とクリップを設定して再生
+        _AudioSource[(int)AudioChannel.MUSIC].clip = _MusicClipList[clipId];
+        
+        _AudioSource[(int)AudioChannel.MUSIC].Play();
+    }
+
+    //--------------------------------------------------------
+    //  SEの再生
+    //--------------------------------------------------------
+    public void PlaySFX(int channelType, int clipId)
+    {
+#if UNITY_EDITOR
+        Debug.Assert(
+            channelType > (int)AudioChannel.MUSIC && channelType < (int)AudioChannel.CHANNEL_MAX,
+            "範囲外のchannelTypeを指定しているかBGMを指定しています！"
         );
         Debug.Assert(
             clipId < (int)SFXList.CLIP_MAX && clipId >= 0,
             "SFXClipIDが範囲外の値です！"
         );
 #endif
-        //  出力先とクリップを設定して再生
-        if(channelType == (int)AudioChannel.MUSIC)
-        {
-            _AudioSource[channelType].clip = _MusicClipList[clipId];
-        }
-        else _AudioSource[channelType].clip = _SFXClipList[clipId];
-        
-        _AudioSource[channelType].Play();
+        //  出力先とクリップを設定して再生       
+        _AudioSource[channelType].PlayOneShot( _SFXClipList[clipId] );
     }
 
     //--------------------------------------------------------

@@ -69,15 +69,32 @@ public class ItemMove : MonoBehaviour
         this.transform.position += new Vector3(0, flowSpeed, 0);
     }
 
+    //----------------------------------------------------------------
+    //  プロパティ
+    //----------------------------------------------------------------
+    public void SetFieldFlag(bool flag){ bField = flag; }
+    public bool GetFieldFlag(){ return bField; }
+
     //-------------------------------------------------------
     //  吸魂フィールドと当たったらプレイヤーに加速する
     //-------------------------------------------------------
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //  タグが吸魂フィールド以外ならreturn
-        if(!collision.CompareTag("PlayerField"))return;
+        if(collision.CompareTag("DeadWall")) //　消滅壁に当たったら
+        {
+            Debug.Log("消滅壁に当たったのでアイテムを消滅させます");
 
-        //  回収フィールド吸引ON
-        bField = true;
+            //  ゲームオブジェクトを削除
+            Destroy(this.gameObject);
+        }
+
+        //  タグが吸魂フィールドなら吸引ON
+        if(collision.CompareTag("PlayerField"))
+        {
+            Debug.Log("回収フィールド吸引ON");
+
+            //  回収フィールド吸引ON
+            bField = true;
+        }
     }
 }

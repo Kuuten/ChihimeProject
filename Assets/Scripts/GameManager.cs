@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -26,6 +27,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]private GameObject enemyGenerator;
 
     private int gameState;
+
+    [SerializeField] private GameObject soundManager;
+    [SerializeField] private FadeIO Fade;
 
     //  デバッグ用
     private InputAction test;
@@ -71,6 +75,14 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+#if UNITY_EDITOR
+        //  SoundManagerがなければ生成
+        if( !GameObject.Find("SoundManager") )
+        {
+            Instantiate(soundManager);
+        }
+#endif
     }
 
     void Start()
@@ -81,8 +93,17 @@ public class GameManager : MonoBehaviour
 
         gameState = (int)eGameState.Zako;   //  最初はザコ戦
 
+        //  初期化開始
+        StartCoroutine(StartInit());
+    }
+
+    IEnumerator StartInit()
+    {
+        //  フェードイン
+        yield return StartCoroutine(WaitingForFadeIn());
+
         //  メインループ開始
-        StartCoroutine(GameLoop());
+        yield return StartCoroutine(GameLoop());
     }
 
     private IEnumerator GameLoop()
@@ -167,20 +188,40 @@ public class GameManager : MonoBehaviour
         //  Inputsystemをプレイヤーモードに
         //EnableCharacterControl();
 
-        //************以降はプレイヤー死亡************
+        //  ステージクリアフラグが立ったら情報保存してショップへ遷移
+        bool clearFlag = false; //  仮処理
 
-        //  プレイヤーのやられ演出を実行＆終了を待つ
-        //  ↓これ参考に
+        GameObject player = GameManager.Instance.GetPlayer();
+        int maxHP = player.GetComponent<PlayerHealth>().GetCurrentMaxHealth();
+        int hP = player.GetComponent<PlayerHealth>().GetCurrentHealth();
+        int bombNum = player.GetComponent<PlayerBombManager>().GetBombNum();
+        int kon = MoneyManager.Instance.GetKonNum();
 
-        //loseSide.DeadStaging();    //  死亡演出再生
-        ////  演出終了まで待つ
-        //while (!loseSide.GetIsDeadStagingEnd())
-        //{
-        //    yield return null;
-        //}
+        if(clearFlag)
+        {
+            //  情報保存
+            PlayerInfoManager.SetInfo(maxHP,hP,kon,bombNum);
 
-        //  ゲームオーバーシーンへ
+            // 巻物アニメーション
+
+            //  フェードアウトを待つ
+            yield return StartCoroutine(WaitingForFadeOut());
+
+            //  ショップシーンへ遷移
+        }
 
         yield return null;
+    }
+
+    // フェードインの完了を待つ
+    public IEnumerator WaitingForFadeIn()
+    {
+        yield return StartCoroutine(Fade.StartFadeIn());
+    }
+
+    // フェードアウトの完了を待つ
+    public IEnumerator WaitingForFadeOut()
+    {
+        yield return StartCoroutine(Fade.StartFadeOut());
     }
 }

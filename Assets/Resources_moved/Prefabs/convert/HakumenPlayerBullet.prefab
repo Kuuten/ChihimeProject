@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 8120478058563874432}
   - component: {fileID: 4795737728170828681}
   - component: {fileID: 4563613631376801037}
-  - component: {fileID: -3599912350984901752}
-  - component: {fileID: -7587762679191515516}
-  - component: {fileID: -8471229946020481293}
+  - component: {fileID: 313962211327499516}
+  - component: {fileID: -3198626858048131305}
+  - component: {fileID: -3477391591948557308}
   m_Layer: 0
-  m_Name: KuramaPlayerBullet
-  m_TagString: NormalBullet
+  m_Name: HakumenPlayerBullet
+  m_TagString: HakumenConvert
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -77,8 +77,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -981101749, guid: c46dd428457d15246a09fa26acc28273, type: 3}
+  m_SortingOrder: 3
+  m_Sprite: {fileID: 1909121718, guid: c46dd428457d15246a09fa26acc28273, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -138,7 +138,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.75, y: 0.453125}
+    oldSize: {x: 0.78125, y: 0.953125}
     newSize: {x: 17, y: 64}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -147,7 +147,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.18, y: 1}
   m_EdgeRadius: 0
---- !u!50 &-3599912350984901752
+--- !u!50 &313962211327499516
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -174,7 +174,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &-7587762679191515516
+--- !u!114 &-3198626858048131305
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d562de92d05e87449aba073ff834833a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-8471229946020481293
+--- !u!114 &-3477391591948557308
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -1,3 +1,5 @@
+using DG.Tweening;
+using DG.Tweening.Core.Easing;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,27 +11,55 @@ using UnityEngine;
 //--------------------------------------------------------------
 public class ConvertDoujiBullet : MonoBehaviour
 {
-    //  Animator.speedみたいなやつを取得して
-    //  それをDotweenでだんだん加速させる
-    //  DOTween.Toを使えばやれるはず
-
-    //  スケールもDoTweenでだんだんと小さくする
-
     private Animator animator;
+    private Vector3 velocity; 
+    private int gamestatus;
+    private bool fripY;
 
     void Start()
     {
         animator = this.GetComponent<Animator>();
+        velocity = Vector3.zero;
 
-        //  ShotManager側で設定するようにする
-        this.GetComponent<SpriteRenderer>().flipY = true;
+        //  GameManagerから状態を取得
+        gamestatus = GameManager.Instance.GetGameState();
 
-        //  ↓が１ならアニメーションが終了している(0はレイヤー番号:BaseLayer)
-        //animator.GetCurrentAnimatorStateInfo(0).normalizedTime
+        //  弾の向き
+        switch(gamestatus)
+        {
+            case (int)eGameState.Zako:
+                velocity = new Vector3(0,-5f,0);   //  下方向へ撃つ
+                break;
+            case (int)eGameState.Boss:
+                velocity = new Vector3(0,5f,0);   //  上方向へ撃つ
+                break;
+            case (int)eGameState.Event:
+                break;
+        }
+
+        //  現在の位置からvelocity分移動
+        this.transform.DOMove(velocity,0.66f).SetRelative(true).SetEase(Ease.InOutQuint);
+
+        //  スケールをだんだん小さくする
+        this.transform.DOScale(new Vector3(0.1f,0.1f,0.1f),0.66f).SetEase(Ease.InExpo);
     }
 
     void Update()
     {
-        
+        //  ↓が１ならアニメーションが終了している(0はレイヤー番号:BaseLayer)
+        if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.66f)
+        {
+            Destroy(this.gameObject);
+        }
     }
+
+    //-------------------------------------------
+    //  プロパティ
+    //-------------------------------------------
+    public void SetVelocity(Vector3 v){ velocity = v; }
+    public Vector3 GetVelocity(){ return velocity; }
+    public void SetFripY(bool frip){ fripY = frip; }
+    public bool GetFripY(){ return fripY; }
+
+
 }

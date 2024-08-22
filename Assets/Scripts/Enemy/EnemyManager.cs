@@ -8,6 +8,9 @@ using static DropItems;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine.InputSystem;
+using System;
+using static EnemyManager;
+using static Enemy;
 
 //--------------------------------------------------------------
 //
@@ -71,6 +74,13 @@ public class EnemyManager : MonoBehaviour
     //  パワーアップアイテムを落とすかどうか
     private List<DROP_TYPE> dropType = new List<DROP_TYPE>();
 
+    //  敵情報
+    private EnemySetting enemySetting;
+    AsyncOperationHandle<IList<EnemySetting>> loadHandleEnemySetting;
+
+    //  EnemyDataクラスからの情報取得用
+    private EnemyData enemyData;
+
     void Awake()
     {
         if (Instance != null)
@@ -88,8 +98,55 @@ public class EnemyManager : MonoBehaviour
         enemyGenerateNum = 0;
         enemyDestroyNum = 0;
 
+        //  敵情報のロード
+        //  ※EmemySettingの読み込みまではここでやる
+        //  EnemyDataへの設定は生成時にEnemyにセットする
+        await LoadEnemySetting();
+
+        Debug.Log("敵情報ファイルのロード完了");
+
         //  プレハブのロード
         await LoadPrefab();
+
+        Debug.Log("ドロップアイテムのロード完了");
+    }
+
+    //-----------------------------------------------------------------
+    //  敵情報のロード
+    //-----------------------------------------------------------------
+    private async UniTask LoadEnemySetting()
+    {
+        enemySetting = new EnemySetting();
+
+        //  キーによる敵情報のロード
+        await LoadEnemySettingByKey();
+    }
+
+    //-----------------------------------------------------------------
+    //  キーによる敵情報のロード
+    //-----------------------------------------------------------------
+    private async UniTask LoadEnemySettingByKey()
+    {
+        // ロードする為のキー
+        List<string> keys = new List<string>() {"EnemySetting"};
+
+        //  敵情報をロード
+        loadHandleEnemySetting = Addressables.LoadAssetsAsync<EnemySetting>
+            (
+                keys,
+                null,
+                Addressables.MergeMode.Union,
+                false
+            );
+
+        //  ロードの完了を待つ
+        await loadHandleEnemySetting.Task;
+
+        //  ロード結果を格納
+        enemySetting = loadHandleEnemySetting.Result.First();
+
+        appearStep++;
+
     }
 
     //-----------------------------------------------------------------
@@ -158,9 +215,18 @@ public class EnemyManager : MonoBehaviour
 
     private void OnDestroy()
     {
-         // 解放
-        Addressables.Release(loadHandleKon);
-        Addressables.Release(loadHandlePowerup);
+        // 解放
+        try {
+            Addressables.Release(loadHandleKon);
+            Addressables.Release(loadHandlePowerup);
+            Addressables.Release(loadHandleEnemySetting);
+        } catch (Exception e) {
+            // 例外発生時の処理
+            Debug.Log("loadHandleKonが未使用です");
+            Debug.Log("loadHandlePowerupが未使用です");
+            Debug.Log("loadHandleEnemySettingが未使用です");
+        }
+
     }
 
     void Update()
@@ -183,7 +249,7 @@ public class EnemyManager : MonoBehaviour
     //------------------------------------------------
     private float GetRandomX()
     {
-        return Random.Range(-7.7f,6.07f);
+        return UnityEngine.Random.Range(-7.7f,6.07f);
     }
 
     //------------------------------------------------
@@ -191,7 +257,11 @@ public class EnemyManager : MonoBehaviour
     //------------------------------------------------
     private void SetEnemy(GameObject prefab,Vector3 pos)
     {
-        Instantiate(prefab,pos,transform.rotation);
+        //  敵オブジェクトの生成
+        GameObject obj = Instantiate(prefab,pos,transform.rotation);
+
+        //  敵情報の設定
+        obj.GetComponent<Enemy>().SetEnemyData(enemySetting);
 
         enemyGenerateNum++; //  敵生成数+1
     }
@@ -220,41 +290,38 @@ public class EnemyManager : MonoBehaviour
 
         switch(appearStep)
         {
-            case 0:
-                SetEnemy(
-                        enemyPrefab[(int)EnemyPattern.E01_3B],
-                        new Vector3(GetRandomX(),appearY,0));
-                appearStep++;
+            case 0: //  待機
+
                 break;
             case 1:
-                if(Timer(3))appearStep++;
-                break;
-            case 2:
                 SetEnemy(
                         enemyPrefab[(int)EnemyPattern.E01_3B],
                         new Vector3(GetRandomX(),appearY,0));
                 appearStep++;
                 break;
+            case 2:
+                if(Timer(3))appearStep++;
+                break;
             case 3:
-                if (Timer(3)) appearStep++;
+                SetEnemy(
+                        enemyPrefab[(int)EnemyPattern.E01_3B],
+                        new Vector3(GetRandomX(),appearY,0));
+                appearStep++;
                 break;
             case 4:
+                if (Timer(3)) appearStep++;
+                break;
+            case 5:
                 SetEnemy(
                         enemyPrefab[(int)EnemyPattern.E01_3B],
                         new Vector3(GetRandomX(), appearY, 0));
                 appearStep++;
                 break;
-            case 5:
+            case 6:
                 if (Timer(3)) appearStep++;
                 break;
-                //case 6:
-                //    SetEnemy(
-                //            enemyPrefab[(int)EnemyPattern.E01_3x1B],
-                //            new Vector3(GetRandomX(),appearY,0));
-                //    break;
-                //case 7:
-                //    if(Timer(3))appearStep++;
-                //    break;
+            case 7:
+                break;
                 //case 8:
                 //    SetEnemy(
                 //            enemyPrefab[(int)EnemyPattern.E01_3x1],
