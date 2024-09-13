@@ -219,12 +219,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Prefabs
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 20a8969bec9c24240b950148e0bdd8b3
-    m_Address: Prefabs/BombIcon.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Prefabs
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1301e82ad744b8b468da77e90debaee9
     m_Address: Prefabs/Target.prefab
     m_ReadOnly: 0

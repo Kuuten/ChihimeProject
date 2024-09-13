@@ -5,13 +5,13 @@ using UnityEngine;
 public class Billboard : MonoBehaviour
 {
 
-    private void Start()
+    private void Awake()
     {
-
+        this.transform.rotation = Camera.main.transform.rotation;
     }
 
     private void Update()
     {
-        this.transform.rotation = Camera.main.transform.rotation;
+        
     }
 }

@@ -186,9 +186,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2832f2e0c5e7c644796e051dab508fc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveType: 0
+  moveType: 8
   enemyType: 2
-  moveSpeed: 3
+  revengeShot: 0
   explosion: {fileID: 7776138344345479518, guid: 52acdfda6d1144543858be1f9c7c6a56, type: 3}
 --- !u!114 &-4069407151855377676
 MonoBehaviour:

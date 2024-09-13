@@ -12,6 +12,8 @@ using static Unity.Collections.AllocatorManager;
 using System.Threading;
 using UnityEditor.Animations;
 using DG.Tweening.Core.Easing;
+using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 
 //--------------------------------------------------------------
 //
@@ -35,7 +37,7 @@ public class PlayerHealth : MonoBehaviour
 
     [SerializeField] private int currentMaxHealth;  //  必ず偶数
     [SerializeField] private int currentHealth;
-    private const int limitHealth = 12;
+    private const int limitHealth = 10;
     private bool bSuperMode;
     private bool bDeath;
     private bool bDamage;
@@ -70,6 +72,26 @@ public class PlayerHealth : MonoBehaviour
     //  ハートフレームオブジェクトのリスト
     private List<GameObject> heartList = new List<GameObject>();
 
+    //-------------------------------------------------------------
+    //  FaceUI周り
+    //-------------------------------------------------------------
+    //  顔UIオブジェクト
+    [SerializeField] private GameObject faceObject;
+    //  顔UIオブジェクトのImageコンポーネント
+    private Image faceImage;
+    //  千姫通常顔スプライト
+    [SerializeField] private Sprite faceNormal;
+    //  千姫ダメージ顔スプライト
+    [SerializeField] private Sprite faceDamage;
+    //  顔UIの絆創膏１
+    [SerializeField] private GameObject faceBand1;
+    //  顔UIの絆創膏２
+    [SerializeField] private GameObject faceBand2;
+
+    //  GameOver表示
+    [SerializeField] private GameObject gameOver;
+
+
     void Awake()
     {
  
@@ -87,14 +109,26 @@ public class PlayerHealth : MonoBehaviour
         if(currentHealth > currentMaxHealth)
             Debug.LogError("現在体力値が最大体力値を超過しています！");
 
+        //  顔UIのImageコンポーネントを取得
+        faceImage = faceObject.GetComponent<Image>();
+
+        //  顔UIの初期化
+        faceImage.sprite = faceNormal;
+
+        //  絆創膏１を無効化
+        faceBand1.SetActive(false);
+
+        //  絆創膏２を無効化
+        faceBand2.SetActive(false);
+
         //  SpriteRenderを取得
         sp = GetComponent<SpriteRenderer>();
 
         //  ループカウントを設定
-        loopCount = 30;
+        loopCount = 10;
 
         //  点滅の間隔を設定
-        flashInterval = 0.02f;
+        flashInterval = 0.1f;
 
         //  ダメージフラグOFF
         bDamage = false;
@@ -105,15 +139,18 @@ public class PlayerHealth : MonoBehaviour
         //  最初は無敵モードOFF
         bSuperMode = false;
 
+        //  最初はGameOverも非表示
+        gameOver.SetActive(false);
+
         //  親オブジェクトの子オブジェクトとしてハートフレームを生成
         for( int i=0; i<currentMaxHealth/2;i++ )
         {
             GameObject obj = Instantiate(heartFrameObj);
-            obj.transform.SetParent( heartRootObj.transform );
+            obj.GetComponent<RectTransform>().SetParent( heartRootObj.transform);
+            obj.GetComponent<RectTransform>().localScale = Vector3.one;
+            obj.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0,0,0);
             obj.transform.GetChild((int)HeartType.Half).gameObject.SetActive(true);
             obj.transform.GetChild((int)HeartType.Full).gameObject.SetActive(true);
-            obj.transform.localScale = Vector3.one;
-            obj.GetComponent<RectTransform>().transform.localPosition = Vector3.zero;
 
 
             heartList.Add( obj );   //  リストに追加
@@ -122,8 +159,14 @@ public class PlayerHealth : MonoBehaviour
 
     void Update()
     {
+        //  ハート画像を更新
+        CalculateHealthUI(currentHealth);
+
         //  プレイヤーが死んでいたら処理しない
         if(bDeath)return;
+
+        //  顔UIの絆創膏を更新
+        ChangeDamageBand();
 
         //  ゲーム段階別でAnimatorの切り替え
        int gamestatus = GameManager.Instance.GetGameState();
@@ -138,9 +181,6 @@ public class PlayerHealth : MonoBehaviour
             case (int)eGameState.Event:
                 break;
         }
-
-        //  ハート画像を更新
-        CalculateHealthUI(currentHealth);
     }
 
     //----------------------------------------------------------------
@@ -153,6 +193,9 @@ public class PlayerHealth : MonoBehaviour
 
         if(collision.CompareTag("Enemy") )    //  敵本体にHIT！
         {
+            //  無敵モードON
+            bSuperMode = true;
+
             //  プレイヤーのダメージ処理
             EnemyData ed = collision.GetComponent<Enemy>().GetEnemyData();
             Damage( ed.Attack );
@@ -167,6 +210,14 @@ public class PlayerHealth : MonoBehaviour
                 StartCoroutine(Death());       //  やられ演出
                 return;
             }
+
+            //  ダメージ顔UIに変更
+            StartCoroutine(ChangeToDmageFace());
+
+            //  ダメージSE再生
+            SoundManager.Instance.PlaySFX(
+            (int)AudioChannel.SFX_DAMAGE,
+            (int)SFXList.SFX_PLAYER_DAMAGE);
 
             //  全強化１段階ダウン
             PlayerShotManager ps = this.GetComponent<PlayerShotManager>();
@@ -191,15 +242,12 @@ public class PlayerHealth : MonoBehaviour
         }
         else if(collision.CompareTag("EnemyBullet"))    //  敵弾にHIT！
         {
+            //  無敵モードON
+            bSuperMode = true;
+
             //  プレイヤーのダメージ処理
-
-            /* ここで弾にEnemyが付いてないのでエラーが出るハズ */
-            /* 敵の弾用のクラスを作成して外部で弾生成時に威力を設定して */
-            /* それをゲッターでここで取得できるようにしたい↓　*/
-            //EnemyData ed = collision.GetComponent<Enemy>().GetEnemyData();
-            //Damage( ed.Attack );
-            Damage( 2 );    //  仮ダメージ処理
-
+            int power = collision.GetComponent<EnemyBullet>().GetPower();
+            Damage( power );
 
             //  死亡フラグON
             if(currentHealth <= 0)
@@ -211,6 +259,14 @@ public class PlayerHealth : MonoBehaviour
                 StartCoroutine(Death());       //  やられ演出
                 return;
             }
+
+            //  ダメージ顔UIに変更
+            StartCoroutine(ChangeToDmageFace());
+
+            //  ダメージSE再生
+            SoundManager.Instance.PlaySFX(
+            (int)AudioChannel.SFX_DAMAGE,
+            (int)SFXList.SFX_PLAYER_DAMAGE);
 
             //  全強化１段階ダウン
             PlayerShotManager ps = this.GetComponent<PlayerShotManager>();
@@ -256,9 +312,6 @@ public class PlayerHealth : MonoBehaviour
     //-------------------------------------------
     private async UniTask Blink()
     {
-        //  無敵モードON
-        bSuperMode = true;
-
         //GameObjectが破棄された時にキャンセルを飛ばすトークンを作成
         var token = this.GetCancellationTokenOnDestroy();
 
@@ -449,10 +502,73 @@ public class PlayerHealth : MonoBehaviour
     //-------------------------------------------
     //  やられ演出
     //-------------------------------------------
+    private IEnumerator GameOverAnimation()
+    {
+        //  最終待機時間
+        float procedural_time = 2.0f;
+        //  アニメーションにかかる時間
+        float duration = 1.0f;
+
+        //  初期座標の設定
+        gameOver.GetComponent<RectTransform>().anchoredPosition
+            = new Vector2 (-17, 563);
+
+        //  GameOver表示を有効化
+        gameOver.SetActive(true);
+
+        //  移動開始
+        gameOver.GetComponent<RectTransform>()
+            .DOAnchorPos(new Vector2(-17f,0f),duration)
+            .SetEase(Ease.OutElastic);
+
+        //  GameOverジングルを鳴らす
+        SoundManager.Instance.PlaySFX(
+        (int)AudioChannel.SFX_SYSTEM,
+        (int)SFXList.SFX_GAMEOVER);
+
+        //  １秒待つ
+        yield return new WaitForSeconds(duration);
+
+        //  回転開始
+        gameOver.GetComponent<RectTransform>()
+            .DOLocalRotate(new Vector3(0, 0, -35f),duration)
+            .SetEase(Ease.InCubic);
+
+        //  １秒待つ
+        yield return new WaitForSeconds(duration);
+
+        //  移動開始
+        gameOver.GetComponent<RectTransform>()
+            .DOAnchorPos(new Vector2(-17f,-700f),duration)
+            .SetEase(Ease.OutElastic);
+
+        //  １秒待つ
+        yield return new WaitForSeconds(duration);
+
+        //  GameOver表示を無効化
+        gameOver.SetActive(false);
+
+        //  最終待機
+        yield return new WaitForSeconds(procedural_time);
+
+        yield return null;
+    }
+
+    //-------------------------------------------
+    //  やられ演出
+    //-------------------------------------------
     private IEnumerator Death()
     {
         //  デバッグ表示
         Debug.Log("プレイヤーが死亡しました！");
+
+        //  ダメージ顔に変更する
+        faceImage.sprite = faceDamage;
+
+        //  死亡SE再生
+        SoundManager.Instance.PlaySFX(
+        (int)AudioChannel.SFX_DAMAGE,
+        (int)SFXList.SFX_PLAYER_DEATH);
 
         //  ライトOFF
         directionalLight.gameObject.SetActive(false);
@@ -491,7 +607,8 @@ public class PlayerHealth : MonoBehaviour
         //  やられエフェクトの終了を待つ
         yield return new WaitForSeconds(0.583f);
 
-        //  GameOver表示を待つ
+        //  GameOverアニメーションの終了を待つ
+        yield return StartCoroutine( GameOverAnimation() );
 
         //  GameOverへシーン遷移
         LoadingScene.Instance.LoadNextScene("GameOver");
@@ -507,72 +624,107 @@ public class PlayerHealth : MonoBehaviour
     //---------------------------------------------------
     private void CalculateHealthUI(int health)
     {
-        if(health < 0)Debug.LogError("healthにマイナスの値が入っています！");
-
-        //  体力0ならハートを全部非表示にする
-        if(health == 0)
+        if(health < 0)
         {
-            for(int i=0;i<heartList.Count;i++)
-            {
-                heartList[i].transform.GetChild((int)HeartType.Half)
-                    .gameObject.SetActive(false);
-                heartList[i].transform.GetChild((int)HeartType.Full)
-                    .gameObject.SetActive(false);
-            }
+            health = 0;
         }
-        else if(health == 1)
-        {
-            for(int i=0;i<heartList.Count;i++)
+
+            //  体力0ならハートを全部非表示にする
+            if (health == 0)
             {
-                if(i==0)
+                for(int i=0;i<heartList.Count;i++)
+                {
+                    heartList[i].transform.GetChild((int)HeartType.Half)
+                        .gameObject.SetActive(false);
+                    heartList[i].transform.GetChild((int)HeartType.Full)
+                        .gameObject.SetActive(false);
+                }
+            }
+            else if(health == 1)
+            {
+                for(int i=0;i<heartList.Count;i++)
+                {
+                    if(i==0)
+                    {
+                        heartList[i].transform.GetChild((int)HeartType.Half)
+                            .gameObject.SetActive(true);
+                        heartList[i].transform.GetChild((int)HeartType.Full)
+                            .gameObject.SetActive(false);
+                    }
+
+                    //  残りを非表示にする
+                    for(int j=1;j<heartList.Count;j++)
+                    {
+                        heartList[j].transform.GetChild((int)HeartType.Half)
+                            .gameObject.SetActive(false);
+                        heartList[j].transform.GetChild((int)HeartType.Full)
+                            .gameObject.SetActive(false);
+                    }
+
+                } 
+            }
+            else // 体力が２以上の時
+            {
+                //  一旦現在体力のとこまで全部フルで埋める
+                int fullNum = health / 2;
+                for(int i=0;i<fullNum;i++)
                 {
                     heartList[i].transform.GetChild((int)HeartType.Half)
                         .gameObject.SetActive(true);
                     heartList[i].transform.GetChild((int)HeartType.Full)
+                        .gameObject.SetActive(true);
+                }
+
+                //  奇数だった場合は最後の番号だけハーフにする
+                int taegetNum = health - fullNum;
+                if(health % 2 != 0)
+                {
+                    heartList[taegetNum-1].transform.GetChild((int)HeartType.Half)
+                        .gameObject.SetActive(true);
+                    heartList[taegetNum-1].transform.GetChild((int)HeartType.Full)
                         .gameObject.SetActive(false);
                 }
 
                 //  残りを非表示にする
-                for(int j=1;j<heartList.Count;j++)
+                for(int i=taegetNum;i<heartList.Count;i++)
                 {
-                    heartList[j].transform.GetChild((int)HeartType.Half)
+                    heartList[i].transform.GetChild((int)HeartType.Half)
                         .gameObject.SetActive(false);
-                    heartList[j].transform.GetChild((int)HeartType.Full)
+                    heartList[i].transform.GetChild((int)HeartType.Full)
                         .gameObject.SetActive(false);
                 }
-
-            } 
-        }
-        else // 体力が２以上の時
-        {
-            //  一旦現在体力のとこまで全部フルで埋める
-            int fullNum = health / 2;
-            for(int i=0;i<fullNum;i++)
-            {
-                heartList[i].transform.GetChild((int)HeartType.Half)
-                    .gameObject.SetActive(true);
-                heartList[i].transform.GetChild((int)HeartType.Full)
-                    .gameObject.SetActive(true);
             }
+    }
 
-            //  奇数だった場合は最後の番号だけハーフにする
-            int taegetNum = health - fullNum;
-            if(health % 2 != 0)
-            {
-                heartList[taegetNum-1].transform.GetChild((int)HeartType.Half)
-                    .gameObject.SetActive(true);
-                heartList[taegetNum-1].transform.GetChild((int)HeartType.Full)
-                    .gameObject.SetActive(false);
-            }
+    //---------------------------------------------------
+    //  顔UIをダメージ顔に変更する
+    //---------------------------------------------------
+    private IEnumerator ChangeToDmageFace()
+    {
+        //  ダメージ顔に変更する
+        faceImage.sprite = faceDamage;
 
-            //  残りを非表示にする
-            for(int i=taegetNum;i<heartList.Count;i++)
-            {
-                heartList[i].transform.GetChild((int)HeartType.Half)
-                    .gameObject.SetActive(false);
-                heartList[i].transform.GetChild((int)HeartType.Full)
-                    .gameObject.SetActive(false);
-            }
-        }
+        //  指定時間待つ
+        yield return new WaitForSeconds(1);
+
+        //  通常顔に戻す
+        faceImage.sprite = faceNormal;
+    }
+
+    //---------------------------------------------------
+    //  顔UIの絆創膏を残り体力によって切り替える
+    //---------------------------------------------------
+    private void ChangeDamageBand()
+    {
+        //  体力が最大体力の半分以下で絆創膏１が有効化
+        if(currentHealth <= currentMaxHealth/2)
+            faceBand1.SetActive(true);
+        else faceBand1.SetActive(false);
+
+        //  残り体力が2で絆創膏２が有効化
+        if(currentHealth <= 2)
+            faceBand2.SetActive(true);
+        else faceBand2.SetActive(false);
+
     }
 }

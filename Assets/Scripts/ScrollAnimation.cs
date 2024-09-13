@@ -57,7 +57,7 @@ public class ScrollAnimation : MonoBehaviour
     //  Šª•¨‚ð•Â‚¶‚é
     public IEnumerator CloseScroll()
     {
-        transform.DOMoveX(1240,2)
+        transform.DOMoveX(1240.5f,2)
         .SetEase(Ease.OutCubic)
         .OnStart(
         () =>

@@ -31,9 +31,7 @@ enum eNormalShotLevel
 {
     Lv1 = 1,
     Lv2,
-    Lv3,
-
-    LvMax
+    Lv3
 }
 
 public class PlayerShotManager : MonoBehaviour
@@ -64,12 +62,18 @@ public class PlayerShotManager : MonoBehaviour
     private float shotCount = 0;
     //  ノーマル弾の弾を何秒毎に撃てるか
     private float shotInterval = 0.05f;
-    //  ノーマル弾のレベル
-    private int normalShotLevel;
     //  ノーマル弾の移動量
     private const float normalSpeed = -20f; 
     //  ノーマル弾の攻撃力
     private float normalShotPower;
+    //  ノーマル弾のレベル
+    private int normalShotLevel;
+    //  ノーマル弾のレベル表示用画像のプレハブ
+    [SerializeField] private GameObject shotPowerLevelIcon;
+    //  ノーマル弾のショットパワーアイコンのリスト
+    private List<GameObject> shotPowerIconList = new List<GameObject>();
+    //  ノーマル弾のショットパワーアイコンの親オブジェクトの位置取得用
+    [SerializeField] private GameObject shotPowerIconRootObj;
 
     //  魂バート弾の種類
     public enum CONVERT_TYPE
@@ -161,7 +165,7 @@ public class PlayerShotManager : MonoBehaviour
         normalShotPower = 1.0f;
         shotCount = 0;
         canShot = true;
-        normalShotLevel = 1; // 最初はレベル１
+        normalShotLevel = 3; // 最初はレベル１
         gaugeValue = 0.0f;
         convertState = ConvertState.None;
         fieldObjectScale = new Vector3(3f,3f,3f);
@@ -184,6 +188,17 @@ public class PlayerShotManager : MonoBehaviour
         convertShotPowerFull[(int)SHOT_TYPE.WADATSUMI] = 5f;
         convertShotPowerFull[(int)SHOT_TYPE.HAKUMEN] = 10f;
 
+        //  親オブジェクトの子オブジェクトとしてボムアイコンを生成
+        for( int i=0; i<(int)eNormalShotLevel.Lv3;i++ )
+        {
+            GameObject obj = Instantiate(shotPowerLevelIcon);
+            obj.GetComponent<RectTransform>().SetParent( shotPowerIconRootObj.transform);
+            obj.GetComponent<RectTransform>().localScale = Vector3.one;
+            obj.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0,0,0);
+
+            shotPowerIconList.Add( obj );   //  リストに追加
+        }
+
         //  テスト用
         gamestatus = (int)eGameState.Zako;
         b = true;
@@ -197,13 +212,17 @@ public class PlayerShotManager : MonoBehaviour
         //  GameManagerから状態を取得
         gamestatus = gameManager.GetGameState();
 
+        //  通常弾レベルアイコンを更新
+        UpdateShotPowerIcon();
+
+
         //  Enterでザコボス切り替え
-        if(test.WasPressedThisFrame())
+        if (test.WasPressedThisFrame())
         {
             b = !b;
-            Debug.Log("切り替えフラグ:"+ b);
+            Debug.Log("切り替えフラグ:" + b);
 
-            if(b)
+            if (b)
             {
                 gamestatus = (int)eGameState.Zako;
                 gameManager.SetGameState(gamestatus);
@@ -215,12 +234,12 @@ public class PlayerShotManager : MonoBehaviour
             }
 
             GameManager.Instance.SetGameState(gamestatus);
-            
-            Debug.Log("gamestatus:"+ gamestatus);
+
+            Debug.Log("gamestatus:" + gamestatus);
         }
 
         //  ゲーム段階別処理
-        switch(gamestatus)
+        switch (gamestatus)
         {
             case (int)eGameState.Zako:
                 NormalShot(true);                    //  通常弾
@@ -234,6 +253,26 @@ public class PlayerShotManager : MonoBehaviour
                 break;
         }
 
+    }
+
+    //------------------------------------------------
+    //  通常弾のパワーアイコンの数を更新する
+    //------------------------------------------------
+    private void UpdateShotPowerIcon()
+    {
+        if(normalShotLevel <= 0)Debug.LogError("normalShotLevelに0以下の値が入っています！");
+
+        //  1回全部表示
+        for(int i=0;i<shotPowerIconList.Count;i++)
+        {
+            shotPowerIconList[i].gameObject.SetActive(true);
+        }
+
+        //  非表示処理
+        for(int i=shotPowerIconList.Count-1;i>normalShotLevel-1;i--)
+        {
+            shotPowerIconList[i].gameObject.SetActive(false);
+        }
     }
 
     //---------------------------------------------------------
@@ -262,18 +301,24 @@ public class PlayerShotManager : MonoBehaviour
         if( state == (int)eGameState.Zako )
         {
             //  移動ベクトル設定
+            velocity.x = 0f;
             velocity.y = normalSpeed;
+            velocity.z = 0f;
             return velocity;
         }
         else if( state == (int)eGameState.Boss ) // ボス戦中なら反転
         {
             //  移動ベクトル設定
+            velocity.x = 0f;
             velocity.y = 20f;
+            velocity.z = 0f;
             return velocity;
         }
         else if( state == (int)eGameState.Event ) // 会話イベント中なら撃てない
         {
+            velocity.x = 0f;
             velocity.y = 0.0f;
+            velocity.z = 0f;
             canShot = false;
             shotCount = 0;
         }
@@ -391,6 +436,7 @@ public class PlayerShotManager : MonoBehaviour
                         break;
                     case 3: //  レベル３
                         const int lv3BulletNum = 5; //  一度に出る弾の数
+                        float Degree = 10;  //  角度
 
                         //  弾の数分のリストを確保
                         List<Transform> firePointLv3 = new List<Transform>(lv3BulletNum);
@@ -402,26 +448,55 @@ public class PlayerShotManager : MonoBehaviour
 
                         for(int i=0;i<firePointLv3.Count;i++)
                         {
+                            //  弾を生成
                             obj = Instantiate(
-                            normalBulletPrefab,
-                            firePointLv3[i].position,
-                            Quaternion.identity);
+                                normalBulletPrefab,
+                                firePointLv3[i].position,
+                                Quaternion.identity);
 
                             //  Yを反転するかどうか設定する
-                            sr = obj.GetComponent<SpriteRenderer>(); 
+                            sr = obj.GetComponent<SpriteRenderer>();
                             sr.flipY = flipY;
 
                             //  反転時に座標を調整
-                            if(!sr.flipY)
+                            if (!sr.flipY)
                             {
-                                obj.transform.position = 
+                                obj.transform.position =
                                     new Vector3(firePointLv3[i].position.x,
                                     firePointLv3[i].position.y + biasY,
                                     firePointLv3[i].position.z);
                             }
 
-                            //  ボス戦かどうかでVelocityを取得して設定
+                            //  ボス戦かどうかでVelocityを取得
                             v = GetReverseVelocity(gamestatus);
+                            //  端の弾だけ角度をつける
+                            if (i == firePointLv3.Count - 2)
+                            {
+                                if (gamestatus == (int)eGameState.Zako)
+                                {
+                                    v = Quaternion.Euler(0, 0, -Degree) * v;
+                                    obj.transform.Rotate(0, 0, -Degree);
+                                }
+                                else
+                                {
+                                    v = Quaternion.Euler(0, 0, Degree) * v;
+                                    obj.transform.Rotate(0, 0, Degree);
+                                }
+
+                            }
+                            else if (i == firePointLv3.Count - 1)
+                            {
+                                if (gamestatus == (int)eGameState.Zako)
+                                {
+                                    v = Quaternion.Euler(0, 0, Degree) * v;
+                                    obj.transform.Rotate(0, 0, Degree);
+                                }
+                                else
+                                {
+                                    v = Quaternion.Euler(0, 0, -Degree) * v;
+                                    obj.transform.Rotate(0, 0, -Degree);
+                                }
+                            }
                             velocity = v;
                             n = obj.GetComponent<NormalBullet>();
                             n.SetVelocity(velocity);
@@ -436,41 +511,6 @@ public class PlayerShotManager : MonoBehaviour
                 
             }
         }
-
-        //if(!canShot)
-        //{
-        //    if(shotCount >= shotInterval)
-        //    {
-        //        canShot = true;
-        //        shotCount = 0;
-        //    }
-        //    else shotCount += Time.deltaTime;
-        //}
-        //else
-        //{
-        //    //  弾発射
-        //    if( shot.WasPressedThisFrame() ) 
-        //    {
-        //        canShot = false;
-
-        //        //  通常弾の連続で撃った数を0に
-        //        bulletCount = 0;
-        //    }
-        //}
-
-        ////  10フレームに1回撃つ
-        //shotIntervalCount++;
-
-        //if(shotIntervalCount % bulletInterval2 == 0)
-        //{
-        //    //  ５連ショット
-        //    if(bulletCount < MaxContinuousShot)
-        //    {
-        //        Instantiate( bulletPrefab[(int)SHOT_TYPE.NORMAL], firePoint1_L.position, bulletPrefab[(int)SHOT_TYPE.NORMAL].transform.rotation);
-        //        bulletCount++;
-        //        shotIntervalCount = 0;
-        //    }
-        //}
     }
 
     //---------------------------------------------------
@@ -504,6 +544,9 @@ public class PlayerShotManager : MonoBehaviour
 
         //  Velocity格納用
         Vector3 v = Vector3.zero;
+
+        //  魂バースト用
+        PlayerBombManager konburst = this.GetComponent<PlayerBombManager>();
 
         switch(convertState)
         {
@@ -644,18 +687,21 @@ public class PlayerShotManager : MonoBehaviour
             //  押している間ゲージを増加させる
             if (shotConvert.IsPressed())
             {
-                KonFieldAlphaAnimation(0.0f,0.784f,0.5f);
-                fieldObject.transform.DOScale(
-                    new Vector3(6f,6f,6f),
-                    0.5f);
                 if(convertState == ConvertState.None)
                 {
-                    //  溜めSE再生
-                    SoundManager.Instance.PlaySFX(
-                        (int)AudioChannel.SFX_CONVERT_SHOT,
-                        (int)SFXList.SFX_CONVERT_SHOT_GAUGE1);
+                    KonFieldAlphaAnimation(0.0f,0.784f,0.5f);
+                    fieldObject.transform.DOScale(
+                        new Vector3(6f,6f,6f),
+                        0.5f);
+                    if(convertState == ConvertState.None)
+                    {
+                        //  溜めSE再生
+                        SoundManager.Instance.PlaySFX(
+                            (int)AudioChannel.SFX_CONVERT_SHOT,
+                            (int)SFXList.SFX_CONVERT_SHOT_GAUGE1);
 
-                    convertState = ConvertState.Restore;
+                        convertState = ConvertState.Restore;
+                    }
                 }
             }
 
@@ -703,6 +749,9 @@ public class PlayerShotManager : MonoBehaviour
                     sr = obj.GetComponent<SpriteRenderer>(); 
                     sr.flipY = flipY;
 
+                    //  魂バーストゲージを少し増やす
+                    konburst.PlusKonburstGauge(false);
+
                     convertState = ConvertState.ReleaseMidPower;
                 }
                 else if(convertState == ConvertState.FullPower)
@@ -729,12 +778,15 @@ public class PlayerShotManager : MonoBehaviour
                     sr = obj.GetComponent<SpriteRenderer>(); 
                     sr.flipY = flipY;
 
+                    //  魂バーストゲージを増やす
+                    konburst.PlusKonburstGauge(true);
+
                     convertState = ConvertState.ReleaseFullPower;
                 }
             }
 
             //  吸魂フィールドのスケールを更新
-            fieldObject.transform.localScale = fieldObjectScale;
+            //fieldObject.transform.localScale = fieldObjectScale;
         }
     }
 

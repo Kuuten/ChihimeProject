@@ -9,15 +9,43 @@ using UnityEngine;
 //--------------------------------------------------------------
 public class EnemyBullet : MonoBehaviour
 {
+    //  外部から弾のベクトルと移動スピードを取得し、移動するだけ
+
+    private Vector3 velocity;
+    private float speed;
+
+    private int power;
     
-    void Start()
+    void Awake()
     {
-        
+        speed = 0f;
+        power = 0;
+        velocity = Vector3.zero;
     }
 
     void Update()
     {
-        //  上方向に発射される
-        transform.position += new Vector3(2,3,0) * Time.deltaTime;
+        transform.position += speed * velocity * Time.deltaTime;
     }
+
+    //-------------------------------------------------
+    //  当たり判定
+    //-------------------------------------------------
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("DeadWall") ||
+            collision.CompareTag("DeadWallBottom"))
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+
+    //------------------------------------------------------
+    //  プロパティ
+    //------------------------------------------------------
+    public void SetVelocity(Vector3 v){ velocity = v; }
+    public void SetSpeed(float s){ speed = s; }
+    public void SetPower(int p){ power = p; }
+    public int GetPower(){ return power; }
 }

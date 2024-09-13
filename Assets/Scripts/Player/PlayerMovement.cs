@@ -8,11 +8,11 @@ using UnityEngine.InputSystem;
 //  スピードのレベル
 enum eSpeedLevel
 {
-    Lv1 = 1,
+    Lv1,
     Lv2,
     Lv3,
 
-    LvMax
+    Max
 };
 
 //--------------------------------------------------------------
@@ -23,7 +23,7 @@ enum eSpeedLevel
 public class PlayerMovement : MonoBehaviour
 {
     //  移動スピード
-    private float[] moveSpeed = new float[(int)eSpeedLevel.LvMax];
+    private float[] moveSpeed = new float[(int)eSpeedLevel.Max];
 
     //  移動スピードの設定値
     private const float moveSpeedLv1 = 5.0f;
@@ -32,6 +32,12 @@ public class PlayerMovement : MonoBehaviour
 
     //  スピードレベル
     private int speedLevel;
+    //  スピードレベル表示用画像のプレハブ
+    [SerializeField] private GameObject speedLevelIcon;
+    //  スピードレベルアイコンのリスト
+    private List<GameObject> speedLevelIconList = new List<GameObject>();
+    //  スピードレベルアイコンの親オブジェクトの位置取得用
+    [SerializeField] private GameObject speedLevelIconRootObj;
 
     //  Animatorの再生速度の設定値
     private const float AnimSpeedLv1 = 0.5f;
@@ -64,6 +70,17 @@ public class PlayerMovement : MonoBehaviour
         //  最初はLv.1
         speedLevel = (int)eSpeedLevel.Lv1;
 
+        //  親オブジェクトの子オブジェクトとしてスピードレベルアイコンを生成
+        for( int i=0; i<(int)eSpeedLevel.Max;i++ )
+        {
+            GameObject obj = Instantiate(speedLevelIcon);
+            obj.GetComponent<RectTransform>().SetParent( speedLevelIconRootObj.transform);
+            obj.GetComponent<RectTransform>().localScale = Vector3.one;
+            obj.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0,0,0);
+
+            speedLevelIconList.Add( obj );   //  リストに追加
+        }
+
         bCanMove = true;
     }
 
@@ -83,16 +100,39 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
 
+        //  スピードレベルアイコンを更新
+        UpdateSpeedLevelIcon();
+
         //  移動
         //Move();
         NewInputMove();
 
     }
 
+    //------------------------------------------------
+    //  スピードレベルアイコンの数を更新する
+    //------------------------------------------------
+    private void UpdateSpeedLevelIcon()
+    {
+        if(speedLevel < 0)Debug.LogError("normalShotLevelにマイナスの値が入っています！");
+
+        //  1回全部表示
+        for(int i=0;i<speedLevelIconList.Count;i++)
+        {
+            speedLevelIconList[i].gameObject.SetActive(true);
+        }
+
+        //  非表示処理
+        for(int i=speedLevelIconList.Count-1;i>speedLevel;i--)
+        {
+            speedLevelIconList[i].gameObject.SetActive(false);
+        }
+    }
+
     //-------------------------------------------
     //  プロパティ
     //-------------------------------------------
-    public float GetSpeedLevel(){ return speedLevel; }
+    public int GetSpeedLevel(){ return speedLevel; }
     public void SetSpeedLevel(int level)
     {
         //  範囲外なら

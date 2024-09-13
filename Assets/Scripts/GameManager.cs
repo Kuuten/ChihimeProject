@@ -50,6 +50,11 @@ public class GameManager : MonoBehaviour
     private const int bigKonValue = 100;
     public int GetBigKonValue(){ return bigKonValue; }
 
+    //  出現ポイント
+    private GameObject[] spawner;
+    //  制御点
+    private GameObject[] controlPoint;
+
 
     //------------------------------------------------------------------------------
     //  プロパティ
@@ -196,11 +201,13 @@ public class GameManager : MonoBehaviour
         int hP = player.GetComponent<PlayerHealth>().GetCurrentHealth();
         int bombNum = player.GetComponent<PlayerBombManager>().GetBombNum();
         int kon = MoneyManager.Instance.GetKonNum();
+        int shotLV = player.GetComponent<PlayerShotManager>().GetNormalShotLevel();;
+        int speedLV = player.GetComponent<PlayerMovement>().GetSpeedLevel();
 
         if(clearFlag)
         {
             //  情報保存
-            PlayerInfoManager.SetInfo(maxHP,hP,kon,bombNum);
+            PlayerInfoManager.SetInfo(maxHP,hP,kon,bombNum,shotLV,speedLV);
 
             // 巻物アニメーション
 

@@ -9,6 +9,7 @@ using UnityEngine;
         MUSIC,
         SFX,
         SFX_ENEMY,
+        ENEMY_SHOT,
         SFX_DAMAGE,
         SFX_SYSTEM,
         SFX_NORMAL_SHOT,
@@ -60,7 +61,11 @@ using UnityEngine;
         SFX_CONVERT_SHOT_FAIL,
         SFX_DOUJI_CONVERT_SHOT_MIDDLE,
         SFX_DOUJI_CONVERT_SHOT_FULL,
-        SFX_CONCURST_CUTIN,
+        SFX_KONBURST_CUTIN,
+        SFX_PLAYER_DAMAGE,
+        SFX_PLAYER_DEATH,
+        SFX_ENEMY_SHOT,
+        SFX_ENEMY_DAMAGE,
 
         SFX_DOUJI_SHOT,
         SFX_TSUKUMO_SHOT,
@@ -70,10 +75,8 @@ using UnityEngine;
         SFX_HAKUMEN_SHOT,
 
         //  ゲームクリア
-        SFX_VICTORY,
-        SFX_LOSE,
-        SFX_GAMECLEAR01,
-        SFX_GAMECLEAR02,
+        SFX_STAGECLEAR,
+        SFX_GAMEOVER,
 
         CLIP_MAX
     };
@@ -144,7 +147,7 @@ public class SoundManager : MonoBehaviour
     {
 #if UNITY_EDITOR
         Debug.Assert(
-            channelType > (int)AudioChannel.MUSIC && channelType < (int)AudioChannel.CHANNEL_MAX,
+            channelType > (int)AudioChannel.MUSIC || channelType < (int)AudioChannel.CHANNEL_MAX,
             "範囲外のchannelTypeを指定しているかBGMを指定しています！"
         );
         Debug.Assert(

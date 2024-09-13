@@ -18,7 +18,6 @@ public class TitleManager : MonoBehaviour
 {
     [SerializeField] private FadeIO Fade;
     [SerializeField] private ScrollAnimation Scroll;
-    [SerializeField] private SoundManager Sound;
 
     [SerializeField] private LogoEasing logoEasing;
     [SerializeField] private LogoScaling logoScaling;
@@ -83,11 +82,7 @@ public class TitleManager : MonoBehaviour
         Buttons.SetActive(true);
 
         //  タイトルBGM再生
-        if(Sound == null)
-        {
-            Sound = GameObject.Find("SoundManager").GetComponent<SoundManager>();
-        }
-        Sound.PlayBGM((int)MusicList.BGM_TITLE);
+        SoundManager.Instance.PlayBGM((int)MusicList.BGM_TITLE);
 
         yield return null;
     }
@@ -149,7 +144,7 @@ public class TitleManager : MonoBehaviour
     //  タイトルのBGMを止める
     public void StopBGM()
     {
-        Sound.Stop((int)AudioChannel.MUSIC);
+        SoundManager.Instance.Stop((int)AudioChannel.MUSIC);
     }
 
     // フェードインの完了を待つ
@@ -277,7 +272,7 @@ public class TitleManager : MonoBehaviour
         else
         {
             //  セレクトSE再生
-            Sound.PlaySFX((int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_SELECT);
+            SoundManager.Instance.PlaySFX((int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_SELECT);
         }
 
         if (verticalInput < 0 && nevigate.WasPressedThisFrame())

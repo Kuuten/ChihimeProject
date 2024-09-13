@@ -1,6 +1,7 @@
 using DG.Tweening;
 using DG.Tweening.Core.Easing;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -22,20 +23,31 @@ public class PlayerBombManager : MonoBehaviour
     private GameObject FadeObj;
     [SerializeField] BombFade bombFade;
 
-    //  魂バーストゲージの値取得用
-    [SerializeField] Slider konBurstSlider;
     //  ドウジの魂バーストプレハブ
     [SerializeField] GameObject doujiKonburstPrefab;
     //  魂バーストカットイン画像プレハブ
     [SerializeField] GameObject[] konburstCutinPrefab;
     //  魂バーストの威力
     private float[] konburstShotPower = new float[(int)SHOT_TYPE.TYPE_MAX];
+    //  魂バーストゲージのスライダー
+    [SerializeField] Slider konburstSlider;
+    //  魂バーストゲージMAX字のランプ
+    [SerializeField] GameObject konburstLamp;
+    //  魂バーストゲージの1回あたりの増加量
+    private const float konbrstPlusValue = 0.5f;    //  暫定値
+    //  魂バーストゲージのFillオブジェクト
+    [SerializeField] GameObject koburstGaugeFill;
+    //  魂バーストゲージのFillのデフォルト画像
+    [SerializeField] Sprite koburstDefaultSprite;
 
-
-    //  BOMBに表示されるテキスト
-    [SerializeField] private TextMeshProUGUI bombText;
+    //  ボムアイコンの親オブジェクトの位置取得用
+    [SerializeField] private GameObject bombIconRootObj;
+    //  ボムアイコンのプレハブ
+    [SerializeField] private GameObject bombIconPrefab;
+    //  ボムアイコンオブジェクトのリスト
+    private List<GameObject> bombIconList = new List<GameObject>();
     private int bombNum;
-    private const int bombMaxNum = 9;
+    private const int bombMaxNum = 5;
     private float bombPower = 50f; //  ボム1発の威力
 
     InputAction inputBomb;
@@ -56,17 +68,34 @@ public class PlayerBombManager : MonoBehaviour
         //  最初は発動できる
         bCanBomb = true;
 
-        //  魂バート弾ごとの弾の威力
+        //  最初はレインボーOFF
+        koburstGaugeFill.GetComponent<Animator>().enabled = false;
+
+        //  魂バーストごとの弾の威力
         konburstShotPower[(int)SHOT_TYPE.DOUJI]     = 100f;
         konburstShotPower[(int)SHOT_TYPE.TSUKUMO]   = 1f;
         konburstShotPower[(int)SHOT_TYPE.KUCHINAWA] = 5f;
         konburstShotPower[(int)SHOT_TYPE.KURAMA]    = 40f;
         konburstShotPower[(int)SHOT_TYPE.WADATSUMI] = 1f;   //  ハート回復量
         konburstShotPower[(int)SHOT_TYPE.HAKUMEN]   = 10f;
+
+        //  親オブジェクトの子オブジェクトとしてボムアイコンを生成
+        for( int i=0; i<bombMaxNum;i++ )
+        {
+            GameObject obj = Instantiate(bombIconPrefab);
+            obj.GetComponent<RectTransform>().SetParent( bombIconRootObj.transform);
+            obj.GetComponent<RectTransform>().localScale = Vector3.one;
+            obj.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0,0,0);
+
+            bombIconList.Add( obj );   //  リストに追加
+        }
     }
 
     void Update()
     {
+        //  ボムのアイコンを更新
+        UpdateBombIcon();
+
         //  GameManagerから状態を取得
         int gamestatus = GameManager.Instance.GetGameState();
 
@@ -82,9 +111,6 @@ public class PlayerBombManager : MonoBehaviour
             case (int)eGameState.Event:
                 break;
         }
-
-        //  ボムのテキストを更新
-        bombText.text = $"{bombNum}";
     }
 
     //  ボムを加算
@@ -116,7 +142,7 @@ public class PlayerBombManager : MonoBehaviour
     private void BombAndKonBurstUpdate(bool fripY)
     {
         //  魂バーストゲージがMAXだったら
-        if( konBurstSlider.value >= 1.0f )
+        if( konburstSlider.value >= 1.0f )
         {
             //  魂バーストゲージを点滅Animatorに切り替え
 
@@ -125,8 +151,8 @@ public class PlayerBombManager : MonoBehaviour
                 //  ボムを発動不可能にする
                 bCanBomb = false;
 
-                //  ゲージを0にセット
-                konBurstSlider.value = 0.0f;
+                //  魂バーストゲージをリセット&ランプOFF
+                ResetKonburstGauge();
 
                 //  魂バーストゲージを通常Animatorに切り替え
 
@@ -173,6 +199,7 @@ public class PlayerBombManager : MonoBehaviour
 
         //  ボムが0なら発動できない
         if(bombNum <= 0)bCanBomb = false; 
+        else bCanBomb = true; 
     }
 
     //-------------------------------------------
@@ -262,7 +289,7 @@ public class PlayerBombManager : MonoBehaviour
         //  カットインSE再生
         SoundManager.Instance.PlaySFX(
             (int)AudioChannel.SFX_BOMB,
-            (int)SFXList.SFX_CONCURST_CUTIN);
+            (int)SFXList.SFX_KONBURST_CUTIN);
 
         //  画面がホワイトでフェードアウトする
         bombFade = FadeObj.GetComponent<BombFade>();
@@ -281,8 +308,8 @@ public class PlayerBombManager : MonoBehaviour
         Destroy( FadeObj );
         FadeObj = null;
 
-        //  魂バーストの弾消し用の当たり判定オブジェクトを無効化
-        bombCollision.SetActive(false);
+         //  魂バーストの弾消し用の当たり判定オブジェクトを有効化
+        konBurstCollision.SetActive(false);
 
         //  プレイヤーの無敵を解除
         ph.SetSuperMode(false);
@@ -457,6 +484,26 @@ public class PlayerBombManager : MonoBehaviour
     }
 
     //------------------------------------------------
+    //  ボムアイコンの数を更新する
+    //------------------------------------------------
+    private void UpdateBombIcon()
+    {
+        if(bombNum < 0)Debug.LogError("bombNumにマイナスの値が入っています！");
+
+        //  1回全部表示
+        for(int i=0;i<bombIconList.Count;i++)
+        {
+            bombIconList[i].gameObject.SetActive(true);
+        }
+
+        //  非表示処理
+        for(int i=bombIconList.Count-1;i>bombNum-1;i--)
+        {
+            bombIconList[i].gameObject.SetActive(false);
+        }
+    }
+
+    //------------------------------------------------
     //  プロパティ
     //------------------------------------------------
     public int GetBombNum(){ return bombNum; }
@@ -465,4 +512,52 @@ public class PlayerBombManager : MonoBehaviour
     public bool GetCanBomb(){ return bCanBomb; }
     public float GetBombPower(){ return bombPower; }
     public float GetKonburstShotPower(){ return konburstShotPower[(int)PlayerInfoManager.g_CONVERTSHOT]; }
+
+    //------------------------------------------------
+    //  魂バーストゲージを増やす
+    //------------------------------------------------
+    public void PlusKonburstGauge(bool full)
+    {
+        if(full)konburstSlider.value += konbrstPlusValue;
+        else konburstSlider.value += konbrstPlusValue / 2;
+            
+        if(konburstSlider.value >= 1.0f)
+        {   
+            konburstSlider.value = 1.0f;
+
+            //  ゲージのレインボーON
+            koburstGaugeFill.GetComponent<Animator>().enabled = true;
+
+            //  MAXランプを有効にする
+            SetLampActive(true);
+        }
+    }
+
+    //------------------------------------------------
+    //  魂バーストゲージをリセットする
+    //------------------------------------------------
+    public void ResetKonburstGauge()
+    {
+        konburstSlider.value = 0.0f;
+
+        //  ゲージのレインボーOFF
+        koburstGaugeFill.GetComponent<Animator>().enabled = false;
+
+        //  ゲージの画像を元に戻す
+        koburstGaugeFill.GetComponent<Image>().sprite = koburstDefaultSprite;
+
+        SetLampActive(false);
+    }
+
+    //------------------------------------------------
+    //  MAXランプを有効・無効にする
+    //------------------------------------------------
+    public void SetLampActive(bool active)
+    {
+        if(konburstLamp.activeSelf != active)
+        {
+            konburstLamp.SetActive(active);
+        }
+    }
+
 }

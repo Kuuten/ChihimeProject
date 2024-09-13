@@ -764,7 +764,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Fade: {fileID: 202123735}
   Scroll: {fileID: 2084967205}
-  Sound: {fileID: 0}
   logoEasing: {fileID: 1088322366}
   logoScaling: {fileID: 1088322365}
   Buttons: {fileID: 41924097}
@@ -8026,6 +8025,10 @@ PrefabInstance:
       propertyPath: Sound
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5073037275599526651, guid: 52aa9f3f596a63f49aba5952ba61c981, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5470602848136937225, guid: 52aa9f3f596a63f49aba5952ba61c981, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -8052,11 +8055,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5470602848136937225, guid: 52aa9f3f596a63f49aba5952ba61c981, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 80
+      value: 81
       objectReference: {fileID: 0}
     - target: {fileID: 5470602848136937225, guid: 52aa9f3f596a63f49aba5952ba61c981, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 720
+      objectReference: {fileID: 0}
+    - target: {fileID: 5470602848136937225, guid: 52aa9f3f596a63f49aba5952ba61c981, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5470602848136937225, guid: 52aa9f3f596a63f49aba5952ba61c981, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8088,7 +8095,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5470602848136937225, guid: 52aa9f3f596a63f49aba5952ba61c981, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1240
+      value: 1240.5
       objectReference: {fileID: 0}
     - target: {fileID: 5470602848136937225, guid: 52aa9f3f596a63f49aba5952ba61c981, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -8113,6 +8120,10 @@ PrefabInstance:
     - target: {fileID: 5828105596134227604, guid: 52aa9f3f596a63f49aba5952ba61c981, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7136061710748614277, guid: 52aa9f3f596a63f49aba5952ba61c981, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 720
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8158,6 +8169,14 @@ PrefabInstance:
     - target: {fileID: 300001678879859674, guid: 5a61f23c21085e546b7f4bb1543e78f7, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 300001678879859674, guid: 5a61f23c21085e546b7f4bb1543e78f7, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 300001678879859674, guid: 5a61f23c21085e546b7f4bb1543e78f7, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.01
       objectReference: {fileID: 0}
     - target: {fileID: 300001678879859674, guid: 5a61f23c21085e546b7f4bb1543e78f7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8248,6 +8267,10 @@ PrefabInstance:
     - target: {fileID: 918719241501148476, guid: 25cdde146db1e4f4b9624e8e64883c31, type: 3}
       propertyPath: m_Name
       value: Fade
+      objectReference: {fileID: 0}
+    - target: {fileID: 918719241501148476, guid: 25cdde146db1e4f4b9624e8e64883c31, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4756048590594060058, guid: 25cdde146db1e4f4b9624e8e64883c31, type: 3}
       propertyPath: m_Pivot.x
