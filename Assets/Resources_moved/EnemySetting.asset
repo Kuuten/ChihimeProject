@@ -15,7 +15,7 @@ MonoBehaviour:
   DataList:
   - Id: Kooni
     Hp: 3
-    Attack: 6
+    Attack: 1
     Money: 100
   - Id: Onibi
     Hp: 20

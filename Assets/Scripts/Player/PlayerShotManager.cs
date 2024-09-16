@@ -2,7 +2,6 @@ using DG.Tweening.Core.Easing;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -165,7 +164,7 @@ public class PlayerShotManager : MonoBehaviour
         normalShotPower = 1.0f;
         shotCount = 0;
         canShot = true;
-        normalShotLevel = 3; // 最初はレベル１
+        normalShotLevel = 1; // 最初はレベル１
         gaugeValue = 0.0f;
         convertState = ConvertState.None;
         fieldObjectScale = new Vector3(3f,3f,3f);
@@ -242,14 +241,22 @@ public class PlayerShotManager : MonoBehaviour
         switch (gamestatus)
         {
             case (int)eGameState.Zako:
+                shot.Enable();
+                shotConvert.Enable();
                 NormalShot(true);                    //  通常弾
                 ConvertShot(true);                   //  魂バート弾
                 break;
             case (int)eGameState.Boss:
+                shot.Enable();
+                shotConvert.Enable();
                 NormalShot(false);                   //  通常弾
                 ConvertShot(false);                  //  魂バート弾
                 break;
             case (int)eGameState.Event:
+                shot.Disable();
+                shotConvert.Disable();
+                NormalShot(false);                   //  通常弾
+                ConvertShot(false);                  //  魂バート弾
                 break;
         }
 
@@ -784,9 +791,6 @@ public class PlayerShotManager : MonoBehaviour
                     convertState = ConvertState.ReleaseFullPower;
                 }
             }
-
-            //  吸魂フィールドのスケールを更新
-            //fieldObject.transform.localScale = fieldObjectScale;
         }
     }
 

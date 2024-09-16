@@ -49,9 +49,10 @@ public class EnemyManager : MonoBehaviour
     private const float appearY = -5.5f;
 
 
-    //private int enemyDestroyMaxNum = 61;    //  １ステージの最大敵数
+    private int enemyDestroyMaxNum = 61;    //  １ステージの最大敵数
     private int enemyGenerateNum = 0;       //  生成された敵数
-    private int enemyDestroyNum = 0;         //  破壊された敵数
+    private int enemyDestroyNum = 0;        //  破壊された敵数
+    private bool endZakoStage;              //  ザコステージの終了フラグ
 
     //  ドロップする魂のプレハブ達
     private List<GameObject> konItems;
@@ -83,6 +84,9 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private Transform[] spawners;       //  スポナー
     [SerializeField] private Transform[] controlPoints;  //  制御点
 
+    //  イベントシーンマネージャーオブジェクト
+    [SerializeField] private GameObject eventSceneManager;
+
     void Awake()
     {
         if (Instance != null)
@@ -99,6 +103,7 @@ public class EnemyManager : MonoBehaviour
         //timer = 0;
         enemyGenerateNum = 0;
         enemyDestroyNum = 0;
+        endZakoStage = false;
 
         /* デバッグ用 */
         PlayerInput playerInput = GameManager.Instance.GetPlayer().GetComponent<PlayerInput>();
@@ -242,7 +247,6 @@ public class EnemyManager : MonoBehaviour
         //  Eneterで敵出現
         if (test.WasPressedThisFrame())
         {
-
             //  敵の出現開始
             StartCoroutine( AppearEnemy_Stage01() );
         }
@@ -259,6 +263,8 @@ public class EnemyManager : MonoBehaviour
     public Vector3 GetSpawnerPos(int i){ return spawners[i].position; }
     public Vector3 GetControlPointPos(int i){ return controlPoints[i].position; }
     public GameObject GetBulletPrefab(int type){ return enemyBullet[type]; }
+    public bool GetEndZakoStage(){ return endZakoStage; }
+    public void SetEndZakoStage(bool b){ endZakoStage = b; }
 
     //------------------------------------------------
     //  ランダムなX座標を返す
@@ -280,6 +286,29 @@ public class EnemyManager : MonoBehaviour
         obj.GetComponent<Enemy>().SetEnemyData(enemySetting);
 
         enemyGenerateNum++; //  敵生成数+1
+    }
+
+    //------------------------------------------------
+    //  ボスの敵を情報をセットする
+    //------------------------------------------------
+    public void SetBoss(BossType bossType)
+    {
+        //  敵情報の設定
+        GameObject obj = EventSceneManager.Instance.GetBossObject();
+
+        //  ステータスを設定
+        if(bossType == BossType.Douji)
+            obj.GetComponent<BossDouji>().SetBossData(enemySetting);
+        //else if(bossType == BossType.Tsukumo)
+        //    obj.GetComponent<BossTsukumo>().SetBossData(enemySetting);
+        //else if(bossType == BossType.Kuchinawa)
+        //    obj.GetComponent<BossKuchinawa>().SetBossData(enemySetting);
+        //else if(bossType == BossType.Kurama)
+        //    obj.GetComponent<BossKurama>().SetBossData(enemySetting);
+        //else if(bossType == BossType.Wadatsumi)
+        //    obj.GetComponent<BossWadatsumi>().SetBossData(enemySetting);
+        //else if(bossType == BossType.Hakumen)
+        //    obj.GetComponent<BossHakumen>().SetBossData(enemySetting);
     }
 
     //------------------------------------------------
@@ -628,6 +657,47 @@ public class EnemyManager : MonoBehaviour
         enemyPrefab[(int)EnemyPattern.E03],
         new Vector3(-1, -6, 0));
 
-        yield return null;
+        //  ザコ戦終了フラグがTRUEになるまで待つ
+        yield return new WaitUntil(()=> endZakoStage == true);
+
+        //  PlayerのShotManagerを無効化する
+        GameObject player = GameManager.Instance.GetPlayer();
+        player.GetComponent<PlayerShotManager>().enabled = false;
+
+        //  ５秒待つ
+        yield return new WaitForSeconds(5);
+
+        //  イベントモードへ移行
+        GameManager.Instance.SetGameState((int)eGameState.Event);
+
+        //  イベントシーンマネージャーを有効化
+        eventSceneManager.SetActive(true);
+
+        //  ボス戦開始フラグがTRUEになるまで待つ(ボス戦モード)
+        yield return new WaitUntil(()=> EventSceneManager.Instance.GetStartBoss());
+
+        //  PlayerのShotManagerを有効化する
+        player.GetComponent<PlayerShotManager>().enabled = true;
+
+        //  ボスコンポーネントを有効化
+        GameObject boss = EventSceneManager.Instance.GetBossObject();
+        boss.GetComponent<BossDouji>().enabled = true;
+        boss.GetComponent<BoxCollider2D>().enabled = true;
+
+        //  ボス戦終了フラグがTRUEになるまで待つ
+        yield return new WaitUntil(() => GameManager.Instance.GetStageClearFlag());
+
+        //  ５秒待つ
+        yield return new WaitForSeconds(5);
+
+        //  イベントモードへ移行
+        GameManager.Instance.SetGameState((int)eGameState.Event);
+
+        //  イベントシーンマネージャーを有効化
+        eventSceneManager.SetActive(true);
+
+
+
+
     }
 }

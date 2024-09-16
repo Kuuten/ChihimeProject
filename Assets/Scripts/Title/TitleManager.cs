@@ -33,6 +33,8 @@ public class TitleManager : MonoBehaviour
     InputAction nevigate;
     float verticalInput;
 
+    bool canContorol;   //  操作可能フラグ
+
     enum TitleMode
     {
         Normal,
@@ -54,6 +56,8 @@ public class TitleManager : MonoBehaviour
     {
         //  最初は通常モード
         titleMode = TitleMode.Normal;
+
+        canContorol = false;
 
         StartCoroutine(StartInit());
     }
@@ -81,6 +85,9 @@ public class TitleManager : MonoBehaviour
         //  ボタンを表示
         Buttons.SetActive(true);
 
+        //  操作可能にする
+        canContorol = true;
+
         //  タイトルBGM再生
         SoundManager.Instance.PlayBGM((int)MusicList.BGM_TITLE);
 
@@ -89,6 +96,9 @@ public class TitleManager : MonoBehaviour
 
     void Update()
     {
+        //  操作不能ならリターン
+        if(!canContorol)return;
+
         switch(titleMode)
         {
             case TitleMode.Normal:  //  通常モード

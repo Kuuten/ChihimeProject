@@ -66,6 +66,8 @@ using UnityEngine;
         SFX_PLAYER_DEATH,
         SFX_ENEMY_SHOT,
         SFX_ENEMY_DAMAGE,
+        SFX_MIDBOSS_PHASE2,
+        SFX_MIDBOSS_JUMP,
 
         SFX_DOUJI_SHOT,
         SFX_TSUKUMO_SHOT,

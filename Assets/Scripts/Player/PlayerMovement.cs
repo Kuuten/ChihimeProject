@@ -177,6 +177,10 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = inputMoveAxis.x;
         verticalInput = inputMoveAxis.y;
 
+
+        Debug.Log("horiozntal" + horizontalInput);
+        Debug.Log("vertical" + verticalInput);
+
         Vector3 moveVector = new Vector3(horizontalInput, verticalInput, 0);
         moveVector.Normalize();
 

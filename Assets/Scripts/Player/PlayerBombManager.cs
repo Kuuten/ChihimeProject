@@ -53,6 +53,9 @@ public class PlayerBombManager : MonoBehaviour
     InputAction inputBomb;
     bool bCanBomb;      //  ボムが発動できるかどうか
 
+    //  ザコ戦終了後のボムコリジョンフラグ
+    bool isCalledOnce; 
+
     void Start()
     {
         // InputActionにMoveを設定
@@ -67,6 +70,9 @@ public class PlayerBombManager : MonoBehaviour
 
         //  最初は発動できる
         bCanBomb = true;
+
+        //  フラグOFF
+        isCalledOnce =false;
 
         //  最初はレインボーOFF
         koburstGaugeFill.GetComponent<Animator>().enabled = false;
@@ -103,12 +109,25 @@ public class PlayerBombManager : MonoBehaviour
         switch(gamestatus)
         {
             case (int)eGameState.Zako:
+                inputBomb.Enable();
                 BombAndKonBurstUpdate(true);    //  ボム・魂バーストの更新
                 break;
             case (int)eGameState.Boss:
+                inputBomb.Enable();
                 BombAndKonBurstUpdate(false);   //  ボム・魂バーストの更新
                 break;
             case (int)eGameState.Event:
+                inputBomb.Disable();
+
+                //  1回ボムコリジョンをONにして弾を消す
+                if (!isCalledOnce) {
+                    isCalledOnce = true;
+                    //  ボムコリジョンON！
+                    bombCollision.SetActive(true);
+
+                    //  ２秒後にコリジョンをリセット
+                    StartCoroutine(ResetCollision());
+                }
                 break;
         }
     }
@@ -558,6 +577,16 @@ public class PlayerBombManager : MonoBehaviour
         {
             konburstLamp.SetActive(active);
         }
+    }
+    //------------------------------------------------
+    //  ２秒後にコリジョンOFFにする
+    //------------------------------------------------
+    private IEnumerator ResetCollision()
+    {
+        yield return new WaitForSeconds(2);
+
+        //  ボムコリジョンOFF
+        bombCollision.SetActive(false);
     }
 
 }

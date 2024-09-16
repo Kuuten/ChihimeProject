@@ -151,6 +151,12 @@ public class Enemy : MonoBehaviour
         destroyNum++;
         EnemyManager.Instance.SetDestroyNum(destroyNum);
         Debug.Log("破壊された敵数 : " + destroyNum);
+
+        //  中ボスがやられたらザコ戦を終了する
+        if(isMidBoss == IS_MID_BOSS.Yes)
+        {
+            EnemyManager.Instance.SetEndZakoStage(true);
+        }
     }
 
     void Update()
@@ -283,9 +289,6 @@ public class Enemy : MonoBehaviour
             //  ダメージSE再生
             StartCoroutine(PlayDamageSFXandSuperModeOff());
 
-            // 残りHP表示
-            Debug.Log("残りHP: " + hp);
-
             //  死亡フラグON
             if(hp <= 0)
             {
@@ -314,9 +317,6 @@ public class Enemy : MonoBehaviour
 
             //  ダメージSE再生
             StartCoroutine(PlayDamageSFXandSuperModeOff());
-
-            // 残りHP表示
-            Debug.Log("残りHP: " + hp);
 
             //  死亡フラグON
             if(hp <= 0)
@@ -1299,38 +1299,200 @@ public class Enemy : MonoBehaviour
         //  移動時間待つ
         yield return new WaitForSeconds(duration);
 
-        //  以降左右ループ移動
-        StartCoroutine(MidBoss_MoveLoop());
+        //  Phase1
+        yield return StartCoroutine(MidBoss_Phase1());
 
-        //  この中でさらに行動分岐する
-        StartCoroutine(MidBoss_Update());
+        Debug.Log("***中ボス第２段階開始！***");
+
+        //  Phase2
+        yield return StartCoroutine(MidBoss_Phase2());
 
         yield return null;
     }
     //------------------------------------------------------------------
-    //  中ボス・Update
+    //  中ボス・Phase1
     //------------------------------------------------------------------
-    private IEnumerator MidBoss_Update()
+    private IEnumerator MidBoss_Phase1()
     {
-        float interval = 5.0f;  //  次の行動までの時間(秒)
+        float duration = 5.0f;  //  移動にかかる時間
 
         while(true)
         {
+            transform.DOLocalMoveX(-10f, duration)
+                .SetEase(Ease.OutBack)
+                .SetRelative(true);
+
             //  バラマキ弾
             StartCoroutine(MidBoss_WildlyShot5way());
 
-            yield return new WaitForSeconds(interval);
+            //  移動時間待つ
+            yield return new WaitForSeconds(duration);
+
+            //  HPが半分を切ったら抜ける
+            if(hp <= enemyData.Hp*0.7)break;
+
+            transform.DOLocalMoveX(10f, duration)
+                .SetEase(Ease.OutBack)
+                .SetRelative(true);
 
             //  バラマキ弾
             StartCoroutine(MidBoss_WildlyShot5way());
 
-            yield return new WaitForSeconds(interval-2.0f);
+            //  移動時間待つ
+            yield return new WaitForSeconds(duration);
 
-            //  自機狙い弾
-            StartCoroutine(MidBoss_SnipeShot3way());
-
-            yield return new WaitForSeconds(interval);
+            //  HPが半分を切ったら抜ける
+            if(hp <= enemyData.Hp/2)break;
         }
+    }
+
+    //------------------------------------------------------------------
+    //  中ボス・Phase2
+    //------------------------------------------------------------------
+    private IEnumerator MidBoss_Phase2()
+    {
+        int rand_move = 30;       //  ジャンプ移動の閾値
+        int rand_wideshot = 70;   //  ジャンプ移動の閾値
+        int rand_snipeshot = 100; //  ジャンプ移動の閾値
+
+        //  ジャンプ
+        yield return StartCoroutine(MidBoss_Jump());
+
+        while(true)
+        {
+            int rand = UnityEngine.Random.Range(0,100);
+            if(rand < rand_move)
+            {
+                yield return StartCoroutine(MidBoss_JumpAndMoveSide());
+            }
+            else if(rand <= rand_wideshot)
+            {
+                yield return StartCoroutine(MidBoss_WildlyShot5way());
+            }
+            else if(rand <= rand_snipeshot)
+            {
+                yield return StartCoroutine(MidBoss_SnipeShot3way());
+            }
+
+            //  1秒待つ
+            yield return new WaitForSeconds(1);
+        }
+    }
+    //------------------------------------------------------------------
+    //  中ボス・ジャンプ
+    //------------------------------------------------------------------
+    private IEnumerator MidBoss_Jump()
+    {
+        float duration = 0.1f;
+
+        //  汽笛SE再生
+        SoundManager.Instance.PlaySFX(
+        (int)AudioChannel.SFX_SYSTEM,
+        (int)SFXList.SFX_MIDBOSS_PHASE2);
+
+        //  ジャンプする
+        transform.DOLocalMoveY(2f, duration)
+                .SetEase(Ease.OutExpo)
+                .SetRelative(true);
+
+        //  ジャンプSE再生
+        SoundManager.Instance.PlaySFX(
+        (int)AudioChannel.SFX_ENEMY,
+        (int)SFXList.SFX_MIDBOSS_JUMP);
+
+        yield return new WaitForSeconds(duration);
+
+        transform.DOLocalMoveY(-2f, duration)
+        .SetEase(Ease.InExpo)
+        .SetRelative(true);
+
+        yield return new WaitForSeconds(duration);
+
+        //  ジャンプする
+        transform.DOLocalMoveY(2f, duration)
+                .SetEase(Ease.OutExpo)
+                .SetRelative(true);
+
+        //  ジャンプSE再生
+        SoundManager.Instance.PlaySFX(
+        (int)AudioChannel.SFX_ENEMY,
+        (int)SFXList.SFX_MIDBOSS_JUMP);
+
+        yield return new WaitForSeconds(duration);
+
+        transform.DOLocalMoveY(-2f, duration)
+        .SetEase(Ease.InExpo)
+        .SetRelative(true);
+
+        yield return new WaitForSeconds(duration);
+
+
+        yield return null;
+    }
+    //------------------------------------------------------------------
+    //  中ボス・ジャンプと横移動
+    //------------------------------------------------------------------
+    private IEnumerator MidBoss_JumpAndMoveSide()
+    {
+        float interval = 2.0f;  //  次の行動までの時間(秒)
+        float jump_minY = 2.0f;
+        float jump_maxY = 6.0f;
+        float jump_minX = -7.0f;
+        float jump_maxX = 5.0f;
+
+        //  横移動する
+        float rndX = UnityEngine.Random.Range(jump_minX, jump_maxX);
+        transform.DOMoveX(rndX, interval)
+            .SetEase(Ease.OutBack);
+
+        //  ジャンプする
+        float rnd = UnityEngine.Random.Range(jump_minY, jump_maxY);
+        transform.DOLocalMoveY(rnd, interval/2)
+                .SetEase(Ease.OutExpo)
+                .SetRelative(true);
+
+        //  ジャンプSE再生
+        SoundManager.Instance.PlaySFX(
+        (int)AudioChannel.SFX_ENEMY,
+        (int)SFXList.SFX_MIDBOSS_JUMP);
+
+        //  移動時間待つ
+        yield return new WaitForSeconds(interval/2);
+
+        //  ジャンプから戻る
+        transform.DOLocalMoveY(-rnd, interval/2)
+                .SetEase(Ease.OutExpo)
+                .SetRelative(true);
+
+        //  戻り時間待つ
+        yield return new WaitForSeconds(interval/2);
+
+        //  横移動する
+        rndX = UnityEngine.Random.Range(jump_minX, jump_maxX);
+        transform.DOMoveX(rndX, interval)
+            .SetEase(Ease.OutBack);
+
+        //  ジャンプする
+        rnd = UnityEngine.Random.Range(jump_minY, jump_maxY);
+        transform.DOLocalMoveY(rnd, interval/2)
+                .SetEase(Ease.OutExpo)
+                .SetRelative(true);
+
+        //  ジャンプSE再生
+        SoundManager.Instance.PlaySFX(
+        (int)AudioChannel.SFX_ENEMY,
+        (int)SFXList.SFX_MIDBOSS_JUMP);
+
+        //  移動時間待つ
+        yield return new WaitForSeconds(interval/2);
+
+        //  ジャンプから戻る
+        transform.DOLocalMoveY(-rnd, interval/2)
+                .SetEase(Ease.OutExpo)
+                .SetRelative(true);
+
+        //  戻り時間待つ
+        yield return new WaitForSeconds(interval/2);
     }
     //------------------------------------------------------------------
     //  中ボス・５wayのバラマキ弾を撃つ/弾速・遅い

@@ -10,7 +10,6 @@ using System.ComponentModel;
 using Cysharp.Threading.Tasks;
 using static Unity.Collections.AllocatorManager;
 using System.Threading;
-using UnityEditor.Animations;
 using DG.Tweening.Core.Easing;
 using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
@@ -43,14 +42,14 @@ public class PlayerHealth : MonoBehaviour
     private bool bDamage;
 
     //  ダメージ演出用のAnimator
-    [SerializeField] private AnimatorController animPlayerFront;
-    [SerializeField] private AnimatorController animPlayerFrontDamage;
-    [SerializeField] private AnimatorController animPlayerBack;
-    [SerializeField] private AnimatorController animPlayerBackDamage;
+    [SerializeField] private RuntimeAnimatorController animPlayerFront;
+    [SerializeField] private RuntimeAnimatorController animPlayerFrontDamage;
+    [SerializeField] private RuntimeAnimatorController animPlayerBack;
+    [SerializeField] private RuntimeAnimatorController animPlayerBackDamage;
 
     //  死亡演出用のAnimator
-    [SerializeField] private AnimatorController animPlayerDeath1;
-    [SerializeField] private AnimatorController animPlayerDeath2;
+    [SerializeField] private RuntimeAnimatorController animPlayerDeath1;
+    [SerializeField] private RuntimeAnimatorController animPlayerDeath2;
 
     //  点滅させるためのSpriteRenderer
     SpriteRenderer sp;
@@ -179,6 +178,7 @@ public class PlayerHealth : MonoBehaviour
                 ChangePlayerSpriteToFront(false);    //  奥向き
                 break;
             case (int)eGameState.Event:
+                ChangePlayerSpriteToFront(false);    //  奥向き
                 break;
         }
     }

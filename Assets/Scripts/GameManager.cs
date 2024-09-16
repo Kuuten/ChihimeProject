@@ -55,6 +55,9 @@ public class GameManager : MonoBehaviour
     //  制御点
     private GameObject[] controlPoint;
 
+    //  ステージクリアフラグ
+    bool stageClearFlag;
+
 
     //------------------------------------------------------------------------------
     //  プロパティ
@@ -69,6 +72,8 @@ public class GameManager : MonoBehaviour
     }
 
     public GameObject GetPlayer(){ return player; }
+    public bool GetStageClearFlag(){ return stageClearFlag; }
+    public void SetStageClearFlag(bool b){ stageClearFlag = b; }
 
     private void Awake()
     {
@@ -97,6 +102,7 @@ public class GameManager : MonoBehaviour
         test2 = playerInput.actions["TestButton2"];
 
         gameState = (int)eGameState.Zako;   //  最初はザコ戦
+        stageClearFlag = false;
 
         //  初期化開始
         StartCoroutine(StartInit());
@@ -194,18 +200,16 @@ public class GameManager : MonoBehaviour
         //EnableCharacterControl();
 
         //  ステージクリアフラグが立ったら情報保存してショップへ遷移
-        bool clearFlag = false; //  仮処理
-
-        GameObject player = GameManager.Instance.GetPlayer();
-        int maxHP = player.GetComponent<PlayerHealth>().GetCurrentMaxHealth();
-        int hP = player.GetComponent<PlayerHealth>().GetCurrentHealth();
-        int bombNum = player.GetComponent<PlayerBombManager>().GetBombNum();
-        int kon = MoneyManager.Instance.GetKonNum();
-        int shotLV = player.GetComponent<PlayerShotManager>().GetNormalShotLevel();;
-        int speedLV = player.GetComponent<PlayerMovement>().GetSpeedLevel();
-
-        if(clearFlag)
+        if(stageClearFlag)
         {
+            GameObject player = GameManager.Instance.GetPlayer();
+            int maxHP = player.GetComponent<PlayerHealth>().GetCurrentMaxHealth();
+            int hP = player.GetComponent<PlayerHealth>().GetCurrentHealth();
+            int bombNum = player.GetComponent<PlayerBombManager>().GetBombNum();
+            int kon = MoneyManager.Instance.GetKonNum();
+            int shotLV = player.GetComponent<PlayerShotManager>().GetNormalShotLevel();;
+            int speedLV = player.GetComponent<PlayerMovement>().GetSpeedLevel();
+
             //  情報保存
             PlayerInfoManager.SetInfo(maxHP,hP,kon,bombNum,shotLV,speedLV);
 
@@ -214,7 +218,16 @@ public class GameManager : MonoBehaviour
             //  フェードアウトを待つ
             yield return StartCoroutine(WaitingForFadeOut());
 
-            //  ショップシーンへ遷移
+            //  体験版では特別クリア画面に遷移
+            if(Application.version == "0.5")
+            {
+                
+            }
+            //  製品版ではショップシーンへ遷移
+            else
+            {
+                
+            }
         }
 
         yield return null;
