@@ -3,12 +3,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
-using static Enemy;
-using static UnityEngine.GraphicsBuffer;
 
 //--------------------------------------------------------------
 //
@@ -27,6 +24,7 @@ public class Enemy : MonoBehaviour
         Straight,                   // 直線移動
         AdjustLine,                 // 軸合わせ
         Curve,                      // 放物線
+        OssanMove,                  // おっさんムーブ
 
         CurveAndShoot,              //  放物線移動&弾を撃って帰っていく
         SnipeShot3way,              //  自機狙い弾を撃つ
@@ -45,7 +43,8 @@ public class Enemy : MonoBehaviour
         Kooni,                      //  子鬼
         Onibi,                      //  鬼火
         Ibarakidouji,               //  茨木童子
-        Douji                       //  ドウジ
+        Douji,                      //  ドウジ
+        Ossan                       //  ちっちゃいおっさん
     }
     // ザコ敵の種類
     public ENEMY_TYPE enemyType = ENEMY_TYPE.None;
@@ -55,7 +54,6 @@ public class Enemy : MonoBehaviour
         No,                      //  ザコ
         Yes,                     //  中ボス
     }
-    // ザコ敵の種類
     public IS_MID_BOSS isMidBoss = IS_MID_BOSS.No;
 
     // 打ち返し弾の設定
@@ -63,7 +61,6 @@ public class Enemy : MonoBehaviour
         None,                       //  なし
         Enable,                     //  あり
     }
-    // ザコ敵の種類
     public REVENGE_SHOT revengeShot = REVENGE_SHOT.None;
 
 
@@ -81,6 +78,19 @@ public class Enemy : MonoBehaviour
         Wildly_RotationR,    //  バラマキ弾・右回転
         Wildly_Long,         //  バラマキ弾・ロング
         Wildly_Big,          //  バラマキ弾・大玉
+        //  ドウジギミック弾
+        Douji_Gimmick_Top,
+        Douji_Gimmick_Bottom,
+        Douji_Gimmick_Left,
+        Douji_Gimmick_Righ,
+        //  ギミック警告
+        Douji_Warning_Top,
+        Douji_Warning_Bottom,
+        Douji_Warning_Left,
+        Douji_Warning_Right,
+        //  ドウジ発狂弾
+        Douji_Berserk_Bullet
+
     }
 
     //  EnemyDataクラスからの情報取得用
@@ -104,6 +114,12 @@ public class Enemy : MonoBehaviour
     //  点滅させるときのループカウント
     private int loopCount;
 
+    //  HPスライダー
+    private Slider hpSlider;
+
+    //  ドロップパワーアップアイテム一覧
+    private ePowerupItems powerupItems;
+
     private void Start()
     {
         //  カメラに写っていない
@@ -126,7 +142,7 @@ public class Enemy : MonoBehaviour
     }
 
     //  敵のデータを設定 
-    public void SetEnemyData(EnemySetting es)
+    public void SetEnemyData(EnemySetting es, ePowerupItems item)
     {
         //  敵のデータを設定 
         enemyData = es.DataList
@@ -142,6 +158,18 @@ public class Enemy : MonoBehaviour
         //Debug.Log($"HP：{enemyData.Hp}");
         //Debug.Log($"攻撃力：{enemyData.Attack}");
         //Debug.Log($"落魂：{enemyData.Money}");
+
+        if(item == ePowerupItems.None)
+        {
+            powerupItems = ePowerupItems.None;
+        }
+        else
+        {
+            //  ドロップアイテムを設定
+            powerupItems = item;    
+        }
+
+
     }
 
     private void OnDestroy()
@@ -161,6 +189,9 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        //  スライダーを更新
+        if(hpSlider != null)hpSlider.value = hp / enemyData.Hp;
+
         //  行動パターン
         switch(moveType)
         {
@@ -178,6 +209,9 @@ public class Enemy : MonoBehaviour
                 break;
             case MOVE_TYPE.ChargeToPlayer:
                 SetCoroutine( ChargeToPlayer() );
+                break;
+            case MOVE_TYPE.OssanMove:
+                SetCoroutine( OssanMove() );
                 break;
             case MOVE_TYPE.Straight:
                 SetCoroutine( Straight() );
@@ -239,6 +273,14 @@ public class Enemy : MonoBehaviour
     public bool GetSuperMode(){ return bSuperMode; }
 
     //------------------------------------------------------
+    //  中ボス用のHPスライダーをセットする
+    //------------------------------------------------------
+    public void SetHpSlider(Slider slider)
+    {
+        hpSlider = slider;
+    }
+
+    //------------------------------------------------------
     //  ダメージSEを再生した後無敵モードをオフにする
     //------------------------------------------------------
     IEnumerator PlayDamageSFXandSuperModeOff()
@@ -264,10 +306,12 @@ public class Enemy : MonoBehaviour
     //  ・どちらかにRigidBodyがついている
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(bSuperMode || !visible || bDeath)return;
+        if(!visible || bDeath)return;
 
         if (collision.CompareTag("DeadWall"))
         {
+            if(bSuperMode)return;
+
             Destroy(this.gameObject);
         }
         else if (collision.CompareTag("NormalBullet"))
@@ -312,6 +356,21 @@ public class Enemy : MonoBehaviour
                 .GetComponent<PlayerShotManager>().GetConvertShotPower();
             Damage(d);
 
+            //  中攻撃か強攻撃か判定
+            bool isFullPower = GameManager.Instance.GetPlayer()
+                .GetComponent<PlayerShotManager>().IsConvertFullPower();
+
+            //  魂バーストゲージを増やす
+            if(isFullPower)
+            {
+                PlayerBombManager.Instance.PlusKonburstGauge(true);
+            }
+            //  魂バーストゲージを少し増やす
+            else
+            {
+                PlayerBombManager.Instance.PlusKonburstGauge(false);  
+            }
+                    
             //  点滅演出
             StartCoroutine(Blink(true,loopCount,flashInterval));
 
@@ -465,7 +524,15 @@ public class Enemy : MonoBehaviour
 
         //  アイテムドロップ判定
         DropItems drop = this.GetComponent<DropItems>();
-        if (drop) drop.DropPowerupItem();
+        if (powerupItems == ePowerupItems.Random)
+        {
+            if (drop) drop.DropRandomPowerupItem();
+        }
+        else
+        {
+            if (drop) drop.DropPowerupItem(powerupItems);
+        }
+
 
         //  お金を生成
         drop.DropKon(enemyData.Money);
@@ -484,7 +551,14 @@ public class Enemy : MonoBehaviour
 
         //  アイテムドロップ判定
         DropItems drop = this.GetComponent<DropItems>();
-        if (drop) drop.DropPowerupItem();
+        if (powerupItems == ePowerupItems.Random)
+        {
+            if (drop) drop.DropRandomPowerupItem();
+        }
+        else
+        {
+            if (drop) drop.DropPowerupItem(powerupItems);
+        }
 
         //  お金を生成(魂バートの時は2倍)
         int dropMoney = enemyData.Money;
@@ -659,6 +733,61 @@ public class Enemy : MonoBehaviour
 
         yield return null;
     }
+    //------------------------------------------------------------------
+    //  おっさんムーブ
+    //------------------------------------------------------------------
+    private IEnumerator OssanMove()
+    {
+        const int Right = 6;
+        const int Middle = 7;
+        const int Left = 8;
+        int[] Position = new int[3];
+        Position[0] = Right;
+        Position[1] = Middle;
+        Position[2] = Left;
+
+        int rand = UnityEngine.Random.Range(0,3);
+
+        float d = 5.0f;         //  移動距離
+        float speed2 = 3.0f;    //  移動スピード２
+        Vector3 dintance = new Vector3(0,d,0);
+
+        //  スポナー[6][7][8]からランダムに出現
+        Vector3 start = EnemyManager.Instance.GetSpawnerPos(Position[rand]);
+        transform.position = start;
+
+        //  一定距離直進
+        yield return StartCoroutine(
+            LineMoveDistance( dintance, 1.0f ));
+
+        //  処理時間待つ
+        yield return new WaitForSeconds(1.0f);
+
+        //  無敵モードOFF
+        bSuperMode = false;
+
+        //  2秒待つ
+        yield return new WaitForSeconds(2.0f);
+
+        //  プレイヤーへのベクトルを計算
+        Vector3 playerPos = GameManager.Instance.GetPlayer().transform.position;
+        Vector3 vec = playerPos - transform.position;
+        vec.Normalize();
+
+        //  その方向にでたらめな距離伸ばした座標に移動する
+        float dist = 30.0f;
+        vec = vec * dist;
+
+        //  一定距離直進
+        yield return StartCoroutine(
+            LineMoveDistance( vec, vec.magnitude/speed2 ));
+
+        //  処理時間待つ
+        yield return new WaitForSeconds(vec.magnitude/speed2);
+
+        yield return null;
+    }
+
     //------------------------------------------------------------------
     //  直線移動(スポナーから反対側のスポナーへ移動)
     //------------------------------------------------------------------
@@ -892,9 +1021,9 @@ public class Enemy : MonoBehaviour
         float duration = 3.0f; //  移動にかかる時間
 
         Vector3 start = EnemyManager.Instance.GetSpawnerPos(8);
-        Vector3 middle1 = new Vector3(-5.5f,-1.65f,0);
-        Vector3 middle2 = new Vector3(-1.5f,-0.65f,0);
-        Vector3 middle3 = new Vector3(3.0f,-1.65f,0);
+        Vector3 middle1 = new Vector3(-4.0f,-1.65f,0);
+        Vector3 middle2 = new Vector3(0f,-0.65f,0);
+        Vector3 middle3 = new Vector3(4.5f,-1.65f,0);
         Vector3 end = EnemyManager.Instance.GetSpawnerPos(6);
 
         //  初期座標を設定
@@ -922,9 +1051,9 @@ public class Enemy : MonoBehaviour
         float duration = 3.0f; //  移動にかかる時間
 
         Vector3 start = EnemyManager.Instance.GetSpawnerPos(8);
-        Vector3 middle1 = new Vector3(-5.5f,-1.65f,0);
-        Vector3 middle2 = new Vector3(-1.5f,-0.65f,0);
-        Vector3 middle3 = new Vector3(3.0f,-1.65f,0);
+        Vector3 middle1 = new Vector3(-4.0f,-1.65f,0);
+        Vector3 middle2 = new Vector3(0f,-0.65f,0);
+        Vector3 middle3 = new Vector3(4.5f,-1.65f,0);
         Vector3 end = EnemyManager.Instance.GetSpawnerPos(6);
 
         //  初期座標を設定
@@ -963,9 +1092,9 @@ public class Enemy : MonoBehaviour
         float duration = 3.0f; //  移動にかかる時間
 
         Vector3 start = EnemyManager.Instance.GetSpawnerPos(6);
-        Vector3 middle1 = new Vector3(3.0f,-1.65f,0);
-        Vector3 middle2 = new Vector3(-1.5f,-0.65f,0);
-        Vector3 middle3 = new Vector3(-5.5f,-1.65f,0);
+        Vector3 middle1 = new Vector3(4.5f,-1.65f,0);
+        Vector3 middle2 = new Vector3(0f,-0.65f,0);
+        Vector3 middle3 = new Vector3(-4.0f,-1.65f,0);
         Vector3 end = EnemyManager.Instance.GetSpawnerPos(8);
 
         //  初期座標を設定
@@ -993,9 +1122,9 @@ public class Enemy : MonoBehaviour
         float duration = 3.0f; //  移動にかかる時間
 
         Vector3 start = EnemyManager.Instance.GetSpawnerPos(6);
-        Vector3 middle1 = new Vector3(3.0f,-1.65f,0);
-        Vector3 middle2 = new Vector3(-1.5f,-0.65f,0);
-        Vector3 middle3 = new Vector3(-5.5f,-1.65f,0);
+        Vector3 middle1 = new Vector3(4.5f,-1.65f,0);
+        Vector3 middle2 = new Vector3(0f,-0.65f,0);
+        Vector3 middle3 = new Vector3(-4.0f,-1.65f,0);
         Vector3 end = EnemyManager.Instance.GetSpawnerPos(8);
 
         //  初期座標を設定
@@ -1236,7 +1365,7 @@ public class Enemy : MonoBehaviour
     //------------------------------------------------------------------
     private IEnumerator MidBoss_Appearance()
     {
-        Vector3 goal = new Vector3(-1,-2.5f,0); //  目標座標
+        Vector3 goal = new Vector3(0,-2.5f,0); //  目標座標
         float duration = 3.0f;                  //  移動にかかる時間
         float wait_time = 2.0f;                 //  待機時間
 
@@ -1260,30 +1389,7 @@ public class Enemy : MonoBehaviour
 
         yield return null;
     }
-    //------------------------------------------------------------------
-    //  中ボス・左右ループ移動
-    //------------------------------------------------------------------
-    private IEnumerator MidBoss_MoveLoop()
-    {
-        float duration = 3.0f;  //  移動にかかる時間
 
-        while(true)
-        {
-            transform.DOLocalMoveX(-10f, duration)
-                .SetEase(Ease.OutBack)
-                .SetRelative(true);
-
-            //  移動時間待つ
-            yield return new WaitForSeconds(duration);
-
-            transform.DOLocalMoveX(10f, duration)
-                .SetEase(Ease.OutBack)
-                .SetRelative(true);
-
-            //  移動時間待つ
-            yield return new WaitForSeconds(duration);
-        }
-    }
     //------------------------------------------------------------------
     //  中ボス・左右に繰り返し移動する
     //------------------------------------------------------------------
@@ -1314,7 +1420,7 @@ public class Enemy : MonoBehaviour
     //------------------------------------------------------------------
     private IEnumerator MidBoss_Phase1()
     {
-        float duration = 5.0f;  //  移動にかかる時間
+        float duration = 2.5f;  //  移動にかかる時間
 
         while(true)
         {
@@ -1322,27 +1428,33 @@ public class Enemy : MonoBehaviour
                 .SetEase(Ease.OutBack)
                 .SetRelative(true);
 
-            //  バラマキ弾
-            StartCoroutine(MidBoss_WildlyShot5way());
-
             //  移動時間待つ
             yield return new WaitForSeconds(duration);
+
+            ////  バラマキ弾
+            //yield return StartCoroutine(MidBoss_WildlyShot5way());
+
+            //  360度バラマキ弾
+            yield return StartCoroutine(MidBoss_WildlyShot360());
 
             //  HPが半分を切ったら抜ける
             if(hp <= enemyData.Hp*0.7)break;
 
             transform.DOLocalMoveX(10f, duration)
-                .SetEase(Ease.OutBack)
-                .SetRelative(true);
-
-            //  バラマキ弾
-            StartCoroutine(MidBoss_WildlyShot5way());
+            .SetEase(Ease.OutBack)
+            .SetRelative(true);
 
             //  移動時間待つ
             yield return new WaitForSeconds(duration);
 
+            ////  バラマキ弾
+            //yield return  StartCoroutine(MidBoss_WildlyShot5way());
+
+            //  360度バラマキ弾
+            yield return StartCoroutine(MidBoss_WildlyShot360());
+
             //  HPが半分を切ったら抜ける
-            if(hp <= enemyData.Hp/2)break;
+            if(hp <= enemyData.Hp*0.7)break;
         }
     }
 
@@ -1351,12 +1463,15 @@ public class Enemy : MonoBehaviour
     //------------------------------------------------------------------
     private IEnumerator MidBoss_Phase2()
     {
-        int rand_move = 30;       //  ジャンプ移動の閾値
-        int rand_wideshot = 70;   //  ジャンプ移動の閾値
-        int rand_snipeshot = 100; //  ジャンプ移動の閾値
+        int rand_move = 40;       //  ジャンプ移動の閾値
+        int rand_wideshot = 70;   //  バラマキ弾の閾値
+        int rand_snipeshot = 100; //  自機狙い弾の閾値
 
         //  ジャンプ
         yield return StartCoroutine(MidBoss_Jump());
+
+        //  ２秒待つ
+        yield return new WaitForSeconds(2);
 
         while(true)
         {
@@ -1435,10 +1550,50 @@ public class Enemy : MonoBehaviour
     private IEnumerator MidBoss_JumpAndMoveSide()
     {
         float interval = 2.0f;  //  次の行動までの時間(秒)
-        float jump_minY = 2.0f;
-        float jump_maxY = 6.0f;
+        float duration = 0.25f;
+        float jumpY = 7.0f;
         float jump_minX = -7.0f;
         float jump_maxX = 5.0f;
+
+        //  予備動作で２回小ジャンプする
+        //---------------------------------------------------------------------
+        //  ジャンプする
+        transform.DOLocalMoveY(2f, duration)
+                .SetEase(Ease.OutExpo)
+                .SetRelative(true);
+
+        //  ジャンプSE再生
+        SoundManager.Instance.PlaySFX(
+        (int)AudioChannel.SFX_ENEMY,
+        (int)SFXList.SFX_MIDBOSS_JUMP);
+
+        yield return new WaitForSeconds(duration);
+
+        transform.DOLocalMoveY(-2f, duration)
+        .SetEase(Ease.InExpo)
+        .SetRelative(true);
+
+        yield return new WaitForSeconds(duration);
+
+        //  ジャンプする
+        transform.DOLocalMoveY(2f, duration)
+                .SetEase(Ease.OutExpo)
+                .SetRelative(true);
+
+        //  ジャンプSE再生
+        SoundManager.Instance.PlaySFX(
+        (int)AudioChannel.SFX_ENEMY,
+        (int)SFXList.SFX_MIDBOSS_JUMP);
+
+        yield return new WaitForSeconds(duration);
+
+        transform.DOLocalMoveY(-2f, duration)
+        .SetEase(Ease.InExpo)
+        .SetRelative(true);
+
+        yield return new WaitForSeconds(duration);
+        //---------------------------------------------------------------------
+
 
         //  横移動する
         float rndX = UnityEngine.Random.Range(jump_minX, jump_maxX);
@@ -1446,8 +1601,7 @@ public class Enemy : MonoBehaviour
             .SetEase(Ease.OutBack);
 
         //  ジャンプする
-        float rnd = UnityEngine.Random.Range(jump_minY, jump_maxY);
-        transform.DOLocalMoveY(rnd, interval/2)
+        transform.DOLocalMoveY(jumpY, interval/2)
                 .SetEase(Ease.OutExpo)
                 .SetRelative(true);
 
@@ -1460,7 +1614,7 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(interval/2);
 
         //  ジャンプから戻る
-        transform.DOLocalMoveY(-rnd, interval/2)
+        transform.DOLocalMoveY(-jumpY, interval/2)
                 .SetEase(Ease.OutExpo)
                 .SetRelative(true);
 
@@ -1473,8 +1627,7 @@ public class Enemy : MonoBehaviour
             .SetEase(Ease.OutBack);
 
         //  ジャンプする
-        rnd = UnityEngine.Random.Range(jump_minY, jump_maxY);
-        transform.DOLocalMoveY(rnd, interval/2)
+        transform.DOLocalMoveY(jumpY, interval/2)
                 .SetEase(Ease.OutExpo)
                 .SetRelative(true);
 
@@ -1487,7 +1640,7 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(interval/2);
 
         //  ジャンプから戻る
-        transform.DOLocalMoveY(-rnd, interval/2)
+        transform.DOLocalMoveY(-jumpY, interval/2)
                 .SetEase(Ease.OutExpo)
                 .SetRelative(true);
 
@@ -1506,9 +1659,9 @@ public class Enemy : MonoBehaviour
         float totalDegree = 120;        //  撃つ範囲の総角  
         int wayNum = 5;                 //  弾のway数(必ず3way以上の奇数にすること)
         float Degree = totalDegree / (wayNum-1);     //  弾一発毎にずらす角度         
-        float speed = 1.0f;             //  弾速
-        int chain = 5;                  //  連弾数
-        float chainInterval = 0.3f;     //  連弾の間隔（秒）
+        float speed = 2.0f;             //  弾速
+        int chain = 3;                  //  連弾数
+        float chainInterval = 0.5f;     //  連弾の間隔（秒）
 
         //  敵の前方ベクトルを取得
         Vector3 vector0 = transform.up;
@@ -1554,7 +1707,7 @@ public class Enemy : MonoBehaviour
 
         float Degree = 15;              //  ずらす角度
         int wayNum = 3;                 //  弾のway数
-        float speed = 4.0f;             //  弾速
+        float speed = 7.0f;             //  弾速
         int chain = 1;                  //  連弾数
         float chainInterval = 0.3f;     //  連弾の間隔（秒）
 
@@ -1589,6 +1742,54 @@ public class Enemy : MonoBehaviour
             yield return new WaitForSeconds(chainInterval);
         }
 
+
+        yield return null;
+    }
+    //------------------------------------------------------------------
+    //  中ボス・360度のバラマキ弾を撃つ/弾速・遅い
+    //------------------------------------------------------------------
+    private IEnumerator MidBoss_WildlyShot360()
+    {
+        //  通常自機狙い弾のプレハブを取得
+        GameObject bullet = EnemyManager.Instance
+            .GetBulletPrefab((int)BULLET_TYPE.Wildly_Normal);
+
+        float totalDegree = 360*5;        //  撃つ範囲の総角  
+        int wayNum = 36*5;                //  弾のway数
+        float Degree = totalDegree / wayNum;     //  弾一発毎にずらす角度         
+        float speed = 2.0f;               //  弾速
+        int chain = wayNum;               //  連弾数
+        float chainInterval = 0.01f;      //  連弾の間隔（秒）
+
+        //  敵の前方ベクトルを取得
+        Vector3 vector0 = transform.up;
+        Vector3[] vector = new Vector3[wayNum];
+        for (int j = 0; j < chain; j++)
+        {
+            for (int i = 0; i < 1; i++)
+            {
+                vector[i] = Quaternion.Euler
+                    (0, 0, -Degree*j) * vector0;
+                vector[i].z = 0f;
+
+                //弾インスタンスを取得し、初速と発射角度を与える
+                GameObject Bullet_obj = 
+                    (GameObject)Instantiate(bullet, transform.position, transform.rotation);
+                EnemyBullet enemyBullet = Bullet_obj.GetComponent<EnemyBullet>();
+                enemyBullet.SetSpeed(speed);
+                enemyBullet.SetVelocity(vector[i]);
+                enemyBullet.SetPower(enemyData.Attack);
+
+                if(i == 0)
+                {
+                    //  発射SE再生
+                    SoundManager.Instance.PlaySFX(
+                    (int)AudioChannel.ENEMY_SHOT,
+                    (int)SFXList.SFX_ENEMY_SHOT);
+                }
+            }
+            yield return new WaitForSeconds(chainInterval);
+        }
 
         yield return null;
     }

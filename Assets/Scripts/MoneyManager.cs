@@ -7,7 +7,7 @@ using Live2D.Cubism.Framework.Json;
 
 //--------------------------------------------------------------
 //
-//  お金管理クラス
+//  お金管理クラス(８ケタまで表示)
 //
 //--------------------------------------------------------------
 public class MoneyManager : MonoBehaviour
@@ -110,4 +110,5 @@ public class MoneyManager : MonoBehaviour
     public int GetKonNumGainedFromSmall(){ return konNumGainedFromSmall; }
     public int GetKonNumGainedFromPowerup(){ return konNumGainedFromPowerup; }
     public int GetKonNum(){ return money; }
+    public void SetKonNum(int num){ money = num; }
 }

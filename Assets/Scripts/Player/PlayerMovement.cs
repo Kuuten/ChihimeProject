@@ -26,9 +26,9 @@ public class PlayerMovement : MonoBehaviour
     private float[] moveSpeed = new float[(int)eSpeedLevel.Max];
 
     //  移動スピードの設定値
-    private const float moveSpeedLv1 = 5.0f;
-    private const float moveSpeedLv2 = 6.0f;
-    private const float moveSpeedLv3 = 7.0f;
+    private const float moveSpeedLv1 = 7.0f;
+    private const float moveSpeedLv2 = 8.0f;
+    private const float moveSpeedLv3 = 9.0f;
 
     //  スピードレベル
     private int speedLevel;
@@ -40,9 +40,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject speedLevelIconRootObj;
 
     //  Animatorの再生速度の設定値
-    private const float AnimSpeedLv1 = 0.5f;
-    private const float AnimSpeedLv2 = 0.6f;
-    private const float AnimSpeedLv3 = 0.7f;
+    private const float AnimSpeedLv1 = 0.7f;
+    private const float AnimSpeedLv2 = 0.8f;
+    private const float AnimSpeedLv3 = 0.9f;
 
     //  移動制限用の壁
     [SerializeField] private GameObject wallLeft;
@@ -176,10 +176,6 @@ public class PlayerMovement : MonoBehaviour
         Vector2 inputMoveAxis = move.ReadValue<Vector2>();
         horizontalInput = inputMoveAxis.x;
         verticalInput = inputMoveAxis.y;
-
-
-        Debug.Log("horiozntal" + horizontalInput);
-        Debug.Log("vertical" + verticalInput);
 
         Vector3 moveVector = new Vector3(horizontalInput, verticalInput, 0);
         moveVector.Normalize();

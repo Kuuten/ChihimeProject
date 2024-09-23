@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static PlayerShotManager;
 
 //--------------------------------------------------------------
 //
@@ -40,6 +41,16 @@ public class KonburstDoujiBullet : MonoBehaviour
 
         //  現在の位置からvelocity分移動
         this.transform.DOMove(velocity,priod).SetRelative(true).SetEase(Ease.Linear);
+
+        //  セットされた魂バートによって分ける
+        if(PlayerInfoManager.g_CONVERTSHOT == SHOT_TYPE.DOUJI)
+        {
+            //  魂バーストSE再生
+            SoundManager.Instance.PlaySFX(
+                (int)AudioChannel.SFX_BOMB,
+                (int)SFXList.SFX_KONBURST_DOUJI);
+        }
+
 
         //  寿命が来たら消す
         Destroy(gameObject, priod);

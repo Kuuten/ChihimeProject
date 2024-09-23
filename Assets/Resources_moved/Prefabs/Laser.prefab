@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4798706709965662774}
   - component: {fileID: 2592391078845448114}
   - component: {fileID: 660941889790125841}
-  - component: {fileID: -8714767973181286355}
   m_Layer: 0
   m_Name: Laser
   m_TagString: ConverterBullet
@@ -260,15 +259,3 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
---- !u!114 &-8714767973181286355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7261212287317507201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5f49040186a00045b08d3d0437f1a0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

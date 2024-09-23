@@ -38,6 +38,18 @@ public class SystemManager : MonoBehaviour
 
     void Update()
     {
+        if( Screen.fullScreen )
+        {
+            //  フルスクリーンを維持
+            Screen.SetResolution(1920, 1080, FullScreenMode.FullScreenWindow);
+
+        }
+        else
+        {
+            //  ウィンドウモードを維持
+            Screen.SetResolution(1280, 720, FullScreenMode.Windowed);
+        }
+
         if (fullScreen.WasPressedThisFrame())
         {
             if( Screen.fullScreen )

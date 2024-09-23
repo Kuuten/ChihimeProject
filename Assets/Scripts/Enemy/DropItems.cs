@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
+using UnityEngine.Rendering;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 //--------------------------------------------------------------
@@ -23,8 +24,10 @@ public enum KonItems
 }
 
 // パワーアップアイテムの種類 
-public enum powerupItems
+public enum ePowerupItems
 {
+    None = -2,
+    Random,      // ランダム
     PowerUp,     //  弾のレベルアップ
     SpeedUp,     //  自機のスピードアップ
     Heal,        //  ハートを回復
@@ -63,19 +66,36 @@ public class DropItems : MonoBehaviour
     //  ドロップ持ちの敵が死んだ時にランダムな
     //  パワーアップアイテムをドロップする
     //------------------------------------------------------------
-    public void DropPowerupItem()
+    public void DropRandomPowerupItem()
     {
         //  ドロップなしならリターン
         if(dropType == EnemyManager.DROP_TYPE.None)return;
 
         //  ランダムなアイテムを生成する
         int rand = Random.Range(
-            (int)powerupItems.PowerUp,
-            (int)powerupItems.Max);
+            (int)ePowerupItems.PowerUp,
+            (int)ePowerupItems.Max);
 
         //  敵がやられた場所に生成する
         Vector3 pos = this.transform.position;
         Instantiate(powerupPrefabs[rand], pos, Quaternion.identity);
+    }
+
+    //------------------------------------------------------------
+    //  ドロップ持ちの敵が死んだ時に指定されたs
+    //  パワーアップアイテムをドロップする
+    //------------------------------------------------------------
+    public void DropPowerupItem(ePowerupItems item)
+    {
+        //  ドロップなしならリターン
+        if(dropType == EnemyManager.DROP_TYPE.None)return;
+
+        if(item == ePowerupItems.None || item == ePowerupItems.Random)
+            return;
+
+        //  敵がやられた場所に生成する
+        Vector3 pos = this.transform.position;
+        Instantiate(powerupPrefabs[(int)item], pos, Quaternion.identity);
     }
 
     //------------------------------------------------------------

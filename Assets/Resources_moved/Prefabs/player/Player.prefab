@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2113886905483911226}
   - component: {fileID: 745465283459105082}
   - component: {fileID: 7623398847629384687}
-  - component: {fileID: 5757520278068835431}
   - component: {fileID: 440332105621545400}
   - component: {fileID: 7767467471430926864}
   - component: {fileID: 833123742488486153}
@@ -95,7 +94,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &745465283459105082
@@ -110,6 +109,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 158924d1bcac46c4daee9319b6b539a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speedLevelIcon: {fileID: 0}
+  speedLevelIconRootObj: {fileID: 0}
   wallLeft: {fileID: 0}
   wallRight: {fileID: 0}
   wallTop: {fileID: 0}
@@ -132,31 +133,14 @@ MonoBehaviour:
   firePoint2_R: {fileID: 511521765754520999}
   firePoint3_L: {fileID: 5854216746967645280}
   firePoint3_R: {fileID: 6104989426499494978}
-  bulletPrefab:
-  - {fileID: 6013692122004912179, guid: 9682b190aa435a24ea6c54a641935a03, type: 3}
-  - {fileID: 6013692122004912179, guid: ac76b1a12a9ce3c4d83c900da79ac922, type: 3}
-  - {fileID: 6013692122004912179, guid: b514ce1637337a44798198b78893ecd9, type: 3}
-  - {fileID: 6013692122004912179, guid: c37dbbb086172fb49ad6a0c317baab70, type: 3}
-  - {fileID: 7261212287317507201, guid: afa7c8a2d69811645961a781afe80306, type: 3}
-  - {fileID: 6013692122004912179, guid: ddc8f457e27f62043a7c712c453da581, type: 3}
-  - {fileID: 6013692122004912179, guid: 392e3a50084deba468520badcddd59f1, type: 3}
-  frontSprite: {fileID: 0}
-  backSprite: {fileID: 0}
-  frontController: {fileID: 0}
-  backController: {fileID: 0}
+  normalBulletPrefab: {fileID: 0}
+  convertBulletPrefab: []
+  fieldObject: {fileID: 0}
+  shotPowerLevelIcon: {fileID: 0}
+  shotPowerIconRootObj: {fileID: 0}
+  sliderObj1: {fileID: 0}
+  sliderObj2: {fileID: 0}
   gamestatus: 0
---- !u!114 &5757520278068835431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 249785431906185015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5f49040186a00045b08d3d0437f1a0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &440332105621545400
 Rigidbody2D:
   serializedVersion: 4
@@ -261,8 +245,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d911123d4940eeb44b11435e362ffe9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentMaxHealth: 0
+  currentHealth: 0
+  animPlayerFront: {fileID: 0}
+  animPlayerFrontDamage: {fileID: 0}
+  animPlayerBack: {fileID: 0}
+  animPlayerBackDamage: {fileID: 0}
+  animPlayerDeath1: {fileID: 0}
+  animPlayerDeath2: {fileID: 0}
   playerDeathEffect: {fileID: 0}
   directionalLight: {fileID: 0}
+  heartRootObj: {fileID: 0}
+  heartFrameObj: {fileID: 0}
+  faceObject: {fileID: 0}
+  faceNormal: {fileID: 0}
+  faceDamage: {fileID: 0}
+  faceBand1: {fileID: 0}
+  faceBand2: {fileID: 0}
+  gameOver: {fileID: 0}
 --- !u!114 &5702756163802858048
 MonoBehaviour:
   m_ObjectHideFlags: 0

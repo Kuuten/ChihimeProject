@@ -38,6 +38,12 @@ public class PlayerShotManager : MonoBehaviour
     //  GameManager
     [SerializeField] private GameManager gameManager;
 
+    //  シングルトンなインスタンス
+    public static PlayerShotManager Instance
+    {
+        get; private set;
+    }
+
     //  弾の発射点
     [SerializeField]private Transform firePoint1;
     [SerializeField]private Transform firePoint2_L;
@@ -118,8 +124,6 @@ public class PlayerShotManager : MonoBehaviour
     private const float gauge2Speed = 2.0f;
     //  魂バートゲージ１が減少するスピード
     private const float gauge2MinusSpeed = 1.0f;
-    //  魂バートゲージ解放用ステップ変数
-    private int releaseStep;
     //  魂バートショットが撃てるかどうか
     private bool canConvert;
     //  魂バートゲージの増減用変数
@@ -143,10 +147,8 @@ public class PlayerShotManager : MonoBehaviour
     //  魂バート弾の威力(強攻撃)
     private float[] convertShotPowerFull = new float[(int)SHOT_TYPE.TYPE_MAX];
 
-    //  テスト用
+    //  ゲームの進行状態
     public int gamestatus;
-    InputAction test;
-    bool b;
 
     //  入力
     InputAction shot;
@@ -159,7 +161,6 @@ public class PlayerShotManager : MonoBehaviour
         PlayerInput playerInput = GetComponent<PlayerInput>();
         shot = playerInput.actions["Shot"];
         shotConvert = playerInput.actions["ConvertShot"];
-        test = playerInput.actions["TestButton2"]; 
 
         normalShotPower = 1.0f;
         shotCount = 0;
@@ -168,7 +169,6 @@ public class PlayerShotManager : MonoBehaviour
         gaugeValue = 0.0f;
         convertState = ConvertState.None;
         fieldObjectScale = new Vector3(3f,3f,3f);
-        releaseStep = 0;
         canConvert =true;
         convertIsFullPower = false;
 
@@ -198,12 +198,72 @@ public class PlayerShotManager : MonoBehaviour
             shotPowerIconList.Add( obj );   //  リストに追加
         }
 
-        //  テスト用
-        gamestatus = (int)eGameState.Zako;
-        b = true;
-
         //  弾の向きはとりあえず通常弾に合わせる
         velocity = new Vector3(0,normalSpeed,0);   //  最初は下方向へ撃つ
+    }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    //----------------------------------------------------------
+    //  ショットの初期化・有効化
+    //----------------------------------------------------------
+    public void InitShot()
+    {
+        shotCount = 0;
+        canShot = true;
+
+        fieldObjectScale = new Vector3(3f,3f,3f);
+
+        //  吸魂フィールドのスケール初期化
+        KonFieldAlphaAnimation(0.784f,0.0f,0.5f);
+        fieldObject.transform.DOScale(
+            new Vector3(3f,3f,3f),
+            0.5f);
+
+        canConvert = true; //  コンバート溜め可能
+
+        //  スライダー２をリセット
+        sliderObj2.GetComponent<Slider>().value = 0f;
+        sliderObj2.SetActive(false);
+
+        //  スライダー１をリセット
+        sliderObj1.GetComponent<Slider>().value = 0f;
+        sliderObj1.SetActive(false);
+        gaugeValue = 0.0f;
+
+        //  無にリセット
+        convertState = ConvertState.None;  
+    }
+
+    //----------------------------------------------------------
+    //  ショットの有効化
+    //----------------------------------------------------------
+    public void EnableShot()
+    {
+        shot.Enable();
+        shotConvert.Enable();
+    }
+
+    //----------------------------------------------------------
+    //  ショットの無効化
+    //----------------------------------------------------------
+    public void DisableShot()
+    {
+        shot.Disable();
+        shotConvert.Disable();
+
+        //  ショットの初期化
+        InitShot();
     }
 
     void Update()
@@ -214,47 +274,18 @@ public class PlayerShotManager : MonoBehaviour
         //  通常弾レベルアイコンを更新
         UpdateShotPowerIcon();
 
-
-        //  Enterでザコボス切り替え
-        if (test.WasPressedThisFrame())
-        {
-            b = !b;
-            Debug.Log("切り替えフラグ:" + b);
-
-            if (b)
-            {
-                gamestatus = (int)eGameState.Zako;
-                gameManager.SetGameState(gamestatus);
-            }
-            else
-            {
-                gamestatus = (int)eGameState.Boss;
-                gameManager.SetGameState(gamestatus);
-            }
-
-            GameManager.Instance.SetGameState(gamestatus);
-
-            Debug.Log("gamestatus:" + gamestatus);
-        }
-
         //  ゲーム段階別処理
         switch (gamestatus)
         {
             case (int)eGameState.Zako:
-                shot.Enable();
-                shotConvert.Enable();
                 NormalShot(true);                    //  通常弾
                 ConvertShot(true);                   //  魂バート弾
                 break;
             case (int)eGameState.Boss:
-                shot.Enable();
-                shotConvert.Enable();
                 NormalShot(false);                   //  通常弾
                 ConvertShot(false);                  //  魂バート弾
                 break;
             case (int)eGameState.Event:
-                shot.Disable();
-                shotConvert.Disable();
                 NormalShot(false);                   //  通常弾
                 ConvertShot(false);                  //  魂バート弾
                 break;
@@ -295,6 +326,7 @@ public class PlayerShotManager : MonoBehaviour
     }
     public float GetNormalShotPower(){ return normalShotPower; }
     public void SetNormalShotPower(float power) { normalShotPower = power; }
+    public bool IsConvertFullPower(){ return convertIsFullPower; }
     public float GetConvertShotPower()
     {
         if(convertIsFullPower)return convertShotPowerFull[(int)PlayerInfoManager.g_CONVERTSHOT];
@@ -552,8 +584,7 @@ public class PlayerShotManager : MonoBehaviour
         //  Velocity格納用
         Vector3 v = Vector3.zero;
 
-        //  魂バースト用
-        PlayerBombManager konburst = this.GetComponent<PlayerBombManager>();
+
 
         switch(convertState)
         {
@@ -577,8 +608,6 @@ public class PlayerShotManager : MonoBehaviour
                     gaugeValue = 0.0f;
 
                     sliderObj2.SetActive(true);
-
-
 
                     //  溜めSE再生
                     SoundManager.Instance.PlaySFX(
@@ -624,66 +653,37 @@ public class PlayerShotManager : MonoBehaviour
                 break;
 
             case ConvertState.ReleaseMidPower:  // 中攻撃の時に離した
-                if( slider1.value <= 0.0f )
-                {
-                    canConvert = true; //  コンバート溜め可能
 
-                    //  スライダー１をリセット
-                    slider1.value = 0f;
-                    sliderObj1.SetActive(false);
-                    gaugeValue = 0.0f;
+                canConvert = true; //  コンバート溜め可能
 
-                    //  無にリセット
-                    convertState = ConvertState.None;
-                }
-                else
-                {
-                    gaugeValue -= gauge1MinusSpeed * Time.deltaTime;
-                    slider1.value = gaugeValue;
-                }
+                //  スライダー１をリセット
+                slider1.value = 0f;
+                sliderObj1.SetActive(false);
+                gaugeValue = 0.0f;
+                slider1.value = gaugeValue;
+
+                //  無にリセット
+                convertState = ConvertState.None;
 
                 break;
             case ConvertState.FullPower:        // 強攻撃
                 break;
             case ConvertState.ReleaseFullPower:        // 強攻撃の時に離した
-                switch(releaseStep)
-                {
-                    case 0:
-                        if( slider2.value <= 0.0f )
-                        {
-                            //  スライダー２をリセット
-                            slider2.value = 0f;
-                            sliderObj2.SetActive(false);
-                            gaugeValue = 1.0f;
-                            releaseStep++;
-                        }
-                        else
-                        {
-                            gaugeValue -= gauge2MinusSpeed * Time.deltaTime;
-                            slider2.value = gaugeValue;
-                        }
-                        break;
-                    case 1:
-                        if( slider1.value <= 0.0f )
-                        {
-                            canConvert = true; //  コンバート溜め可能
 
-                            //  スライダー２をリセット
-                            slider1.value = 0f;
-                            sliderObj2.SetActive(false);
-                            gaugeValue = 0.0f;
-                            releaseStep = 0;
+                canConvert = true; //  コンバート溜め可能
 
-                            //  無にリセット
-                            convertState = ConvertState.None;
-                        }
-                        else
-                        {
-                            gaugeValue -= gauge1MinusSpeed * Time.deltaTime;
-                            slider1.value = gaugeValue;
-                        }
-                        break;
-                }
+                //  スライダー２をリセット
+                slider2.value = 0f;
+                sliderObj2.SetActive(false);      
+
+                //  スライダー１をリセット
+                slider1.value = 0f;
+                sliderObj1.SetActive(false);
+                gaugeValue = 0.0f;
+
+                //  無にリセット
+                convertState = ConvertState.None;
+
                 break;
         
         }
@@ -700,15 +700,13 @@ public class PlayerShotManager : MonoBehaviour
                     fieldObject.transform.DOScale(
                         new Vector3(6f,6f,6f),
                         0.5f);
-                    if(convertState == ConvertState.None)
-                    {
-                        //  溜めSE再生
-                        SoundManager.Instance.PlaySFX(
-                            (int)AudioChannel.SFX_CONVERT_SHOT,
-                            (int)SFXList.SFX_CONVERT_SHOT_GAUGE1);
 
-                        convertState = ConvertState.Restore;
-                    }
+                    //  溜めSE再生
+                    SoundManager.Instance.PlaySFX(
+                        (int)AudioChannel.SFX_CONVERT_SHOT,
+                        (int)SFXList.SFX_CONVERT_SHOT_GAUGE1);
+
+                    convertState = ConvertState.Restore;
                 }
             }
 
@@ -756,9 +754,6 @@ public class PlayerShotManager : MonoBehaviour
                     sr = obj.GetComponent<SpriteRenderer>(); 
                     sr.flipY = flipY;
 
-                    //  魂バーストゲージを少し増やす
-                    konburst.PlusKonburstGauge(false);
-
                     convertState = ConvertState.ReleaseMidPower;
                 }
                 else if(convertState == ConvertState.FullPower)
@@ -770,7 +765,7 @@ public class PlayerShotManager : MonoBehaviour
                     //  強攻撃SE再生
                     SoundManager.Instance.PlaySFX(
                         (int)AudioChannel.SFX_CONVERT_SHOT,
-                        sfxId[(int)PlayerInfoManager.g_CONVERTSHOT,(int)CONVERT_TYPE.FULL]);
+                        sfxId[(int)PlayerInfoManager.g_CONVERTSHOT, (int)CONVERT_TYPE.FULL]);
 
                     //  魂バート弾生成
                     GameObject obj = Instantiate(
@@ -784,9 +779,6 @@ public class PlayerShotManager : MonoBehaviour
                     //  Yを反転するかどうか設定する
                     sr = obj.GetComponent<SpriteRenderer>(); 
                     sr.flipY = flipY;
-
-                    //  魂バーストゲージを増やす
-                    konburst.PlusKonburstGauge(true);
 
                     convertState = ConvertState.ReleaseFullPower;
                 }

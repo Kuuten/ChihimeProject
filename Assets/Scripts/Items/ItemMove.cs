@@ -1,3 +1,4 @@
+using DG.Tweening.Core.Easing;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -66,7 +67,24 @@ public class ItemMove : MonoBehaviour
     //  常に結界の中心（ボス側）にアイテムが流れる
     private void Flowing()
     {
-        this.transform.position += new Vector3(0, flowSpeed, 0);
+        //  GameManagerから状態を取得
+        int gamestatus = GameManager.Instance.GetGameState();
+
+        //  ゲーム段階別処理
+        switch (gamestatus)
+        {
+            case (int)eGameState.Zako:
+                this.transform.position += new Vector3(0, flowSpeed, 0);
+                break;
+            case (int)eGameState.Boss:
+                this.transform.position -= new Vector3(0, flowSpeed, 0);
+                break;
+            case (int)eGameState.Event:
+                this.transform.position -= new Vector3(0, flowSpeed, 0);
+                break;
+        }
+
+        
     }
 
     //----------------------------------------------------------------

@@ -182,7 +182,7 @@ public class TitleManager : MonoBehaviour
 
         yield return new WaitForSeconds(2.0f); //  2.0秒待つ
 
-        //  BGMを止めてタイトルへ
+        //  BGMを止めてメインへ
         StopBGM();
         LoadingScene.Instance.LoadNextScene("Main");
     }
@@ -213,7 +213,7 @@ public class TitleManager : MonoBehaviour
         titleMode = TitleMode.Config;
     }
 
-     //  コンフィグ画面でセーブして戻るが押された時の処理
+     //  ゲーム開始が押された時の処理
     public void OnPressedStart()
     {
         StartCoroutine( WaitingForClosingScroll() );

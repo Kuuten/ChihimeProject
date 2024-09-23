@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8263136911065318099}
   - component: {fileID: 3094226663618152188}
-  - component: {fileID: 2685028107559390647}
   - component: {fileID: 3346022758746137007}
   - component: {fileID: 2703978121766300980}
   - component: {fileID: 1052254108100070817}
@@ -18,7 +17,7 @@ GameObject:
   - component: {fileID: 2549955025241058432}
   m_Layer: 0
   m_Name: boss_douji
-  m_TagString: Enemy
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94,18 +93,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2685028107559390647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 952405892329829615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5f49040186a00045b08d3d0437f1a0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &3346022758746137007
 Rigidbody2D:
   serializedVersion: 4
@@ -191,6 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosion: {fileID: 7776138344345479518, guid: 52acdfda6d1144543858be1f9c7c6a56, type: 3}
+  warningPrefab: []
 --- !u!114 &5898458702240623037
 MonoBehaviour:
   m_ObjectHideFlags: 0

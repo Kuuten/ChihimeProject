@@ -26,6 +26,8 @@ TagManager:
   - WadatsumiKonburst
   - HakumenConvert
   - HakumenKonburst
+  - Boss
+  - ConverterBullet
   layers:
   - Default
   - TransparentFX
@@ -33,7 +35,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - PlayerUI
   - 
   - 
   - 

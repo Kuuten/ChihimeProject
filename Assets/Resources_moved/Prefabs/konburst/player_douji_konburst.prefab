@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 8447879070818890903}
   - component: {fileID: 722209678591530019}
   - component: {fileID: 3766507344817565655}
-  - component: {fileID: 6912075161419784924}
   m_Layer: 0
   m_Name: player_douji_konburst
   m_TagString: DoujiKonburst
@@ -174,15 +173,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.75, y: 1.96}
   m_EdgeRadius: 0
---- !u!114 &6912075161419784924
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2148900806719592490}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5f49040186a00045b08d3d0437f1a0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

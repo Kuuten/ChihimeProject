@@ -24,6 +24,9 @@ public class BombFade : MonoBehaviour
     // フェードイン 
     public IEnumerator StartFadeIn(GameObject obj, float time)
     {
+        //  ゲームオブジェクトがない場合は抜ける
+        if(obj == null)yield break;
+
         bool complete = false;
 
         //  アニメーション準備
@@ -96,5 +99,16 @@ public class BombFade : MonoBehaviour
 
       //  完了まで待つ
       yield return new WaitUntil(() => complete == true);
+    }
+
+    // 強制削除 
+    public IEnumerator DestroyObject()
+    {
+        //  ゲームオブジェクトがない場合は抜ける
+        if(this.gameObject == null)yield break;
+
+        DestroyImmediate (this.gameObject, true);
+
+        yield return null;
     }
 }

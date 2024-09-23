@@ -274,14 +274,14 @@ public class EventSceneManager : MonoBehaviour
         eventCanvas.GetComponent<RectTransform>().anchoredPosition =
             new Vector2(0,0);
 
-        if (gameText != "ENDTEXT")
+        if (TextData[textNum] != "ENDTEXT")
         {
             if (textNext.WasPressedThisFrame())
             {
                 textNum++; //行を下（次）にする
             }
+            gameText = TextData[textNum];
         }
-        gameText = TextData[textNum].ToString();
     }
 
     //-----------------------------------------------------------------
@@ -319,7 +319,7 @@ public class EventSceneManager : MonoBehaviour
         BossObject = Instantiate(BossPrefab[(int)type],pos,Quaternion.identity);
 
         //  ボス情報セット
-        EnemyManager.Instance.SetBoss(type);
+        EnemyManager.Instance.SetBoss(type, ePowerupItems.Heal);
 
         //  BossDoujiコンポーネントを無効化
         BossObject.GetComponent<BossDouji>().enabled = false;
@@ -348,7 +348,7 @@ public class EventSceneManager : MonoBehaviour
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
         //  ボスを生成＆移動
-        yield return StartCoroutine(CreateBossAndMove(BossType.Douji,new Vector2(-1,5.5f)));
+        StartCoroutine(CreateBossAndMove(BossType.Douji,new Vector2(-1,5.5f)));
 
         //  上をアクティブ化
         frameObject[(int)Frame.TOP].SetActive(true);

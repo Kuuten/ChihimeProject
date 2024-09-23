@@ -15,13 +15,19 @@ using UnityEngine.UI;
 public class PlayerBombManager : MonoBehaviour
 {
     [SerializeField] FadeIO Fade;
-    [SerializeField] GameObject bombFadePrefab;
+    [SerializeField] GameObject bombFadeObject;
     [SerializeField] GameObject CanvasObject;
     [SerializeField] GameObject MainCanvasObject;
     [SerializeField] GameObject bombCollision;
     [SerializeField] GameObject konBurstCollision;
     private GameObject FadeObj;
     [SerializeField] BombFade bombFade;
+
+    //  シングルトンなインスタンス
+    public static PlayerBombManager Instance
+    {
+        get; private set;
+    }
 
     //  ドウジの魂バーストプレハブ
     [SerializeField] GameObject doujiKonburstPrefab;
@@ -34,7 +40,7 @@ public class PlayerBombManager : MonoBehaviour
     //  魂バーストゲージMAX字のランプ
     [SerializeField] GameObject konburstLamp;
     //  魂バーストゲージの1回あたりの増加量
-    private const float konbrstPlusValue = 0.5f;    //  暫定値
+    private const float konbrstPlusValue = 0.1f;    //  暫定値
     //  魂バーストゲージのFillオブジェクト
     [SerializeField] GameObject koburstGaugeFill;
     //  魂バーストゲージのFillのデフォルト画像
@@ -48,13 +54,25 @@ public class PlayerBombManager : MonoBehaviour
     private List<GameObject> bombIconList = new List<GameObject>();
     private int bombNum;
     private const int bombMaxNum = 5;
-    private float bombPower = 50f; //  ボム1発の威力
+    private float bombPower = 20f; //  ボム1発の威力
 
     InputAction inputBomb;
     bool bCanBomb;      //  ボムが発動できるかどうか
 
     //  ザコ戦終了後のボムコリジョンフラグ
-    bool isCalledOnce; 
+    bool isCalledOnce;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
@@ -218,7 +236,6 @@ public class PlayerBombManager : MonoBehaviour
 
         //  ボムが0なら発動できない
         if(bombNum <= 0)bCanBomb = false; 
-        else bCanBomb = true; 
     }
 
     //-------------------------------------------
@@ -234,7 +251,7 @@ public class PlayerBombManager : MonoBehaviour
         ph.SetSuperMode(true);
 
         //  弾を全て消す用のフェード板を生成
-        GameObject FadeObj = Instantiate( bombFadePrefab );
+        GameObject FadeObj = bombFadeObject;
         FadeObj.gameObject.transform.SetParent( CanvasObject.transform );
         FadeObj.gameObject.transform.SetAsFirstSibling();   //  ヒエラルキーの一番上に
         FadeObj.GetComponent<RectTransform>().transform.localPosition = Vector3.zero;
@@ -263,9 +280,8 @@ public class PlayerBombManager : MonoBehaviour
         //  画面がホワイトでフェードインする
         yield return StartCoroutine(bombFade.StartFadeIn(FadeObj, 0.2f));
 
-        //  フェードオブジェクトを削除
-        Destroy( FadeObj );
-        FadeObj = null;
+        //  0.2秒待つ
+        yield return new WaitForSeconds(0.2f);
 
         //  ボムの当たり判定オブジェクトを無効化
         bombCollision.SetActive(false);
@@ -295,7 +311,7 @@ public class PlayerBombManager : MonoBehaviour
         ph.SetSuperMode(true);
 
         //  弾を全て消す用のフェード板を生成
-        FadeObj = Instantiate( bombFadePrefab );
+        FadeObj = bombFadeObject;
         FadeObj.gameObject.transform.SetParent( CanvasObject.transform );
         FadeObj.gameObject.transform.SetAsFirstSibling();   //  ヒエラルキーの一番上に
         FadeObj.GetComponent<RectTransform>().transform.localPosition = Vector3.zero;
@@ -322,10 +338,6 @@ public class PlayerBombManager : MonoBehaviour
     {
         //  画面がホワイトでフェードインする
         yield return StartCoroutine(bombFade.StartFadeIn(FadeObj, 0.2f));
-
-        //  フェードオブジェクトを削除
-        Destroy( FadeObj );
-        FadeObj = null;
 
          //  魂バーストの弾消し用の当たり判定オブジェクトを有効化
         konBurstCollision.SetActive(false);

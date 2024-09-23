@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: -555598133550914068}
   - component: {fileID: -6456918231507496724}
   - component: {fileID: -3534323077064876794}
-  - component: {fileID: -4069407151855377676}
   - component: {fileID: 6835293649258351850}
   - component: {fileID: 7259069586578885932}
   m_Layer: 0
@@ -188,20 +187,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveType: 8
   enemyType: 2
+  isMidBoss: 0
   revengeShot: 0
   explosion: {fileID: 7776138344345479518, guid: 52acdfda6d1144543858be1f9c7c6a56, type: 3}
---- !u!114 &-4069407151855377676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 567640649506363673}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5f49040186a00045b08d3d0437f1a0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6835293649258351850
 MonoBehaviour:
   m_ObjectHideFlags: 0

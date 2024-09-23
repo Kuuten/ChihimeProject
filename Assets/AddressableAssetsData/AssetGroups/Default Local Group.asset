@@ -208,11 +208,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 94719bca0a616754fa428231a9f45bd0
-    m_Address: UI/ingame_mainUI.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6d0146f8c5a5e084aa970a7a6c5aaf95
     m_Address: Prefabs
     m_ReadOnly: 0
@@ -328,6 +323,17 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 868397f8a81be464f892444ab8ee8a73
+    m_Address: Sounds/SFX/System/se_ingame_cash.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sounds
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e6f35b8723ae4bd48bb4fb2aeb74421e
+    m_Address: Assets/Resources_moved/Sounds/SFX/System/se_ingame_count.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 5b3e9bf9194140840b980876631db859, type: 2}

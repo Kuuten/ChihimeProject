@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6509332764356201289}
   - component: {fileID: 5333072487723204131}
   - component: {fileID: 1816400542026437867}
-  - component: {fileID: -7402516113810762194}
   m_Layer: 0
   m_Name: mob
   m_TagString: Enemy
@@ -156,17 +155,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2832f2e0c5e7c644796e051dab508fc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
+  moveType: 0
+  enemyType: 0
+  isMidBoss: 0
+  revengeShot: 0
   explosion: {fileID: 7776138344345479518, guid: 52acdfda6d1144543858be1f9c7c6a56, type: 3}
---- !u!114 &-7402516113810762194
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 522768385097875514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5f49040186a00045b08d3d0437f1a0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
