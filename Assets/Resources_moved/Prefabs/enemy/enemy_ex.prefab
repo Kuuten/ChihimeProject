@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2832f2e0c5e7c644796e051dab508fc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveType: 4
+  moveType: 8
   enemyType: 5
   isMidBoss: 0
   revengeShot: 0
@@ -224,4 +224,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2a26fcd5ce69984187211e3f5a54df3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropType: 1
+  dropType: 0

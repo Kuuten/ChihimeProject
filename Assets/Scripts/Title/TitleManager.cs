@@ -180,11 +180,11 @@ public class TitleManager : MonoBehaviour
     {
         yield return StartCoroutine(Scroll.CloseScroll());
 
-        yield return new WaitForSeconds(2.0f); //  2.0秒待つ
+        yield return new WaitForSeconds(1f); //  1秒待つ
 
         //  BGMを止めてメインへ
         StopBGM();
-        LoadingScene.Instance.LoadNextScene("Main");
+        LoadingScene.Instance.LoadNextScene("SelectConvert");
     }
 
     //  タイトルロゴのイーズインを待つ
@@ -216,6 +216,10 @@ public class TitleManager : MonoBehaviour
      //  ゲーム開始が押された時の処理
     public void OnPressedStart()
     {
+        //  決定音再生
+        SoundManager.Instance.PlaySFX(
+            (int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_DECISION);
+
         StartCoroutine( WaitingForClosingScroll() );
     }
 

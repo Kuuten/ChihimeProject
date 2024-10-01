@@ -54,6 +54,9 @@ public class PlayerMovement : MonoBehaviour
     private float horizontalInput, verticalInput;
     InputAction move;
 
+    //  入力がプラス方向かのフラグ
+    private int horizontalCheck;     //  X軸の入力が+か-か0か
+
     bool bCanMove;
 
     void Start()
@@ -82,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         bCanMove = true;
+        horizontalCheck = 0;
     }
 
     void Update()
@@ -144,6 +148,16 @@ public class PlayerMovement : MonoBehaviour
         }
         if(level != speedLevel)speedLevel = level;
     }
+    public int GetHorizontalCheck()
+    {
+        //  範囲外なら
+        if(horizontalCheck < -2 ||
+            horizontalCheck > 2)
+        {
+            Debug.LogError("水平方向の入力フラグに範囲外の数値が入っています！");
+        }
+        return horizontalCheck;
+    }
 
     //-------------------------------------------
     //  移動処理
@@ -177,6 +191,11 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = inputMoveAxis.x;
         verticalInput = inputMoveAxis.y;
 
+        // X軸入力が+なら1、-なら-1、なしなら0とする
+        if(horizontalInput > 0.0f)horizontalCheck = 1;
+        else if(horizontalInput < 0.0f)horizontalCheck = -1;
+        else horizontalCheck = 0;
+
         Vector3 moveVector = new Vector3(horizontalInput, verticalInput, 0);
         moveVector.Normalize();
 
@@ -192,9 +211,6 @@ public class PlayerMovement : MonoBehaviour
         {
             bCanMove = true;
         }
-
-        
-
 
         if(bCanMove)transform.position += moveVector * moveSpeed[speedLevel] * Time.deltaTime;
 

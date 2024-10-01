@@ -20,7 +20,7 @@ public class PowerupItem : MonoBehaviour
 
     void Update()
     {
-        
+ 
     }
 
     //-------------------------------------------------------
@@ -52,6 +52,5 @@ public class PowerupItem : MonoBehaviour
             //  ƒAƒCƒeƒ€‚ğÁ‹
             Destroy(this.gameObject);
         }
-
     }
 }

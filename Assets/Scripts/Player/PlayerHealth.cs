@@ -13,6 +13,7 @@ using System.Threading;
 using DG.Tweening.Core.Easing;
 using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
+using UnityEngine.AddressableAssets;
 
 //--------------------------------------------------------------
 //
@@ -43,8 +44,12 @@ public class PlayerHealth : MonoBehaviour
 
     //  ダメージ演出用のAnimator
     [SerializeField] private RuntimeAnimatorController animPlayerFront;
+    [SerializeField] private RuntimeAnimatorController animPlayerFrontLeft;
+    [SerializeField] private RuntimeAnimatorController animPlayerFrontRight;
     [SerializeField] private RuntimeAnimatorController animPlayerFrontDamage;
     [SerializeField] private RuntimeAnimatorController animPlayerBack;
+    [SerializeField] private RuntimeAnimatorController animPlayerBackLeft;
+    [SerializeField] private RuntimeAnimatorController animPlayerBackRight;
     [SerializeField] private RuntimeAnimatorController animPlayerBackDamage;
 
     //  死亡演出用のAnimator
@@ -90,6 +95,9 @@ public class PlayerHealth : MonoBehaviour
     //  GameOver表示
     [SerializeField] private GameObject gameOver;
 
+     //  ドロップパワーアップアイテム一覧
+    [SerializeField] private GameObject DropItem;
+
 
     void Awake()
     {
@@ -98,6 +106,7 @@ public class PlayerHealth : MonoBehaviour
 
     void Start()
     {
+
         //  PlayerInfoManagerから初期化
         currentMaxHealth = PlayerInfoManager.g_MAXHP;
         if(currentMaxHealth > limitHealth)
@@ -454,8 +463,24 @@ public class PlayerHealth : MonoBehaviour
             }
             else // 通常
             {
-                this.GetComponent<Animator>().runtimeAnimatorController =
-                    animPlayerFront;
+                //  水平方向の入力値チェック
+                int check = this.GetComponent<PlayerMovement>().GetHorizontalCheck();
+
+                if(check == 1)          //  入力が+方向なら
+                {
+                    this.GetComponent<Animator>().runtimeAnimatorController =
+                        animPlayerFrontRight;
+                }
+                else if(check == -1)    //  入力が-方向なら
+                {
+                    this.GetComponent<Animator>().runtimeAnimatorController =
+                        animPlayerFrontLeft;
+                }
+                else   //   入力なしなら
+                {
+                    this.GetComponent<Animator>().runtimeAnimatorController =
+                        animPlayerFront;
+                }
             }
 
         }
@@ -468,8 +493,24 @@ public class PlayerHealth : MonoBehaviour
             }
             else // 通常
             {
-                this.GetComponent<Animator>().runtimeAnimatorController =
-                    animPlayerBack;
+                //  水平方向の入力値チェック
+                int check = this.GetComponent<PlayerMovement>().GetHorizontalCheck();
+
+                if(check == 1)          //  入力が+方向なら
+                {
+                    this.GetComponent<Animator>().runtimeAnimatorController =
+                        animPlayerBackRight;
+                }
+                else if(check == -1)    //  入力が-方向なら
+                {
+                    this.GetComponent<Animator>().runtimeAnimatorController =
+                        animPlayerBackLeft;
+                }
+                else   //   入力なしなら
+                {
+                    this.GetComponent<Animator>().runtimeAnimatorController =
+                        animPlayerBack;
+                }
             }
         }
     }
@@ -491,13 +532,15 @@ public class PlayerHealth : MonoBehaviour
 
         currentHealth = target;
 
-        //// 数値の変更
-        //DOTween.To(
-        //    () => currentHealth,          // 何を対象にするのか
-        //    num => currentHealth = num,   // 値の更新
-        //    target,                       // 最終的な値
-        //    value/2                       // アニメーション時間
-        //);
+        ////  プレイヤーの通常弾レベルが１じゃないなら
+        //if(GetComponent<PlayerShotManager>().GetNormalShotLevel() > 1)
+        //{
+        //    Debug.Log("ドロップ！");
+
+        //    //  ショット強化アイテムを落とす
+        //    Instantiate(DropItem,this.transform.position,Quaternion.identity);
+        //}
+
 
         //  デバッグ表示
         Debug.Log($"プレイヤーの体力が{value}減少して\n" +

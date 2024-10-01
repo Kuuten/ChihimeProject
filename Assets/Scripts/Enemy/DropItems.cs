@@ -7,6 +7,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
 using UnityEngine.Rendering;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using static EnemyManager;
 
 //--------------------------------------------------------------
 //
@@ -32,6 +33,7 @@ public enum ePowerupItems
     SpeedUp,     //  自機のスピードアップ
     Heal,        //  ハートを回復
     Bomb,        //  ボムが１UP
+    Ossan,       //  ちっちゃいおっさん
     
     Max
 }
@@ -41,12 +43,12 @@ public class DropItems : MonoBehaviour
     //  プレハブのアドレス
     private string[] adress =
     {
-        "item_smallKon",    //  Items.smallKon
-        "item_largeKon",    //  Items.largeKon
-        "item_powerup",     //  Items.PowerUp
-        "item_speedup",     //  Items.SpeedUp
-        "item_heart",       //  Items.Heal
-        "item_bomb"         //  Items.Bomb
+        "item_smallKon",    //  KonItems.smallKon
+        "item_largeKon",    //  KonItems.largeKon
+        "item_powerup",     //  ePowerupItems.PowerUp
+        "item_speedup",     //  ePowerupItems.SpeedUp
+        "item_heart",       //  ePowerupItems.Heal
+        "item_bomb",        //  ePowerupItems.Bomb
     };
     
     //  アイテムのプレハブ格納用
@@ -56,7 +58,7 @@ public class DropItems : MonoBehaviour
     //  パワーアップアイテムを落とすかどうか
     [SerializeField] EnemyManager.DROP_TYPE dropType;
 
-    private void Start()
+    void Start()
     {
         konPrefabs = EnemyManager.Instance.GetKonItems();
         powerupPrefabs = EnemyManager.Instance.GetPowerupItems();
@@ -72,13 +74,27 @@ public class DropItems : MonoBehaviour
         if(dropType == EnemyManager.DROP_TYPE.None)return;
 
         //  ランダムなアイテムを生成する
-        int rand = Random.Range(
-            (int)ePowerupItems.PowerUp,
-            (int)ePowerupItems.Max);
+        int rand = Random.Range(0,100);
 
-        //  敵がやられた場所に生成する
         Vector3 pos = this.transform.position;
-        Instantiate(powerupPrefabs[rand], pos, Quaternion.identity);
+
+        if(rand == 0)    //  確率１％でちっちゃいおっさんが出る
+        {
+            EnemyManager.Instance.SetEnemy(
+                EnemyManager.Instance.GetEnemyPrefab((int)EnemyPattern.EX),
+                pos
+            );
+        }
+        else // その他は確率なしのランダム
+        {
+            int num = Random.Range(
+                (int)ePowerupItems.PowerUp,
+                (int)ePowerupItems.Ossan
+            );
+
+            //  敵がやられた場所に生成する
+            Instantiate(powerupPrefabs[num], pos, Quaternion.identity);
+        }
     }
 
     //------------------------------------------------------------
@@ -93,9 +109,22 @@ public class DropItems : MonoBehaviour
         if(item == ePowerupItems.None || item == ePowerupItems.Random)
             return;
 
-        //  敵がやられた場所に生成する
-        Vector3 pos = this.transform.position;
-        Instantiate(powerupPrefabs[(int)item], pos, Quaternion.identity);
+        //  ちっちゃいおっさんのセット
+        if(item == ePowerupItems.Ossan)
+        {            
+            //  敵がやられた場所に生成する
+            Vector3 pos = this.transform.position;
+            EnemyManager.Instance.SetEnemy(
+                EnemyManager.Instance.GetEnemyPrefab((int)EnemyPattern.EX),
+                pos
+            );
+        }
+        else // その他は通常通り
+        {
+            //  敵がやられた場所に生成する
+            Vector3 pos = this.transform.position;
+            Instantiate(powerupPrefabs[(int)item], pos, Quaternion.identity);
+        }
     }
 
     //------------------------------------------------------------
@@ -132,8 +161,8 @@ public class DropItems : MonoBehaviour
     public void DropKon(int money)
     {
         //  大魂１個あたりの魂獲得量を取得
-        int largeKon = MoneyManager.Instance.GetKonNumGainedFromLarge();
-        int smallKon = MoneyManager.Instance.GetKonNumGainedFromSmall();
+        int largeKon = MoneyManager.Instance.GetKonNumGainedFromLarge(); // 500 
+        int smallKon = MoneyManager.Instance.GetKonNumGainedFromSmall(); // 100
 
         if (money < largeKon)
         {

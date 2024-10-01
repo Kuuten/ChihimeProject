@@ -41,7 +41,7 @@ public class ScrollAnimation : MonoBehaviour
     //  Šª•¨‚ðŠJ‚­
     public IEnumerator OpenScroll()
     {
-        this.GetComponent<RectTransform>().DOAnchorPosX(40,2)
+        this.GetComponent<RectTransform>().DOAnchorPosX(40,1)
         .SetEase(Ease.OutCubic)
         .OnStart(
         () =>
@@ -57,7 +57,7 @@ public class ScrollAnimation : MonoBehaviour
     //  Šª•¨‚ð•Â‚¶‚é
     public IEnumerator CloseScroll()
     {
-        this.GetComponent<RectTransform>().DOAnchorPosX(1240.5f,2)
+        this.GetComponent<RectTransform>().DOAnchorPosX(1240.5f,1)
         .SetEase(Ease.OutCubic)
         .OnStart(
         () =>

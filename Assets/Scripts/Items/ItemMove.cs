@@ -28,12 +28,12 @@ public class ItemMove : MonoBehaviour
         bField = false;
         speed = 1.0f;
         acceleration = 1.0f;
+
+        player = GameManager.Instance.GetPlayer();
     }
 
     void Update()
     {
-
-
         //  吸魂フィールドに触れない限りは常に流れる
         if(bField)MoveToPlayer();
         else Flowing();
@@ -42,8 +42,6 @@ public class ItemMove : MonoBehaviour
     //  魂バート弾時にプレイヤーに加速しながら移動
     public void MoveToPlayer()
     {
-        player = GameManager.Instance.GetPlayer();
-
         //  プレイヤーの体力がなければリターン
         if(player == null)return;
 
@@ -109,8 +107,6 @@ public class ItemMove : MonoBehaviour
         //  タグが吸魂フィールドなら吸引ON
         if(collision.CompareTag("PlayerField"))
         {
-            Debug.Log("回収フィールド吸引ON");
-
             //  回収フィールド吸引ON
             bField = true;
         }

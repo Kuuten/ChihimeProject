@@ -124,7 +124,7 @@ public class GameOverManager : MonoBehaviour
     {
         yield return StartCoroutine(Scroll.CloseScroll());
 
-        yield return new WaitForSeconds(2.0f); //  2.0•b‘Ò‚Â
+        yield return new WaitForSeconds(1f); //  1•b‘Ò‚Â
 
         //  BGM‚ðŽ~‚ß‚Äƒ^ƒCƒgƒ‹‚Ö
         StopBGM();

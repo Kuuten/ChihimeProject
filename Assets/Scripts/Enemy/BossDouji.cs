@@ -2,9 +2,39 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+// 敵の弾の種類
+public enum BULLET_TYPE {
+    //  青弾
+    Snipe_Normal,        //  自機狙い弾・通常
+    Snipe_RotationL,     //  自機狙い弾・左回転
+    Snipe_RotationR,     //  自機狙い弾・右回転
+    Snipe_Long,          //  自機狙い弾・ロング
+    Snipe_Big,           //  自機狙い弾・大玉
+    //  赤弾
+    Wildly_Normal,       //  バラマキ弾・通常
+    Wildly_RotationL,    //  バラマキ弾・左回転
+    Wildly_RotationR,    //  バラマキ弾・右回転
+    Wildly_Long,         //  バラマキ弾・ロング
+    Wildly_Big,          //  バラマキ弾・大玉
+    //  ドウジギミック弾
+    Douji_Gimmick_Top,
+    Douji_Gimmick_Bottom,
+    Douji_Gimmick_Left,
+    Douji_Gimmick_Right,
+    //  ギミック警告
+    Douji_Warning,
+    //  ドウジ発狂弾
+    Douji_Berserk_Bullet,
+    //  警告の予測ライン
+    Douji_DangerLine_Top,
+    Douji_DangerLine_Bottom,
+    Douji_DangerLine_Left,
+    Douji_DangerLine_Right,
+}
 
 //--------------------------------------------------------------
 //
@@ -44,34 +74,6 @@ public class BossDouji : MonoBehaviour
         Max
     };
 
-    // 敵の弾の種類
-    public enum BULLET_TYPE {
-        //  青弾
-        Snipe_Normal,        //  自機狙い弾・通常
-        Snipe_RotationL,     //  自機狙い弾・左回転
-        Snipe_RotationR,     //  自機狙い弾・右回転
-        Snipe_Long,          //  自機狙い弾・ロング
-        Snipe_Big,           //  自機狙い弾・大玉
-        //  赤弾
-        Wildly_Normal,       //  バラマキ弾・通常
-        Wildly_RotationL,    //  バラマキ弾・左回転
-        Wildly_RotationR,    //  バラマキ弾・右回転
-        Wildly_Long,         //  バラマキ弾・ロング
-        Wildly_Big,          //  バラマキ弾・大玉
-        //  ドウジギミック弾
-        Douji_Gimmick_Top,
-        Douji_Gimmick_Bottom,
-        Douji_Gimmick_Left,
-        Douji_Gimmick_Right,
-        //  ギミック警告
-        Douji_Warning_Top,
-        Douji_Warning_Bottom,
-        Douji_Warning_Left,
-        Douji_Warning_Right,
-        //  ドウジ発狂弾
-        Douji_Berserk_Bullet
-    }
-
     //  ドロップパワーアップアイテム一覧
     private ePowerupItems powerupItems;
 
@@ -81,20 +83,30 @@ public class BossDouji : MonoBehaviour
     //------------------------------------------------------------
     //  Phase2用
     //------------------------------------------------------------
-    private GameObject[] warningObject;
+    private GameObject warningObject;
+
+    private bool bWarningFirst;
+
+    //  WARNING時の予測ライン
+    private GameObject[] dangerLineObject;
 
     void Start()
     {
         //  警告オブジェクトを取得
-        warningObject = new GameObject[(int)DoujiPhase2Bullet.KooniDirection.MAX];
-        warningObject[(int)DoujiPhase2Bullet.KooniDirection.TOP] =
-            EnemyManager.Instance.GetBulletPrefab((int)BULLET_TYPE.Douji_Warning_Top);
-        warningObject[(int)DoujiPhase2Bullet.KooniDirection.BOTTOM] =
-            EnemyManager.Instance.GetBulletPrefab((int)BULLET_TYPE.Douji_Warning_Bottom);
-        warningObject[(int)DoujiPhase2Bullet.KooniDirection.LEFT] =
-            EnemyManager.Instance.GetBulletPrefab((int)BULLET_TYPE.Douji_Warning_Left);
-        warningObject[(int)DoujiPhase2Bullet.KooniDirection.RIGHT] =
-            EnemyManager.Instance.GetBulletPrefab((int)BULLET_TYPE.Douji_Warning_Right);
+        warningObject = new GameObject();
+        warningObject =
+            EnemyManager.Instance.GetBulletPrefab((int)BULLET_TYPE.Douji_Warning);
+
+        //  WARNING時の予測ラインオブジェクトを取得
+        dangerLineObject = new GameObject[(int)DoujiPhase2Bullet.KooniDirection.MAX];
+        dangerLineObject[(int)DoujiPhase2Bullet.KooniDirection.TOP] =
+            EnemyManager.Instance.GetBulletPrefab((int)BULLET_TYPE.Douji_DangerLine_Top);
+        dangerLineObject[(int)DoujiPhase2Bullet.KooniDirection.BOTTOM] =
+            EnemyManager.Instance.GetBulletPrefab((int)BULLET_TYPE.Douji_DangerLine_Bottom);
+        dangerLineObject[(int)DoujiPhase2Bullet.KooniDirection.LEFT] =
+            EnemyManager.Instance.GetBulletPrefab((int)BULLET_TYPE.Douji_DangerLine_Left);
+        dangerLineObject[(int)DoujiPhase2Bullet.KooniDirection.RIGHT] =
+            EnemyManager.Instance.GetBulletPrefab((int)BULLET_TYPE.Douji_DangerLine_Right);
 
         //  ギミック弾の使用済み番号を初期化
         for(int i=0;i<(int)DoujiPhase2Bullet.KooniDirection.MAX;i++)
@@ -112,6 +124,8 @@ public class BossDouji : MonoBehaviour
         flashInterval = 0.2f;
         //  SpriteRenderを取得
         sp = GetComponent<SpriteRenderer>();
+        //  Warningの初回フラグ
+        bWarningFirst = false;
 
         //  行動開始
         StartCoroutine(WaitDoujiAction(1));
@@ -286,6 +300,67 @@ public class BossDouji : MonoBehaviour
                 Death2();                      //  やられ演出2
             }
         }
+        else if (collision.CompareTag("TsukumoConvert"))
+        {
+            //  弾を消す
+            Destroy(collision.gameObject);
+
+            //  ダメージ処理
+            float d = GameManager.Instance.GetPlayer()
+                .GetComponent<PlayerShotManager>().GetConvertShotPower();
+            Damage(d);
+
+            //  中攻撃か強攻撃か判定
+            bool isFullPower = GameManager.Instance.GetPlayer()
+                .GetComponent<PlayerShotManager>().IsConvertFullPower();
+
+            //  魂バーストゲージを増やす
+            if(isFullPower)
+            {
+                PlayerBombManager.Instance.PlusKonburstGauge(true);
+            }
+            //  魂バーストゲージを少し増やす
+            else
+            {
+                PlayerBombManager.Instance.PlusKonburstGauge(false);  
+            }
+
+            //  点滅演出
+            StartCoroutine(Blink(true,loopCount,flashInterval));
+
+            //  ダメージSE再生
+            StartCoroutine(PlayDamageSFXandSuperModeOff());
+
+            //  死亡フラグON
+            if(hp <= 0)
+            {
+                bDeath = true;
+                Death2();                      //  やられ演出2
+            }
+        }
+        else if (collision.CompareTag("TsukumoKonburst"))
+        {
+            //  弾を消す
+            Destroy(collision.gameObject);
+
+            //  ダメージ処理
+            float d = GameManager.Instance.GetPlayer()
+                .GetComponent<PlayerBombManager>().GetKonburstShotPower();
+            Damage(d);
+
+            //  点滅演出
+            StartCoroutine(Blink(true,loopCount,flashInterval));
+
+            //  ダメージSE再生
+            StartCoroutine(PlayDamageSFXandSuperModeOff());
+
+            //  死亡フラグON
+            if(hp <= 0)
+            {
+                bDeath = true;
+                Death2();                      //  やられ演出2
+            }
+        }
         else if (collision.CompareTag("Bomb"))
         {
             //  ダメージ処理
@@ -441,6 +516,14 @@ public class BossDouji : MonoBehaviour
             yield return StartCoroutine(Shot());
 
 
+            //yield return StartCoroutine(Douji_LoopMove(1.0f, 1.0f));
+            //yield return StartCoroutine(Warning());
+            //StartCoroutine(KooniParty());
+            //StartCoroutine(KooniParty());
+            //StartCoroutine(KooniParty());
+            //yield return StartCoroutine(KooniParty());
+
+
             //yield return StartCoroutine(Douji_BerserkBarrage());
 
             //yield return StartCoroutine(Douji_LoopMoveBerserk(3, 0.6f, 1.0f));
@@ -458,7 +541,8 @@ public class BossDouji : MonoBehaviour
             {
                 //  アイテムドロップ判定
                 DropItems drop = this.GetComponent<DropItems>();
-                if (drop) drop.DropRandomPowerupItem();
+                //  確定ドロップでショット強化を落とす
+                if (drop) drop.DropPowerupItem(ePowerupItems.PowerUp);
 
                 //  ３秒待つ
                 yield return new WaitForSeconds(3);
@@ -471,6 +555,7 @@ public class BossDouji : MonoBehaviour
         {
             yield return StartCoroutine(Douji_LoopMove(1.0f,1.0f));
 
+            StartCoroutine(WildlyShotSmall());
             StartCoroutine(KooniParty());
             StartCoroutine(KooniParty());
             StartCoroutine(KooniParty());
@@ -481,7 +566,8 @@ public class BossDouji : MonoBehaviour
             {
                 //  アイテムドロップ判定
                 DropItems drop = this.GetComponent<DropItems>();
-                if (drop) drop.DropRandomPowerupItem();
+                //  確定ドロップでショット強化を落とす
+                if (drop) drop.DropPowerupItem(ePowerupItems.PowerUp);
 
                 //  ３秒待つ
                 yield return new WaitForSeconds(3);
@@ -594,7 +680,7 @@ public class BossDouji : MonoBehaviour
         int rand = Random.Range(0,100);
 
         //  発生確率の閾値で呼び分ける
-        if (rand <= 66f)
+        if (rand <= 49f)
         {
             yield return StartCoroutine(WildlyShot());
 
@@ -603,6 +689,61 @@ public class BossDouji : MonoBehaviour
         else if (rand <= 99f)
         {
             yield return StartCoroutine(OriginalShot());
+
+            yield return StartCoroutine(StraightShot());
+
+            yield return StartCoroutine(StraightShot());
+        }
+
+        yield return null;
+    }
+
+    //------------------------------------------------------------------
+    //  バラマキ弾(小)
+    //------------------------------------------------------------------
+    private IEnumerator WildlyShotSmall()
+    {
+        //  通常バラマキ弾のプレハブを取得
+        GameObject bullet = EnemyManager.Instance
+            .GetBulletPrefab((int)BULLET_TYPE.Wildly_Normal);
+
+        float totalDegree = 180;        //  撃つ範囲の総角  
+        int wayNum = 5;                 //  弾のway数(必ず3way以上の奇数にすること)
+        float Degree = totalDegree / (wayNum-1);     //  弾一発毎にずらす角度         
+        float speed = 3.0f;             //  弾速
+        int chain = 5;                  //  連弾数
+        float chainInterval = 0.8f;     //  連弾の間隔（秒）
+
+        //  敵の前方ベクトルを取得
+        Vector3[] vector = new Vector3[wayNum];
+        for (int j = 0; j < chain; j++)
+        {
+            for (int i = 0; i < wayNum; i++)
+            {
+                Vector3 vector0 = Quaternion.Euler(0,0,Random.Range(-10,11)) * -transform.up;
+
+                vector[i] = Quaternion.Euler(
+                        0, 0, -Degree * ((wayNum-1)/2) + (i * Degree)
+                    ) * vector0;
+                vector[i].z = 0f;
+
+                //弾インスタンスを取得し、初速と発射角度を与える
+                GameObject Bullet_obj = 
+                    (GameObject)Instantiate(bullet, transform.position, transform.rotation);
+                EnemyBullet enemyBullet = Bullet_obj.GetComponent<EnemyBullet>();
+                enemyBullet.SetSpeed(speed);
+                enemyBullet.SetVelocity(vector[i]);
+                enemyBullet.SetPower(enemyData.Attack);
+
+                if(i == 0)
+                {
+                    //  発射SE再生
+                    SoundManager.Instance.PlaySFX(
+                    (int)AudioChannel.ENEMY_SHOT,
+                    (int)SFXList.SFX_ENEMY_SHOT);
+                }
+            }
+            yield return new WaitForSeconds(chainInterval);
         }
 
         yield return null;
@@ -729,10 +870,10 @@ public class BossDouji : MonoBehaviour
 
         float totalDegree = 180;        //  撃つ範囲の総角  
         int wayNum = 1;                 //  弾のway数(必ず3way以上の奇数にすること)
-        int chain = 5;                 //  連弾数
+        int chain = 5;                  //  連弾数
         float Degree = totalDegree/chain;     //  弾一発毎にずらす角度         
-        float speed = 10.0f;             //  弾速
-        float chainInterval = 0.05f;     //  連弾の間隔（秒）
+        float speed = 7.0f;             //  弾速
+        float chainInterval = 0.05f;    //  連弾の間隔（秒）
 
         //  敵の前方ベクトルを取得
         Vector3[] vector = new Vector3[wayNum];
@@ -854,39 +995,170 @@ public class BossDouji : MonoBehaviour
     }
 
     //------------------------------------------------------------------
-    //  Phase2:警告を出す
+    //  撃ち下ろしショット
     //------------------------------------------------------------------
-    private IEnumerator Warning(DoujiPhase2Bullet.KooniDirection direction, Vector2 pos)
+    private IEnumerator StraightShot()
     {
-        int loop_count = 2;
-        float flash_interval = 0.5f;
+        int currentlNum = (int)Control.Left;       //  現在位置
+        List<int> targetList = new List<int>();    //  目標位置候補リスト
+        int targetNum = (int)Control.Right;        //  目標位置
+
+        Vector3 vec = Vector3.down;     //  弾のベクトル
+        float duration = 2.0f;
+        int bulletNum = 3;
+        float interval = 2.0f;
+
+        //  通常バラマキ弾のプレハブを取得
+        GameObject bullet = EnemyManager.Instance
+            .GetBulletPrefab((int)BULLET_TYPE.Wildly_Big);
+
+        //  現在位置を求める（一番近い位置とする）
+        Vector3 p1 = EnemyManager.Instance.GetControlPointPos((int)Control.Left);
+        Vector3 p2 = EnemyManager.Instance.GetControlPointPos((int)Control.Right);
+        float d1 = Vector3.Distance(p1,this.transform.position);
+        float d2 = Vector3.Distance(p2,this.transform.position);
+        List<float> dList = new List<float>();
+        dList.Clear();
+        dList.Add(d1);
+        dList.Add(d2);
+        
+        //  並び替え
+        dList.Sort();
+
+        if(dList[0] == d1)currentlNum = (int)Control.Left;
+        if(dList[0] == d2)currentlNum = (int)Control.Right;
+
+        //  リストをクリア
+        targetList.Clear();
+
+        //  目標の番号を設定
+        if(currentlNum ==(int)Control.Left)
+        {
+            targetList.Add((int)Control.Right);
+        }
+        else if(currentlNum ==(int)Control.Right)
+        {
+            targetList.Add((int)Control.Left);
+        }
+
+        //  目標番号を設定
+        targetNum = targetList[Random.Range(0, targetList.Count)];
+
+        //  目標座標を取得
+        Vector3 targetPos = EnemyManager.Instance.GetControlPointPos(targetNum);
+
+        //  横移動開始
+        transform.DOLocalMoveX(targetPos.x, duration)
+            .SetEase(Ease.Linear);
+
+        //  弾を生成
+        GameObject bullet1 = Instantiate(bullet,transform.position,Quaternion.identity);
+        bullet1.transform.DOMoveY(-15,duration)
+            .SetRelative(true)
+            .SetEase(Ease.InOutQuint)
+            .OnComplete(()=>Destroy(bullet1));
+
+        yield return new WaitForSeconds(duration/bulletNum);
+
+        GameObject bullet2 = Instantiate(bullet,transform.position,Quaternion.identity);
+        bullet2.transform.DOMoveY(-15,duration)
+            .SetRelative(true)
+            .SetEase(Ease.InOutQuint)
+            .OnComplete(()=>Destroy(bullet2));
+
+        yield return new WaitForSeconds(duration/bulletNum);
+
+        GameObject bullet3 = Instantiate(bullet,transform.position,Quaternion.identity);
+        bullet3.transform.DOMoveY(-15,duration)
+            .SetRelative(true)
+            .SetEase(Ease.InOutQuint)
+            .OnComplete(()=>Destroy(bullet3));
+
+        yield return new WaitForSeconds(duration/bulletNum);
+
+        //  現在の番号を更新
+        currentlNum = targetNum;
+
+        //  次の移動まで待つ
+        yield return new WaitForSeconds(interval);
+    }
+
+    //------------------------------------------------------------------
+    //  Phase2:子鬼の群れの進路を表示する
+    //------------------------------------------------------------------
+    private IEnumerator DisplayDirection(DoujiPhase2Bullet.KooniDirection direction, Vector2 pos)
+    {
+        GameObject line = null;
 
         //  SEを再生
         SoundManager.Instance.PlaySFX(
             (int)AudioChannel.SFX_SYSTEM,
             (int)SFXList.SFX_DOUJI_WARNING);
 
-        //点滅ループ開始
-        for (int i = 0; i < loop_count; i++)
-        {
-            //  座標を設定
-            warningObject[(int)direction].GetComponent<RectTransform>()
-                .anchoredPosition = pos;
+        //  予測進路のスライダーを生成
+        GameObject canvas = EnemyManager.Instance.GetDangerLineCanvas();
+        line = Instantiate(dangerLineObject[(int)direction]);
+        line.transform.SetParent(canvas.transform);
+        line.GetComponent<RectTransform>().anchoredPosition = pos;
 
-            //  有効化
-            warningObject[(int)direction].SetActive(true);
+        yield return new WaitForSeconds(1);
 
-            //  flashInterval待ってから
-            yield return new WaitForSeconds(flash_interval);
+        if(line.gameObject)Destroy(line.gameObject);
+    }
 
-            //  無効化
-            warningObject[(int)direction].SetActive(false);
+    //------------------------------------------------------------------
+    //  Phase2:アルファアニメーション
+    //------------------------------------------------------------------
+    private IEnumerator AlphaAnimation(float start, float end)
+    {
+        float duration = 0.4f;
 
-            //  flashInterval待ってから
-            yield return new WaitForSeconds(flash_interval);
-        }
+        //  アルファを0.0に設定
+        var  fadeImage = warningObject.GetComponent<Image>();
+        fadeImage.enabled = true;
+        var c = fadeImage.color;
+        c.a = start;    // 初期値
+        fadeImage.color = c;
 
-        yield return null;
+        //  アニメーション開始
+        DOTween.ToAlpha(
+	        ()=> fadeImage.color,
+	        color => fadeImage.color = color,
+	        end,         // 目標値
+	        duration    // 所要時間
+        );
+
+        yield return new WaitForSeconds(duration);
+    }
+
+    //------------------------------------------------------------------
+    //  Phase2:警告を出す
+    //------------------------------------------------------------------
+    private IEnumerator Warning()
+    {
+        if(bWarningFirst)yield break;
+
+        //  SEを再生
+        SoundManager.Instance.PlaySFX(
+            (int)AudioChannel.SFX_SYSTEM,
+            (int)SFXList.SFX_DOUJI_WARNING);
+
+        //  WARNINGを有効化
+        warningObject.SetActive(true);
+
+        //  アルファアニメーション
+        yield return StartCoroutine(AlphaAnimation(0f,0.8f));
+        yield return StartCoroutine(AlphaAnimation(0.8f,0f));
+        yield return StartCoroutine(AlphaAnimation(0f,0.8f));
+        yield return StartCoroutine(AlphaAnimation(0.8f,0f));
+
+        //  WARNINGを無効化
+        warningObject.SetActive(false);
+
+        //  初回ではなくなったのでTRUE
+        bWarningFirst = true;
+
+        yield return new WaitForSeconds(2);
     }
 
     //------------------------------------------------------------------
@@ -916,6 +1188,7 @@ public class BossDouji : MonoBehaviour
             //  ギミック弾のプレハブを取得
             GameObject bullet = EnemyManager.Instance
                 .GetBulletPrefab((int)BULLET_TYPE.Douji_Gimmick_Top);
+
             //  ３箇所で抽選
             int rand = Random.Range(0,3);
             Vector3 pos = default;
@@ -923,9 +1196,9 @@ public class BossDouji : MonoBehaviour
             {
                 pos = EnemyManager.Instance.GetSpawnerPos(0);
 
-                //  Warning!表示
+                //  子鬼の群れの進路を表示する
                 yield return StartCoroutine(
-                    Warning(
+                    DisplayDirection(
                         DoujiPhase2Bullet.KooniDirection.TOP,
                         new Vector2(-375,300)
                         ));
@@ -934,9 +1207,9 @@ public class BossDouji : MonoBehaviour
             {
                 pos = EnemyManager.Instance.GetSpawnerPos(1);
 
-                //  Warning!表示
+                //  子鬼の群れの進路を表示する
                 yield return StartCoroutine(
-                    Warning(
+                    DisplayDirection(
                         DoujiPhase2Bullet.KooniDirection.TOP,
                         new Vector2(-60,300)
                         ));
@@ -945,13 +1218,14 @@ public class BossDouji : MonoBehaviour
             {
                 pos = EnemyManager.Instance.GetSpawnerPos(2);
 
-                //  Warning!表示
+                //  子鬼の群れの進路を表示する
                 yield return StartCoroutine(
-                    Warning(
+                    DisplayDirection(
                         DoujiPhase2Bullet.KooniDirection.TOP,
                         new Vector2(250,300)
                         ));
             }
+            //  子鬼を生成
             GameObject obj = Instantiate(bullet,pos,Quaternion.identity);
             DoujiPhase2Bullet bulletComp =  obj.GetComponent<DoujiPhase2Bullet>();
             bulletComp.SetPower(enemyData.Attack);
@@ -975,9 +1249,9 @@ public class BossDouji : MonoBehaviour
             {
                 pos = EnemyManager.Instance.GetSpawnerPos(8);
 
-                //  Warning!表示
+                //  子鬼の群れの進路を表示する
                 yield return StartCoroutine(
-                    Warning(
+                    DisplayDirection(
                         DoujiPhase2Bullet.KooniDirection.BOTTOM,
                         new Vector2(-375,-300)
                         ));
@@ -986,9 +1260,10 @@ public class BossDouji : MonoBehaviour
             {
                 pos = EnemyManager.Instance.GetSpawnerPos(7);
 
-                //  Warning!表示
+
+                //  子鬼の群れの進路を表示する
                 yield return StartCoroutine(
-                    Warning(
+                    DisplayDirection(
                         DoujiPhase2Bullet.KooniDirection.BOTTOM,
                         new Vector2(-60,-300)
                         ));
@@ -997,13 +1272,14 @@ public class BossDouji : MonoBehaviour
             {
                 pos = EnemyManager.Instance.GetSpawnerPos(6);
 
-                //  Warning!表示
+                //  子鬼の群れの進路を表示する
                 yield return StartCoroutine(
-                    Warning(
+                    DisplayDirection(
                         DoujiPhase2Bullet.KooniDirection.BOTTOM,
                         new Vector2(250,-300)
                         ));
             }
+            //  子鬼を生成
             GameObject obj = Instantiate(bullet,pos,Quaternion.identity);
             DoujiPhase2Bullet bulletComp =  obj.GetComponent<DoujiPhase2Bullet>();
             bulletComp.SetPower(enemyData.Attack);
@@ -1027,9 +1303,12 @@ public class BossDouji : MonoBehaviour
             {
                 pos = EnemyManager.Instance.GetSpawnerPos(11);
 
-                //  Warning!表示
+                //  座標をセット
+                //pos2 = new Vector2(-560,190);
+
+                //  子鬼の群れの進路を表示する
                 yield return StartCoroutine(
-                    Warning(
+                    DisplayDirection(
                         DoujiPhase2Bullet.KooniDirection.LEFT,
                         new Vector2(-430,180)
                         ));
@@ -1038,9 +1317,12 @@ public class BossDouji : MonoBehaviour
             {
                 pos = EnemyManager.Instance.GetSpawnerPos(10);
 
-                //  Warning!表示
+                //  座標をセット
+                //pos2 = new Vector2(-560,-18);
+
+                //  子鬼の群れの進路を表示する
                 yield return StartCoroutine(
-                    Warning(
+                    DisplayDirection(
                         DoujiPhase2Bullet.KooniDirection.LEFT,
                         new Vector2(-430,-15)
                         ));
@@ -1049,13 +1331,17 @@ public class BossDouji : MonoBehaviour
             {
                 pos = EnemyManager.Instance.GetSpawnerPos(9);
 
-                //  Warning!表示
+                //  座標をセット
+                //pos2 = new Vector2(-560,-215);
+
+                //  子鬼の群れの進路を表示する
                 yield return StartCoroutine(
-                    Warning(
+                    DisplayDirection(
                         DoujiPhase2Bullet.KooniDirection.LEFT,
                         new Vector2(-430,-220)
                         ));
             }
+            //  子鬼を生成
             GameObject obj = Instantiate(bullet,pos,Quaternion.identity);
             DoujiPhase2Bullet bulletComp =  obj.GetComponent<DoujiPhase2Bullet>();
             bulletComp.SetPower(enemyData.Attack);
@@ -1079,9 +1365,12 @@ public class BossDouji : MonoBehaviour
             {
                 pos = EnemyManager.Instance.GetSpawnerPos(3);
 
-                //  Warning!表示
+                //  座標をセット
+                //pos2 = new Vector2(440,190);
+
+                //  子鬼の群れの進路を表示する
                 yield return StartCoroutine(
-                    Warning(
+                    DisplayDirection(
                         DoujiPhase2Bullet.KooniDirection.RIGHT,
                         new Vector2(300,185)
                         ));
@@ -1090,9 +1379,12 @@ public class BossDouji : MonoBehaviour
             {
                 pos = EnemyManager.Instance.GetSpawnerPos(4);
 
-                //  Warning!表示
+                //  座標をセット
+                //pos2 = new Vector2(440,-18);
+
+                //  子鬼の群れの進路を表示する
                 yield return StartCoroutine(
-                    Warning(
+                    DisplayDirection(
                         DoujiPhase2Bullet.KooniDirection.RIGHT,
                         new Vector2(300,-15)
                         ));
@@ -1101,13 +1393,17 @@ public class BossDouji : MonoBehaviour
             {
                 pos = EnemyManager.Instance.GetSpawnerPos(5);
 
-                //  Warning!表示
+                //  座標をセット
+                //pos2 = new Vector2(440,-215);
+
+                //  子鬼の群れの進路を表示する
                 yield return StartCoroutine(
-                    Warning(
+                    DisplayDirection(
                         DoujiPhase2Bullet.KooniDirection.RIGHT,
                         new Vector2(300,-215)
                         ));
             }
+            //  子鬼を生成
             GameObject obj = Instantiate(bullet,pos,Quaternion.identity);
             DoujiPhase2Bullet bulletComp =  obj.GetComponent<DoujiPhase2Bullet>();
             bulletComp.SetPower(enemyData.Attack);
@@ -1226,7 +1522,7 @@ public class BossDouji : MonoBehaviour
         float totalDegree = 180;        //  撃つ範囲の総角  
         int wayNum = 9;                 //  弾のway数(必ず3way以上の奇数にすること)
         float Degree = totalDegree / (wayNum-1);     //  弾一発毎にずらす角度         
-        float speed = 10.0f;             //  弾速
+        float speed = 8.0f;             //  弾速
         int chain = 5;                  //  連弾数
         float chainInterval = 0.3f;     //  連弾の間隔（秒）
 
@@ -1278,8 +1574,8 @@ public class BossDouji : MonoBehaviour
 
         int wayNum = 3;                 //  弾のway数
         float Degree = 20;              //  ずらす角度
-        int chain = 2;                 //  連弾数         
-        float speed = 10.0f;            //  弾速
+        int chain = 2;                  //  連弾数         
+        float speed = 8.0f;             //  弾速
         float chainInterval = 0.5f;     //  連弾の間隔（秒）
 
         for (int j = 0; j < chain; j++)

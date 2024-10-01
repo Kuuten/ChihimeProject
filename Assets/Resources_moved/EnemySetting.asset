@@ -30,6 +30,6 @@ MonoBehaviour:
     Attack: 1
     Money: 4000
   - Id: Ossan
-    Hp: 15
+    Hp: 3
     Attack: 810
     Money: 10000

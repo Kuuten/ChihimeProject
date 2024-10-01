@@ -1,9 +1,13 @@
+using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
 //  ゲーム中の状態
@@ -50,8 +54,7 @@ public class GameManager : MonoBehaviour
 
     //  デバッグ用
     private InputAction test;
-    private InputAction test2;
-    private bool testSwitch = true;
+    private bool testSwitch;
 
 
     //  シングルトンなインスタンス
@@ -84,8 +87,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject[] resultObject;
     //  イベントキャンバスオブジェクト
     [SerializeField] private GameObject eventCanvas;
-
-
 
     //------------------------------------------------------------------------------
     //  プロパティ
@@ -131,7 +132,7 @@ public class GameManager : MonoBehaviour
     {
         PlayerInput playerInput = player.GetComponent<PlayerInput>();
         test = playerInput.actions["TestButton"];
-        test2 = playerInput.actions["TestButton2"];
+        testSwitch = true;
 
         gameState = (int)eGameState.Zako;   //  最初はザコ戦
         stageClearFlag = false;
@@ -172,36 +173,32 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        //if (test.WasPressedThisFrame())
-        //{
-        //    testSwitch = false;
+        if (test.WasPressedThisFrame())
+        {
+            testSwitch = !testSwitch;
 
-        //    if (testSwitch == false)
-        //    {
-        //        //  Pauserが付いたオブジェクトをポーズ
-        //        Pauser.Pause();
+            if (testSwitch == false)
+            {
+                //  Pauserが付いたオブジェクトをポーズ
+                Pauser.Pause();
 
-        //        //  止める
-        //        Time.timeScale = 0;
+                //  止める
+                Time.timeScale = 0;
 
-        //        //  ポーズ後に入力がきかなくなるのでリセット
-        //        player.GetComponent<PlayerInput>().enabled = true;
-        //    }
-        //}
+                //  ポーズ後に入力がきかなくなるのでリセット
+                player.GetComponent<PlayerInput>().enabled = true;
+            }
+            else
+            {
+                //  再開する
+                Time.timeScale = 1;
 
-        //if (test2.WasPressedThisFrame())
-        //{
-        //    testSwitch = true;
+                //  Pauserが付いたオブジェクトをポーズ
+                Pauser.Resume();
+            }
+        }
 
-        //    if (testSwitch == true)
-        //    {
-        //        //  再開する
-        //        Time.timeScale = 1;
 
-        //        //  Pauserが付いたオブジェクトをポーズ
-        //        Pauser.Resume();
-        //    }
-        //}
     }
 
     //-----------------------------------------------------------------

@@ -89,29 +89,6 @@ public class PlayerShotManager : MonoBehaviour
         MAX
     }
 
-    //  魂バート弾のSEのID
-    int[,] sfxId = new int[(int)SHOT_TYPE.TYPE_MAX,(int)CONVERT_TYPE.MAX]
-        {
-            //  ドウジ
-            { (int)SFXList.SFX_DOUJI_CONVERT_SHOT_MIDDLE,
-              (int)SFXList.SFX_DOUJI_CONVERT_SHOT_FULL },
-            //  ツクモ
-            { (int)SFXList.SFX_DOUJI_CONVERT_SHOT_MIDDLE,
-              (int)SFXList.SFX_DOUJI_CONVERT_SHOT_FULL },
-            //  クチナワ
-            { (int)SFXList.SFX_DOUJI_CONVERT_SHOT_MIDDLE, 
-              (int)SFXList.SFX_DOUJI_CONVERT_SHOT_FULL },
-            //  クラマ
-            { (int)SFXList.SFX_DOUJI_CONVERT_SHOT_MIDDLE, 
-              (int)SFXList.SFX_DOUJI_CONVERT_SHOT_FULL },
-            //  ワダツミ
-            { (int)SFXList.SFX_DOUJI_CONVERT_SHOT_MIDDLE,
-              (int)SFXList.SFX_DOUJI_CONVERT_SHOT_FULL },
-            //  ハクメン
-            { (int)SFXList.SFX_DOUJI_CONVERT_SHOT_MIDDLE,
-              (int)SFXList.SFX_DOUJI_CONVERT_SHOT_FULL },
-        };
-
     //  魂バートゲージ用のスライダー１
     [SerializeField]private GameObject sliderObj1;
     //  魂バートゲージ用のスライダー２
@@ -154,6 +131,22 @@ public class PlayerShotManager : MonoBehaviour
     InputAction shot;
     InputAction shotConvert;
 
+    //  通常弾の通常威力
+    private const float normalShotPower_normal = 1.0f;
+    //  通常弾の溜め威力
+    private const float normalShotPower_charge = 1.5f;
+    //  溜め時間
+    private const float chargeDuration = 1.0f;
+    //  連続でチャージ威力で撃てる通常弾の数
+    private const int chargeNormalShotNum = 30;
+    //  通常弾の溜めフラグ
+    private bool normalShotChargeFlag;
+    //  溜めタイマー用
+    private float chargeTimer;
+
+    //  チャージされてから通常弾を何発撃ったか(wayは含まない)
+    private int chargeNormalShotCount;
+
 
     void Start()
     {
@@ -162,7 +155,10 @@ public class PlayerShotManager : MonoBehaviour
         shot = playerInput.actions["Shot"];
         shotConvert = playerInput.actions["ConvertShot"];
 
-        normalShotPower = 1.0f;
+        normalShotPower = normalShotPower_normal;
+        normalShotChargeFlag = false;
+        chargeTimer =0f;
+        chargeNormalShotCount = 0;
         shotCount = 0;
         canShot = true;
         normalShotLevel = 1; // 最初はレベル１
@@ -174,14 +170,14 @@ public class PlayerShotManager : MonoBehaviour
 
         //  魂バート弾ごとの弾の威力
         convertShotPowerHalf[(int)SHOT_TYPE.DOUJI] = 10f;
-        convertShotPowerHalf[(int)SHOT_TYPE.TSUKUMO] = 2f;
+        convertShotPowerHalf[(int)SHOT_TYPE.TSUKUMO] = 4f;
         convertShotPowerHalf[(int)SHOT_TYPE.KUCHINAWA] = 1f;
         convertShotPowerHalf[(int)SHOT_TYPE.KURAMA] = 7f;
         convertShotPowerHalf[(int)SHOT_TYPE.WADATSUMI] = 2f;
         convertShotPowerHalf[(int)SHOT_TYPE.HAKUMEN] = 5f;
 
         convertShotPowerFull[(int)SHOT_TYPE.DOUJI] = 30f;
-        convertShotPowerFull[(int)SHOT_TYPE.TSUKUMO] = 5f;
+        convertShotPowerFull[(int)SHOT_TYPE.TSUKUMO] = 10f;
         convertShotPowerFull[(int)SHOT_TYPE.KUCHINAWA] = 2f;
         convertShotPowerFull[(int)SHOT_TYPE.KURAMA] = 15f;
         convertShotPowerFull[(int)SHOT_TYPE.WADATSUMI] = 5f;
@@ -221,6 +217,9 @@ public class PlayerShotManager : MonoBehaviour
     {
         shotCount = 0;
         canShot = true;
+        normalShotChargeFlag = false;
+        chargeTimer =0f;
+        chargeNormalShotCount = 0;
 
         fieldObjectScale = new Vector3(3f,3f,3f);
 
@@ -370,6 +369,31 @@ public class PlayerShotManager : MonoBehaviour
     //-------------------------------------------
     private void NormalShot(bool flipY)
     {
+        //  ボタンを離している間
+        if (!shot.IsPressed())
+        {
+            //  通常弾強化カウント開始
+            if(chargeTimer >= chargeDuration)
+            {
+                chargeTimer = 0f;
+                //  通常弾強化ON
+                normalShotChargeFlag = true;
+
+                Debug.Log("通常弾強化ON！！");
+            }
+            else chargeTimer += Time.deltaTime;
+        }
+
+        //  通常弾強化
+        if(normalShotChargeFlag)
+        {
+            normalShotPower = normalShotPower_charge;
+        }
+        else
+        {
+            normalShotPower = normalShotPower_normal;
+        }
+
         //  通常弾を撃つ
         if (!canShot)
         {
@@ -385,6 +409,20 @@ public class PlayerShotManager : MonoBehaviour
             //  弾発射
             if (shot.IsPressed())
             {
+                //  チャージされていたらカウントを増やす
+                if(normalShotChargeFlag)
+                {
+                    if(chargeNormalShotCount > chargeNormalShotNum)
+                    {
+                        chargeNormalShotCount = 0;
+                        normalShotChargeFlag = false;
+
+                        Debug.Log("通常弾強化OFF...");
+                    }
+                    else chargeNormalShotCount++;
+                }
+                
+
                 //  フラグリセット
                 canShot = false;
 
@@ -543,11 +581,13 @@ public class PlayerShotManager : MonoBehaviour
                         break;
                 }
             }
-            //  ボタンを離した瞬間
-            if (shot.WasReleasedThisFrame())
+            //  ボタンを離した！
+            if(shot.WasReleasedThisFrame())
             {
-                //  カウント開始
-                
+                chargeNormalShotCount = 0;
+                normalShotChargeFlag = false;
+
+                Debug.Log("通常弾強化OFF...");
             }
         }
     }
@@ -577,14 +617,9 @@ public class PlayerShotManager : MonoBehaviour
         //  Sliderコンポーネントを取得
         Slider slider1 = sliderObj1.GetComponent<Slider>();
         Slider slider2 = sliderObj2.GetComponent<Slider>();
-        
-        //  Y反転用のSpriteRenderer
-        SpriteRenderer sr = null;
 
         //  Velocity格納用
         Vector3 v = Vector3.zero;
-
-
 
         switch(convertState)
         {
@@ -643,6 +678,10 @@ public class PlayerShotManager : MonoBehaviour
                 {
                     slider2.value = 1.0f;
 
+                    //  溜め完了SE再生
+                    SoundManager.Instance.PlaySFX(
+                        (int)AudioChannel.SFX_CONVERT_SHOT,
+                        (int)SFXList.SFX_CONVERT_SHOT_GAUGE3);
                     convertState = ConvertState.FullPower;
                 }
                 else
@@ -733,54 +772,67 @@ public class PlayerShotManager : MonoBehaviour
                     slider2.value = 0f;
                     sliderObj2.SetActive(false);
 
-                    //  中攻撃SE再生
-                    SoundManager.Instance.PlaySFX(
-                        (int)AudioChannel.SFX_CONVERT_SHOT,
-                        sfxId[(int)PlayerInfoManager.g_CONVERTSHOT,(int)CONVERT_TYPE.MIDDLE]);
-
-                    //  魂バート弾生成
-                    GameObject obj = Instantiate(
-                        convertBulletPrefab[(int)PlayerInfoManager.g_CONVERTSHOT],
-                        this.transform.position,
-                            Quaternion.identity);
-
-                    //  スケールを半分に
-                    obj.transform.localScale = new Vector3(0.5f,0.5f,0.5f);
-
                     //  威力を中攻撃に設定
                     convertIsFullPower = false;
 
-                    //  Yを反転するかどうか設定する
-                    sr = obj.GetComponent<SpriteRenderer>(); 
-                    sr.flipY = flipY;
+                    if(PlayerInfoManager.g_CONVERTSHOT == SHOT_TYPE.DOUJI)
+                    {
+                        GenerateConvertDouji(flipY);
+                    }
+                    else if(PlayerInfoManager.g_CONVERTSHOT == SHOT_TYPE.TSUKUMO)
+                    {
+                        GenerateConvertTsukumo(flipY);
+                    }
+                    else if(PlayerInfoManager.g_CONVERTSHOT == SHOT_TYPE.KUCHINAWA)
+                    {
+                       GenerateConvertKuchinawa(flipY);
+                    }
+                    else if(PlayerInfoManager.g_CONVERTSHOT == SHOT_TYPE.KURAMA)
+                    {
+                        GenerateConvertKurama(flipY);
+                    }
+                    else if(PlayerInfoManager.g_CONVERTSHOT == SHOT_TYPE.WADATSUMI)
+                    {
+                        GenerateConvertWadatsumi(flipY);
+                    }    
+                    else if(PlayerInfoManager.g_CONVERTSHOT == SHOT_TYPE.HAKUMEN)
+                    {
+                        GenerateConvertHakumen(flipY);
+                    }
 
-                    convertState = ConvertState.ReleaseMidPower;
                 }
                 else if(convertState == ConvertState.FullPower)
                 {
                     Debug.Log("強攻撃で離した！");
-
-                    canConvert = false; //  クールダウン
-
-                    //  強攻撃SE再生
-                    SoundManager.Instance.PlaySFX(
-                        (int)AudioChannel.SFX_CONVERT_SHOT,
-                        sfxId[(int)PlayerInfoManager.g_CONVERTSHOT, (int)CONVERT_TYPE.FULL]);
-
-                    //  魂バート弾生成
-                    GameObject obj = Instantiate(
-                        convertBulletPrefab[(int)PlayerInfoManager.g_CONVERTSHOT],
-                        this.transform.position,
-                            Quaternion.identity);
-
+                    
                     //  威力を強攻撃に設定
                     convertIsFullPower = true;
 
-                    //  Yを反転するかどうか設定する
-                    sr = obj.GetComponent<SpriteRenderer>(); 
-                    sr.flipY = flipY;
+                    if(PlayerInfoManager.g_CONVERTSHOT == SHOT_TYPE.DOUJI)
+                    {
+                        GenerateConvertDouji(flipY);
+                    }
+                    else if(PlayerInfoManager.g_CONVERTSHOT == SHOT_TYPE.TSUKUMO)
+                    {
+                        GenerateConvertTsukumo(flipY);
+                    }
+                    else if(PlayerInfoManager.g_CONVERTSHOT == SHOT_TYPE.KUCHINAWA)
+                    {
+                       GenerateConvertKuchinawa(flipY);
+                    }
+                    else if(PlayerInfoManager.g_CONVERTSHOT == SHOT_TYPE.KURAMA)
+                    {
+                        GenerateConvertKurama(flipY);
+                    }
+                    else if(PlayerInfoManager.g_CONVERTSHOT == SHOT_TYPE.WADATSUMI)
+                    {
+                        GenerateConvertWadatsumi(flipY);
+                    }    
+                    else if(PlayerInfoManager.g_CONVERTSHOT == SHOT_TYPE.HAKUMEN)
+                    {
+                        GenerateConvertHakumen(flipY);
+                    }
 
-                    convertState = ConvertState.ReleaseFullPower;
                 }
             }
         }
@@ -804,5 +856,198 @@ public class PlayerShotManager : MonoBehaviour
 	        goal, // 目標値
 	        time // 所要時間
         );
+    }
+
+    //-----------------------------------------------------
+    //  ドウジの魂バート弾生成処理
+    //-----------------------------------------------------
+    private void GenerateConvertDouji(bool fripY)
+    {
+        canConvert = false; //  クールダウン
+
+        //  魂バート弾生成
+        GameObject obj = Instantiate(
+            convertBulletPrefab[(int)PlayerInfoManager.g_CONVERTSHOT],
+            this.transform.position,
+            Quaternion.identity);
+
+        obj.GetComponent<ConvertDoujiBullet>().SetFullPower(convertIsFullPower);
+        //  Yを反転するかどうか設定する
+        SpriteRenderer sr = obj.GetComponent<SpriteRenderer>(); 
+        sr.flipY = fripY;
+
+        if(convertIsFullPower)
+        {
+            convertState = ConvertState.ReleaseFullPower;
+        }
+        else
+        {
+            //  スケールを半分に
+            obj.transform.localScale = new Vector3(0.5f,0.5f,0.5f);
+            convertState = ConvertState.ReleaseMidPower;
+        }
+    }
+
+    //-----------------------------------------------------
+    //  ツクモの魂バート弾生成処理
+    //-----------------------------------------------------
+    private void GenerateConvertTsukumo(bool fripY)
+    {
+        canConvert = false; //  クールダウン
+
+        //  魂バート弾生成
+        GameObject objL = Instantiate(
+            convertBulletPrefab[(int)PlayerInfoManager.g_CONVERTSHOT],
+            transform.position,
+            Quaternion.identity);
+        GameObject objR = Instantiate(
+            convertBulletPrefab[(int)PlayerInfoManager.g_CONVERTSHOT],
+            transform.position,
+            Quaternion.identity);
+
+        //  中攻撃か強攻撃かを設定
+        objL.GetComponent<ConvertTsukumoBullet>().SetFullPower(convertIsFullPower);
+        objL.GetComponent<ConvertTsukumoBullet>().SetIsL(true);
+        objR.GetComponent<ConvertTsukumoBullet>().SetFullPower(convertIsFullPower);
+        objR.GetComponent<ConvertTsukumoBullet>().SetIsL(false);
+
+        //  Yを反転するかどうか設定する
+        SpriteRenderer srL = objL.GetComponent<SpriteRenderer>(); 
+        srL.flipY = fripY;
+        SpriteRenderer srR = objR.GetComponent<SpriteRenderer>(); 
+        srR.flipY = fripY;
+
+        //  設定別処理
+        if(convertIsFullPower)
+        {
+            convertState = ConvertState.ReleaseFullPower;
+        }
+        else
+        {
+            //  スケールを半分に
+            objL.transform.localScale = new Vector3(0.5f,0.5f,0.5f);
+            objR.transform.localScale = new Vector3(0.5f,0.5f,0.5f);
+            convertState = ConvertState.ReleaseMidPower;
+        }
+    }
+
+    //-----------------------------------------------------
+    //  クチナワの魂バート弾生成処理
+    //-----------------------------------------------------
+    private void GenerateConvertKuchinawa(bool fripY)
+    {
+        //canConvert = false; //  クールダウン
+
+        ////  魂バート弾生成
+        //GameObject obj = Instantiate(
+        //    convertBulletPrefab[(int)PlayerInfoManager.g_CONVERTSHOT],
+        //    this.transform.position,
+        //    Quaternion.identity);
+
+        //obj.GetComponent<ConvertKuchinawaBullet>().SetFullPower(convertIsFullPower);
+        ////  Yを反転するかどうか設定する
+        //SpriteRenderer sr = obj.GetComponent<SpriteRenderer>(); 
+        //sr.flipY = fripY;
+
+        //if(convertIsFullPower)
+        //{
+        //    convertState = ConvertState.ReleaseFullPower;
+        //}
+        //else
+        //{
+        //    //  スケールを半分に
+        //    obj.transform.localScale = new Vector3(0.5f,0.5f,0.5f);
+        //    convertState = ConvertState.ReleaseMidPower;
+        //}
+    }
+
+    //-----------------------------------------------------
+    //  クラマの魂バート弾生成処理
+    //-----------------------------------------------------
+    private void GenerateConvertKurama(bool fripY)
+    {
+        //canConvert = false; //  クールダウン
+
+        ////  魂バート弾生成
+        //GameObject obj = Instantiate(
+        //    convertBulletPrefab[(int)PlayerInfoManager.g_CONVERTSHOT],
+        //    this.transform.position,
+        //    Quaternion.identity);
+
+        //obj.GetComponent<ConvertKuramaBullet>().SetFullPower(convertIsFullPower);
+        ////  Yを反転するかどうか設定する
+        //SpriteRenderer sr = obj.GetComponent<SpriteRenderer>(); 
+        //sr.flipY = fripY;
+
+        //if(convertIsFullPower)
+        //{
+        //    convertState = ConvertState.ReleaseFullPower;
+        //}
+        //else
+        //{
+        //    //  スケールを半分に
+        //    obj.transform.localScale = new Vector3(0.5f,0.5f,0.5f);
+        //    convertState = ConvertState.ReleaseMidPower;
+        //}
+    }
+
+    //-----------------------------------------------------
+    //  ツクモの魂バート弾生成処理
+    //-----------------------------------------------------
+    private void GenerateConvertWadatsumi(bool fripY)
+    {
+        //canConvert = false; //  クールダウン
+
+        ////  魂バート弾生成
+        //GameObject obj = Instantiate(
+        //    convertBulletPrefab[(int)PlayerInfoManager.g_CONVERTSHOT],
+        //    this.transform.position,
+        //    Quaternion.identity);
+
+        //obj.GetComponent<ConvertDoujiBullet>().SetFullPower(convertIsFullPower);
+        ////  Yを反転するかどうか設定する
+        //SpriteRenderer sr = obj.GetComponent<SpriteRenderer>(); 
+        //sr.flipY = fripY;
+
+        //if(convertIsFullPower)
+        //{
+        //    convertState = ConvertState.ReleaseFullPower;
+        //}
+        //else
+        //{
+        //    //  スケールを半分に
+        //    obj.transform.localScale = new Vector3(0.5f,0.5f,0.5f);
+        //    convertState = ConvertState.ReleaseMidPower;
+        //}
+    }
+
+    //-----------------------------------------------------
+    //  ツクモの魂バート弾生成処理
+    //-----------------------------------------------------
+    private void GenerateConvertHakumen(bool fripY)
+    {
+        //canConvert = false; //  クールダウン
+
+        ////  魂バート弾生成
+        //GameObject obj = Instantiate(
+        //    convertBulletPrefab[(int)PlayerInfoManager.g_CONVERTSHOT],
+        //    this.transform.position,
+        //    Quaternion.identity);
+
+        //obj.GetComponent<ConvertDoujiBullet>().SetFullPower(convertIsFullPower);
+        ////  Yを反転するかどうか設定する
+        //SpriteRenderer sr = obj.GetComponent<SpriteRenderer>(); 
+        //sr.flipY = fripY;
+
+        //if(convertIsFullPower)
+        //{
+        //    convertState = ConvertState.ReleaseFullPower;
+        //}
+        //else
+        //{
+        //    //  スケールを半分に
+        //    obj.transform.localScale = new Vector3(0.5f,0.5f,0.5f);
+        //    convertState = ConvertState.ReleaseMidPower;
+        //}
     }
 }

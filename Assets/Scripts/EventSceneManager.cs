@@ -20,19 +20,6 @@ using static PlayerInfoManager;
 //  ボス戦前後に入る会話シーンを管理する。
 //  ここでコルーチンや関数を作成して再生する。
 
-//  ボスの種類
-public enum BossType
-{
-    Douji,      //  ドウジ
-    Tsukumo,    //  ツクモ
-    Kuchinawa,  //  クチナワ
-    Kurama,     //  クラマ
-    Wadatsumi,  //  ワダツミ
-    Hakumen,    //  ハクメン
-
-    Max
-}
-
 //  イベントの種類
 public enum EventType
 {

@@ -3,6 +3,7 @@ using DG.Tweening.Core.Easing;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static PlayerShotManager;
 
 //--------------------------------------------------------------
 //
@@ -14,7 +15,7 @@ public class ConvertDoujiBullet : MonoBehaviour
     private Animator animator;
     private Vector3 velocity; 
     private int gamestatus;
-    private bool fripY;
+    private bool fullPower;
 
     void Start()
     {
@@ -37,6 +38,21 @@ public class ConvertDoujiBullet : MonoBehaviour
                 break;
         }
 
+        if(fullPower)
+        {
+            //  強攻撃SE再生
+            SoundManager.Instance.PlaySFX(
+                (int)AudioChannel.SFX_CONVERT_SHOT,
+                (int)SFXList.SFX_DOUJI_CONVERT_SHOT_FULL);
+        }
+        else
+        {
+            //  中攻撃SE再生
+            SoundManager.Instance.PlaySFX(
+                (int)AudioChannel.SFX_CONVERT_SHOT,
+                (int)SFXList.SFX_DOUJI_CONVERT_SHOT_MIDDLE);
+        }
+
         //  現在の位置からvelocity分移動
         this.transform.DOMove(velocity,0.66f).SetRelative(true).SetEase(Ease.InOutQuint);
 
@@ -53,13 +69,13 @@ public class ConvertDoujiBullet : MonoBehaviour
         }
     }
 
-    //-------------------------------------------
+    //-----------------------------------------------------------
     //  プロパティ
-    //-------------------------------------------
+    //-----------------------------------------------------------
     public void SetVelocity(Vector3 v){ velocity = v; }
     public Vector3 GetVelocity(){ return velocity; }
-    public void SetFripY(bool frip){ fripY = frip; }
-    public bool GetFripY(){ return fripY; }
+    public void SetFullPower(bool b){ fullPower = b; }
+    public bool GetFullPower(bool b){ return fullPower; }
 
 
 }

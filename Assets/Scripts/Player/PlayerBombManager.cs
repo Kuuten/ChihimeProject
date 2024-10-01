@@ -31,6 +31,8 @@ public class PlayerBombManager : MonoBehaviour
 
     //  ドウジの魂バーストプレハブ
     [SerializeField] GameObject doujiKonburstPrefab;
+    //  ツクモの魂バーストプレハブ
+    [SerializeField] GameObject tsukumoKonburstPrefab;
     //  魂バーストカットイン画像プレハブ
     [SerializeField] GameObject[] konburstCutinPrefab;
     //  魂バーストの威力
@@ -39,8 +41,20 @@ public class PlayerBombManager : MonoBehaviour
     [SerializeField] Slider konburstSlider;
     //  魂バーストゲージMAX字のランプ
     [SerializeField] GameObject konburstLamp;
-    //  魂バーストゲージの1回あたりの増加量
-    private const float konbrstPlusValue = 0.1f;    //  暫定値
+
+    //  ドウジ魂バーストゲージの1回あたりの増加量
+    private const float doujiKonburstPlusValue = 0.1f;
+    //  ツクモ魂バーストゲージの1回あたりの増加量
+    private const float tsukumoKonburstPlusValue = 0.05f;
+    //  クチナワ魂バーストゲージの1回あたりの増加量
+    private const float kuchinawaKonburstPlusValue = 0.02f;
+    //  クラマ魂バーストゲージの1回あたりの増加量
+    private const float kuramaKonburstPlusValue = 0.1f;
+    //  ワダツミ魂バーストゲージの1回あたりの増加量
+    private const float wadatsumiKonburstPlusValue = 0.01f;
+    //  ハクメン魂バーストゲージの1回あたりの増加量
+    private const float hakumenKonburstPlusValue = 0.02f;
+
     //  魂バーストゲージのFillオブジェクト
     [SerializeField] GameObject koburstGaugeFill;
     //  魂バーストゲージのFillのデフォルト画像
@@ -97,7 +111,7 @@ public class PlayerBombManager : MonoBehaviour
 
         //  魂バーストごとの弾の威力
         konburstShotPower[(int)SHOT_TYPE.DOUJI]     = 100f;
-        konburstShotPower[(int)SHOT_TYPE.TSUKUMO]   = 1f;
+        konburstShotPower[(int)SHOT_TYPE.TSUKUMO]   = 0.1f;
         konburstShotPower[(int)SHOT_TYPE.KUCHINAWA] = 5f;
         konburstShotPower[(int)SHOT_TYPE.KURAMA]    = 40f;
         konburstShotPower[(int)SHOT_TYPE.WADATSUMI] = 1f;   //  ハート回復量
@@ -389,14 +403,46 @@ public class PlayerBombManager : MonoBehaviour
         //  魂バースト開始演出
         yield return StartCoroutine(StartingKonBurst(ph));
 
-        //  魂バーストオブジェクト生成
-        GameObject obj = null;
+        //  魂バーストオブジェクトを２つ生成
+        GameObject objL = Instantiate( tsukumoKonburstPrefab,
+                                    this.transform.position,
+                                    Quaternion.identity );
+        GameObject objR = Instantiate( tsukumoKonburstPrefab,
+                                    this.transform.position,
+                                    Quaternion.identity );
 
-        //  威力を設定
+        //  左の人形か右の人形かを設定
+        objL.GetComponent<KonburstTsukumoBullet>().SetIsL(true);
+        objR.GetComponent<KonburstTsukumoBullet>().SetIsL(false);
+
+        //  プレイヤーの座標
+        Vector3 playerPos = this.transform.position;
+
+        //  プレイヤーの左右ベクトルを求める
+        Vector3 left = -this.transform.right;
+        Vector3 right = this.transform.right;
+
+        //  左右に１離れた座標を求める
+        float duration = 1.0f;
+        float bias = 2.0f; 
+        Vector3 posL = this.transform.position + left * bias;
+        Vector3 posR = this.transform.position + right * bias;
+
+        //  そこへ移動する
+        objL.transform.DOMove(posL,duration);
+        objR.transform.DOMove(posR,duration);
 
         //  Yを反転するかどうか設定する
-        SpriteRenderer sr = obj.GetComponent<SpriteRenderer>(); 
-        sr.flipY = fripY;
+        SpriteRenderer srL = objL.GetComponent<SpriteRenderer>(); 
+        srL.flipY = fripY;
+        SpriteRenderer srR = objR.GetComponent<SpriteRenderer>(); 
+        srR.flipY = fripY;
+
+        //  移動時間待つ
+        yield return new WaitForSeconds(duration);
+
+        //  5秒待つ
+        yield return new WaitForSeconds(5);
 
         //  魂バースト終了演出
         yield return StartCoroutine(EndingKonBurst(ph));
@@ -418,8 +464,6 @@ public class PlayerBombManager : MonoBehaviour
 
         //  魂バーストオブジェクト生成
         GameObject obj = null;
-
-        //  威力を設定
 
         //  Yを反転するかどうか設定する
         SpriteRenderer sr = obj.GetComponent<SpriteRenderer>(); 
@@ -446,8 +490,6 @@ public class PlayerBombManager : MonoBehaviour
         //  魂バーストオブジェクト生成
         GameObject obj = null;
 
-        //  威力を設定
-
         //  Yを反転するかどうか設定する
         SpriteRenderer sr = obj.GetComponent<SpriteRenderer>(); 
         sr.flipY = fripY;
@@ -473,8 +515,6 @@ public class PlayerBombManager : MonoBehaviour
         //  魂バーストオブジェクト生成
         GameObject obj = null;
 
-        //  威力を設定
-
         //  Yを反転するかどうか設定する
         SpriteRenderer sr = obj.GetComponent<SpriteRenderer>(); 
         sr.flipY = fripY;
@@ -499,8 +539,6 @@ public class PlayerBombManager : MonoBehaviour
 
         //  魂バーストオブジェクト生成
         GameObject obj = null;
-
-        //  威力を設定
 
         //  Yを反転するかどうか設定する
         SpriteRenderer sr = obj.GetComponent<SpriteRenderer>(); 
@@ -549,8 +587,37 @@ public class PlayerBombManager : MonoBehaviour
     //------------------------------------------------
     public void PlusKonburstGauge(bool full)
     {
-        if(full)konburstSlider.value += konbrstPlusValue;
-        else konburstSlider.value += konbrstPlusValue / 2;
+        if(PlayerInfoManager.g_CONVERTSHOT == SHOT_TYPE.DOUJI)
+        {
+            if(full)konburstSlider.value += doujiKonburstPlusValue;
+            else konburstSlider.value += doujiKonburstPlusValue / 2;
+        }
+        else if(PlayerInfoManager.g_CONVERTSHOT == SHOT_TYPE.TSUKUMO)
+        {
+            if(full)konburstSlider.value += tsukumoKonburstPlusValue;
+            else konburstSlider.value += tsukumoKonburstPlusValue / 2;
+        }
+        else if(PlayerInfoManager.g_CONVERTSHOT == SHOT_TYPE.KUCHINAWA)
+        {
+            if(full)konburstSlider.value += kuchinawaKonburstPlusValue;
+            else konburstSlider.value += kuchinawaKonburstPlusValue / 2;
+        }
+        else if(PlayerInfoManager.g_CONVERTSHOT == SHOT_TYPE.KURAMA)
+        {
+            if(full)konburstSlider.value += kuramaKonburstPlusValue;
+            else konburstSlider.value += kuramaKonburstPlusValue / 2;
+        }
+        else if(PlayerInfoManager.g_CONVERTSHOT == SHOT_TYPE.WADATSUMI)
+        {
+            if(full)konburstSlider.value += wadatsumiKonburstPlusValue;
+            else konburstSlider.value += wadatsumiKonburstPlusValue / 2;
+        }
+        else if(PlayerInfoManager.g_CONVERTSHOT == SHOT_TYPE.HAKUMEN)
+        {
+            if(full)konburstSlider.value += hakumenKonburstPlusValue;
+            else konburstSlider.value += hakumenKonburstPlusValue / 2;
+        }
+
             
         if(konburstSlider.value >= 1.0f)
         {   

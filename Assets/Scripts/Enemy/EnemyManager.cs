@@ -10,6 +10,19 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.Experimental.GlobalIllumination;
 
+//  ボスの種類
+public enum BossType
+{
+    Douji,
+    Tsukumo,
+    Kuchinawa,
+    Kurama,
+    Wadatsumi,
+    Hakumen,
+
+    Max
+}
+
 //--------------------------------------------------------------
 //
 //  敵の管理クラス
@@ -72,9 +85,6 @@ public class EnemyManager : MonoBehaviour
    //  敵の弾プレハブ
     [SerializeField] private GameObject[] enemyBullet;
 
-    //  デバッグ用
-    private InputAction test;
-
     //----------------------------------------------------
     //  移動経路用スポナー＆制御点のトランスフォーム
     //----------------------------------------------------
@@ -93,9 +103,17 @@ public class EnemyManager : MonoBehaviour
     //  ボスのHPスライダー
     [SerializeField] private GameObject bossSlider;
 
-
     //  ディレクショナルライト
     [SerializeField] private Light directionalLight;
+
+    //  WARNING時のラインを描画するキャンバス(位置取得用)
+    [SerializeField] private GameObject dangerLineCanvas;
+
+    //  敵オブジェクトのリスト
+    List<GameObject> enemyObjList;
+
+    //  HPスライダーのボス名
+    [SerializeField] private GameObject[] bossNameHPSlider;
 
     void Awake()
     {
@@ -112,10 +130,7 @@ public class EnemyManager : MonoBehaviour
         //appearStep = 0;
         //timer = 0;
         endZakoStage = false;
-
-        /* デバッグ用 */
-        PlayerInput playerInput = GameManager.Instance.GetPlayer().GetComponent<PlayerInput>();
-        test = playerInput.actions["TestButton2"];
+        enemyObjList = new List<GameObject>();
 
         //  敵情報のロード
         //  ※EmemySettingの読み込みまではここでやる
@@ -249,11 +264,13 @@ public class EnemyManager : MonoBehaviour
 
     void Update()
     {
-        //  Eneterで敵出現
-        if (test.WasPressedThisFrame())
+        //  敵リストを監視して死んでいたらリストから削除
+        for(int i = 0;i<enemyObjList.Count;i++)
         {
-            //  敵の出現開始
-            StartCoroutine( AppearEnemy_Stage01() );
+            if(enemyObjList[i].gameObject == null)
+            {
+                enemyObjList.Remove(enemyObjList[i]);
+            }
         }
     }
 
@@ -270,6 +287,8 @@ public class EnemyManager : MonoBehaviour
     public GameObject GetBulletPrefab(int type){ return enemyBullet[type]; }
     public bool GetEndZakoStage(){ return endZakoStage; }
     public void SetEndZakoStage(bool b){ endZakoStage = b; }
+    public GameObject GetEnemyPrefab(int n){ return enemyPrefab[n]; }
+    public GameObject GetDangerLineCanvas(){ return dangerLineCanvas;}
 
     //------------------------------------------------
     //  ランダムなX座標を返す
@@ -282,15 +301,15 @@ public class EnemyManager : MonoBehaviour
     //------------------------------------------------
     //  指定の座標に指定の敵セットを生成する
     //------------------------------------------------
-    private GameObject SetEnemy(GameObject prefab,Vector3 pos,ePowerupItems item = ePowerupItems.None)
+    public GameObject SetEnemy(GameObject prefab,Vector3 pos,ePowerupItems item = ePowerupItems.None)
     {
         //  敵オブジェクトの生成
-        GameObject obj = Instantiate(prefab,pos,transform.rotation);
+        enemyObjList.Add(Instantiate(prefab,pos,transform.rotation));
 
         //  敵情報の設定
-        obj.GetComponent<Enemy>().SetEnemyData(enemySetting, item);
+        enemyObjList.Last().GetComponent<Enemy>().SetEnemyData(enemySetting, item);
 
-        return obj;
+        return enemyObjList.Last();
     }
 
     //------------------------------------------------
@@ -350,6 +369,39 @@ public class EnemyManager : MonoBehaviour
     }
 
     //-----------------------------------------------------------
+    //  プレイヤーに一番近い敵オブジェクトを検索して返す
+    //-----------------------------------------------------------
+    public GameObject GetNearestEnemyFromPlayer()
+    {
+        //  プレイヤーの座標を取得
+        Vector3 playerPos = GameManager.Instance.GetPlayer().transform.position;
+
+        //  全ての敵リストの敵と距離を比較
+        float d1 = 0f;          //  今回の敵との距離
+        float d2 = 100f;        //  前回の敵との距離(適当な大きい値)
+        int nearestNum = -1;    //  一番近い敵のリスト番号
+
+        //  敵がいない場合はnull
+        if(enemyObjList.Count == 0)return null;
+
+        for(int i = 0;i<enemyObjList.Count;i++)
+        {
+            //  リストのi番目の敵とプレイヤーの距離を算出
+            d1 = Vector3.Distance(enemyObjList[i].transform.position, playerPos);
+
+            //  今回の方が近かったらそれをd2にコピー
+            if(d1 < d2)
+            {
+                d2 = d1;
+
+                //  一番近い敵のリスト番号をコピー
+                nearestNum = i;
+            }
+        }
+        return enemyObjList[nearestNum];
+    }
+
+    //-----------------------------------------------------------
     //  ステージ１のザコ敵の出現パターン
     //-----------------------------------------------------------
     public IEnumerator AppearEnemy_Stage01()
@@ -357,349 +409,342 @@ public class EnemyManager : MonoBehaviour
         //  ザコ戦BGM開始
         //SoundManager.Instance.PlayBGM((int)MusicList.BGM_DOUJI_STAGE_ZAKO);
 
-        //yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(3f);
 
-        ////  Wave1
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0)
-        //);
+        //  Wave1
+        SetEnemy(
+            enemyPrefab[(int)EnemyPattern.E01],
+            new Vector3(GetRandomX(), appearY, 0)
+        );
 
-        //yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(5.0f);
 
-        ////  Wave2
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        //  Wave2
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(0.32f);
+        yield return new WaitForSeconds(0.32f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.0f);
 
-        ////  Wave3
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        //  Wave3
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(0.32f);
+        yield return new WaitForSeconds(0.32f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.3f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01_B],
-        //new Vector3(GetRandomX(), appearY, 0), ePowerupItems.PowerUp);
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01_B],
+        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.PowerUp);
 
-        //yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.0f);
 
-        ////  Wave4
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E02],
-        //new Vector3(GetRandomX(), appearY, 0));
+        //  Wave4
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E02],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.0f);
 
-        ////  Wave5
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E02],
-        //new Vector3(GetRandomX(), appearY, 0));
+        //  Wave5
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E02],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.0f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E02],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E02],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.0f);
 
-        ////SetEnemy(
-        ////enemyPrefab[(int)EnemyPattern.E02_B],
-        ////new Vector3(GetRandomX(), appearY, 0), ePowerupItems.Random);
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E02_B],
+        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.Random);
 
-        //yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(5.0f);
 
-        ////  Wave6
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        //  Wave6
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(0.32f);
+        yield return new WaitForSeconds(0.32f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.3f);
 
-        ////SetEnemy(
-        ////enemyPrefab[(int)EnemyPattern.E01_B],
-        ////new Vector3(GetRandomX(), appearY, 0), ePowerupItems.Random);
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01_B],
+        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.Random);
 
-        //yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.3f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.3f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.3f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01_B],
-        //new Vector3(GetRandomX(), appearY, 0), ePowerupItems.PowerUp);
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01_B],
+        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.PowerUp);
 
-        //yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.0f);
 
-        ////  Wave7
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        //  Wave7
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(0.32f);
+        yield return new WaitForSeconds(0.32f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.3f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01_B],
-        //new Vector3(GetRandomX(), appearY, 0), ePowerupItems.Heal);
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01_B],
+        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.Heal);
 
-        //yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.3f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(0.32f);
+        yield return new WaitForSeconds(0.32f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.3f);
 
-        ////SetEnemy(
-        ////enemyPrefab[(int)EnemyPattern.E01_B],
-        ////new Vector3(GetRandomX(), appearY, 0), ePowerupItems.Random);
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01_B],
+        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.Random);
 
-        //yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.3f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.3f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.3f);
 
-        //yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.0f);
 
-        ////  ちっちゃいおっさん
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.EX],
-        //new Vector3(GetRandomX(), appearY, 0));
+        //  Wave8
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.32f);
 
-        ////  Wave8
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(0.32f);
+        yield return new WaitForSeconds(0.3f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.3f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.32f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(0.32f);
+        yield return new WaitForSeconds(0.3f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.3f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.32f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(0.32f);
+        yield return new WaitForSeconds(0.3f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.3f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01_B],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.3f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01_B],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E02],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(1.0f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E02],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E02],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.0f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E02],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E02_B],
+        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.PowerUp);
 
-        //yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.0f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E02_B],
-        //new Vector3(GetRandomX(), appearY, 0), ePowerupItems.PowerUp);
+        //  Wave9
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(1.0f);
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        ////  Wave9
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01_B],
+        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.Random);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        yield return new WaitForSeconds(1.0f);
 
-        ////SetEnemy(
-        ////enemyPrefab[(int)EnemyPattern.E01_B],
-        ////new Vector3(GetRandomX(), appearY, 0), ePowerupItems.Random);
+        //  wave10
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(1.0f);
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        ////  wave10
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01_B],
+        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.Random);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E02],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        ////SetEnemy(
-        ////enemyPrefab[(int)EnemyPattern.E01_B],
-        ////new Vector3(GetRandomX(), appearY, 0), ePowerupItems.Random);
+        yield return new WaitForSeconds(1.0f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E02],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E02],
+        new Vector3(GetRandomX(), appearY, 0));
 
-        //yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.0f);
 
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E02],
-        //new Vector3(GetRandomX(), appearY, 0));
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E02_B],
+        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.PowerUp);
 
-        //yield return new WaitForSeconds(1.0f);
-
-        //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E02_B],
-        //new Vector3(GetRandomX(), appearY, 0), ePowerupItems.PowerUp);
-
-        //yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(5.0f);
 
         //  Wave11
         GameObject MidBoss = SetEnemy(
@@ -765,31 +810,37 @@ public class EnemyManager : MonoBehaviour
         {
             BossObj.GetComponent<BossDouji>()
                 .SetHpSlider(sliderObject.GetComponent<Slider>());
+            bossNameHPSlider[(int)BossType.Douji].SetActive(true);
         }
-        //else if(BossObj.GetComponent<BossTsukumo>())
+        //else if (BossObj.GetComponent<BossTsukumo>())
         //{
         //    BossObj.GetComponent<BossTsukumo>()
         //        .SetHpSlider(sliderObject.GetComponent<Slider>());
+        //    bossNameHPSlider[(int)BossType.Tsukumo].SetActive(true);
         //}
-        //else if(BossObj.GetComponent<BossKuchinawa>())
+        //else if (BossObj.GetComponent<BossKuchinawa>())
         //{
         //    BossObj.GetComponent<BossKuchinawa>()
         //        .SetHpSlider(sliderObject.GetComponent<Slider>());
+        //    bossNameHPSlider[(int)BossType.Kuchinawa].SetActive(true);
         //}
-        //else if(BossObj.GetComponent<BossKurama>())
+        //else if (BossObj.GetComponent<BossKurama>())
         //{
         //    BossObj.GetComponent<BossKurama>()
         //        .SetHpSlider(sliderObject.GetComponent<Slider>());
+        //    bossNameHPSlider[(int)BossType.Kurama].SetActive(true);
         //}
-        //else if(BossObj.GetComponent<BossWadatsumi>())
+        //else if (BossObj.GetComponent<BossWadatsumi>())
         //{
         //    BossObj.GetComponent<BossWadatsumi>()
         //        .SetHpSlider(sliderObject.GetComponent<Slider>());
+        //    bossNameHPSlider[(int)BossType.Wadatsumi].SetActive(true);
         //}
-        //else if(BossObj.GetComponent<BossHakumen>())
+        //else if (BossObj.GetComponent<BossHakumen>())
         //{
         //    BossObj.GetComponent<BossHakumen>()
         //        .SetHpSlider(sliderObject.GetComponent<Slider>());
+        //    bossNameHPSlider[(int)BossType.Hakumen].SetActive(true);
         //}
 
         //  ボスコンポーネントを有効化
@@ -800,8 +851,8 @@ public class EnemyManager : MonoBehaviour
         //  ボス戦終了フラグがTRUEになるまで待つ
         yield return new WaitUntil(() => GameManager.Instance.GetStageClearFlag());
 
-        //  ボスのHPCanvasを非表示
-        sliderObject.SetActive(false);
+        //  ボスのHPキャンバスを非表示
+        bossCanavs.SetActive(false);
 
         // ショットを無効化
         player.GetComponent<PlayerShotManager>().DisableShot();

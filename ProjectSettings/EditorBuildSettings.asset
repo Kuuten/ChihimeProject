@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Resources/Scenes/Title.unity
     guid: 699c6690506318e45806b28006b681b8
+  - enabled: 1
+    path: Assets/Resources/Scenes/SelectConvert.unity
+    guid: ab5041aafc93523438d71e3454f78ad6
   - enabled: 0
     path: Assets/Resources/Scenes/Intro.unity
     guid: 7f6a1e249bc528a4eb6a819655a77ce9

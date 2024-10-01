@@ -15,6 +15,8 @@ using UnityEngine;
         SFX_NORMAL_SHOT,
         SFX_CONVERT_SHOT,
         SFX_BOMB,
+        SFX_LOOP,
+        SFX_SYSTEM2,
 
         CHANNEL_MAX
     };
@@ -66,11 +68,16 @@ using UnityEngine;
         SFX_NORMAL_SHOT,
         SFX_CONVERT_SHOT_GAUGE1,
         SFX_CONVERT_SHOT_GAUGE2,
+        SFX_CONVERT_SHOT_GAUGE3,
         SFX_CONVERT_SHOT_FAIL,
         SFX_DOUJI_CONVERT_SHOT_MIDDLE,
         SFX_DOUJI_CONVERT_SHOT_FULL,
+        SFX_TSUKUMO_CONVERT_SHOT_01,
+        SFX_TSUKUMO_CONVERT_SHOT_02,
+        SFX_TSUKUMO_CONVERT_SHOT_03,
         SFX_KONBURST_CUTIN,
         SFX_KONBURST_DOUJI,
+        SFX_KONBURST_TSUKUMO_TIMELIMIT,
         SFX_PLAYER_DAMAGE,
         SFX_PLAYER_DEATH,
         SFX_ENEMY_SHOT,
@@ -152,6 +159,9 @@ public class SoundManager : MonoBehaviour
         );
 
 #endif
+        //  BGMはループをON
+        _AudioSource[(int)AudioChannel.MUSIC].loop = true;
+
         //  出力先とクリップを設定して再生
         _AudioSource[(int)AudioChannel.MUSIC].clip = _MusicClipList[clipId];
         
@@ -175,6 +185,27 @@ public class SoundManager : MonoBehaviour
 #endif
         //  出力先とクリップを設定して再生       
         _AudioSource[channelType].PlayOneShot( _SFXClipList[clipId] );
+    }
+
+    //--------------------------------------------------------
+    //  ループSEの再生
+    //--------------------------------------------------------
+    public void PlayLoopSFX(int channelType, int clipId)
+    {
+#if UNITY_EDITOR
+        Debug.Assert(
+            channelType > (int)AudioChannel.MUSIC || channelType < (int)AudioChannel.CHANNEL_MAX,
+            "範囲外のchannelTypeを指定しているかBGMを指定しています！"
+        );
+        Debug.Assert(
+            clipId < (int)SFXList.CLIP_MAX && clipId >= 0,
+            "SFXClipIDが範囲外の値です！"
+        );
+#endif
+
+        //  出力先とクリップを設定して再生       
+        _AudioSource[channelType].clip = _SFXClipList[clipId];
+        _AudioSource[channelType].Play();
     }
 
     //--------------------------------------------------------
