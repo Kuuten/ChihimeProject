@@ -6,6 +6,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
@@ -53,8 +54,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ScrollAnimation Scroll;
 
     //  デバッグ用
-    private InputAction test;
-    private bool testSwitch;
+    private InputAction pauseButton;
+    private bool pauseSwitch;
 
 
     //  シングルトンなインスタンス
@@ -88,6 +89,16 @@ public class GameManager : MonoBehaviour
     //  イベントキャンバスオブジェクト
     [SerializeField] private GameObject eventCanvas;
 
+
+    //  ポーズキャンバスオブジェクト
+    [SerializeField] private GameObject pauseCanvas;
+    //  PlayerInput
+    PlayerInput _input;
+    // 「ゲームにもどる」ボタン
+    [SerializeField] private Button returnGameButton;
+    //  ゲーム開始フラグ
+    private bool startFlag;
+
     //------------------------------------------------------------------------------
     //  プロパティ
     //------------------------------------------------------------------------------
@@ -104,6 +115,7 @@ public class GameManager : MonoBehaviour
     public bool GetStageClearFlag(){ return stageClearFlag; }
     public void SetStageClearFlag(bool b){ stageClearFlag = b; }
     public GameObject GetGameObject(int num){ return resultObject[num]; }
+    public InputAction GetPauseAction(){ return pauseButton; }
 
     private void Awake()
     {
@@ -130,13 +142,18 @@ public class GameManager : MonoBehaviour
     //---------------------------------------------------------------------
     void Start()
     {
-        PlayerInput playerInput = player.GetComponent<PlayerInput>();
-        test = playerInput.actions["TestButton"];
-        testSwitch = true;
+        //  ポーズキャンバスを無効化
+        pauseCanvas.SetActive(false);
 
+        // InputActionを初期化
+        _input = player.GetComponent<PlayerInput>();
+        pauseButton = _input.actions["Pause"];
+        pauseSwitch = true;
+        
         gameState = (int)eGameState.Zako;   //  最初はザコ戦
         stageClearFlag = false;
         sceneChangeFlag = false;
+        startFlag = false;
 
         //  初期化開始
         StartCoroutine(StartInit());
@@ -153,6 +170,12 @@ public class GameManager : MonoBehaviour
         yield return StartCoroutine(WaitingForOpeningScroll());
 
         yield return new WaitForSeconds(2.0f); //  2秒待つ
+
+        //  巻物アニメが終わったので操作可能
+        startFlag = true;
+
+        //  プレイヤーにPauserを追加
+        GetPlayer().AddComponent<Pauser>();
 
         //  メインループ開始
         yield return StartCoroutine(GameLoop());
@@ -173,12 +196,27 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (test.WasPressedThisFrame())
-        {
-            testSwitch = !testSwitch;
+        //  巻物アニメが終わってないならreturn
+        if(!startFlag)return;
 
-            if (testSwitch == false)
+        if (pauseButton.WasPressedThisFrame())
+        {
+            pauseSwitch = !pauseSwitch;
+
+            if (pauseSwitch == false)
             {
+                //  ポーズキャンバスを有効化
+                pauseCanvas.SetActive(true);
+
+                //  アクションマップを設定
+                InputActionMap mapPlayer = _input.actions.FindActionMap("Player");
+
+                //  各マップにモードチェンジを設定
+                mapPlayer["Pause"].started -= ToTitleUIMode;
+
+                //  最初はドウジを選択状態にする
+                EventSystem.current.SetSelectedGameObject(returnGameButton.gameObject);
+
                 //  Pauserが付いたオブジェクトをポーズ
                 Pauser.Pause();
 
@@ -190,6 +228,15 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                //  ポーズキャンバスを無効化
+                pauseCanvas.SetActive(false);
+
+                //  アクションマップを設定
+                InputActionMap mapTitle_ui = _input.actions.FindActionMap("TITLE_UI");
+
+                //  各マップにモードチェンジを設定
+                mapTitle_ui["Pause"].started -= ToPlayerMode;
+
                 //  再開する
                 Time.timeScale = 1;
 
@@ -198,6 +245,52 @@ public class GameManager : MonoBehaviour
             }
         }
 
+
+    }
+
+    //-----------------------------------------------------------------
+    //  「ゲームにもどる」を押した時の処理
+    //-----------------------------------------------------------------
+    public void OnReturnGameButtonDown()
+    {
+        //  ポーズキャンバスを無効化
+        pauseCanvas.SetActive(false);
+
+        //  アクションマップを設定
+        InputActionMap mapTitle_ui = _input.actions.FindActionMap("TITLE_UI");
+
+        //  各マップにモードチェンジを設定
+        mapTitle_ui["Pause"].started -= ToPlayerMode;
+
+        //  再開する
+        Time.timeScale = 1;
+
+        //  Pauserが付いたオブジェクトをレジューム
+        Pauser.Resume();
+    }
+
+    //-----------------------------------------------------------------
+    //  「タイトルにもどる」を押した時の処理
+    //-----------------------------------------------------------------
+    public void OnReturnTitleButtonDown()
+    {
+        //  ポーズキャンバスを無効化
+        pauseCanvas.SetActive(false);
+
+        //  アクションマップを設定
+        InputActionMap mapTitle_ui = _input.actions.FindActionMap("TITLE_UI");
+
+        //  各マップにモードチェンジを設定
+        mapTitle_ui["Pause"].started -= ToPlayerMode;
+
+        //  再開する
+        Time.timeScale = 1;
+
+        //  Pauserが付いたオブジェクトをポーズ
+        Pauser.Pause();
+
+        //  タイトルシーンへ遷移
+        StartCoroutine(WaitingForClosingScrollByButtonDown());
 
     }
 
@@ -274,9 +367,19 @@ public class GameManager : MonoBehaviour
     {
         yield return StartCoroutine(Scroll.CloseScroll());
 
-        yield return new WaitForSeconds(2.0f); //  2.0秒待つ
+        yield return new WaitForSeconds(1f); //  1秒待つ
 
         yield return StartCoroutine(DataCopyAndChangeScene());
+    }
+
+    //  巻物を閉じるアニメーションの完了を待つ
+    IEnumerator WaitingForClosingScrollByButtonDown()
+    {
+        yield return StartCoroutine(Scroll.CloseScroll());
+
+        yield return new WaitForSeconds(1f); //  1秒待つ
+
+        yield return StartCoroutine(ChangeScene());
     }
 
     //  タイトルのBGMを止める
@@ -327,6 +430,21 @@ public class GameManager : MonoBehaviour
         yield return null;
     }
 
+    // 情報保存＆シーン遷移
+    public IEnumerator ChangeScene()
+    {
+        //  BGMを止める
+        StopBGM();
+
+        //  現在ステージをリセット
+        PlayerInfoManager.stageInfo = PlayerInfoManager.StageInfo.Stage01;
+
+        //   ゲームクリアシーンへ
+        LoadingScene.Instance.LoadNextScene("Title");
+
+        yield return null;
+    }
+
     //-----------------------------------------------------------------
     //  ゲーム結果表示
     //-----------------------------------------------------------------
@@ -370,5 +488,17 @@ public class GameManager : MonoBehaviour
             sceneChangeFlag = true;
             StartCoroutine(WaitingForClosingScroll());
         }
+    }
+
+    //  アクションマップをTitle_UIに切り替える
+    private void ToTitleUIMode(InputAction.CallbackContext context)
+    {
+        _input.SwitchCurrentActionMap("Title_UI");
+    }
+
+    //  アクションマップをPlayerに切り替える
+    private void ToPlayerMode(InputAction.CallbackContext context)
+    {
+        _input.SwitchCurrentActionMap("Player");
     }
 }

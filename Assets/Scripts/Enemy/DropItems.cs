@@ -39,21 +39,13 @@ public enum ePowerupItems
 }
 
 public class DropItems : MonoBehaviour
-{
-    //  プレハブのアドレス
-    private string[] adress =
-    {
-        "item_smallKon",    //  KonItems.smallKon
-        "item_largeKon",    //  KonItems.largeKon
-        "item_powerup",     //  ePowerupItems.PowerUp
-        "item_speedup",     //  ePowerupItems.SpeedUp
-        "item_heart",       //  ePowerupItems.Heal
-        "item_bomb",        //  ePowerupItems.Bomb
-    };
-    
+{  
     //  アイテムのプレハブ格納用
     List<GameObject> konPrefabs = new List<GameObject>();
     List<GameObject> powerupPrefabs = new List<GameObject>();
+    List<GameObject> speedupPrefabs = new List<GameObject>();
+    List<GameObject> bombPrefabs = new List<GameObject>();
+    List<GameObject> healPrefabs = new List<GameObject>();
 
     //  パワーアップアイテムを落とすかどうか
     [SerializeField] EnemyManager.DROP_TYPE dropType;
@@ -62,6 +54,9 @@ public class DropItems : MonoBehaviour
     {
         konPrefabs = EnemyManager.Instance.GetKonItems();
         powerupPrefabs = EnemyManager.Instance.GetPowerupItems();
+        speedupPrefabs = EnemyManager.Instance.GetSpeedupItems();
+        bombPrefabs = EnemyManager.Instance.GetBombItems();
+        healPrefabs = EnemyManager.Instance.GetHealItems();
     }
 
     //------------------------------------------------------------
@@ -92,8 +87,27 @@ public class DropItems : MonoBehaviour
                 (int)ePowerupItems.Ossan
             );
 
-            //  敵がやられた場所に生成する
-            Instantiate(powerupPrefabs[num], pos, Quaternion.identity);
+            if(num == (int)ePowerupItems.PowerUp)
+            {
+                //  敵がやられた場所に生成する
+                Instantiate(powerupPrefabs[0], pos, Quaternion.identity);
+            }
+            else if(num == (int)ePowerupItems.SpeedUp)
+            {
+                //  敵がやられた場所に生成する
+                Instantiate(speedupPrefabs[0], pos, Quaternion.identity);
+            }
+            else if(num == (int)ePowerupItems.Bomb)
+            {
+                //  敵がやられた場所に生成する
+                Instantiate(bombPrefabs[0], pos, Quaternion.identity);
+            }
+            else if(num == (int)ePowerupItems.Heal)
+            {
+                //  敵がやられた場所に生成する
+                Instantiate(healPrefabs[0], pos, Quaternion.identity);
+            }
+
         }
     }
 
@@ -109,21 +123,32 @@ public class DropItems : MonoBehaviour
         if(item == ePowerupItems.None || item == ePowerupItems.Random)
             return;
 
+        //  敵がやられた場所に生成する
+        Vector3 pos = this.transform.position;
+
         //  ちっちゃいおっさんのセット
         if(item == ePowerupItems.Ossan)
         {            
-            //  敵がやられた場所に生成する
-            Vector3 pos = this.transform.position;
             EnemyManager.Instance.SetEnemy(
                 EnemyManager.Instance.GetEnemyPrefab((int)EnemyPattern.EX),
                 pos
             );
         }
-        else // その他は通常通り
+        else if(item == ePowerupItems.PowerUp)
         {
-            //  敵がやられた場所に生成する
-            Vector3 pos = this.transform.position;
-            Instantiate(powerupPrefabs[(int)item], pos, Quaternion.identity);
+            Instantiate(powerupPrefabs[0], pos, Quaternion.identity);
+        }
+        else if(item == ePowerupItems.SpeedUp)
+        {
+            Instantiate(speedupPrefabs[0], pos, Quaternion.identity);
+        }
+        else if(item == ePowerupItems.Bomb)
+        {
+            Instantiate(bombPrefabs[0], pos, Quaternion.identity);
+        }
+        else if(item == ePowerupItems.Heal)
+        {
+            Instantiate(healPrefabs[0], pos, Quaternion.identity);
         }
     }
 

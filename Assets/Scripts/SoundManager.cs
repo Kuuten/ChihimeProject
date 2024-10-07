@@ -90,9 +90,11 @@ using UnityEngine;
         SFX_RESULT_CASH,
         SFX_RESULT_TEXTNEXT,
         SFX_RESULT_BOUND,
+        SFX_BOSS_APPEAR,
 
         SFX_DOUJI_SHOT1,
         SFX_DOUJI_SHOT2,
+
         SFX_TSUKUMO_SHOT,
         SFX_KUCHINAWA_SHOT,
         SFX_KURAMA_SHOT,

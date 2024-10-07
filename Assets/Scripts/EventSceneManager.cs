@@ -119,6 +119,13 @@ public class EventSceneManager : MonoBehaviour
     //  結果表示開始フラグ
     private bool startResult;
 
+    //  ボスの障気オブジェクト
+    [SerializeField] private GameObject bossFogObjectL;
+    [SerializeField] private GameObject bossFogObjectR;
+
+    //  ボス戦前にボスの名前を表示するテキスト
+     [SerializeField] private GameObject bossNameText;
+
     private void Awake()
     {
         if (Instance == null)
@@ -150,6 +157,7 @@ public class EventSceneManager : MonoBehaviour
         //  一旦全て非表示
         frameObject[(int)Frame.TOP].SetActive(false);
         frameObject[(int)Frame.BOTTOM].SetActive(false);
+        bossNameText.SetActive(false);
 
         // InputActionにShotを設定
         PlayerInput playerInput = GameManager.Instance.GetPlayer().GetComponent<PlayerInput>();
@@ -279,6 +287,8 @@ public class EventSceneManager : MonoBehaviour
     public bool GetStartResult(){ return startResult; }
     public void SetStartResult(bool b){ startResult = b; }
     public GameObject GetBossObject(){ return BossObject; }
+    public GameObject GetFogObjectL(){ return bossFogObjectL; }
+    public GameObject GetFogObjectR(){ return bossFogObjectR; }
 
     //-------------------------------------------------------------
     //  顔UIとテキストを変更する
@@ -306,7 +316,7 @@ public class EventSceneManager : MonoBehaviour
         BossObject = Instantiate(BossPrefab[(int)type],pos,Quaternion.identity);
 
         //  ボス情報セット
-        EnemyManager.Instance.SetBoss(type, ePowerupItems.Heal);
+        EnemyManager.Instance.SetBoss(type, ePowerupItems.PowerUp);
 
         //  BossDoujiコンポーネントを無効化
         BossObject.GetComponent<BossDouji>().enabled = false;
@@ -317,6 +327,69 @@ public class EventSceneManager : MonoBehaviour
 
         //  ３秒待つ
         yield return new WaitForSeconds(duration);
+    }
+
+    //-------------------------------------------------------------
+    //  ボスの名前をアルファアニメさせる
+    //-------------------------------------------------------------
+    private IEnumerator AlphaAnimationBossName()
+    {
+        float duration = 5.0f;  //  フェードインにかかる時間
+        float duration2 = 2.0f; //  フェードアウトにかかる時間
+
+        //  表示する内容を表示
+        string douji     = "剛魔天 ドウジ";
+        string tsukumo   = "操魔天 ツクモ";
+        string kuchinawa = "輪魔天 クチナワ";
+        string kurama    = "楓魔天 クラマ";
+        string wadatsumi = "海魔天 ワダツミ";
+        string hakumen   = "焔魔天 ハクメン";
+        string name = "";
+
+        //  今のステージによってボスの名前を設定
+        if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage01)
+        {
+            name = douji;
+        }
+        else if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage02)
+        {
+            name = tsukumo;
+        }
+        else if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage02)
+        {
+            name = kuchinawa;
+        }
+        else if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage02)
+        {
+            name = kurama;
+        }
+        else if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage02)
+        {
+            name = wadatsumi;
+        }
+        else if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage02)
+        {
+            name = hakumen;
+        }
+
+        //  テキストを有効化
+        bossNameText.SetActive(true);
+
+        //  ボスの名前を設定
+        bossNameText.GetComponent<TextMeshProUGUI>().text = name;
+
+        //  テキストのアルファを0にする
+        bossNameText.GetComponent<TextMeshProUGUI>().DOFade(0f,0f);
+
+        yield return null;
+
+        //  透明状態からゆっくり出現する
+        bossNameText.GetComponent<TextMeshProUGUI>().DOFade(1f,duration)
+            .OnComplete(()=>
+            bossNameText.GetComponent<TextMeshProUGUI>().DOFade(0f, duration2).SetEase(Ease.Linear).SetEase(Ease.Linear))
+            .SetEase(Ease.Linear);
+
+        yield return null;
     }
 
     //-------------------------------------------------------------
@@ -420,6 +493,25 @@ public class EventSceneManager : MonoBehaviour
         //  入力待ち
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
+
+        //  キャンバスをOFF
+        eventCanvas.SetActive(false);
+
+        //  左右の障気オブジェクトを有効化
+        bossFogObjectL.SetActive(true);
+        bossFogObjectR.SetActive(true);
+
+        //  ボス登場SE再生
+        SoundManager.Instance.PlaySFX(
+            (int)AudioChannel.SFX_SYSTEM,
+            (int)SFXList.SFX_BOSS_APPEAR);
+
+        //  ボスの名前をアルファアニメさせる
+        StartCoroutine(AlphaAnimationBossName());
+
+        //  ７秒待つ
+        yield return new WaitForSeconds(7);
+
         //  ボスモードへ移行
         GameManager.Instance.SetGameState((int)eGameState.Boss);
 
@@ -428,8 +520,6 @@ public class EventSceneManager : MonoBehaviour
 
         Debug.Log("***ボス戦モードになりました。***");
 
-        //  キャンバスをOFF
-        eventCanvas.SetActive(false);
 
         //  ボス戦開始フラグTRUE
         startBoss = true;

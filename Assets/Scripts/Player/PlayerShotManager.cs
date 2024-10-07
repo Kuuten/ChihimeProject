@@ -169,15 +169,15 @@ public class PlayerShotManager : MonoBehaviour
         convertIsFullPower = false;
 
         //  ç∞ÉoÅ[ÉgíeÇ≤Ç∆ÇÃíeÇÃà–óÕ
-        convertShotPowerHalf[(int)SHOT_TYPE.DOUJI] = 10f;
-        convertShotPowerHalf[(int)SHOT_TYPE.TSUKUMO] = 4f;
+        convertShotPowerHalf[(int)SHOT_TYPE.DOUJI] = 30f;
+        convertShotPowerHalf[(int)SHOT_TYPE.TSUKUMO] = 2f;
         convertShotPowerHalf[(int)SHOT_TYPE.KUCHINAWA] = 1f;
         convertShotPowerHalf[(int)SHOT_TYPE.KURAMA] = 7f;
         convertShotPowerHalf[(int)SHOT_TYPE.WADATSUMI] = 2f;
         convertShotPowerHalf[(int)SHOT_TYPE.HAKUMEN] = 5f;
 
-        convertShotPowerFull[(int)SHOT_TYPE.DOUJI] = 30f;
-        convertShotPowerFull[(int)SHOT_TYPE.TSUKUMO] = 10f;
+        convertShotPowerFull[(int)SHOT_TYPE.DOUJI] = 90f;
+        convertShotPowerFull[(int)SHOT_TYPE.TSUKUMO] = 5f;
         convertShotPowerFull[(int)SHOT_TYPE.KUCHINAWA] = 2f;
         convertShotPowerFull[(int)SHOT_TYPE.KURAMA] = 15f;
         convertShotPowerFull[(int)SHOT_TYPE.WADATSUMI] = 5f;
@@ -379,7 +379,7 @@ public class PlayerShotManager : MonoBehaviour
                 //  í èÌíeã≠âªON
                 normalShotChargeFlag = true;
 
-                Debug.Log("í èÌíeã≠âªONÅIÅI");
+                //Debug.Log("í èÌíeã≠âªONÅIÅI");
             }
             else chargeTimer += Time.deltaTime;
         }
@@ -417,7 +417,7 @@ public class PlayerShotManager : MonoBehaviour
                         chargeNormalShotCount = 0;
                         normalShotChargeFlag = false;
 
-                        Debug.Log("í èÌíeã≠âªOFF...");
+                        //Debug.Log("í èÌíeã≠âªOFF...");
                     }
                     else chargeNormalShotCount++;
                 }
@@ -871,7 +871,25 @@ public class PlayerShotManager : MonoBehaviour
             this.transform.position,
             Quaternion.identity);
 
+        //  ã≠çUåÇÇ©Ç«Ç§Ç©Çê›íË
         obj.GetComponent<ConvertDoujiBullet>().SetFullPower(convertIsFullPower);
+
+        //  å∏êäëOÇÃà–óÕÇê›íË
+        if(convertIsFullPower)  //  ã≠çUåÇÇÃéû
+        {
+            //  èâä˙à–óÕÇê›íË
+            obj.GetComponent<ConvertDoujiBullet>().SetInitialPower(
+                    convertShotPowerFull[(int)SHOT_TYPE.DOUJI]
+                );
+        }
+        elseÅ@// íÜçUåÇÇÃéû
+        {
+            //  èâä˙à–óÕÇê›íË
+            obj.GetComponent<ConvertDoujiBullet>().SetInitialPower(
+                    convertShotPowerHalf[(int)SHOT_TYPE.DOUJI]
+                );
+        }
+
         //  YÇîΩì]Ç∑ÇÈÇ©Ç«Ç§Ç©ê›íËÇ∑ÇÈ
         SpriteRenderer sr = obj.GetComponent<SpriteRenderer>(); 
         sr.flipY = fripY;

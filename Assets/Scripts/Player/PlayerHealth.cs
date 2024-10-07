@@ -762,9 +762,6 @@ public class PlayerHealth : MonoBehaviour
         //  GameOverへシーン遷移
         LoadingScene.Instance.LoadNextScene("GameOver");
 
-        //  Pauserが付いたオブジェクトをポーズ
-        //Pauser.Pause();
-
         yield return null;
     }
 

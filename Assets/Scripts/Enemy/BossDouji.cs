@@ -48,8 +48,9 @@ public class BossDouji : MonoBehaviour
     
     //  パラメータ
     private float hp;
-    private bool bDeath;        //  死亡フラグ
-    private bool bSuperMode;    //  無敵モードフラグ
+    private bool bDeath;            //  死亡フラグ
+    private bool bSuperMode;        //  無敵モードフラグ
+    private bool bSuperModeInterval;//  フェーズ切り替え時の無敵モードフラグ
 
     //  点滅させるためのSpriteRenderer
     SpriteRenderer sp;
@@ -90,12 +91,27 @@ public class BossDouji : MonoBehaviour
     //  WARNING時の予測ライン
     private GameObject[] dangerLineObject;
 
+    //  コルーチン停止用フラグ
+    Coroutine phase1_Coroutine;
+    Coroutine phase2_Coroutine;
+    private bool bStopPhase1;
+    private bool bStopPhase2;
+
+    private const float phase1_end = 0.66f;   //  フェーズ１終了条件のHP割合の閾値
+    private const float phase2_end = 0.33f;   //  フェーズ２終了条件のHP割合の閾値
+
+
+
     void Start()
     {
         //  警告オブジェクトを取得
         warningObject = new GameObject();
         warningObject =
             EnemyManager.Instance.GetBulletPrefab((int)BULLET_TYPE.Douji_Warning);
+
+        //  フラグ初期化
+        bStopPhase1 = false;
+        bStopPhase2 = false;
 
         //  WARNING時の予測ラインオブジェクトを取得
         dangerLineObject = new GameObject[(int)DoujiPhase2Bullet.KooniDirection.MAX];
@@ -118,6 +134,7 @@ public class BossDouji : MonoBehaviour
         bDeath = false;
         //  最初は無敵モードOFF
         bSuperMode = false;
+        bSuperModeInterval = false;
         //  ループカウントを設定
         loopCount = 1;
         //  点滅の間隔を設定
@@ -135,13 +152,36 @@ public class BossDouji : MonoBehaviour
     {
         Debug.Log("ボス撃破！ステージクリア！");
 
+        //  DangerLineCanvasを非表示に
+        EnemyManager.Instance.GetDangerLineCanvas().SetActive(false);
 
         //  ボス戦やられたらステージクリア
         GameManager.Instance.SetStageClearFlag(true);
     }
 
+    //*********************************************************************************
+    //
+    //  更新
+    //
+    //*********************************************************************************
     void Update()
     {
+        //  HPが閾値を切ったら抜ける
+        if (hp <= enemyData.Hp*phase1_end)
+        {
+            if(!bStopPhase1)
+            {
+                bStopPhase1 = true;
+            }
+        }
+        if(hp <= enemyData.Hp*phase2_end)
+        {
+            if(!bStopPhase2)
+            {
+                bStopPhase2 = true;
+            }
+        }
+        
         //  スライダーを更新
         hpSlider.value = hp / enemyData.Hp;
     }
@@ -214,10 +254,8 @@ public class BossDouji : MonoBehaviour
     //  ・どちらかにRigidBodyがついている
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(bDeath)
-        {
-            return;
-        }
+        if(bDeath)return;
+
 
         if (collision.CompareTag("NormalBullet"))
         {
@@ -225,7 +263,7 @@ public class BossDouji : MonoBehaviour
             Destroy(collision.gameObject);
 
             //  無敵モードなら弾だけ消して返す
-            if(bSuperMode)return;
+            if(bSuperMode || bSuperModeInterval)return;
 
             //  ダメージ処理
             float d = GameManager.Instance.GetPlayer()
@@ -247,9 +285,16 @@ public class BossDouji : MonoBehaviour
         }
         else if (collision.CompareTag("DoujiConvert"))
         {
+            //  フェーズ切替時の無敵モードなら弾だけ消して返す
+            if(bSuperModeInterval)
+            {
+                //  弾の消去
+                Destroy(collision.gameObject);
+                return;
+            }
+
             //  ダメージ処理
-            float d = GameManager.Instance.GetPlayer()
-                .GetComponent<PlayerShotManager>().GetConvertShotPower();
+            float d = collision.GetComponent<ConvertDoujiBullet>().GetInitialPower();
             Damage(d);
 
             //  中攻撃か強攻撃か判定
@@ -282,6 +327,9 @@ public class BossDouji : MonoBehaviour
         }
         else if (collision.CompareTag("DoujiKonburst"))
         {
+            //  フェーズ切替時の無敵モードなら弾だけ消して返す
+            if(bSuperModeInterval)return;
+
             //  ダメージ処理
             float d = GameManager.Instance.GetPlayer()
                 .GetComponent<PlayerBombManager>().GetKonburstShotPower();
@@ -302,6 +350,14 @@ public class BossDouji : MonoBehaviour
         }
         else if (collision.CompareTag("TsukumoConvert"))
         {
+            //  フェーズ切替時の無敵モードなら弾だけ消して返す
+            if(bSuperModeInterval)
+            {
+                //  弾の消去
+                Destroy(collision.gameObject);
+                return;
+            }
+
             //  弾を消す
             Destroy(collision.gameObject);
 
@@ -340,6 +396,14 @@ public class BossDouji : MonoBehaviour
         }
         else if (collision.CompareTag("TsukumoKonburst"))
         {
+            //  フェーズ切替時の無敵モードなら弾だけ消して返す
+            if(bSuperModeInterval)
+            {
+                //  弾の消去
+                Destroy(collision.gameObject);
+                return;
+            }
+
             //  弾を消す
             Destroy(collision.gameObject);
 
@@ -363,6 +427,9 @@ public class BossDouji : MonoBehaviour
         }
         else if (collision.CompareTag("Bomb"))
         {
+            //  フェーズ切替時の無敵モードなら返す
+            if(bSuperModeInterval)return;
+
             //  ダメージ処理
             float d = GameManager.Instance.GetPlayer()
                 .GetComponent<PlayerBombManager>().GetBombPower();
@@ -495,33 +562,85 @@ public class BossDouji : MonoBehaviour
         yield return new WaitForSeconds(duration);
 
         //  行動開始
-        StartCoroutine(Douji_Action());
+        StartCoroutine(StartDoujiAction());
     }
 
     //------------------------------------------------------------------
     //  ドウジの行動管理関数
     //------------------------------------------------------------------
-    private IEnumerator Douji_Action()
+    private IEnumerator StartDoujiAction()
     {
-        float phase1_end = 0.66f;   //  フェーズ１終了条件のHP割合の閾値
-        float phase2_end = 0.33f;   //  フェーズ２終了条件のHP割合の閾値
-
         Debug.Log("***ドウジ弾幕フェーズ開始！***");
+
+        //  フェーズ１開始
+        phase1_Coroutine = StartCoroutine(Douji_Phase1());
+
+        //  フラグがTRUEになるまで待つ
+        yield return new WaitUntil(()=>bStopPhase1 == true);
+
+        //  フラグでコルーチン停止
+        StopCoroutine(phase1_Coroutine);
+
+        //  フェーズ変更
+        yield return StartCoroutine(Douji_PhaseChange());
+
+        //  フェーズ２開始
+        phase2_Coroutine = StartCoroutine(Douji_Phase2());
+
+        //  フラグがTRUEになるまで待つ
+        yield return new WaitUntil(()=>bStopPhase2 == true);
+
+        //  フラグでコルーチン停止
+        StopCoroutine(phase2_Coroutine);
+
+        //  フェーズ変更
+        yield return StartCoroutine(Douji_PhaseChange());
+
+        //  フェーズ３開始
+        StartCoroutine(Douji_Phase3());
+    }
+
+    //------------------------------------------------------------------
+    //  ドウジのフェーズチェンジ時の行動
+    //------------------------------------------------------------------
+    private IEnumerator Douji_PhaseChange()
+    {
+        //  移動にかかる時間(秒)
+        float duration = 1.5f;
+        //  移動後に待機する時間(秒)
+        float interval = 5.0f;
+
+        //  真ん中に移動する
+        yield return StartCoroutine(Douji_MoveToCenter(duration));
+
+        //  次のフェーズまで待つ
+        yield return new WaitForSeconds(interval);
+
+        //  無敵モードOFF
+        bSuperModeInterval = false;
+    }
+
+    //------------------------------------------------------------------
+    //  ドウジのPhase1
+    //------------------------------------------------------------------
+    private IEnumerator Douji_Phase1()
+    {
         Debug.Log("フェーズ１開始");
+
         //  フェーズ１
-        while (true)
+        while (!bStopPhase1)
         {
-            yield return StartCoroutine(Douji_LoopMove(1.5f, 0.5f));
+            //yield return StartCoroutine(Douji_LoopMove(1.5f,0.5f));
 
-            yield return StartCoroutine(Shot());
+            //yield return StartCoroutine(Shot());
 
 
-            //yield return StartCoroutine(Douji_LoopMove(1.0f, 1.0f));
-            //yield return StartCoroutine(Warning());
-            //StartCoroutine(KooniParty());
-            //StartCoroutine(KooniParty());
-            //StartCoroutine(KooniParty());
-            //yield return StartCoroutine(KooniParty());
+            yield return StartCoroutine(Douji_LoopMove(1.0f, 1.0f));
+            yield return StartCoroutine(Warning());
+            StartCoroutine(KooniParty());
+            StartCoroutine(KooniParty());
+            StartCoroutine(KooniParty());
+            yield return StartCoroutine(KooniParty());
 
 
             //yield return StartCoroutine(Douji_BerserkBarrage());
@@ -533,25 +652,18 @@ public class BossDouji : MonoBehaviour
             //yield return StartCoroutine(Douji_LoopMoveBerserk(3, 0.6f, 1.0f));
 
             //yield return StartCoroutine(Douji_BerserkGatling());
-
-
-
-            //  HPが三分の二を切ったら抜ける
-            if (hp <= enemyData.Hp*phase1_end)
-            {
-                //  アイテムドロップ判定
-                DropItems drop = this.GetComponent<DropItems>();
-                //  確定ドロップでショット強化を落とす
-                if (drop) drop.DropPowerupItem(ePowerupItems.PowerUp);
-
-                //  ３秒待つ
-                yield return new WaitForSeconds(3);
-                break;
-            }
         }
+    }
+
+    //------------------------------------------------------------------
+    //  ドウジのPhase2
+    //------------------------------------------------------------------
+    private IEnumerator Douji_Phase2()
+    {
         Debug.Log("フェーズ２へ移行");
+
         //  フェーズ２
-        while (true)
+        while (!bStopPhase2)
         {
             yield return StartCoroutine(Douji_LoopMove(1.0f,1.0f));
 
@@ -559,22 +671,18 @@ public class BossDouji : MonoBehaviour
             StartCoroutine(KooniParty());
             StartCoroutine(KooniParty());
             StartCoroutine(KooniParty());
+
             yield return StartCoroutine(KooniParty());
-
-            //  HPが三分の一を切ったら抜ける
-            if(hp <= enemyData.Hp*phase2_end)
-            {
-                //  アイテムドロップ判定
-                DropItems drop = this.GetComponent<DropItems>();
-                //  確定ドロップでショット強化を落とす
-                if (drop) drop.DropPowerupItem(ePowerupItems.PowerUp);
-
-                //  ３秒待つ
-                yield return new WaitForSeconds(3);
-                break;
-            }
         }
+    }
+
+    //------------------------------------------------------------------
+    //  ドウジのPhase3
+    //------------------------------------------------------------------
+    private IEnumerator Douji_Phase3()
+    {
         Debug.Log("フェーズ３へ移行");
+
         //  フェーズ３
         while (true)
         {
@@ -673,6 +781,36 @@ public class BossDouji : MonoBehaviour
     }
 
     //------------------------------------------------------------------
+    //  フェーズの切り替え時にドウジが真ん中に移動する
+    //------------------------------------------------------------------
+    private IEnumerator Douji_MoveToCenter(float duration)
+    {
+        int targetNum = (int)Control.Center;        //  目標位置
+
+        //  無敵モードON
+        bSuperModeInterval = true;
+
+        //  目標座標を取得
+        Vector3 targetPos = EnemyManager.Instance.GetControlPointPos(targetNum);
+
+        //  横移動開始
+        transform.DOLocalMoveX(targetPos.x, duration)
+            .SetEase(Ease.Linear);
+
+        //  縦移動開始
+        transform.DOLocalMoveY(targetPos.y, duration)
+            .SetEase(Ease.Linear);
+
+        //  移動時間待つ
+        yield return new WaitForSeconds(duration);
+
+        //  アイテムドロップ判定
+        DropItems drop = this.GetComponent<DropItems>();
+        //  確定ドロップでショット強化を落とす
+        if (drop) drop.DropPowerupItem(ePowerupItems.PowerUp);
+    }
+
+    //------------------------------------------------------------------
     //  通常弾をランダムに選択して撃つ
     //------------------------------------------------------------------
     private IEnumerator Shot()
@@ -694,8 +832,6 @@ public class BossDouji : MonoBehaviour
 
             yield return StartCoroutine(StraightShot());
         }
-
-        yield return null;
     }
 
     //------------------------------------------------------------------
@@ -758,11 +894,11 @@ public class BossDouji : MonoBehaviour
         GameObject bullet = EnemyManager.Instance
             .GetBulletPrefab((int)BULLET_TYPE.Wildly_Big);
 
-        float totalDegree = 180;        //  撃つ範囲の総角  
+        float totalDegree = 360;        //  撃つ範囲の総角  
         int wayNum = 9;                 //  弾のway数(必ず3way以上の奇数にすること)
         float Degree = totalDegree / (wayNum-1);     //  弾一発毎にずらす角度         
         float speed = 3.0f;             //  弾速
-        int chain = 10;                  //  連弾数
+        int chain = 10;                 //  連弾数
         float chainInterval = 0.4f;     //  連弾の間隔（秒）
 
         //  敵の前方ベクトルを取得
@@ -771,7 +907,9 @@ public class BossDouji : MonoBehaviour
         {
             for (int i = 0; i < wayNum; i++)
             {
-                Vector3 vector0 = Quaternion.Euler(0,0,Random.Range(-10,11)) * -transform.up;
+                /*　開始軸をランダムにずらす　*/
+                Vector3 vector0 = Quaternion.Euler(0,0,Random.Range(-90,91)) * -transform.up;
+                //Vector3 vector0 = -transform.up;
 
                 vector[i] = Quaternion.Euler(
                         0, 0, -Degree * ((wayNum-1)/2) + (i * Degree)
@@ -1186,6 +1324,7 @@ public class BossDouji : MonoBehaviour
         if (fourDirection == 0)         //  上方向とする
         {
             //  ギミック弾のプレハブを取得
+            /*プレハブの種類が増える予定*/
             GameObject bullet = EnemyManager.Instance
                 .GetBulletPrefab((int)BULLET_TYPE.Douji_Gimmick_Top);
 

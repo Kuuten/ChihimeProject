@@ -322,8 +322,7 @@ public class Enemy : MonoBehaviour
         else if (collision.CompareTag("DoujiConvert"))
         {
             //  ƒ_ƒ[ƒWˆ—
-            float d = GameManager.Instance.GetPlayer()
-                .GetComponent<PlayerShotManager>().GetConvertShotPower();
+           float d = collision.GetComponent<ConvertDoujiBullet>().GetInitialPower();
             Damage(d);
 
             //  ’†UŒ‚‚©‹­UŒ‚‚©”»’è
@@ -1771,6 +1770,7 @@ public class Enemy : MonoBehaviour
         float speed = 2.0f;               //  ’e‘¬
         int chain = wayNum;               //  ˜A’e”
         float chainInterval = 0.03f;      //  ˜A’e‚ÌŠÔŠui•bj
+        float wait_time = 4f;             //  ’e”­ËŒã‚Ì‘Ò‚¿ŠÔi•bj
 
         //  “G‚Ì‘O•ûƒxƒNƒgƒ‹‚ğæ“¾
         Vector3 vector0 = transform.up;
@@ -1802,7 +1802,7 @@ public class Enemy : MonoBehaviour
             yield return new WaitForSeconds(chainInterval);
         }
 
-        yield return null;
+        yield return new WaitForSeconds(wait_time);
     }
     //------------------------------------------------------------------
     //  ’†ƒ{ƒXE‚â‚ç‚ê‚½‚Í‚W•ûŒü‚ÉŒ‚‚¿•Ô‚µ’e‚ğŒ‚‚Â

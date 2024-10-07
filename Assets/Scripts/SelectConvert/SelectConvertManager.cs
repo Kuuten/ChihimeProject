@@ -55,7 +55,7 @@ public class SelectConvertManager : MonoBehaviour
 
         yield return new WaitForSeconds(2.0f); //  2•b‘Ò‚Â
 
-        /* ```````````‰‰o‚ÌI—¹``````````` */
+        /* ```````````‰‰o‚ÌI—¹````````ƒtƒ‰ƒO``` */
 
         //  BGMÄ¶
         //SoundManager.Instance.PlayBGM((int)MusicList.BGM_GAMEOVER);

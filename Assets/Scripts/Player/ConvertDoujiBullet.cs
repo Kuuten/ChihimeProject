@@ -2,6 +2,7 @@ using DG.Tweening;
 using DG.Tweening.Core.Easing;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static PlayerShotManager;
 
@@ -16,6 +17,7 @@ public class ConvertDoujiBullet : MonoBehaviour
     private Vector3 velocity; 
     private int gamestatus;
     private bool fullPower;
+    private float initialPower; //  減衰する前の威力
 
     void Start()
     {
@@ -58,6 +60,9 @@ public class ConvertDoujiBullet : MonoBehaviour
 
         //  スケールをだんだん小さくする
         this.transform.DOScale(new Vector3(0.1f,0.1f,0.1f),0.66f).SetEase(Ease.InExpo);
+
+        //  威力をだんだん小さくする
+        DOTween.To(() => initialPower, (x) => initialPower = x, 0f, 0.66f).SetEase(Ease.InQuad);
     }
 
     void Update()
@@ -76,6 +81,8 @@ public class ConvertDoujiBullet : MonoBehaviour
     public Vector3 GetVelocity(){ return velocity; }
     public void SetFullPower(bool b){ fullPower = b; }
     public bool GetFullPower(bool b){ return fullPower; }
+    public void SetInitialPower(float power){ initialPower = power; }
+    public float GetInitialPower(){ return initialPower; }
 
 
 }

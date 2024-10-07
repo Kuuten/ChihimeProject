@@ -32,6 +32,7 @@ public class TitleManager : MonoBehaviour
     PlayerInput _input;
     InputAction nevigate;
     float verticalInput;
+    float horizontalInput;
 
     bool canContorol;   //  操作可能フラグ
 
@@ -46,11 +47,37 @@ public class TitleManager : MonoBehaviour
 
     //[SerializeField] private EventSystem eventSystem;
 
+
     //--------------------------------------------------------------
     //  Config
     //--------------------------------------------------------------
+    [SerializeField] private GameObject ConfigCanvas;
+
+    //  コンフィグパネル
     [SerializeField] private GameObject ConfigPanel;
-    [SerializeField] private GameObject KeyConfigButton;
+
+    //  コンフィグパネルの子オブジェクト一覧
+    enum eConfigPanel
+    {
+        WaitingPanel,
+        KeyConfigButton,
+        SoundConfigButton,
+        SaveButton,
+        CancelButton,
+    }
+
+    //  キーコンフィグパネル
+    [SerializeField] private GameObject KeyConfigPanel;
+    //  サウンドコンフィグパネル
+    [SerializeField] private GameObject SoundConfigPanel;
+
+    //  キーボードの上下左右文字表示
+    [SerializeField] private GameObject keyboardNavigateTextObj;
+    //  ゲームパッドのボタンセット
+    [SerializeField] private GameObject gamepadButtonSetObj;
+    //  キーボードのボタンセット
+    [SerializeField] private GameObject keyboardButtonSetObj;
+
 
     void Start()
     {
@@ -106,10 +133,9 @@ public class TitleManager : MonoBehaviour
                 break;
 
             case TitleMode.Config:  //  コンフィグモード
+                MoveConfigMenuCursor();  //  カーソル移動
                 break;
         }
-        
-
     }
 
     //----------------------------------------------------------------
@@ -126,7 +152,7 @@ public class TitleManager : MonoBehaviour
         InputActionMap title_ui = _input.actions.FindActionMap("TITLE_UI");
 
         //  各マップにモードチェンジを設定
-        player["ModeChange"].started += ToTitleUIMode;
+        player["Pause"].started += ToTitleUIMode;
     }
 
     private void OnDisable()
@@ -136,7 +162,7 @@ public class TitleManager : MonoBehaviour
         InputActionMap title_ui = _input.actions.FindActionMap("TITLE_UI");
 
         //  各マップにモードチェンジを設定
-        player["ModeChange"].started -= ToTitleUIMode;
+        player["Pause"].started -= ToTitleUIMode;
     }
 
     //  アクションマップをTitle_UIに切り替える
@@ -202,15 +228,36 @@ public class TitleManager : MonoBehaviour
             DisableObject[i].SetActive(false);
         }
 
-        //  コンフィグパネルをアクティブにする
-        ConfigPanel.SetActive(true);
-
-        //  キーコンフィグボタンを選択状態にする
-        EventSystem.current.SetSelectedGameObject(KeyConfigButton.gameObject);
-
+        //  コンフィグキャンバスをアクティブにする
+        ConfigCanvas.SetActive(true);
 
         //  実行モードをコンフィグモードにする
         titleMode = TitleMode.Config;
+
+        //----------------------------------------------------------------
+        //  接続されているデバイスによって表示を変える
+        //----------------------------------------------------------------
+        if(_input.currentControlScheme == "Gamepad")
+        {
+            keyboardNavigateTextObj.SetActive(false);
+            gamepadButtonSetObj.SetActive(true);
+            keyboardButtonSetObj.SetActive(false);
+
+            //  最初のボタンを選択状態にする
+            EventSystem.current.SetSelectedGameObject(
+                gamepadButtonSetObj.transform.GetChild(0).gameObject);
+            
+        }
+        else if(_input.currentControlScheme == "Keyboard")
+        {
+            keyboardNavigateTextObj.SetActive(true);
+            gamepadButtonSetObj.SetActive(false);
+            keyboardButtonSetObj.SetActive(true);
+
+            //  最初のボタンを選択状態にする
+            EventSystem.current.SetSelectedGameObject(
+                keyboardButtonSetObj.transform.GetChild(0).gameObject);
+        }
     }
 
      //  ゲーム開始が押された時の処理
@@ -226,17 +273,22 @@ public class TitleManager : MonoBehaviour
      //  コンフィグ画面でセーブして戻るが押された時の処理
     public void OnPressedSave()
     {
+        //  決定音再生
+        SoundManager.Instance.PlaySFX(
+            (int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_DECISION);
+
         //  背景以外をアクティブにする
         for(int i=0;i<DisableObject.Length;i++)
         {
             DisableObject[i].SetActive(true);
         }
 
-        //  コンフィグパネルを非アクティブにする
-        ConfigPanel.SetActive(false);
+        //  コンフィグキャンバスを非アクティブにする
+        ConfigCanvas.SetActive(false);
 
-        //  スタートボタンを選択状態にする
-        EventSystem.current.SetSelectedGameObject(Buttons.transform.GetChild(0).gameObject);
+        //  コンフィグボタンを選択状態にする
+        EventSystem.current.SetSelectedGameObject(
+            Buttons.transform.GetChild(1).gameObject);
 
         //  実行モードを通常モードにする
         titleMode = TitleMode.Normal;
@@ -245,17 +297,22 @@ public class TitleManager : MonoBehaviour
      //  コンフィグ画面でもどるが押された時の処理
     public void OnPressedCancel()
     {
+        //  決定音再生
+        SoundManager.Instance.PlaySFX(
+            (int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_DECISION);
+
         //  背景以外をアクティブにする
         for(int i=0;i<DisableObject.Length;i++)
         {
             DisableObject[i].SetActive(true);
         }
 
-        //  コンフィグパネルを非アクティブにする
-        ConfigPanel.SetActive(false);
+        //  コンフィグキャンバスを非アクティブにする
+        ConfigCanvas.SetActive(false);
 
-        //  スタートボタンを選択状態にする
-        EventSystem.current.SetSelectedGameObject(Buttons.transform.GetChild(0).gameObject);
+        //  コンフィグボタンを選択状態にする
+        EventSystem.current.SetSelectedGameObject(
+            Buttons.transform.GetChild(1).gameObject);
 
         //  実行モードを通常モードにする
         titleMode = TitleMode.Normal;
@@ -280,6 +337,57 @@ public class TitleManager : MonoBehaviour
     {
         UnityEngine.Vector2 inputNavigateAxis = nevigate.ReadValue<UnityEngine.Vector2>();
         verticalInput = inputNavigateAxis.y;
+        horizontalInput = inputNavigateAxis.x;
+
+        //  入力がない場合は弾く
+        if(!nevigate.WasPressedThisFrame())return;
+        else if(Mathf.Abs(verticalInput) > 0.0f)
+        {
+            //  セレクトSE再生
+            SoundManager.Instance.PlaySFX((int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_SELECT);
+        }
+
+        if (verticalInput < 0)
+        {
+            if (Pos != menuNum)
+            {
+                Cursor.GetComponent<RectTransform>().anchoredPosition += 
+                new UnityEngine.Vector2(0,-lineHeight);
+                Pos += 1;
+            }
+            else
+            {
+                Cursor.GetComponent<RectTransform>().anchoredPosition += 
+                new UnityEngine.Vector2(0,lineHeight*(menuNum-1));
+                Pos = 1;
+            }
+            
+        }
+        else if (verticalInput > 0)
+        {
+            if (Pos != 1)
+            {
+                Cursor.GetComponent<RectTransform>().anchoredPosition +=
+                    new UnityEngine.Vector2(0, lineHeight);
+                Pos -= 1;
+            }
+            else
+            {
+                Cursor.GetComponent<RectTransform>().anchoredPosition +=
+                new UnityEngine.Vector2(0, -lineHeight * (menuNum - 1));
+                Pos = menuNum;
+            }
+        } 
+    }
+
+    //---------------------------------------------------
+    //  コンフィグ画面でのカーソル移動
+    //---------------------------------------------------
+    private void MoveConfigMenuCursor()
+    {
+        UnityEngine.Vector2 inputNavigateAxis = nevigate.ReadValue<UnityEngine.Vector2>();
+        verticalInput = inputNavigateAxis.y;
+        horizontalInput = inputNavigateAxis.x;
 
         //  入力がない場合は弾く
         if(!nevigate.WasPressedThisFrame())return;
@@ -287,51 +395,22 @@ public class TitleManager : MonoBehaviour
         {
             //  セレクトSE再生
             SoundManager.Instance.PlaySFX((int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_SELECT);
-        }
-
-        if (verticalInput < 0 && nevigate.WasPressedThisFrame())
-        {
-            if (Pos != menuNum)
-            {
-                Cursor.GetComponent<RectTransform>().position += 
-                new UnityEngine.Vector3(0,-lineHeight,0);
-                Pos += 1;
-            }
-            else
-            {
-                Cursor.GetComponent<RectTransform>().position += 
-                new UnityEngine.Vector3(0,lineHeight*(menuNum-1),0);
-                Pos = 1;
-            }
-            
-        }
-        else if (verticalInput > 0 && nevigate.WasPressedThisFrame())
-        {
-            if (Pos != 1)
-            {
-                Cursor.GetComponent<RectTransform>().position +=
-                    new UnityEngine.Vector3(0, lineHeight, 0);
-                Pos -= 1;
-            }
-            else
-            {
-                Cursor.GetComponent<RectTransform>().position +=
-                new UnityEngine.Vector3(0, -lineHeight * (menuNum - 1), 0);
-                Pos = menuNum;
-            }
         } 
     }
 
-    //  キーコンフィグボタンが押された時
+    //---------------------------------------------------
+    //  キーコンフィグボタンが押された時の処理
+    //---------------------------------------------------
     public void OnPressedKeyConfig()
     {
-    
-    }
+        //  キーコンフィグボタンを無効にする
+        ConfigPanel.transform.GetChild((int)eConfigPanel.KeyConfigButton)
+            .GetComponent<Button>().interactable = false;
 
-    //  サウンドコンフィグボタンが押された時
-    public void OnPressedSoundConfig()
-    {
-    
+        //  キーボードボタンを選択状態にする
+        EventSystem.current.SetSelectedGameObject(
+            KeyConfigPanel.transform.GetChild(0).gameObject);
+
     }
 
 }

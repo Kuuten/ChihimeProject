@@ -22,7 +22,7 @@ MonoBehaviour:
     Attack: 1
     Money: 300
   - Id: Ibarakidouji
-    Hp: 1000
+    Hp: 100
     Attack: 1
     Money: 1500
   - Id: Douji

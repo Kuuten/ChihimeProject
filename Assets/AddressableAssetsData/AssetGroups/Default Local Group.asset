@@ -299,19 +299,19 @@ MonoBehaviour:
     m_Address: item_speedup
     m_ReadOnly: 0
     m_SerializedLabels:
-    - PowerupItems
+    - SpeedupItems
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cd90ca791c227704d9303cd75347b653
     m_Address: item_bomb
     m_ReadOnly: 0
     m_SerializedLabels:
-    - PowerupItems
+    - BombItems
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c6b161f3127d827438f54ef54f5f5a8e
     m_Address: item_heart
     m_ReadOnly: 0
     m_SerializedLabels:
-    - PowerupItems
+    - HealItems
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cdde7c0de12a72149be9b50384fbce51
     m_Address: Assets/Resources_moved/Materials
@@ -334,6 +334,48 @@ MonoBehaviour:
     m_Address: Assets/Resources_moved/Sounds/SFX/System/se_ingame_count.wav
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1d9e7c66813916748b9de5d48d27e9d4
+    m_Address: Sprites/item_speedup.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: adc188dff9018b9449edb90739ef0915
+    m_Address: Sprites/item_bomb.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dbf5600adc2071748a5a9a278ccbec87
+    m_Address: Sprites/item_speedupanim.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a3bdc636369b28d4a92635a6d0dc8aa8
+    m_Address: Sprites/item_speedup_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0b52388b65ad89449a2c1aec8115ef72
+    m_Address: Sprites/item_bomb_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 77b1510f9964c864f9eeb0fe2ad3b345
+    m_Address: Sprites/item_bomb.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eb100938458f1a24697f8ee15e3087c3
+    m_Address: Sprites/player
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 5b3e9bf9194140840b980876631db859, type: 2}

@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 5c6a852aa12016045ac54e0de5fdb950
   m_currentHash:
     serializedVersion: 2
-    Hash: f896302cb4fa527b451ceea8df1bb698
+    Hash: 6070f9c156878991d5cf95cbc9743d19
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -93,6 +93,9 @@ MonoBehaviour:
     - Prefabs
     - KonItems
     - PowerupItems
+    - SpeedupItems
+    - BombItems
+    - HealItems
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 1806e32b19d88d2498f73719e0c3a02c, type: 2}
