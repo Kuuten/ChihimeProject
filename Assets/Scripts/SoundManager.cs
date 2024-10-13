@@ -60,6 +60,7 @@ using UnityEngine;
         SFX_BRAKE,            //  ブレーキ
         SFX_TITLE_SELECT,     //  カーソル音
         SFX_TITLE_DECISION,   //  カーソル決定音
+        SFX_TITLE_INCORRECT,  //  決定不可音
 
         //  イベント・チュートリアル
 

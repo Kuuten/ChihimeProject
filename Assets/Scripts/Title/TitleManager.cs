@@ -1,9 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -263,6 +260,9 @@ public class TitleManager : MonoBehaviour
      //  ゲーム開始が押された時の処理
     public void OnPressedStart()
     {
+        //  連打を防ぐ
+        Buttons.transform.GetChild(0).GetComponent<Button>().enabled = false;
+
         //  決定音再生
         SoundManager.Instance.PlaySFX(
             (int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_DECISION);
@@ -335,7 +335,7 @@ public class TitleManager : MonoBehaviour
     //---------------------------------------------------
     private void MoveTitleMenuCursor()
     {
-        UnityEngine.Vector2 inputNavigateAxis = nevigate.ReadValue<UnityEngine.Vector2>();
+        Vector2 inputNavigateAxis = nevigate.ReadValue<Vector2>();
         verticalInput = inputNavigateAxis.y;
         horizontalInput = inputNavigateAxis.x;
 

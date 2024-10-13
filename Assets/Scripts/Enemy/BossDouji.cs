@@ -630,17 +630,17 @@ public class BossDouji : MonoBehaviour
         //  フェーズ１
         while (!bStopPhase1)
         {
-            //yield return StartCoroutine(Douji_LoopMove(1.5f,0.5f));
+            yield return StartCoroutine(Douji_LoopMove(1.5f, 0.5f));
 
-            //yield return StartCoroutine(Shot());
+            yield return StartCoroutine(Shot());
 
 
-            yield return StartCoroutine(Douji_LoopMove(1.0f, 1.0f));
-            yield return StartCoroutine(Warning());
-            StartCoroutine(KooniParty());
-            StartCoroutine(KooniParty());
-            StartCoroutine(KooniParty());
-            yield return StartCoroutine(KooniParty());
+            //yield return StartCoroutine(Douji_LoopMove(1.0f, 1.0f));
+            //yield return StartCoroutine(Warning());
+            //StartCoroutine(KooniParty());
+            //StartCoroutine(KooniParty());
+            //StartCoroutine(KooniParty());
+            //yield return StartCoroutine(KooniParty());
 
 
             //yield return StartCoroutine(Douji_BerserkBarrage());

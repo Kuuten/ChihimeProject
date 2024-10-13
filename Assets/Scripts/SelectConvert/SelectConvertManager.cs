@@ -1,8 +1,12 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 //--------------------------------------------------------------
 //
@@ -19,17 +23,26 @@ public class SelectConvertManager : MonoBehaviour
     [SerializeField] private Button wadatsumiButton;
     [SerializeField] private Button hakumenButton;
 
-    //  魂バート説明文
-    [SerializeField] private GameObject doujiText;
-    [SerializeField] private GameObject tsukumoText;
-    [SerializeField] private GameObject kuchinawaText;
-    [SerializeField] private GameObject kuramaText;
-    [SerializeField] private GameObject wadatsumiText;
-    [SerializeField] private GameObject hakumenText;
+    //  メニューボタンのインデックス
+    private int menuIndex;
+
+    //  説明テキスト
+    [SerializeField] private GameObject[] explanationTextObj;
 
     [SerializeField] private FadeIO Fade;               //  FadeIO
     [SerializeField] private ScrollAnimation Scroll;    //  巻物
     [SerializeField] private GameObject soundManager;   //  SoundManager
+
+    //  魂バート用の動画クリップ
+    [SerializeField] private VideoClip[] videoClip;
+    //  魂バート用の動画プレイヤー
+    [SerializeField] private VideoPlayer videoPlayer;
+
+    bool bCanDecision;  //  ボタンの決定可能フラグ
+
+    PlayerInput _input;
+    InputAction navigate;
+    float verticalInput;
 
     //  前回選択されていたオブジェクト
     private GameObject preSelectedObject;
@@ -42,6 +55,13 @@ public class SelectConvertManager : MonoBehaviour
             Debug.Log("SoundManagerがないので生成します");
             Instantiate(soundManager);
         }
+
+        _input = GetComponent<PlayerInput>();
+        navigate =  _input.actions["Navigate"];
+        verticalInput = default;
+        menuIndex = (int)BossType.Douji;
+
+        bCanDecision = true;
 
         /* ～～～～～～～～～～～演出の開始～～～～～～～～～～～ */
 
@@ -63,71 +83,22 @@ public class SelectConvertManager : MonoBehaviour
         //  最初はドウジを選択状態にする
         EventSystem.current.SetSelectedGameObject(doujiButton.gameObject);
         preSelectedObject = doujiButton.gameObject;
+
     }
 
     void Update()
     {
+        //  3Dメニューを回転させる
+        RotateMenu();
+
+        //  選択ボタンによって説明動画を再生する
+        PlayExplanationMovie();
+
         //  今回選択されているオブジェクトが前回と違ったらSE再生
         if(preSelectedObject != EventSystem.current.currentSelectedGameObject)
         {
             //  セレクトSE再生
             SoundManager.Instance.PlaySFX((int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_SELECT);
-        }
-
-        //  ボタンに合わせて説明文を表示
-        if(EventSystem.current.currentSelectedGameObject == doujiButton.gameObject)
-        {
-            doujiText.SetActive(true);
-            tsukumoText.SetActive(false);
-            kuchinawaText.SetActive(false);
-            kuramaText.SetActive(false);
-            wadatsumiText.SetActive(false);
-            hakumenText.SetActive(false);
-        }
-        else if(EventSystem.current.currentSelectedGameObject == tsukumoButton.gameObject)
-        {
-            doujiText.SetActive(false);
-            tsukumoText.SetActive(true);
-            kuchinawaText.SetActive(false);
-            kuramaText.SetActive(false);
-            wadatsumiText.SetActive(false);
-            hakumenText.SetActive(false);
-        }
-        else if(EventSystem.current.currentSelectedGameObject == kuchinawaButton.gameObject)
-        {
-            doujiText.SetActive(false);
-            tsukumoText.SetActive(false);
-            kuchinawaText.SetActive(true);
-            kuramaText.SetActive(false);
-            wadatsumiText.SetActive(false);
-            hakumenText.SetActive(false);
-        }
-        else if(EventSystem.current.currentSelectedGameObject == kuramaButton.gameObject)
-        {
-            doujiText.SetActive(false);
-            tsukumoText.SetActive(false);
-            kuchinawaText.SetActive(false);
-            kuramaText.SetActive(true);
-            wadatsumiText.SetActive(false);
-            hakumenText.SetActive(false);
-        }
-        else if(EventSystem.current.currentSelectedGameObject == wadatsumiButton.gameObject)
-        {
-            doujiText.SetActive(false);
-            tsukumoText.SetActive(false);
-            kuchinawaText.SetActive(false);
-            kuramaText.SetActive(false);
-            wadatsumiText.SetActive(true);
-            hakumenText.SetActive(false);
-        }
-        else if(EventSystem.current.currentSelectedGameObject == hakumenButton.gameObject)
-        {
-            doujiText.SetActive(false);
-            tsukumoText.SetActive(false);
-            kuchinawaText.SetActive(false);
-            kuramaText.SetActive(false);
-            wadatsumiText.SetActive(false);
-            hakumenText.SetActive(true);
         }
 
         //  今回選択されたオブジェクトを保存
@@ -137,6 +108,17 @@ public class SelectConvertManager : MonoBehaviour
     //  ドウジボタンを押下した時
     public void OnDoujiButtonDown()
     {
+        //  決定可能フラグがfalseならリターン
+        if(!bCanDecision)return;
+
+        //  ボタンを無効化
+        doujiButton.GetComponent<Button>().enabled = false;
+        tsukumoButton.GetComponent<Button>().enabled = false;
+        kuchinawaButton.GetComponent<Button>().enabled = false;
+        kuramaButton.GetComponent<Button>().enabled = false;
+        wadatsumiButton.GetComponent<Button>().enabled = false;
+        hakumenButton.GetComponent<Button>().enabled = false;
+
         //  決定音再生
         SoundManager.Instance.PlaySFX(
             (int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_DECISION);
@@ -155,6 +137,17 @@ public class SelectConvertManager : MonoBehaviour
     //  ツクモボタンを押下した時
     public void OnTsukumoButtonDown()
     {
+        //  決定可能フラグがfalseならリターン
+        if(!bCanDecision)return;
+
+        //  ボタンを無効化
+        doujiButton.GetComponent<Button>().enabled = false;
+        tsukumoButton.GetComponent<Button>().enabled = false;
+        kuchinawaButton.GetComponent<Button>().enabled = false;
+        kuramaButton.GetComponent<Button>().enabled = false;
+        wadatsumiButton.GetComponent<Button>().enabled = false;
+        hakumenButton.GetComponent<Button>().enabled = false;
+
         //  決定音再生
         SoundManager.Instance.PlaySFX(
             (int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_DECISION);
@@ -170,6 +163,17 @@ public class SelectConvertManager : MonoBehaviour
     //  クチナワボタンを押下した時
     public void OnKuchinawaButtonDown()
     {
+        //  決定可能フラグがfalseならリターン
+        if(!bCanDecision)return;
+
+        ////  ボタンを無効化
+        //doujiButton.GetComponent<Button>().enabled = false;
+        //tsukumoButton.GetComponent<Button>().enabled = false;
+        //kuchinawaButton.GetComponent<Button>().enabled = false;
+        //kuramaButton.GetComponent<Button>().enabled = false;
+        //wadatsumiButton.GetComponent<Button>().enabled = false;
+        //hakumenButton.GetComponent<Button>().enabled = false;
+
         //  決定音再生
         SoundManager.Instance.PlaySFX(
             (int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_DECISION);
@@ -185,6 +189,17 @@ public class SelectConvertManager : MonoBehaviour
     //  クラマボタンを押下した時
     public void OnKuramaButtonDown()
     {
+        //  決定可能フラグがfalseならリターン
+        if(!bCanDecision)return;
+
+        ////  ボタンを無効化
+        //doujiButton.GetComponent<Button>().enabled = false;
+        //tsukumoButton.GetComponent<Button>().enabled = false;
+        //kuchinawaButton.GetComponent<Button>().enabled = false;
+        //kuramaButton.GetComponent<Button>().enabled = false;
+        //wadatsumiButton.GetComponent<Button>().enabled = false;
+        //hakumenButton.GetComponent<Button>().enabled = false;
+
         //  決定音再生
         SoundManager.Instance.PlaySFX(
             (int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_DECISION);
@@ -200,6 +215,17 @@ public class SelectConvertManager : MonoBehaviour
     //  ワダツミボタンを押下した時
     public void OnWadatsumiButtonDown()
     {
+        //  決定可能フラグがfalseならリターン
+        if(!bCanDecision)return;
+
+        ////  ボタンを無効化
+        //doujiButton.GetComponent<Button>().enabled = false;
+        //tsukumoButton.GetComponent<Button>().enabled = false;
+        //kuchinawaButton.GetComponent<Button>().enabled = false;
+        //kuramaButton.GetComponent<Button>().enabled = false;
+        //wadatsumiButton.GetComponent<Button>().enabled = false;
+        //hakumenButton.GetComponent<Button>().enabled = false;
+
         //  決定音再生
         SoundManager.Instance.PlaySFX(
             (int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_DECISION);
@@ -214,6 +240,17 @@ public class SelectConvertManager : MonoBehaviour
     //  ハクメンボタンを押下した時
     public void OnHakumenButtonDown()
     {
+        //  決定可能フラグがfalseならリターン
+        if(!bCanDecision)return;
+
+        ////  ボタンを無効化
+        //doujiButton.GetComponent<Button>().enabled = false;
+        //tsukumoButton.GetComponent<Button>().enabled = false;
+        //kuchinawaButton.GetComponent<Button>().enabled = false;
+        //kuramaButton.GetComponent<Button>().enabled = false;
+        //wadatsumiButton.GetComponent<Button>().enabled = false;
+        //hakumenButton.GetComponent<Button>().enabled = false;
+
         //  決定音再生
         SoundManager.Instance.PlaySFX(
             (int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_DECISION);
@@ -253,5 +290,207 @@ public class SelectConvertManager : MonoBehaviour
         //  BGMを止めてタイトルへ
         SoundManager.Instance.Stop((int)AudioChannel.MUSIC);
         LoadingScene.Instance.LoadNextScene("Main");
+    }
+
+    //----------------------------------------------------
+    //  3Dメニューを回転させる
+    //----------------------------------------------------
+    private void RotateMenu()
+    {
+        //  上下の入力を検出する
+        Vector2 inputNavigateAxis = navigate.ReadValue<Vector2>();
+        verticalInput = inputNavigateAxis.y;
+
+        //  3Dメニューを回転させる
+        if (verticalInput > 0 && Rotate3DMenu.Instance.GetComplete())
+        {
+            Debug.Log("下回転");
+            Rotate3DMenu.Instance.TurnMenu(true);
+
+            bCanDecision = false;
+
+            //  インデックスプラス
+            if(menuIndex >= (int)BossType.Hakumen)
+            {
+                menuIndex = (int)BossType.Douji;
+            }
+            else menuIndex++;
+
+            //  ボタンの選択状態を更新
+            SelectButtonByMenuIndex();
+
+            //  ボタンのスケールを更新
+            UpdateButtonScale(doujiButton.gameObject);
+            UpdateButtonScale(tsukumoButton.gameObject);
+            UpdateButtonScale(kuchinawaButton.gameObject);
+            UpdateButtonScale(kuramaButton.gameObject);
+            UpdateButtonScale(wadatsumiButton.gameObject);
+            UpdateButtonScale(hakumenButton.gameObject);
+        }
+        else if (verticalInput < 0 && Rotate3DMenu.Instance.GetComplete())
+        {
+            Debug.Log("上回転");
+            Rotate3DMenu.Instance.TurnMenu(false);
+
+            bCanDecision = false;
+
+            //  インデックスマイナス
+            if(menuIndex <= (int)BossType.Douji)
+            {
+                menuIndex = (int)BossType.Hakumen;
+            }
+            else menuIndex--;
+
+            //  ボタンの選択状態を更新
+            SelectButtonByMenuIndex();
+
+            //  ボタンのスケールを更新
+            UpdateButtonScale(doujiButton.gameObject);
+            UpdateButtonScale(tsukumoButton.gameObject);
+            UpdateButtonScale(kuchinawaButton.gameObject);
+            UpdateButtonScale(kuramaButton.gameObject);
+            UpdateButtonScale(wadatsumiButton.gameObject);
+            UpdateButtonScale(hakumenButton.gameObject);
+        }
+    }
+
+    //----------------------------------------------------
+    //  選択されたボタンを大きくする
+    //----------------------------------------------------
+    private void UpdateButtonScale(GameObject obj)
+    {
+        float duration = 0.7f;
+
+        if(obj == EventSystem.current.currentSelectedGameObject)
+        {
+            obj.transform.DOScale(1.2f,duration)
+                .SetEase(Ease.InOutElastic)
+                .OnComplete(()=>{ bCanDecision = true; });
+        }
+        else
+        {
+            obj.transform.DOScale(1.0f,duration)
+                .SetEase(Ease.InOutElastic);
+        }
+    }
+
+    //----------------------------------------------------
+    //  未実装ボタンが押された時の処理
+    //----------------------------------------------------
+    private void OnNotImplementedButtonDown()
+    {
+        //  不正解SEを再生してリターン
+        SoundManager.Instance.PlaySFX(
+            (int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_INCORRECT);
+
+        return;
+    }
+
+    //----------------------------------------------------
+    //  魂バート弾の説明動画を再生する
+    //----------------------------------------------------
+    private void PlayExplanationMovie()
+    {
+        if(!Rotate3DMenu.Instance.GetComplete() || !bCanDecision)return;
+
+        //  選択ボタンによって説明動画を再生する
+        if(doujiButton.gameObject == EventSystem.current.currentSelectedGameObject)
+        {
+            videoPlayer.clip = videoClip[(int)BossType.Douji];
+            videoPlayer.Play();
+        }
+        else if(tsukumoButton.gameObject == EventSystem.current.currentSelectedGameObject)
+        {
+            videoPlayer.clip = videoClip[(int)BossType.Tsukumo];
+            videoPlayer.Play();
+        }
+        else if(kuchinawaButton.gameObject == EventSystem.current.currentSelectedGameObject)
+        {
+            videoPlayer.clip = videoClip[(int)BossType.Kuchinawa];
+            videoPlayer.Play();
+        }
+        else if(kuramaButton.gameObject == EventSystem.current.currentSelectedGameObject)
+        {
+            videoPlayer.clip = videoClip[(int)BossType.Kurama];
+            videoPlayer.Play();
+        }
+        else if(wadatsumiButton.gameObject == EventSystem.current.currentSelectedGameObject)
+        {
+            videoPlayer.clip = videoClip[(int)BossType.Wadatsumi];
+            videoPlayer.Play();
+        }
+        else if(hakumenButton.gameObject == EventSystem.current.currentSelectedGameObject)
+        {
+            videoPlayer.clip = videoClip[(int)BossType.Hakumen];
+            videoPlayer.Play();
+        }
+    }
+
+    //----------------------------------------------------
+    //  インデックスでボタンを選択する
+    //----------------------------------------------------
+    private void SelectButtonByMenuIndex()
+    {
+        //  インデックスでボタンを選択状態にする
+        if(menuIndex == (int)BossType.Douji)
+        {
+            EventSystem.current.SetSelectedGameObject(doujiButton.gameObject);
+            explanationTextObj[(int)BossType.Douji].SetActive(true);
+            explanationTextObj[(int)BossType.Tsukumo].SetActive(false);
+            explanationTextObj[(int)BossType.Kuchinawa].SetActive(false);
+            explanationTextObj[(int)BossType.Kurama].SetActive(false);
+            explanationTextObj[(int)BossType.Wadatsumi].SetActive(false);
+            explanationTextObj[(int)BossType.Hakumen].SetActive(false);
+        }
+        else if(menuIndex == (int)BossType.Tsukumo)
+        {
+            EventSystem.current.SetSelectedGameObject(tsukumoButton.gameObject);
+            explanationTextObj[(int)BossType.Douji].SetActive(false);
+            explanationTextObj[(int)BossType.Tsukumo].SetActive(true);
+            explanationTextObj[(int)BossType.Kuchinawa].SetActive(false);
+            explanationTextObj[(int)BossType.Kurama].SetActive(false);
+            explanationTextObj[(int)BossType.Wadatsumi].SetActive(false);
+            explanationTextObj[(int)BossType.Hakumen].SetActive(false);
+        }
+        else if(menuIndex == (int)BossType.Kuchinawa)
+        {
+            EventSystem.current.SetSelectedGameObject(kuchinawaButton.gameObject);
+            explanationTextObj[(int)BossType.Douji].SetActive(false);
+            explanationTextObj[(int)BossType.Tsukumo].SetActive(false);
+            explanationTextObj[(int)BossType.Kuchinawa].SetActive(true);
+            explanationTextObj[(int)BossType.Kurama].SetActive(false);
+            explanationTextObj[(int)BossType.Wadatsumi].SetActive(false);
+            explanationTextObj[(int)BossType.Hakumen].SetActive(false);
+        }
+        else if(menuIndex == (int)BossType.Kurama)
+        {
+            EventSystem.current.SetSelectedGameObject(kuramaButton.gameObject);
+            explanationTextObj[(int)BossType.Douji].SetActive(false);
+            explanationTextObj[(int)BossType.Tsukumo].SetActive(false);
+            explanationTextObj[(int)BossType.Kuchinawa].SetActive(false);
+            explanationTextObj[(int)BossType.Kurama].SetActive(true);
+            explanationTextObj[(int)BossType.Wadatsumi].SetActive(false);
+            explanationTextObj[(int)BossType.Hakumen].SetActive(false);
+        }
+        else if(menuIndex == (int)BossType.Wadatsumi)
+        {
+            EventSystem.current.SetSelectedGameObject(wadatsumiButton.gameObject);
+            explanationTextObj[(int)BossType.Douji].SetActive(false);
+            explanationTextObj[(int)BossType.Tsukumo].SetActive(false);
+            explanationTextObj[(int)BossType.Kuchinawa].SetActive(false);
+            explanationTextObj[(int)BossType.Kurama].SetActive(false);
+            explanationTextObj[(int)BossType.Wadatsumi].SetActive(true);
+            explanationTextObj[(int)BossType.Hakumen].SetActive(false);
+        }
+        else if(menuIndex == (int)BossType.Hakumen)
+        {
+            EventSystem.current.SetSelectedGameObject(hakumenButton.gameObject);
+            explanationTextObj[(int)BossType.Douji].SetActive(false);
+            explanationTextObj[(int)BossType.Tsukumo].SetActive(false);
+            explanationTextObj[(int)BossType.Kuchinawa].SetActive(false);
+            explanationTextObj[(int)BossType.Kurama].SetActive(false);
+            explanationTextObj[(int)BossType.Wadatsumi].SetActive(false);
+            explanationTextObj[(int)BossType.Hakumen].SetActive(true);
+        }
     }
 }

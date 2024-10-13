@@ -12,6 +12,7 @@ public class Scroll : MonoBehaviour
     private RectTransform rect;
     private Vector2 velocity;
     [SerializeField] private float period = 10.0f;
+    private const float resolutionX = 1280f;
 
     void Start()
     {
@@ -23,10 +24,14 @@ public class Scroll : MonoBehaviour
         velocity.x = Screen.width / period * Time.deltaTime;
         velocity.y = Screen.height / period * Time.deltaTime;
 
-        if(rect.localPosition.x <= -Screen.width)
+        if(rect.anchoredPosition.x <= -resolutionX)
         {
-            rect.localPosition = new Vector3(0,0,0);
+            Debug.Log("ScreenWidth " + Screen.width);
+            rect.anchoredPosition = new Vector2(0,0);
         }
-        else rect.localPosition += new Vector3(-velocity.x,-velocity.y,0); 
+        else
+        {
+            rect.anchoredPosition += new Vector2(-velocity.x,-velocity.y); 
+        }
     }
 }
