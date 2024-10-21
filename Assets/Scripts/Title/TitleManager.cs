@@ -74,6 +74,9 @@ public class TitleManager : MonoBehaviour
     [SerializeField] private GameObject gamepadButtonSetObj;
     //  キーボードのボタンセット
     [SerializeField] private GameObject keyboardButtonSetObj;
+    //  最初に選択されるボタン
+    [SerializeField] private GameObject firstSelectedButton;
+    [SerializeField] private GameObject firstSelectedButtonGamePad;
 
 
     void Start()
@@ -241,8 +244,7 @@ public class TitleManager : MonoBehaviour
             keyboardButtonSetObj.SetActive(false);
 
             //  最初のボタンを選択状態にする
-            EventSystem.current.SetSelectedGameObject(
-                gamepadButtonSetObj.transform.GetChild(0).gameObject);
+            EventSystem.current.SetSelectedGameObject(firstSelectedButtonGamePad.gameObject);
             
         }
         else if(_input.currentControlScheme == "Keyboard")
@@ -252,8 +254,7 @@ public class TitleManager : MonoBehaviour
             keyboardButtonSetObj.SetActive(true);
 
             //  最初のボタンを選択状態にする
-            EventSystem.current.SetSelectedGameObject(
-                keyboardButtonSetObj.transform.GetChild(0).gameObject);
+            EventSystem.current.SetSelectedGameObject(firstSelectedButton.gameObject);
         }
     }
 
@@ -407,9 +408,8 @@ public class TitleManager : MonoBehaviour
         ConfigPanel.transform.GetChild((int)eConfigPanel.KeyConfigButton)
             .GetComponent<Button>().interactable = false;
 
-        //  キーボードボタンを選択状態にする
-        EventSystem.current.SetSelectedGameObject(
-            KeyConfigPanel.transform.GetChild(0).gameObject);
+        //  通常弾ボタンを選択状態にする
+        EventSystem.current.SetSelectedGameObject(firstSelectedButton.gameObject);
 
     }
 

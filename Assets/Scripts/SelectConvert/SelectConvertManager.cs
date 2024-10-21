@@ -26,6 +26,9 @@ public class SelectConvertManager : MonoBehaviour
     //  メニューボタンのインデックス
     private int menuIndex;
 
+    //  説明動画の背景オブジェクト
+    [SerializeField] private GameObject explanationMovieBack;
+
     //  説明テキスト
     [SerializeField] private GameObject[] explanationTextObj;
 
@@ -83,6 +86,9 @@ public class SelectConvertManager : MonoBehaviour
         //  最初はドウジを選択状態にする
         EventSystem.current.SetSelectedGameObject(doujiButton.gameObject);
         preSelectedObject = doujiButton.gameObject;
+
+        //  動画と動画の枠を表示する
+        explanationMovieBack.SetActive(true);
 
     }
 

@@ -6,34 +6,34 @@ EditorUserSettings:
   serializedVersion: 4
   m_ConfigSettings:
     RecentlyUsedSceneGuid-0:
-      value: 5a090553030c0b030f0a0a7a46770c4440151d7f7a70233275784b30e6b3663b
-      flags: 0
-    RecentlyUsedSceneGuid-1:
-      value: 5354575252560f0c085e542613760e44174e4e28752b72637f714962b7e46c3e
-      flags: 0
-    RecentlyUsedSceneGuid-2:
-      value: 5700005004565d085d575874412208444416497b7e702565782c4461b3e56068
-      flags: 0
-    RecentlyUsedSceneGuid-3:
-      value: 5a0355555d065c0a5b5f5c2147775a44154f197c7b297035282a1b32b0b9636f
-      flags: 0
-    RecentlyUsedSceneGuid-4:
       value: 02020157070050580c5b582340215c44464f4b297f7d7e64792d1c62b1e16269
       flags: 0
-    RecentlyUsedSceneGuid-5:
+    RecentlyUsedSceneGuid-1:
       value: 0204525104005f5f5e5d5526117b0b44424e4073752d2536747c1b31e7b3673c
       flags: 0
-    RecentlyUsedSceneGuid-6:
+    RecentlyUsedSceneGuid-2:
       value: 5550060701065c085e5c5924162609444f4f4b297e70226674284564b1b8326d
       flags: 0
+    RecentlyUsedSceneGuid-3:
+      value: 5457020754505b0f540c0f77427b5e4413154e2b74797f66787c1c64b5e33161
+      flags: 0
+    RecentlyUsedSceneGuid-4:
+      value: 5700005004565d085d575874412208444416497b7e702565782c4461b3e56068
+      flags: 0
+    RecentlyUsedSceneGuid-5:
+      value: 5a0355555d065c0a5b5f5c2147775a44154f197c7b297035282a1b32b0b9636f
+      flags: 0
+    RecentlyUsedSceneGuid-6:
+      value: 05070d5f50535d5e0c0c5472427008444e4e1b2f7a7170622e784e37bab3636a
+      flags: 0
     RecentlyUsedSceneGuid-7:
-      value: 57030d5455040a5a5b5c0d7311265d44464e407d2d2a76602f2a4c60b1e63639
+      value: 025301565104085a0b0d557145710c44454f1c7d7d2d7564787d1b64bae1306e
       flags: 0
     RecentlyUsedSceneGuid-8:
-      value: 55080d055303500b585e5a71417b5a44434f487c2e7a7e607d7f1f65bab13660
+      value: 57030d5455040a5a5b5c0d7311265d44464e407d2d2a76602f2a4c60b1e63639
       flags: 0
     RecentlyUsedSceneGuid-9:
-      value: 025301565104085a0b0d557145710c44454f1c7d7d2d7564787d1b64bae1306e
+      value: 55080d055303500b585e5a71417b5a44434f487c2e7a7e607d7f1f65bab13660
       flags: 0
     auto save:
       value: 37434103

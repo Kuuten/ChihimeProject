@@ -37,7 +37,7 @@ TagManager:
   - UI
   - PlayerUI
   - 3DMenu
-  - 
+  - Sprite
   - 
   - 
   - 
@@ -62,6 +62,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BackGround
+    uniqueID: 1952124931
+    locked: 0
   - name: KonField
     uniqueID: 1543788887
     locked: 0

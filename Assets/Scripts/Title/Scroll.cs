@@ -26,7 +26,7 @@ public class Scroll : MonoBehaviour
 
         if(rect.anchoredPosition.x <= -resolutionX)
         {
-            Debug.Log("ScreenWidth " + Screen.width);
+            //Debug.Log("ScreenWidth " + Screen.width);
             rect.anchoredPosition = new Vector2(0,0);
         }
         else

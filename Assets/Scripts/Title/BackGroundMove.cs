@@ -11,10 +11,6 @@ public class BackGroundMove : MonoBehaviour
 {
     //  スクロールするスピード
     [SerializeField] private float scrollSpeed = 1.0f;
-    //  折り返し地点用オブジェクト
-    [SerializeField] private GameObject returnPoint;
-    //  再スタート地点用オブジェクト
-    [SerializeField] private GameObject restartPoint;
 
     void Start()
     {
@@ -23,11 +19,12 @@ public class BackGroundMove : MonoBehaviour
 
     void Update()
     {
-        this.transform.position += new Vector3(0,-scrollSpeed,0)*Time.deltaTime;
+        RectTransform rt = this.GetComponent<RectTransform>();
+        rt.anchoredPosition += new Vector2(0,-scrollSpeed)*Time.deltaTime;
 
-        if (this.transform.position.y <= returnPoint.transform.position.y)
+        if (rt.anchoredPosition.y <= -1440f)
         {
-            this.transform.position = restartPoint.transform.position;
+            rt.anchoredPosition = new Vector2(0,720f);
         }
     }
 }

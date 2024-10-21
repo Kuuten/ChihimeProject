@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
     // 動きの種類
     [SerializeField] private enum MOVE_TYPE {
         None,                       // 未設定
+        Appear,                     // 現れるだけ
         ClampL,                     // カクカク移動左スタート
         ClampR,                     // カクカク移動右スタート
         ClampRandom,                // カクカク移動ランダムスタート
@@ -168,6 +169,9 @@ public class Enemy : MonoBehaviour
             case MOVE_TYPE.None:
                 break;
             //  低級ザコ
+            case MOVE_TYPE.Appear:
+                SetCoroutine( Appear() );
+                break;
             case MOVE_TYPE.ClampL:
                 SetCoroutine( Clamp(true) );
                 break;
@@ -649,6 +653,37 @@ public class Enemy : MonoBehaviour
             .SetRelative(true)
             .SetEase(Ease.Linear)
             .WaitForCompletion();
+
+        yield return null;
+    }
+
+    //------------------------------------------------------------------
+    //  直進で登場する(デバッグ用など)
+    //------------------------------------------------------------------
+    private IEnumerator Appear()
+    {
+        const int Middle = 7;
+        int Position = Middle;
+
+        int rand = UnityEngine.Random.Range(0,3);
+
+        float d = 5.0f;         //  移動距離
+        float duration = 1.0f;  // 時間
+        Vector3 dintance = new Vector3(0,d,0);
+
+        //  スポナー[7]から出現
+        Vector3 start = EnemyManager.Instance.GetSpawnerPos(Position);
+        transform.position = start;
+
+        //  一定距離直進
+        yield return StartCoroutine(
+            LineMoveDistance( dintance, duration ));
+
+        //  処理時間待つ
+        yield return new WaitForSeconds(duration);
+
+        //  無敵モードOFF
+        bSuperMode = false;
 
         yield return null;
     }

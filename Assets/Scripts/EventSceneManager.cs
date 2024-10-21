@@ -77,14 +77,15 @@ public class EventSceneManager : MonoBehaviour
     //  差し替え顔グラフィックの種類
     public enum FaceType
     {
-        CHIHIME_NORMAL, //  千姫・通常
-        CHIHIME_EXCITE, //  千姫・騒ぐ
+        CHIHIME_NORMAL,     //  千姫・通常
+        CHIHIME_EXCITE,     //  千姫・><。
+        CHIHIME_SURPRISED,  //  千姫・きょとん
 
-        DOUJI_NORMAL,   //  ドウジ・通常
-        DOUJI_SWEAT,    //  ドウジ・焦り
+        DOUJI_NORMAL,       //  ドウジ・通常
+        DOUJI_ANGRY,        //  ドウジ・怒り
+        DOUJI_SURPRISED,    //  ドウジ・驚き
 
-        DODOME_NORMAL,  //  百々目・通常
-        DODOME_SWEAT,   //  百々目・焦り
+        DODOME_NORMAL,      //  百々目・通常
 
         Max
     }
@@ -438,12 +439,12 @@ public class EventSceneManager : MonoBehaviour
         //  入力待ち
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
-        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.DODOME_SWEAT,gameText);
+        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.DODOME_NORMAL,gameText);
 
         //  入力待ち
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
-        yield return ChangeFaceAndText(Frame.TOP,FaceType.DOUJI_SWEAT,gameText);
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.DOUJI_NORMAL,gameText);
 
         //  入力待ち
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
@@ -453,22 +454,22 @@ public class EventSceneManager : MonoBehaviour
         //  入力待ち
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
-        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.DOUJI_SWEAT,gameText);
+        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.DOUJI_SURPRISED,gameText);
 
         //  入力待ち
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
-        yield return ChangeFaceAndText(Frame.TOP,FaceType.DODOME_SWEAT,gameText);
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.DODOME_NORMAL,gameText);
 
         //  入力待ち
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
-        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.DOUJI_SWEAT,gameText);
+        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.DOUJI_ANGRY,gameText);
 
         //  入力待ち
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
-        yield return ChangeFaceAndText(Frame.TOP,FaceType.DODOME_SWEAT,gameText);
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.DODOME_NORMAL,gameText);
 
         //  入力待ち
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
@@ -542,7 +543,7 @@ public class EventSceneManager : MonoBehaviour
         //  上をアクティブ化
         frameObject[(int)Frame.TOP].SetActive(true);
 
-        yield return ChangeFaceAndText(Frame.TOP,FaceType.DOUJI_NORMAL,gameText);
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.DOUJI_SURPRISED,gameText);
 
         //  入力待ち
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
@@ -570,7 +571,7 @@ public class EventSceneManager : MonoBehaviour
         //  入力待ち
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
-        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_EXCITE,gameText);
+        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_SURPRISED,gameText);
 
         //  入力待ち
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
@@ -586,12 +587,12 @@ public class EventSceneManager : MonoBehaviour
         //  入力待ち
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
-        yield return ChangeFaceAndText(Frame.TOP,FaceType.DOUJI_NORMAL,gameText);
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.DOUJI_ANGRY,gameText);
 
         //  入力待ち
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
-        yield return ChangeFaceAndText(Frame.TOP,FaceType.DOUJI_NORMAL,gameText);
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.DOUJI_ANGRY,gameText);
 
         //  入力待ち
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());

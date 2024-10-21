@@ -508,17 +508,11 @@ public class EnemyManager : MonoBehaviour
 
         //yield return new WaitForSeconds(3f);
 
-        ////  Wave1
-        //SetEnemy(
-        //    enemyPrefab[(int)EnemyPattern.E01],
-        //    new Vector3(GetRandomX(), appearY, 0)
-        //);
-
+        //  Wave1
         SetEnemy(
-        enemyPrefab[(int)EnemyPattern.E01_B],
-        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.PowerUp);
-
-        yield return new WaitForSeconds(5.0f);
+            enemyPrefab[(int)EnemyPattern.E01],
+            new Vector3(GetRandomX(), appearY, 0)
+        );
 
         ////  Wave2
         //SetEnemy(
