@@ -40,6 +40,23 @@ public class RebindUI : MonoBehaviour
         RefreshDisplay();
     }
 
+    private void OnEnable()
+    {
+        if (_actionRef == null) return;
+
+        //  PlayerInputを取得
+        input = GameObject.Find("TitleManager").GetComponent<PlayerInput>();
+
+        //  現在のスキームを設定
+        _scheme = input.currentControlScheme;
+
+        // InputActionインスタンスを保持しておく
+        _action = _actionRef.action;
+
+        // キーバインドの表示を反映する
+        RefreshDisplay();
+    }
+
     // 後処理
     private void OnDestroy()
     {

@@ -8,7 +8,7 @@ public class RebindSaveManager : MonoBehaviour
     [SerializeField] private InputActionAsset _actionAsset;
 
     // 上書き情報の保存先
-    [SerializeField] private string _savePath = "InputActionOverrides.json";
+    [SerializeField] private string _savePath = "key_config_overrides.json";
 
     // 上書き情報の保存
     public void Save()
@@ -32,12 +32,12 @@ public class RebindSaveManager : MonoBehaviour
         var path = Path.Combine(Application.persistentDataPath, _savePath);
         if (!File.Exists(path))
         {
-            Debug.Log("InputActionOverrides.jsonが見つかりませんでした。\n" +
+            Debug.Log($"{_savePath}が見つかりませんでした。\n" +
                 "このまま続行します。");
             return;
         }
 
-         Debug.Log("InputActionOverrides.jsonが見つかりました！\n" +
+         Debug.Log($"{_savePath}が見つかりました！\n" +
                 "ロードします。");
 
         var json = File.ReadAllText(path);

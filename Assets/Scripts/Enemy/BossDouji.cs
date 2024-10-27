@@ -630,17 +630,17 @@ public class BossDouji : MonoBehaviour
         //  フェーズ１
         while (!bStopPhase1)
         {
-            yield return StartCoroutine(Douji_LoopMove(1.5f, 0.5f));
+            //yield return StartCoroutine(Douji_LoopMove(1.5f, 0.5f));
 
-            yield return StartCoroutine(Shot());
+            //yield return StartCoroutine(Shot());
 
 
-            //yield return StartCoroutine(Douji_LoopMove(1.0f, 1.0f));
-            //yield return StartCoroutine(Warning());
-            //StartCoroutine(KooniParty());
-            //StartCoroutine(KooniParty());
-            //StartCoroutine(KooniParty());
-            //yield return StartCoroutine(KooniParty());
+            yield return StartCoroutine(Douji_LoopMove(1.0f, 1.0f));
+            yield return StartCoroutine(Warning());
+            StartCoroutine(KooniParty());
+            StartCoroutine(KooniParty());
+            StartCoroutine(KooniParty());
+            yield return StartCoroutine(KooniParty());
 
 
             //yield return StartCoroutine(Douji_BerserkBarrage());
@@ -668,6 +668,10 @@ public class BossDouji : MonoBehaviour
             yield return StartCoroutine(Douji_LoopMove(1.0f,1.0f));
 
             StartCoroutine(WildlyShotSmall());
+
+            //  Warning!(初回のみ)
+            yield return StartCoroutine(Warning());
+
             StartCoroutine(KooniParty());
             StartCoroutine(KooniParty());
             StartCoroutine(KooniParty());
@@ -1274,6 +1278,8 @@ public class BossDouji : MonoBehaviour
     //------------------------------------------------------------------
     private IEnumerator Warning()
     {
+        float duration = 3.0f;
+
         if(bWarningFirst)yield break;
 
         //  SEを再生
@@ -1284,19 +1290,20 @@ public class BossDouji : MonoBehaviour
         //  WARNINGを有効化
         warningObject.SetActive(true);
 
-        //  アルファアニメーション
-        yield return StartCoroutine(AlphaAnimation(0f,0.8f));
-        yield return StartCoroutine(AlphaAnimation(0.8f,0f));
-        yield return StartCoroutine(AlphaAnimation(0f,0.8f));
-        yield return StartCoroutine(AlphaAnimation(0.8f,0f));
-
-        //  WARNINGを無効化
-        warningObject.SetActive(false);
+        ////  アルファアニメーション
+        //yield return StartCoroutine(AlphaAnimation(0f,0.8f));
+        //yield return StartCoroutine(AlphaAnimation(0.8f,0f));
+        //yield return StartCoroutine(AlphaAnimation(0f,0.8f));
+        //yield return StartCoroutine(AlphaAnimation(0.8f,0f));
 
         //  初回ではなくなったのでTRUE
         bWarningFirst = true;
 
-        yield return new WaitForSeconds(2);
+        //  演出が３秒なのでその分待つ
+        yield return new WaitForSeconds(duration);
+
+        //  WARNINGを無効化
+        warningObject.SetActive(false);
     }
 
     //------------------------------------------------------------------

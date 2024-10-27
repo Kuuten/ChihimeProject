@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 //
-//  ”wŒi”Â‚Q–‡‚ğØ‚è‘Ö‚¦‚Äs‚­•û®‚Ås‚­
+//  ”wŒi”Â–‡‚ğØ‚è‘Ö‚¦‚Äs‚­•û®‚Ås‚­
 //
 public class BackGroundMove : MonoBehaviour
 {

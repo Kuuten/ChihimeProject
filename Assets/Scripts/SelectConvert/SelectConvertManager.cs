@@ -64,8 +64,6 @@ public class SelectConvertManager : MonoBehaviour
         verticalInput = default;
         menuIndex = (int)BossType.Douji;
 
-        bCanDecision = true;
-
         /* ```````````‰‰o‚ÌŠJn``````````` */
 
         //  ƒtƒF[ƒhƒCƒ“
@@ -90,10 +88,15 @@ public class SelectConvertManager : MonoBehaviour
         //  “®‰æ‚Æ“®‰æ‚Ì˜g‚ğ•\¦‚·‚é
         explanationMovieBack.SetActive(true);
 
+        //  Œˆ’è‰Â”\ƒtƒ‰ƒOON
+        bCanDecision = true;
+
     }
 
     void Update()
     {
+        if(!bCanDecision)return;
+
         //  3Dƒƒjƒ…[‚ğ‰ñ“]‚³‚¹‚é
         RotateMenu();
 

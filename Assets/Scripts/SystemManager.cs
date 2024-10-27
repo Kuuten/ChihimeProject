@@ -17,7 +17,11 @@ public class SystemManager : MonoBehaviour
         get; private set;
     }
 
-    private InputAction fullScreen;
+    //  InputAction
+    private InputAction fullScreenAction;
+
+    //  切り替え用フラグ
+    private bool bSwitch; 
 
     void Awake()
     {
@@ -33,15 +37,17 @@ public class SystemManager : MonoBehaviour
     void Start()
     {
         PlayerInput systemInput = this.GetComponent<PlayerInput>();
-        fullScreen = systemInput.actions["FullScreen"];;
+        fullScreenAction = systemInput.actions["FullScreen"];
+        
+        bSwitch = false;
     }
 
     void Update()
     {
-        if( Screen.fullScreen )
+        if (Screen.fullScreen)
         {
             //  フルスクリーンを維持
-            Screen.SetResolution(1920, 1080, FullScreenMode.FullScreenWindow);
+            Screen.SetResolution( Screen.width, Screen.height, FullScreenMode.FullScreenWindow);
 
         }
         else
@@ -50,18 +56,12 @@ public class SystemManager : MonoBehaviour
             Screen.SetResolution(1280, 720, FullScreenMode.Windowed);
         }
 
-        if (fullScreen.WasPressedThisFrame())
+        //  Alt + Enterを押下
+        if (fullScreenAction.WasPressedThisFrame())
         {
-            if( Screen.fullScreen )
-            {
-                //  フルスクリーンの時はウィンドウモードに変更
-                Screen.SetResolution(1280, 720, FullScreenMode.Windowed);
-            }
-            else
-            {
-                //  ウィンドウモードの時はフルスクリーンに変更
-                Screen.SetResolution(1920, 1080, FullScreenMode.FullScreenWindow);
-            }
+            bSwitch = !bSwitch;
+            Screen.fullScreen = bSwitch;
+            Debug.Log("フルスクリーン状態:" + bSwitch);
         }
     }
 }

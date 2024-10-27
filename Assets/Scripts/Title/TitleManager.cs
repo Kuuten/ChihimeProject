@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using TMPro;
@@ -19,8 +20,25 @@ public class TitleManager : MonoBehaviour
     [SerializeField] private LogoEasing logoEasing;
     [SerializeField] private LogoScaling logoScaling;
     [SerializeField] private GameObject Buttons;
-    [SerializeField] private GameObject Cursor;
+    //[SerializeField] private GameObject Cursor;
     [SerializeField] private GameObject[] DisableObject;
+
+    //  走るスプライトオブジェクト
+    [SerializeField] private GameObject[] runObject;
+
+    //  キーコンフィグの上書き分のセーブ・ロード用
+    [SerializeField] private RebindSaveManager rebindSaveManager;
+
+    enum RunObject
+    {
+        Chihime,
+        Douji,
+        Tsukumo,
+        Kuchinawa,
+        Kurama,
+        Wadatsumi,
+        Hakumen,
+    }
 
     private int Pos = 1;                    //  一番上
     private  int menuNum = 3;               //  メニューの数
@@ -63,11 +81,6 @@ public class TitleManager : MonoBehaviour
         CancelButton,
     }
 
-    //  キーコンフィグパネル
-    [SerializeField] private GameObject KeyConfigPanel;
-    //  サウンドコンフィグパネル
-    [SerializeField] private GameObject SoundConfigPanel;
-
     //  キーボードの上下左右文字表示
     [SerializeField] private GameObject keyboardNavigateTextObj;
     //  ゲームパッドのボタンセット
@@ -78,13 +91,23 @@ public class TitleManager : MonoBehaviour
     [SerializeField] private GameObject firstSelectedButton;
     [SerializeField] private GameObject firstSelectedButtonGamePad;
 
+    //  ウィンドウ関連
+    [SerializeField] private Button windowSwitchButton;
+    [SerializeField] private TextMeshProUGUI screenStateText;
+
 
     void Start()
     {
+        // 強制スクリーンサイズの指定
+        Screen.SetResolution(1280, 720, false);
+
         //  最初は通常モード
         titleMode = TitleMode.Normal;
 
         canContorol = false;
+
+        //  キーコンフィグ設定のロード
+        rebindSaveManager.Load();
 
         StartCoroutine(StartInit());
     }
@@ -118,6 +141,12 @@ public class TitleManager : MonoBehaviour
         //  タイトルBGM再生
         SoundManager.Instance.PlayBGM((int)MusicList.BGM_TITLE);
 
+        yield return new WaitForSeconds(3); //  3秒待つ
+
+        //  走る千姫くんとそれを追いかける六魔天
+        float repeat_time = 10f; //  繰り返す間隔（秒）
+        InvokeRepeating("RunToLeftAll",0f, repeat_time);
+
         yield return null;
     }
 
@@ -129,7 +158,7 @@ public class TitleManager : MonoBehaviour
         switch(titleMode)
         {
             case TitleMode.Normal:  //  通常モード
-                MoveTitleMenuCursor();  //  カーソル移動
+                //MoveTitleMenuCursor();  //  カーソル移動
                 break;
 
             case TitleMode.Config:  //  コンフィグモード
@@ -230,6 +259,9 @@ public class TitleManager : MonoBehaviour
 
         //  コンフィグキャンバスをアクティブにする
         ConfigCanvas.SetActive(true);
+
+        //  現在の画面モードに状態をセット
+        SetScreenStateText(Screen.fullScreen);
 
         //  実行モードをコンフィグモードにする
         titleMode = TitleMode.Config;
@@ -336,49 +368,54 @@ public class TitleManager : MonoBehaviour
     //---------------------------------------------------
     private void MoveTitleMenuCursor()
     {
-        Vector2 inputNavigateAxis = nevigate.ReadValue<Vector2>();
-        verticalInput = inputNavigateAxis.y;
-        horizontalInput = inputNavigateAxis.x;
+        //Vector2 inputNavigateAxis = nevigate.ReadValue<Vector2>();
+        //verticalInput = inputNavigateAxis.y;
+        //horizontalInput = inputNavigateAxis.x;
 
-        //  入力がない場合は弾く
-        if(!nevigate.WasPressedThisFrame())return;
-        else if(Mathf.Abs(verticalInput) > 0.0f)
-        {
-            //  セレクトSE再生
-            SoundManager.Instance.PlaySFX((int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_SELECT);
-        }
+        ////  入力がない場合は弾く
+        //if(!nevigate.WasPressedThisFrame())return;
+        ////  どちらも入力がある場合も弾く
+        //else if(Mathf.Abs(verticalInput) >= 1.0f && Mathf.Abs(horizontalInput) >= 1.0f)
+        //{
+        //    return;
+        //}
+        //else
+        //{
+        //    //  セレクトSE再生
+        //    SoundManager.Instance.PlaySFX((int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_SELECT);
+        //}
 
-        if (verticalInput < 0)
-        {
-            if (Pos != menuNum)
-            {
-                Cursor.GetComponent<RectTransform>().anchoredPosition += 
-                new UnityEngine.Vector2(0,-lineHeight);
-                Pos += 1;
-            }
-            else
-            {
-                Cursor.GetComponent<RectTransform>().anchoredPosition += 
-                new UnityEngine.Vector2(0,lineHeight*(menuNum-1));
-                Pos = 1;
-            }
+        //if (verticalInput < 0)
+        //{
+        //    if (Pos != menuNum)
+        //    {
+        //        Cursor.GetComponent<RectTransform>().anchoredPosition += 
+        //        new UnityEngine.Vector2(0,-lineHeight);
+        //        Pos += 1;
+        //    }
+        //    else
+        //    {
+        //        Cursor.GetComponent<RectTransform>().anchoredPosition += 
+        //        new UnityEngine.Vector2(0,lineHeight*(menuNum-1));
+        //        Pos = 1;
+        //    }
             
-        }
-        else if (verticalInput > 0)
-        {
-            if (Pos != 1)
-            {
-                Cursor.GetComponent<RectTransform>().anchoredPosition +=
-                    new UnityEngine.Vector2(0, lineHeight);
-                Pos -= 1;
-            }
-            else
-            {
-                Cursor.GetComponent<RectTransform>().anchoredPosition +=
-                new UnityEngine.Vector2(0, -lineHeight * (menuNum - 1));
-                Pos = menuNum;
-            }
-        } 
+        //}
+        //else if (verticalInput > 0)
+        //{
+        //    if (Pos != 1)
+        //    {
+        //        Cursor.GetComponent<RectTransform>().anchoredPosition +=
+        //            new UnityEngine.Vector2(0, lineHeight);
+        //        Pos -= 1;
+        //    }
+        //    else
+        //    {
+        //        Cursor.GetComponent<RectTransform>().anchoredPosition +=
+        //        new UnityEngine.Vector2(0, -lineHeight * (menuNum - 1));
+        //        Pos = menuNum;
+        //    }
+        //} 
     }
 
     //---------------------------------------------------
@@ -392,6 +429,11 @@ public class TitleManager : MonoBehaviour
 
         //  入力がない場合は弾く
         if(!nevigate.WasPressedThisFrame())return;
+        //  どちらも入力がある場合も弾く
+        else if(Mathf.Abs(verticalInput) >= 1.0f && Mathf.Abs(horizontalInput) >= 1.0f)
+        {
+            return;
+        }
         else
         {
             //  セレクトSE再生
@@ -411,6 +453,88 @@ public class TitleManager : MonoBehaviour
         //  通常弾ボタンを選択状態にする
         EventSystem.current.SetSelectedGameObject(firstSelectedButton.gameObject);
 
+    }
+
+    //---------------------------------------------------
+    //  千姫くん達が画面左へ走る処理
+    //---------------------------------------------------
+    private void RunToLeft(GameObject prefab,float duration, float delay)
+    {
+        float targetX = -11f;   //  目標X座標
+
+        //  オブジェクト生成
+        GameObject obj = Instantiate(prefab);
+
+        obj.transform.DOMoveX(targetX, duration)
+            .SetEase(Ease.Linear)
+            .SetDelay(delay)
+            .OnComplete( ()=>Destroy(obj) );
+    }
+
+    private void RunToLeftAll()
+    {
+        //  目的地に着くまでにかかる時間（秒）
+        float chihime_AnimeTime = 5.0f;
+        float other_AnimeTime = 4.0f;
+
+        //  千姫くんに対しての遅延の基準時間(秒)
+        float delay_BaseTime = 2.0f;
+
+        //  遅延のバイアス
+        float delayBias = 0.1f;
+
+        for(int i=0;i<runObject.Length;i++)
+        {
+            if(i == 0)
+            {
+                //  千姫くんを走らせる
+                RunToLeft(runObject[i],chihime_AnimeTime, 0f);
+            }
+            else
+            {
+                //  それ以外を走らせる
+                RunToLeft(
+                    runObject[(int)RunObject.Douji],
+                    other_AnimeTime,
+                    delay_BaseTime + (delayBias * i));
+            }
+        }
+
+        //RunToLeft(runObject[(int)RunObject.Douji],other_AnimeTime, delay_BaseTime);
+        //RunToLeft(runObject[(int)RunObject.Tsukumo],other_AnimeTime, delay_BaseTime+0.1f);
+        //RunToLeft(runObject[(int)RunObject.Kuchinawa],other_AnimeTime, delay_BaseTime+0.2f);
+        //RunToLeft(runObject[(int)RunObject.Kurama],other_AnimeTime, delay_BaseTime+0.3f);
+        //RunToLeft(runObject[(int)RunObject.Wadatsumi],other_AnimeTime, delay_BaseTime+0.4f);
+        //RunToLeft(runObject[(int)RunObject.Hakumen],other_AnimeTime, delay_BaseTime+0.5f);
+    }
+
+    //---------------------------------------------------
+    //  画面の状態の表示を切り替える
+    //---------------------------------------------------
+    private void SetScreenStateText(bool isFullScreen)
+    {
+        //  フルスクリーンかどうかをセット
+        Screen.fullScreen = isFullScreen;
+
+        //  ローカル変数を用意
+        string[] screenModeText = { "ウィンドウ", "フルスクリーン" };
+        int index = Convert.ToInt32(!Screen.fullScreen);
+
+        //  スクリーン状態のテキストを更新
+        screenStateText.text = $"現在の画面モード:{screenModeText[index]}";
+    }
+
+    public void SetScreenStateText()
+    {
+        //  状態を反転
+        Screen.fullScreen = !Screen.fullScreen;
+
+        //  ローカル変数を用意
+        string[] screenModeText = { "ウィンドウ", "フルスクリーン" };
+        int index = Convert.ToInt32(!Screen.fullScreen);
+
+        //  スクリーン状態のテキストを更新
+        screenStateText.text = $"現在の画面モード:{screenModeText[index]}";
     }
 
 }
