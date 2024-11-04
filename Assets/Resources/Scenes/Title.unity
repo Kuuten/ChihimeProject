@@ -1173,7 +1173,7 @@ MonoBehaviour:
   - {fileID: 41924097}
   runObject:
   - {fileID: 1738630562540974232, guid: b229fa022a46b76499518ae094b2f1ab, type: 3}
-  - {fileID: 1738630562540974232, guid: b229fa022a46b76499518ae094b2f1ab, type: 3}
+  - {fileID: 5176128539460027276, guid: 974dcf57b3241be469177ab116ec8751, type: 3}
   - {fileID: 1738630562540974232, guid: b229fa022a46b76499518ae094b2f1ab, type: 3}
   - {fileID: 1738630562540974232, guid: b229fa022a46b76499518ae094b2f1ab, type: 3}
   - {fileID: 1738630562540974232, guid: b229fa022a46b76499518ae094b2f1ab, type: 3}
@@ -15529,7 +15529,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5828105596134227604, guid: 52aa9f3f596a63f49aba5952ba61c981, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
