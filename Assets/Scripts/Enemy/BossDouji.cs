@@ -152,9 +152,6 @@ public class BossDouji : MonoBehaviour
     {
         Debug.Log("ボス撃破！ステージクリア！");
 
-        //  DangerLineCanvasを非表示に
-        EnemyManager.Instance.GetDangerLineCanvas().SetActive(false);
-
         //  ボス戦やられたらステージクリア
         GameManager.Instance.SetStageClearFlag(true);
     }
@@ -1371,6 +1368,10 @@ public class BossDouji : MonoBehaviour
                         new Vector2(250,300)
                         ));
             }
+
+            //  0.5秒のディレイをかける
+            yield return new WaitForSeconds(0.5f);
+
             //  子鬼を生成
             GameObject obj = Instantiate(bullet,pos,Quaternion.identity);
             DoujiPhase2Bullet bulletComp =  obj.GetComponent<DoujiPhase2Bullet>();
@@ -1425,6 +1426,10 @@ public class BossDouji : MonoBehaviour
                         new Vector2(250,-300)
                         ));
             }
+
+            //  0.5秒のディレイをかける
+            yield return new WaitForSeconds(0.5f);
+
             //  子鬼を生成
             GameObject obj = Instantiate(bullet,pos,Quaternion.identity);
             DoujiPhase2Bullet bulletComp =  obj.GetComponent<DoujiPhase2Bullet>();
@@ -1487,6 +1492,10 @@ public class BossDouji : MonoBehaviour
                         new Vector2(-430,-220)
                         ));
             }
+
+            //  0.5秒のディレイをかける
+            yield return new WaitForSeconds(0.5f);
+
             //  子鬼を生成
             GameObject obj = Instantiate(bullet,pos,Quaternion.identity);
             DoujiPhase2Bullet bulletComp =  obj.GetComponent<DoujiPhase2Bullet>();
@@ -1549,6 +1558,10 @@ public class BossDouji : MonoBehaviour
                         new Vector2(300,-215)
                         ));
             }
+
+            //  0.5秒のディレイをかける
+            yield return new WaitForSeconds(0.5f);
+
             //  子鬼を生成
             GameObject obj = Instantiate(bullet,pos,Quaternion.identity);
             DoujiPhase2Bullet bulletComp =  obj.GetComponent<DoujiPhase2Bullet>();

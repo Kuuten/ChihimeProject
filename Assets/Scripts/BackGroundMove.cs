@@ -22,9 +22,9 @@ public class BackGroundMove : MonoBehaviour
         RectTransform rt = this.GetComponent<RectTransform>();
         rt.anchoredPosition += new Vector2(0,-scrollSpeed)*Time.deltaTime;
 
-        if (rt.anchoredPosition.y <= -1440f)
+        if (rt.anchoredPosition.y <= -1080f)
         {
-            rt.anchoredPosition = new Vector2(0,720f);
+            rt.anchoredPosition = new Vector2(-58,1080.0f);
         }
     }
 }

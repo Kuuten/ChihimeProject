@@ -18,7 +18,7 @@ public static class PlayerInfoManager
     public static int g_SHOT_LV = 3;
     public static int g_SPEED_LV = 3;
     //  ※通常弾をセットしないように気をつける
-    public static SHOT_TYPE g_CONVERTSHOT = SHOT_TYPE.TSUKUMO;
+    public static SHOT_TYPE g_CONVERTSHOT = SHOT_TYPE.DOUJI;
 
     //  プレイヤーが今いるステージ情報
     public enum StageInfo

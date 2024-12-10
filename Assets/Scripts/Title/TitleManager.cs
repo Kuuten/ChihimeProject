@@ -33,16 +33,12 @@ public class TitleManager : MonoBehaviour
     {
         Chihime,
         Douji,
+        Dodome,
         Tsukumo,
-        Kuchinawa,
-        Kurama,
-        Wadatsumi,
-        Hakumen,
+        Momo,
+        Gorozaemon,
+        Ossan
     }
-
-    private int Pos = 1;                    //  一番上
-    private  int menuNum = 3;               //  メニューの数
-    private float lineHeight = 111.7f;      //  1回で上下に動く幅
 
     PlayerInput _input;
     InputAction nevigate;
@@ -237,7 +233,7 @@ public class TitleManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f); //  1秒待つ
 
-        //  BGMを止めてメインへ
+        //  BGMを止めて魂バートセレクトへ
         StopBGM();
         LoadingScene.Instance.LoadNextScene("SelectConvert");
     }
@@ -465,10 +461,35 @@ public class TitleManager : MonoBehaviour
         //  オブジェクト生成
         GameObject obj = Instantiate(prefab);
 
+        //  左へ移動
         obj.transform.DOMoveX(targetX, duration)
             .SetEase(Ease.Linear)
             .SetDelay(delay)
             .OnComplete( ()=>Destroy(obj) );
+    }
+
+    //---------------------------------------------------
+    //  百々目が画面左へ走る処理
+    //---------------------------------------------------
+    private void RunDodomeToLeft(GameObject prefab,float duration, float delay)
+    {
+        float targetX = -11f;   //  目標X座標
+        float targetY = -4.0f;  //  目標Y座標
+
+        //  オブジェクト生成
+        GameObject obj = Instantiate(prefab);
+
+        //  左へ移動
+        obj.transform.DOMoveX(targetX, duration)
+            .SetEase(Ease.Linear)
+            .SetDelay(delay)
+            .OnComplete( ()=>Destroy(obj) );
+
+        //  上下に揺れる
+        obj.transform.DOMoveY(targetY, duration/4)
+            .SetEase(Ease.Linear)
+            .SetLoops(-1,LoopType.Yoyo)
+            .SetDelay(delay);
     }
 
     private void RunToLeftAll()
@@ -476,9 +497,13 @@ public class TitleManager : MonoBehaviour
         //  目的地に着くまでにかかる時間（秒）
         float chihime_AnimeTime = 5.0f;
         float other_AnimeTime = 4.0f;
+        float gorozaemon_AnimeTime = 6.0f;
+        float ossan_AnimeTime = 2.0f;
 
         //  千姫くんに対しての遅延の基準時間(秒)
         float delay_BaseTime = 2.0f;
+        float gorozaemon_delay_BaseTime = 3.0f;
+        float ossan_delay_BaseTime_ = 4.0f;
 
         //  遅延のバイアス
         float delayBias = 0.1f;
@@ -490,11 +515,29 @@ public class TitleManager : MonoBehaviour
                 //  千姫くんを走らせる
                 RunToLeft(runObject[i],chihime_AnimeTime, 0f);
             }
+            else if( i == (int)RunObject.Dodome)
+            {
+                //  百々目を走らせる
+                RunDodomeToLeft(
+                    runObject[i],
+                    other_AnimeTime,
+                    delay_BaseTime + (delayBias * i));
+            }
+            else if( i == (int)RunObject.Gorozaemon)
+            {
+                //  ごろざえもんを走らせる
+                RunToLeft(runObject[i],gorozaemon_AnimeTime, gorozaemon_delay_BaseTime);
+            }
+            else if( i == (int)RunObject.Ossan)
+            {
+                //  ちっちゃいおっさんを走らせる
+                RunToLeft(runObject[i],ossan_AnimeTime, ossan_delay_BaseTime_);
+            }
             else
             {
                 //  それ以外を走らせる
                 RunToLeft(
-                    runObject[(int)RunObject.Douji],
+                    runObject[i],
                     other_AnimeTime,
                     delay_BaseTime + (delayBias * i));
             }

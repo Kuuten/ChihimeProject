@@ -2,13 +2,9 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
 //  ゲーム中の状態
@@ -37,6 +33,17 @@ public enum eResultObj
     Max
 }
 
+// ショップアイテムID
+public enum eShopItemID
+{
+    RedHeart,          //   赤いハート
+    DoubleUpHeart,     //   ダブルアップハート
+    GoldHeart,         //   金色のハート
+    HoneGBomb,         //   骨Gボム
+
+    Max
+}
+
 //--------------------------------------------------------------
 //
 //  ゲーム管理クラス
@@ -44,18 +51,18 @@ public enum eResultObj
 //--------------------------------------------------------------
 public class GameManager : MonoBehaviour
 {
-    [SerializeField]private GameObject player;
-    [SerializeField]private GameObject enemyGenerator;
+    [SerializeField]private GameObject player;              //  プレイヤーオブジェクト
+    [SerializeField]private GameObject enemyGenerator;      //  敵マネージャーオブジェクト
 
-    private int gameState;
+    private int gameState;  //  ゲーム全体の状態
 
-    [SerializeField] private GameObject soundManager;
-    [SerializeField] private FadeIO Fade;
-    [SerializeField] private ScrollAnimation Scroll;
+    [SerializeField] private GameObject soundManager;       //  サウンドマネージャー
+    [SerializeField] private FadeIO Fade;                   //  FadeIOクラス
+    [SerializeField] private ScrollAnimation Scroll;        //  巻物
 
     //  デバッグ用
-    private InputAction pauseButton;
-    private bool pauseSwitch;
+    private InputAction pauseButton;                        //  ポーズボタンアクション
+    private bool pauseSwitch;                               //  ポーズフラグ
 
 
     //  シングルトンなインスタンス
@@ -98,6 +105,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Button returnGameButton;
     //  ゲーム開始フラグ
     private bool startFlag;
+
+    //----------------------------------------------------
+    //  ショップ表示用
+    //----------------------------------------------------
+    //  アイテムボタンプレハブ
+    [SerializeField] private GameObject[] itemButtonPrefab;
+    //  アイテムリストオブジェクト（生成位置）
+    [SerializeField] private GameObject itemListObject;
+    //  ショップキャンバスオブジェクト
+    [SerializeField] private GameObject shopCanvas;
+    //  再生成ボタンオブジェクト
+    [SerializeField] private GameObject regenerateButton;
 
     //------------------------------------------------------------------------------
     //  プロパティ
@@ -190,6 +209,7 @@ public class GameManager : MonoBehaviour
         yield return StartCoroutine(GameStarting());
         yield return StartCoroutine(GamePlaying());
         yield return StartCoroutine(GameResult());
+        yield return StartCoroutine(ShopMode());
 
         yield return null;
     }
@@ -412,20 +432,8 @@ public class GameManager : MonoBehaviour
         //   ゲームクリアシーンへ
         LoadingScene.Instance.LoadNextScene("TrialEnding");
 
-        ////   ショップシーンへ
-        //LoadingScene.Instance.LoadNextScene("Shop"); 
-
-        ////  体験版では特別クリア画面に遷移
-        //if(Application.version == "0.5")
-        //{
-        //   //   ゲームクリアシーンへ
-        //   LoadingScene.Instance.LoadNextScene("TrialEnding");
-        //}
-        ////  製品版ではショップシーンへ遷移
-        //else
-        //{
-   
-        //}
+        ////   製品版では次のステージへ進めて魂バートセレクト画面へ
+        //LoadingScene.Instance.LoadNextScene("SelectConvert"); 
 
         yield return null;
     }
@@ -464,9 +472,9 @@ public class GameManager : MonoBehaviour
     }
 
 
-    //-----------------------------------------------------------------
-    //  情報保存＆ショップへ遷移(ボタンが押されたら呼ばれる)
-    //-----------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    //  情報保存＆ショップへ遷移(リザルトで「次へ」ボタンが押されたら呼ばれる)
+    //--------------------------------------------------------------------------
     public void AfterResult()
     {
         if(!sceneChangeFlag)
@@ -482,10 +490,135 @@ public class GameManager : MonoBehaviour
                 (int)AudioChannel.SFX,
                 (int)SFXList.SFX_TITLE_SELECT);
 
+            //------------------------------------------------------------------
+            //  体験版用処理
+            //------------------------------------------------------------------
+            ////  シーン切り替えフラグをTRUE
+            //sceneChangeFlag = true;
+            ////  巻物アニメーション＆情報保存
+            //StartCoroutine(WaitingForClosingScroll());
+            //------------------------------------------------------------------
+
+            //------------------------------------------------------------------
+            //  製品版用処理
+            //------------------------------------------------------------------
+            shopCanvas.SetActive(true); //  ショップキャンバスを表示
+            InstantiateRandomItems();   //  ItemListにランダムにプレハブを生成
+        }
+    }
+
+    //-----------------------------------------------------------------
+    //  ショップ画面を有効化
+    //-----------------------------------------------------------------
+    private IEnumerator ShopMode()
+    {
+        Debug.Log("***ショップ画面表示モードになりました。***");
+
+        yield return null;
+    }
+
+    //--------------------------------------------------------------------------
+    //  商品になるアイテムをランダムに３個生成
+    //--------------------------------------------------------------------------
+    private void InstantiateRandomItems()
+    {
+        //  始点と終点を設定する
+        int start = (int)eShopItemID.RedHeart;
+        int end = (int)eShopItemID.Max-1;
+
+        //  ボタンを何個生成するか
+        int chooseNum = 3;
+
+        // 0～eShopItemID.Maxまでのリストを作る
+        List<int> idList = new List<int>();
+        for(int i=start;i<=end;i++)
+        {
+            idList.Add(i);
+        }      
+
+        //  その中からランダムに3個抽出する
+        while(chooseNum-- > 0)
+        {
+            //  ランダムな数値を抽出(0~3)
+            int index = UnityEngine.Random.Range(0, (int)idList.Count);
+            int rand = idList[index];
+
+            //  オブジェクトをを生成する
+            GameObject obj = Instantiate(itemButtonPrefab[rand]);
+
+            //  ItemListオブジェクトの子にする
+            obj.transform.parent = itemListObject.transform;
+
+            //  何故かスケールが0になるので補正
+            obj.transform.localScale = new Vector3(1,1,1);
+
+            //  その番号をidListから除外
+            idList.RemoveAt(index);
+        }
+
+        //  PlayerInputのマップをUIモードに変更
+        PlayerInput playerInput = GameManager.Instance.GetPlayer()
+            .GetComponent<PlayerInput>();
+        playerInput.enabled = true;
+        playerInput.SwitchCurrentActionMap("Title_UI");
+
+        //  itemListObjectの最初の子オブジェクトを選択状態にする
+        EventSystem.current.SetSelectedGameObject(
+            itemListObject.transform.GetChild(0).gameObject);
+
+        //  生成完了したらリストを全削除
+        idList.Clear();
+    }
+
+    //--------------------------------------------------------------------------
+    //  アイテムボタンを全部削除して再生成(再入荷:3000魂)
+    //--------------------------------------------------------------------------
+    public void ReGenerate()
+    {
+        int value = 3000;   //  再入荷代金
+
+        //  代金分魂を減らす
+        if(MoneyManager.Instance.CanBuyItem(value))
+        { 
+            //  親オブジェクトのTransformを取得する
+            Transform parentTransform = itemListObject.transform;
+
+            //  全ての子オブジェクトを削除する
+            foreach (Transform child in parentTransform)
+            {
+                Destroy(child.gameObject);
+            }
+
+            //  再生成
+            InstantiateRandomItems();
+        }
+
+        //  再生成ボタンオブジェクトを選択状態にする
+        EventSystem.current.SetSelectedGameObject(
+            regenerateButton.gameObject);
+    }
+
+    //--------------------------------------------------------------------------
+    //  ショップへ遷移(ショップで「次へ」ボタンが押されたら呼ばれる)
+    //--------------------------------------------------------------------------
+    public void AfterShop()
+    {
+        if(!sceneChangeFlag)
+        {
+            //  ショップキャンバスを非表示にする
+            shopCanvas.SetActive(false);
+
+            //  決定SEを鳴らす
+            SoundManager.Instance.PlaySFX(
+                (int)AudioChannel.SFX,
+                (int)SFXList.SFX_TITLE_SELECT);
+
             //  イベントキャンバスを非表示にする
             eventCanvas.SetActive(false);
 
+            //  シーン切り替えフラグをTRUE
             sceneChangeFlag = true;
+            //  巻物アニメーション＆情報保存
             StartCoroutine(WaitingForClosingScroll());
         }
     }

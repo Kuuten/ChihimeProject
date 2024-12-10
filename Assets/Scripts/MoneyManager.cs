@@ -40,8 +40,6 @@ public class MoneyManager : MonoBehaviour
         }
         Instance = this;
 
-        //  PlayerInfoManagerから情報をセット
-        PlayerInfoManager.g_KONNUM = money;
     }
 
     void Start()
@@ -77,6 +75,17 @@ public class MoneyManager : MonoBehaviour
         else targetMoney += value;
     }
 
+    //  魂（お金）を減算
+    public void SubMoney(int value )
+    {
+        //  目標値を更新
+        if(targetMoney <= 0)
+        {
+            targetMoney = 0;
+        }
+        else targetMoney -= value;
+    }
+
     private IEnumerator CountMoney()
     {
         //  フラグをfalseに
@@ -103,12 +112,44 @@ public class MoneyManager : MonoBehaviour
         yield return null;
     }
 
-    //------------------------------------------------
+    //-------------------------------------------------------------------------------
     //  プロパティ
-    //------------------------------------------------
+    //-------------------------------------------------------------------------------
     public int GetKonNumGainedFromLarge(){ return konNumGainedFromLarge; }
     public int GetKonNumGainedFromSmall(){ return konNumGainedFromSmall; }
     public int GetKonNumGainedFromPowerup(){ return konNumGainedFromPowerup; }
     public int GetKonNum(){ return money; }
     public void SetKonNum(int num){ money = num; }
+
+    //-------------------------------------------------------------------------------
+    //  残金でアイテムを購入可能かどうかを判定する(value:アイテムの値段)
+    //-------------------------------------------------------------------------------
+    public bool CanBuyItem(int value)
+    {
+        int kon = targetMoney - value;
+
+        //  お金が足りなかったら
+        if(kon < 0)
+        {
+            //  SEを再生
+            SoundManager.Instance.PlaySFX(
+                (int)AudioChannel.SFX,
+                (int)SFXList.SFX_TITLE_INCORRECT);
+
+            return false;
+        }
+        //  購入成功！
+        else
+        {
+            //  SEを再生
+            SoundManager.Instance.PlaySFX(
+                (int)AudioChannel.SFX,
+                (int)SFXList.SFX_RESULT_CASH);
+
+            //  お金を減らす
+            SubMoney(value);
+
+            return true;
+        }
+    }
 }

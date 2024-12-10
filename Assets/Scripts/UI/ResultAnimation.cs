@@ -145,8 +145,8 @@ public class ResultAnimation : MonoBehaviour
         honeGImage.SetActive(true);
 
         //  骨Gアニメーション開始
-        honeGImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(325,500);
-        honeGImage.GetComponent<RectTransform>().DOAnchorPosY(-161,1.5f)
+        honeGImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-465,500);
+        honeGImage.GetComponent<RectTransform>().DOAnchorPosY(22,1.5f)
             .SetEase(Ease.OutBounce);
 
         //  アニメーションを待つ

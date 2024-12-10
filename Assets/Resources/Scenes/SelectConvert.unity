@@ -221,7 +221,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5828105596134227604, guid: 52aa9f3f596a63f49aba5952ba61c981, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -382,7 +382,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u9B42\u5370\u5C4A\u30FB\u64CD\u9B54\u5929"
+  m_text: "\u9B42\u30D0\u30FC\u30C8\u30FB\u64CD\u9B54\u5929"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e3190499fe2943a4883b75b70fa14b77, type: 2}
   m_sharedMaterial: {fileID: 4486266660689969587, guid: e3190499fe2943a4883b75b70fa14b77, type: 2}
@@ -649,7 +649,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u9B42\u30D0\u30FC\u30C8\u5F3E\u306E\u30BF\u30A4\u30D7\u3092\u9078\u307C\u3046\uFF01"
+  m_text: "\u597D\u304D\u306A\u9B42\u30D0\u30FC\u30C8\u5F3E\u3092\u9078\u307C\u3046\uFF01"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 42d3fc6d5aa332a4680dca31315e1d11, type: 2}
   m_sharedMaterial: {fileID: 23655408710875008, guid: 42d3fc6d5aa332a4680dca31315e1d11, type: 2}
@@ -893,7 +893,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u9B42\u5370\u5C4A\u30FB\u525B\u9B54\u5929"
+  m_text: "\u9B42\u30D0\u30FC\u30C8\u30FB\u525B\u9B54\u5929"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e3190499fe2943a4883b75b70fa14b77, type: 2}
   m_sharedMaterial: {fileID: 4486266660689969587, guid: e3190499fe2943a4883b75b70fa14b77, type: 2}
@@ -1387,7 +1387,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u9B42\u5370\u5C4A\u30FB\u6953\u9B54\u5929"
+  m_text: "\u9B42\u30D0\u30FC\u30C8\u30FB\u6953\u9B54\u5929"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e3190499fe2943a4883b75b70fa14b77, type: 2}
   m_sharedMaterial: {fileID: 4486266660689969587, guid: e3190499fe2943a4883b75b70fa14b77, type: 2}
@@ -1521,7 +1521,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u9B42\u5370\u5C4A\u30FB\u8F2A\u9B54\u5929"
+  m_text: "\u9B42\u30D0\u30FC\u30C8\u30FB\u8F2A\u9B54\u5929"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e3190499fe2943a4883b75b70fa14b77, type: 2}
   m_sharedMaterial: {fileID: 4486266660689969587, guid: e3190499fe2943a4883b75b70fa14b77, type: 2}
@@ -1981,7 +1981,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.29383236, g: 0.43266073, b: 0.8773585, a: 1}
+  m_Color: {r: 0.8392157, g: 0.827451, b: 0.8039216, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2384,7 +2384,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.30980393, g: 0.30980393, b: 0.30980393, a: 1}
     m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
-    m_DisabledColor: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 2
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -2398,7 +2398,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1064811990}
   m_OnClick:
     m_PersistentCalls:
@@ -2839,7 +2839,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u9B42\u5370\u5C4A\u30FB\u6D77\u9B54\u5929"
+  m_text: "\u9B42\u30D0\u30FC\u30C8\u30FB\u6D77\u9B54\u5929"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e3190499fe2943a4883b75b70fa14b77, type: 2}
   m_sharedMaterial: {fileID: 4486266660689969587, guid: e3190499fe2943a4883b75b70fa14b77, type: 2}
@@ -3107,7 +3107,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u9B42\u5370\u5C4A\u30FB\u7114\u9B54\u5929"
+  m_text: "\u9B42\u30D0\u30FC\u30C8\u30FB\u7114\u9B54\u5929"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e3190499fe2943a4883b75b70fa14b77, type: 2}
   m_sharedMaterial: {fileID: 4486266660689969587, guid: e3190499fe2943a4883b75b70fa14b77, type: 2}
@@ -3532,7 +3532,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5828105596134227604, guid: 52aa9f3f596a63f49aba5952ba61c981, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -3579,8 +3579,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -581, y: 19.979}
-  m_SizeDelta: {x: 200, y: 200}
+  m_AnchoredPosition: {x: -587, y: 22}
+  m_SizeDelta: {x: 174, y: 257}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1498423616
 MonoBehaviour:
@@ -3602,7 +3602,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -824212724, guid: 7ec57f6b272a72841832b5d1f76a3aed, type: 3}
+  m_Sprite: {fileID: -372218609, guid: 2ee992dbc94cd5242aa76cce745f500f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3661,7 +3661,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 139, y: -248}
+  m_AnchoredPosition: {x: 139, y: -234}
   m_SizeDelta: {x: -312.647, y: -528.1487}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1581986039
@@ -3824,7 +3824,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u300C\u8A93\u7D04\u66F8\u300D\u3068\u66F8\u304B\u308C\u305F\u9B42\u5370\u5C4A\u3002\n\u516D\u9B54\u5929\u306E\u4E00\u4EBA\u3001\u64CD\u9B54\u5929\u306E\u529B\u3092\u501F\u308A\u308B\u4E8B\u304C\u3067\u304D\u308B\u3002\n\u5B89\u5B9A\u3057\u305F\u30D7\u30EC\u30A4\u3053\u305D\u304C\u52DD\u5229\u3078\u306E\u9375\u3002"
+  m_text: "\u516D\u9B54\u5929\u306E\u4E00\u4EBA\u3001\u64CD\u9B54\u5929\u306E\u529B\u3092\u501F\u308A\u308B\u4E8B\u304C\u3067\u304D\u308B\u3002\n\u5B89\u5B9A\u3057\u305F\u30D7\u30EC\u30A4\u3053\u305D\u304C\u52DD\u5229\u3078\u306E\u9375\u3002"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e3190499fe2943a4883b75b70fa14b77, type: 2}
   m_sharedMaterial: {fileID: 4486266660689969587, guid: e3190499fe2943a4883b75b70fa14b77, type: 2}
@@ -3958,7 +3958,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u300C\u679C\u305F\u3057\u72B6\u300D\u3068\u66F8\u304B\u308C\u305F\u9B42\u5370\u5C4A\u3002\n\u516D\u9B54\u5929\u306E\u4E00\u4EBA\u3001\u525B\u9B54\u5929\u306E\u529B\u3092\u501F\u308A\u308B\u4E8B\u304C\u3067\u304D\u308B\u3002\n\u30CF\u30A4\u30EA\u30B9\u30AF\u30FB\u30CF\u30A4\u30EA\u30BF\u30FC\u30F3\u306A\u30D7\u30EC\u30A4\u3092\u6C42\u3081\u308B\u3042\u306A\u305F\u306B\u3002"
+  m_text: "\u516D\u9B54\u5929\u306E\u4E00\u4EBA\u3001\u525B\u9B54\u5929\u306E\u529B\u3092\u4F7F\u3046\u3053\u3068\u304C\u3067\u304D\u308B\u3002\n\u30CF\u30A4\u30EA\u30B9\u30AF\u30FB\u30CF\u30A4\u30EA\u30BF\u30FC\u30F3\u306A\u30D7\u30EC\u30A4\u3092\u6C42\u3081\u308B\u3042\u306A\u305F\u306B\u3002\n\uFF08\u4E00\u884C25\u6587\u5B57\u30FB3\u884C\u307E\u3067\uFF09"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e3190499fe2943a4883b75b70fa14b77, type: 2}
   m_sharedMaterial: {fileID: 4486266660689969587, guid: e3190499fe2943a4883b75b70fa14b77, type: 2}
@@ -4096,7 +4096,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.30980393, g: 0.30980393, b: 0.30980393, a: 1}
     m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
-    m_DisabledColor: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 2
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -4110,7 +4110,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1839238223}
   m_OnClick:
     m_PersistentCalls:
@@ -4346,7 +4346,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.30980393, g: 0.30980393, b: 0.30980393, a: 1}
     m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
-    m_DisabledColor: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 2
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -4360,7 +4360,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1903692335}
   m_OnClick:
     m_PersistentCalls:
@@ -4858,7 +4858,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.30980393, g: 0.30980393, b: 0.30980393, a: 1}
     m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
-    m_DisabledColor: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 2
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -4872,7 +4872,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 2136734141}
   m_OnClick:
     m_PersistentCalls:

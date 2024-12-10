@@ -26,7 +26,6 @@ using UnityEngine;
     //-----------------------------------------------
     public enum MusicList
     {
-
         BGM_TITLE,
         BGM_TUTORIAL,
         BGM_DOUJI_STAGE_ZAKO,
@@ -41,6 +40,7 @@ using UnityEngine;
         BGM_WADATSUMI_STAGE_BOSS,
         BGM_HAKUMEN_STAGE_ZAKO,
         BGM_HAKUMEN_STAGE_BOSS,
+        BGM_SHOP,
 
 
         BGM_GAMEOVER,
@@ -101,6 +101,10 @@ using UnityEngine;
         SFX_KURAMA_SHOT,
         SFX_WADATSUMI_SHOT,
         SFX_HAKUMEN_SHOT,
+
+        SFX_SHOP_ENTER01,
+        SFX_SHOP_ENTER02,
+        SFX_SHOP_ENTER03,
 
         //  ÉQÅ[ÉÄÉNÉäÉA
         SFX_STAGECLEAR,

@@ -1174,11 +1174,11 @@ MonoBehaviour:
   runObject:
   - {fileID: 1738630562540974232, guid: b229fa022a46b76499518ae094b2f1ab, type: 3}
   - {fileID: 5176128539460027276, guid: 974dcf57b3241be469177ab116ec8751, type: 3}
-  - {fileID: 1738630562540974232, guid: b229fa022a46b76499518ae094b2f1ab, type: 3}
-  - {fileID: 1738630562540974232, guid: b229fa022a46b76499518ae094b2f1ab, type: 3}
-  - {fileID: 1738630562540974232, guid: b229fa022a46b76499518ae094b2f1ab, type: 3}
-  - {fileID: 1738630562540974232, guid: b229fa022a46b76499518ae094b2f1ab, type: 3}
-  - {fileID: 1738630562540974232, guid: b229fa022a46b76499518ae094b2f1ab, type: 3}
+  - {fileID: 3272024846520203555, guid: 978207b434b5ab04aba8c844c36188fe, type: 3}
+  - {fileID: 5176128539460027276, guid: 974dcf57b3241be469177ab116ec8751, type: 3}
+  - {fileID: 5176128539460027276, guid: 974dcf57b3241be469177ab116ec8751, type: 3}
+  - {fileID: 3356727191827056598, guid: b3c081c7d5879c547bbf15456138f2c9, type: 3}
+  - {fileID: 3114260289486174711, guid: de436583a920e324fb7b34da7d924892, type: 3}
   rebindSaveManager: {fileID: 1593455120}
   ConfigCanvas: {fileID: 1375567927}
   ConfigPanel: {fileID: 1643799067}
@@ -15529,7 +15529,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5828105596134227604, guid: 52aa9f3f596a63f49aba5952ba61c981, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15634,11 +15634,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 756992573914074697, guid: 5a61f23c21085e546b7f4bb1543e78f7, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2410319538997921251, guid: 5a61f23c21085e546b7f4bb1543e78f7, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3761281332932064239, guid: 5a61f23c21085e546b7f4bb1543e78f7, type: 3}
       propertyPath: m_Name

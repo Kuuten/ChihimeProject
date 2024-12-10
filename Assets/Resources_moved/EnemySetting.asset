@@ -22,14 +22,30 @@ MonoBehaviour:
     Attack: 1
     Money: 300
   - Id: Ibarakidouji
-    Hp: 100
+    Hp: 1
     Attack: 1
     Money: 1500
   - Id: Douji
-    Hp: 3000
+    Hp: 3
     Attack: 1
     Money: 4000
   - Id: Ossan
     Hp: 3
     Attack: 810
     Money: 10000
+  - Id: Doll
+    Hp: 3
+    Attack: 1
+    Money: 100
+  - Id: Chouchin
+    Hp: 20
+    Attack: 1
+    Money: 300
+  - Id: Nuigurumi
+    Hp: 1000
+    Attack: 1
+    Money: 1500
+  - Id: Tsukumo
+    Hp: 3000
+    Attack: 1
+    Money: 4000

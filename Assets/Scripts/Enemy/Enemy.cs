@@ -45,7 +45,12 @@ public class Enemy : MonoBehaviour
         Onibi,                      //  鬼火
         Ibarakidouji,               //  茨木童子
         Douji,                      //  ドウジ
-        Ossan                       //  ちっちゃいおっさん
+        Ossan,                      //  ちっちゃいおっさん
+
+        Doll,                       //  人形
+        Chouchin,                   //  提灯
+        Nuigurumi,                  //  ぬいぐるみ
+        Tsukumo,                    //  ツクモ
     }
     // ザコ敵の種類
     public ENEMY_TYPE enemyType = ENEMY_TYPE.None;

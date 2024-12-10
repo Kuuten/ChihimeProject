@@ -108,6 +108,44 @@ public class FadeIO : MonoBehaviour
       yield return new WaitUntil(() => complete == true);
     }
 
+    public IEnumerator StartFadeIn(Color in_color)
+    {
+        bool complete = false;
+
+        //  アニメーション準備
+        Image fadeImage = GetComponent<Image>();
+        fadeImage.enabled = true;
+        fadeImage.color = in_color;
+        Color c = fadeImage.color;
+        c.a = 1.0f; // 初期値
+        fadeImage.color = c;
+
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append
+    (
+        DOTween.ToAlpha
+        (
+            () => fadeImage.color,
+            color => fadeImage.color = color,
+            0f, // 目標値
+            1.0f // 所要時間
+        )
+    )
+    .OnStart(
+    () =>
+    {
+
+    })
+    .OnComplete(
+    () =>
+    {
+        complete = true;
+    });
+
+      //  完了まで待つ
+      yield return new WaitUntil(() => complete == true);
+    }
+
     // フェードアウト 
     public IEnumerator StartFadeOut()
     {
@@ -117,7 +155,7 @@ public class FadeIO : MonoBehaviour
         Image fadeImage = GetComponent<Image>();
         fadeImage.enabled = true;
         Color c = fadeImage.color;
-        c.a = 1.0f; // 初期値
+        c.a = 0.0f; // 初期値
         fadeImage.color = c;
 
         Sequence sequence = DOTween.Sequence();
@@ -133,6 +171,48 @@ public class FadeIO : MonoBehaviour
                     )
                     .OnStart(() => {
 
+                    })
+                    .OnComplete(
+                    () =>
+                    {
+                        complete = true;
+                    })
+            );
+
+        //  完了まで待つ
+        yield return new WaitUntil(() => complete == true);
+    }
+
+    public IEnumerator StartFadeOut(Color in_color)
+    {
+        bool complete = false;
+
+        //  アニメーション準備
+        Image fadeImage = GetComponent<Image>();
+        fadeImage.enabled = true;
+        fadeImage.color = in_color;
+        Color c = fadeImage.color;
+        c.a = 0.0f; // 初期値
+        fadeImage.color = c;
+
+        Sequence sequence = DOTween.Sequence();
+
+        sequence.Append
+            (
+                    DOTween.ToAlpha
+                    (
+                        () => fadeImage.color,
+                        color => fadeImage.color = color,
+                        1f, // 目標値
+                        1.0f // 所要時間
+                    )
+                    .OnStart(() => {
+
+                    })
+                    .OnComplete(
+                    () =>
+                    {
+                        complete = true;
                     })
             );
 

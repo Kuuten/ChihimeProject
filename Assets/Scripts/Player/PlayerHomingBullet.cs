@@ -16,7 +16,7 @@ public class PlayerHomingBullet : MonoBehaviour
     //
     private float speed = 5.0f;
     //  ’e‚ÌŽõ–½
-    [SerializeField] private float lifetime = 3;
+    //[SerializeField] private float lifetime = 3;
 
     void Start()
     {

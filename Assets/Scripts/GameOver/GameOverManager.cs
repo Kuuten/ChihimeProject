@@ -13,9 +13,6 @@ using UnityEngine.InputSystem;
 //--------------------------------------------------------------
 public class GameOverManager : MonoBehaviour
 {
-    //  画像プレハブ配列
-    [SerializeField] GameObject[] gameOverImage;
-
     //  PressAnyButton用
     [SerializeField] GameObject pressAnyButton;
     private bool bInputFlag = false;
@@ -31,14 +28,6 @@ public class GameOverManager : MonoBehaviour
 
     IEnumerator Start()
     {
-        //  配列チェック
-        if(gameOverImage.Length > (int)PlayerInfoManager.StageInfo.Max)
-            Debug.LogError("画像プレハブの配列の数がオーバーしています！");
-
-        //  現在のステージ番号にあった画像を生成
-        int num = (int)PlayerInfoManager.stageInfo;
-        Instantiate(gameOverImage[num]);
-
         // InputActionにAnyButtonを設定
         input = GetComponent<PlayerInput>();
         anykey = input.actions["AnyButton"];

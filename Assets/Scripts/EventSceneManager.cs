@@ -87,6 +87,8 @@ public class EventSceneManager : MonoBehaviour
 
         DODOME_NORMAL,      //  百々目・通常
 
+        HONEG_NORMAL,       //  骨G・通常
+
         Max
     }
 
@@ -126,6 +128,9 @@ public class EventSceneManager : MonoBehaviour
 
     //  ボス戦前にボスの名前を表示するテキスト
      [SerializeField] private GameObject bossNameText;
+
+    //  ボス戦（夜）用の背景オブジェクト
+    [SerializeField] private GameObject[] bossBackGroundObj;
 
     private void Awake()
     {
@@ -356,19 +361,19 @@ public class EventSceneManager : MonoBehaviour
         {
             name = tsukumo;
         }
-        else if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage02)
+        else if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage03)
         {
             name = kuchinawa;
         }
-        else if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage02)
+        else if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage04)
         {
             name = kurama;
         }
-        else if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage02)
+        else if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage05)
         {
             name = wadatsumi;
         }
-        else if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage02)
+        else if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage06)
         {
             name = hakumen;
         }
@@ -501,6 +506,9 @@ public class EventSceneManager : MonoBehaviour
         //  左右の障気オブジェクトを有効化
         bossFogObjectL.SetActive(true);
         bossFogObjectR.SetActive(true);
+
+        //  夜用の背景オブジェクトを有効化
+        bossBackGroundObj[(int)StageInfo.Stage01].SetActive(true);
 
         //  ボス登場SE再生
         SoundManager.Instance.PlaySFX(

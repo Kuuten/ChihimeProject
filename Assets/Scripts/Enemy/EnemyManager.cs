@@ -37,16 +37,15 @@ public class EnemyManager : MonoBehaviour
         get; private set;
     }
 
-    // 敵の出現セット 
+    // 敵の出現セット(全ステージ共通規格)
     public enum EnemyPattern
     {
-        //  １面
-        E01,     //  子鬼
-        E01_B,   //  子鬼B
-        E02,     //  ヒトダマ
-        E02_B,   //  ヒトダマB
-        E03,     //  茨木童子
-        EX,      //  ちっちゃいおっさん
+        E01,        //  ザコ１
+        E01_B,      //  ザコ１（ドロップ有り）
+        E02,        //  ザコ２
+        E02_B,      //  ザコ２（ドロップ有り）
+        MidBoss01,  //  中ボス
+        EX,         //  ちっちゃいおっさん
 
         Max
     }
@@ -508,11 +507,11 @@ public class EnemyManager : MonoBehaviour
 
         //yield return new WaitForSeconds(3f);
 
-        //  Wave1
-        SetEnemy(
-            enemyPrefab[(int)EnemyPattern.E01],
-            new Vector3(GetRandomX(), appearY, 0)
-        );
+        ////  Wave1
+        //SetEnemy(
+        //    enemyPrefab[(int)EnemyPattern.E01],
+        //    new Vector3(GetRandomX(), appearY, 0)
+        //);
 
         ////  Wave2
         //SetEnemy(
@@ -541,7 +540,7 @@ public class EnemyManager : MonoBehaviour
         //yield return new WaitForSeconds(0.3f);
 
         //SetEnemy(
-        //enemyPrefab[(int)EnemyPattern.E01_B],
+        //enemyPrefab[(int)EnemyPattern.E01],
         //new Vector3(GetRandomX(), appearY, 0), ePowerupItems.PowerUp);
 
         //yield return new WaitForSeconds(1.0f);
@@ -843,7 +842,7 @@ public class EnemyManager : MonoBehaviour
 
         //  Wave11
         GameObject MidBoss = SetEnemy(
-                                    enemyPrefab[(int)EnemyPattern.E03],
+                                    enemyPrefab[(int)EnemyPattern.MidBoss01],
                                     new Vector3(0, -4, 0),
                                     ePowerupItems.PowerUp
                                 );
@@ -871,9 +870,6 @@ public class EnemyManager : MonoBehaviour
 
         //  ５秒待つ
         yield return new WaitForSeconds(5);
-
-        //  ディレクショナルライトを無効化
-        directionalLight.enabled = false;
 
         //  ポーズを無効化
         GameManager.Instance.GetPauseAction().Disable();

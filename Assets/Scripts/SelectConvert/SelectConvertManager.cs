@@ -133,14 +133,14 @@ public class SelectConvertManager : MonoBehaviour
             (int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_DECISION);
 
         //  巻物を閉じるアニメーションの完了を待つ
-        //StartCoroutine(WaitingForClosingScroll());
+        StartCoroutine(WaitingForClosingScroll());
     
         //  魂バート弾をセット
         PlayerInfoManager.g_CONVERTSHOT = SHOT_TYPE.DOUJI;
 
-        //  BGMを止めてタイトルへ
+        //  BGMを止めてIntroシーンへ
         SoundManager.Instance.Stop((int)AudioChannel.MUSIC);
-        LoadingScene.Instance.LoadNextScene("Main");
+        LoadingScene.Instance.LoadNextScene("Intro");
     }
 
     //  ツクモボタンを押下した時
@@ -166,6 +166,10 @@ public class SelectConvertManager : MonoBehaviour
     
         //  魂バート弾をセット
         PlayerInfoManager.g_CONVERTSHOT = SHOT_TYPE.TSUKUMO;
+
+        //  BGMを止めてIntroシーンへ
+        SoundManager.Instance.Stop((int)AudioChannel.MUSIC);
+        LoadingScene.Instance.LoadNextScene("Intro");
     }
 
 
@@ -295,10 +299,6 @@ public class SelectConvertManager : MonoBehaviour
         yield return StartCoroutine(Scroll.CloseScroll());
 
         yield return new WaitForSeconds(1f); //  1秒待つ
-
-        //  BGMを止めてタイトルへ
-        SoundManager.Instance.Stop((int)AudioChannel.MUSIC);
-        LoadingScene.Instance.LoadNextScene("Main");
     }
 
     //----------------------------------------------------
