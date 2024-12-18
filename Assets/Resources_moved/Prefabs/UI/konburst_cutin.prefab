@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3440158283627792255}
   - component: {fileID: 3238501978546486605}
   m_Layer: 5
-  m_Name: konburst_cutin_douji
+  m_Name: konburst_cutin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 523f3050caf27574f801ab0dfb5ff770, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f384af8f0f502f346b648634aacc52d1, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

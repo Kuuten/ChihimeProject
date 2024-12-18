@@ -77,11 +77,10 @@ MonoBehaviour:
     m_SerializedLabels:
     - Sprites
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9c752db80e1787d43bb68344ed2c9d9e
-    m_Address: Sprites/enemy
+  - m_GUID: 94e0a11f452ccf6448d9ec8c032ea007
+    m_Address: Assets/Resources_moved/Sprites/Dropitems
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Sprites
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5223d0b1b0bcf03499141934d6816715
     m_Address: Sprites/enemy/enemy01
@@ -155,53 +154,45 @@ MonoBehaviour:
     m_SerializedLabels:
     - Sounds
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: eeeb2e11cde5e8d468a3f6ccea406acb
-    m_Address: Sounds/Music/title_bgm.ogg
+  - m_GUID: 0ba2a542766a6ca46baac4646650df4b
+    m_Address: Assets/Resources_moved/Sounds/Music/test_bgm.ogg
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Sounds
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 397d2b1260ce6a5439fa01b0fe4efd03
-    m_Address: Sounds/SFX/brake.wav
+  - m_GUID: a81ae9b6a128320488ccc71397784d2b
+    m_Address: Assets/Resources_moved/Sounds/SFX/gameover_jingle.wav
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Sounds
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f6e810bd031977f4e8a030ca0cb11b67
-    m_Address: Sounds/SFX/dash.wav
+  - m_GUID: b0eab2bfd9f15a743a86b4bebbaecc0c
+    m_Address: Assets/Resources_moved/Sounds/SFX/se_title_visual.wav
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Sounds
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 22c255ee21466954bb01075cf3bdcdc4
-    m_Address: Sounds/SFX/se_decision_button.wav
+  - m_GUID: 868397f8a81be464f892444ab8ee8a73
+    m_Address: Assets/Resources_moved/Sounds/SFX/System/se_ingame_cash.wav
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Sounds
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a8f3cd2174b9a6f46a0c67a4cbd17e7e
+    m_Address: Assets/Resources_moved/Sounds/SFX/System/se_incorrect.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f736ffe4b8be9024c88a3a0913da1de1
-    m_Address: Sounds/SFX/se_cursor_move.wav
+    m_Address: Assets/Resources_moved/Sounds/SFX/System/se_cursor_move.wav
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Sounds
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ccdcb25eb9172444daab3351cb5ace23
-    m_Address: Sounds/SFX/se_hyoushigi.wav
+  - m_GUID: 26a04f97bebe132408fa97a233ef5fec
+    m_Address: Assets/Resources_moved/Sounds/SFX/Player/DropItems/se_player_getkon.wav
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Sounds
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c7b6157966c873b41b3bd6741901ee5c
-    m_Address: Sounds/SFX/se_scroll.wav
+    m_Address: Assets/Resources_moved/Sounds/SFX/System/se_scroll.wav
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Sounds
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6d6fdbc3b20341b44abc3671a1a68634
-    m_Address: Sounds/SFX/se_scroll2.wav
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Sounds
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 373cc5d2a66bdce41acac19f2e34b8d8
     m_Address: UI
@@ -214,124 +205,119 @@ MonoBehaviour:
     m_SerializedLabels:
     - Prefabs
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1301e82ad744b8b468da77e90debaee9
-    m_Address: Prefabs/Target.prefab
+  - m_GUID: d7e803c77b6d0ed4d89e3aff3484e9f1
+    m_Address: Assets/Resources_moved/Prefabs/SystemManager.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 52acdfda6d1144543858be1f9c7c6a56
+    m_Address: Prefabs/explosion.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9682b190aa435a24ea6c54a641935a03
-    m_Address: Assets/Resources_moved/Prefabs/NormalPlayerBullet.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ac76b1a12a9ce3c4d83c900da79ac922
-    m_Address: Assets/Resources_moved/Prefabs/DoujiPlayerBullet.prefab
+    m_Address: Assets/Resources_moved/Prefabs/convert/DoujiPlayerBullet.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b514ce1637337a44798198b78893ecd9
-    m_Address: Assets/Resources_moved/Prefabs/KuramaPlayerBullet.prefab
+  - m_GUID: 392e3a50084deba468520badcddd59f1
+    m_Address: Assets/Resources_moved/Prefabs/convert/HakumenPlayerBullet.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c37dbbb086172fb49ad6a0c317baab70
-    m_Address: Assets/Resources_moved/Prefabs/KuchinawaPlayerBullet.prefab
+  - m_GUID: 999f59af4223ef243966fb67701a23f5
+    m_Address: Prefabs/convert/TsukumoPlayerBullet.prefab
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Prefabs
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: afa7c8a2d69811645961a781afe80306
     m_Address: Assets/Resources_moved/Prefabs/Laser.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ddc8f457e27f62043a7c712c453da581
-    m_Address: Assets/Resources_moved/Prefabs/WadatsumiPlayerBullet.prefab
+  - m_GUID: f03e7d3d9dc28bd44852a3fa77f84654
+    m_Address: Assets/Resources_moved/Prefabs/convert/TsukumoPlayerBullet 1.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 392e3a50084deba468520badcddd59f1
-    m_Address: Assets/Resources_moved/Prefabs/HakumenPlayerBullet.prefab
+  - m_GUID: b514ce1637337a44798198b78893ecd9
+    m_Address: Assets/Resources_moved/Prefabs/convert/KuramaPlayerBullet.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 52acdfda6d1144543858be1f9c7c6a56
-    m_Address: Assets/Resources_moved/Prefabs/explosion.prefab
+  - m_GUID: 9682b190aa435a24ea6c54a641935a03
+    m_Address: Assets/Resources_moved/Prefabs/NormalPlayerBullet.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 999f59af4223ef243966fb67701a23f5
-    m_Address: Assets/Resources_moved/Prefabs/TsukumoPlayerBullet.prefab
+  - m_GUID: c37dbbb086172fb49ad6a0c317baab70
+    m_Address: Assets/Resources_moved/Prefabs/convert/KuchinawaPlayerBullet.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 28205191643636a4fbdde89b52ad876e
-    m_Address: Prefabs/Items
+  - m_GUID: 46d56727584a73543be16e34cf7ba5be
+    m_Address: Assets/Resources_moved/Prefabs/UI
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - PowerupItems
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2a807c1d64b8c5543a3d0e78700d1f12
-    m_Address: Prefabs/enemy
+  - m_GUID: c157dde540bf93441aae68ddede07c5f
+    m_Address: Assets/Resources_moved/Prefabs/Live2DPrefab
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Prefabs
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 41d1a3023c369944383309ad49e3ec6f
-    m_Address: item_smallKon
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - KonItems
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 131bc6a0655585a4493bedfcd9808087
-    m_Address: item_largeKon
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - KonItems
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c81038ab1e5168c48aa13f4d1653d415
-    m_Address: item_powerup
+    m_Address: Assets/Resources_moved/Prefabs/Items/item_powerup.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - PowerupItems
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 18b64f45e100e074a9266e37374678a4
-    m_Address: item_speedup
+    m_Address: Assets/Resources_moved/Prefabs/Items/item_speedup.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - SpeedupItems
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: cd90ca791c227704d9303cd75347b653
-    m_Address: item_bomb
+  - m_GUID: 41d1a3023c369944383309ad49e3ec6f
+    m_Address: item_smallKon
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - BombItems
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 131bc6a0655585a4493bedfcd9808087
+    m_Address: item_largeKon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c6b161f3127d827438f54ef54f5f5a8e
-    m_Address: item_heart
+    m_Address: Prefabs/Items/item_heart.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - HealItems
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: cdde7c0de12a72149be9b50384fbce51
-    m_Address: Assets/Resources_moved/Materials
+  - m_GUID: cd90ca791c227704d9303cd75347b653
+    m_Address: Assets/Resources_moved/Prefabs/Items/item_bomb.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BombItems
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8bf52404be69ab84cb227954c5e41122
+    m_Address: Assets/Resources_moved/Prefabs/convert
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 18e413331985cbf49b0901ee22d65e29
-    m_Address: Prefabs/SoundManager.prefab
+  - m_GUID: 9752e2d4d0a1e84499feb66e1a3ac4ae
+    m_Address: Assets/Resources_moved/Prefabs/effect_player_death.prefab
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Prefabs
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 868397f8a81be464f892444ab8ee8a73
-    m_Address: Sounds/SFX/System/se_ingame_cash.wav
+  - m_GUID: 70c32068426328f4193f9ea4a7cf5464
+    m_Address: Assets/Resources_moved/Sounds/SFX/Player/DropItems/s_player_powerup.wav
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Sounds
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e6f35b8723ae4bd48bb4fb2aeb74421e
-    m_Address: Assets/Resources_moved/Sounds/SFX/System/se_ingame_count.wav
+  - m_GUID: 8973e8c2b3a515a4ab6fb6e04ead3aac
+    m_Address: Assets/Resources_moved/Sounds/SFX/System/se_ingame_dorodoro.wav
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -372,10 +358,1655 @@ MonoBehaviour:
     - Sprites
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: eb100938458f1a24697f8ee15e3087c3
-    m_Address: Sprites/player
+    m_Address: Assets/Resources_moved/Sprites/player
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6915c1bc1b6599c46bb190481e417466
+    m_Address: Assets/Resources_moved/UI/Title/title_visual.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 028543ce8651efd46aed6f5aa5b8f492
+    m_Address: Assets/Resources_moved/UI/Title/title_sample.jpg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 67ef85802fae524478287600d51e1e76
+    m_Address: Assets/Resources_moved/UI/Title/title_bg_kari.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fb95fe21484130849bf612d97c9c95a4
+    m_Address: Assets/Resources_moved/UICamera.renderTexture
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c6695cd9d5199dc43a1148b4e1b7da65
+    m_Address: Assets/Resources_moved/SpriteCamera.renderTexture
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8c9bfe27407ec3c43b9f3f560cfc9164
+    m_Address: Assets/Resources_moved/MovieCamera.renderTexture
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 43a76a6f117f76943ab73fc8e5249ca0
+    m_Address: Assets/Resources_moved/UI/Title/title_button.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 05a910355dc08a34eb6f0151bfe0704b
+    m_Address: UI/Shop/shop_soldout.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f0fcf023c6e3424409c4e43d94b3aa07
+    m_Address: UI/Shop/shop_icon_frame.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f5865c4a24bb84b41898c12a6fb79613
+    m_Address: UI/Shop/shop_header.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 000c70ad775a6c14d84b39ed0e8b47ef
+    m_Address: UI/Shop/shop_ui.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cbe4db190fb429c458442516234d0f7a
+    m_Address: UI/Intro/intro_back01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dbba421bd58d3e24d88a7e86757d2c03
+    m_Address: UI/Intro/intro_back02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 230c91f23ac35fc47a39f58e3081b957
+    m_Address: UI/Intro/intro_image01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cf94517464eee724b81c3708a88497a5
+    m_Address: Assets/Resources_moved/UI/Intro/intro_image02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 498067da739c6344e9ab6052b88deaf1
+    m_Address: Assets/Resources_moved/UI/Intro/intro_image03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c0cab38ecee42454a959614c00bf04aa
+    m_Address: Assets/Resources_moved/UI/Intro/intro_image04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 67415ee0f9716204990aa74b1975a407
+    m_Address: Assets/Resources_moved/UI/Intro/IntroSample.jpg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d7a76ee2abab97242878b0af0b5e080d
+    m_Address: Assets/Resources_moved/UI/Intro/intro_imagesample.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cb580fe5c5594e34db4f8eea6eeead13
+    m_Address: Assets/Resources_moved/UI/Intro/intro_image_dummy.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ede34f9ba2892874d839a2f6b01f86a3
+    m_Address: UI/bossHPHandle.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 67a504fee28e236498f9af690271f98f
+    m_Address: UI/Aim Arrow.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c13ec64f1a8a577438fac1fa027630c0
+    m_Address: UI/2.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 53972e9a831cd364185826bc4ea2673c
+    m_Address: UI/Canvas.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2ee992dbc94cd5242aa76cce745f500f
+    m_Address: UI/event_faceUI.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5ca22a7b89761de49997cc3d27db2fba
+    m_Address: UI/event_window.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b90ba158937c03940917d10e26ce3628
+    m_Address: UI/ingame_bossHP_gauge_back.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d2ea63d8e38062b4ca0686a0baa60d4a
+    m_Address: Assets/Resources_moved/UI/ingame_faceUI.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5fef08a60546dc448868fcc1384a85b3
+    m_Address: Assets/Resources_moved/UI/ingame_boss_fog.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5391eb665bdaced4ab5ab163b0957908
+    m_Address: Assets/Resources_moved/UI/ingame_bossHP_gauge_handle.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ebd54a6274cf8774b88b0a989a31178d
+    m_Address: UI/ingame_result02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 838abb5ba6db037499b47b69c9c5b2eb
+    m_Address: Assets/Resources_moved/UI/ingame_gameover.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 978a850b0cf806347b468dc04ad86c34
+    m_Address: Assets/Resources_moved/UI/ingame_stage01_overray.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c72fd316628c10349b15d2c787be96f0
+    m_Address: Assets/Resources_moved/UI/ingame_stage01_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 73fbb1d60d7574b4f806d29212dc8612
+    m_Address: Assets/Resources_moved/UI/ingame_stage01_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2041b2750cf628d42b847be5dce4ba6e
+    m_Address: Assets/Resources_moved/UI/ingame_ui_9slice.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 16a2ee72171cdb74599c5f866ab2ea18
+    m_Address: Assets/Resources_moved/UI/ingame_result.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1a42ee16694b1ad4a9f0c164ff64be0d
+    m_Address: Assets/Resources_moved/UI/ingame_ui_warning.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8462cdb9e85c95c4caa3dda83c123e7f
+    m_Address: Assets/Resources_moved/UI/ingame_ui_warning01.gif
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7d052fb8f271c79449fc124ad6cc6744
+    m_Address: UI/KonsburstLamp.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: da4ace17bba30124bab21af597af4eeb
+    m_Address: Assets/Resources_moved/UI/KonBurstSlider.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2b661d23252cf2e43bd4631567dc2fa6
+    m_Address: UI/konburstlamp.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ff13584a43dbd54418d2edba2541c9d8
+    m_Address: Assets/Resources_moved/UI/konburstgauge.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b68db6697aa1b384992d8c1d98b0efb9
+    m_Address: Assets/Resources_moved/UI/ingame_ui_warning02.gif
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a7ff66446629d3844b960b7f7c743047
+    m_Address: UI/ui_scroll_back.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 01156ab31a847944fbccd7e7911f22cf
+    m_Address: Assets/Resources_moved/UI/ui_konburst_gauge.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0c1d8e9271163d6448a3645e020b4297
+    m_Address: Assets/Resources_moved/UI/ui_button_backpng.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 998071948ad036846a70137d030a73df
+    m_Address: Assets/Resources_moved/UI/PanelBG.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3e3eedc65e080d94ebe8871826f036a6
+    m_Address: Assets/Resources_moved/UI/ui_info 1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7ec57f6b272a72841832b5d1f76a3aed
+    m_Address: Assets/Resources_moved/UI/ui_player.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d9e2d234a9558e7469b26c254e6cda9b
+    m_Address: "Assets/Resources_moved/UI/UI\u4F4D\u7F6E\u53C2\u8003\u7528.png"
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c887120421008a5438e73663322eeb18
+    m_Address: Assets/Resources_moved/UI/press_any_button.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 25b7880a6586cd846ad6bed53394c4d2
+    m_Address: "Sprites/\u52D5\u753B\u64AE\u5F71\u7528.png"
     m_ReadOnly: 0
     m_SerializedLabels:
     - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dee5eb33d0d85c546b3b1cb40f9363a3
+    m_Address: Assets/Resources_moved/UI/Title/checker.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 27867f91af67d4f4391b04c4472f63ed
+    m_Address: UI/Title/title_logo.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cf986f571a1809e4491cae35777bde98
+    m_Address: Sprites/title_animation/chihime/title_animation_chihime.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 941c5e1b79258044282b6da0301ad376
+    m_Address: Sprites/title_animation/chihime/title_animation_chihime.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 48e6140ffb96c5b4c833b70d5e3c48e6
+    m_Address: Sprites/title_animation/chihime/title_animation_chihime_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5bcf28c555f06d34b837b77d0119eb9a
+    m_Address: Sprites/title_animation/dodome/title_animation_dodome_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8987d9d056084574b82be210505050ee
+    m_Address: Sprites/title_animation/dodome/title_animation_dodome.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 325b446043e675040a1a82dce778d1c3
+    m_Address: Sprites/title_animation/dodome/title_animation_dodome.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c87c22e979966dc44bb1a95d49c838a1
+    m_Address: Sprites/title_animation/douji/title_animation_douji.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 56d303af6b22870429b93a994c02ffb2
+    m_Address: Sprites/title_animation/douji/title_animation_douji.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 51ea8a4b5c66f0f4b96289f77992c64e
+    m_Address: Sprites/title_animation/douji/title_animation_douji_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 91a927f677c61a34c967e896a5053283
+    m_Address: Sprites/title_animation/gorozaemon/title_animation_gorozaemon.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7a4c73b568e439a44bac685670d6c386
+    m_Address: Sprites/title_animation/gorozaemon/title_animation_gorozaemon.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b029d7cbd45a8e84eb2a59c6a29de4e3
+    m_Address: Sprites/title_animation/gorozaemon/title_animation_gorozaemon_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7ba755d377599f7489de9876fd7bc261
+    m_Address: Sprites/title_animation/ossan/title_animation_ossan.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5e6399ccd897c4d4f888788c224dc10e
+    m_Address: Sprites/title_animation/ossan/title_animation_ossan.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 737510277fd530840ae6f6577675247b
+    m_Address: Sprites/title_animation/ossan/title_animation_ossan_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bd0baaecd67e19e4294420fe3364aa13
+    m_Address: "Sprites/Shop/\u30B7\u30E7\u30C3\u30D7\u4EEE\u80CC\u666F.jpg"
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5efae5d64efcfe64f88a434c3880ea9a
+    m_Address: Sprites/Shop/shop_noren.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b2c6fd7f05b44ee438e316e73e1a625b
+    m_Address: Sprites/Shop/shop_door_R.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5a102dd86d358c84d9ba26e379dd505b
+    m_Address: Sprites/Shop/shop_door_L.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 47c72ca22d35e6c489b86d43ba5cb22d
+    m_Address: Sprites/player/chihimedot03.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c271d489d8322c848995c8f956eefc37
+    m_Address: Sprites/player/Player.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8f92ec8d04fc53544b3349c20aa6c6e3
+    m_Address: Sprites/player/shadow.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 65763a459faebca48ae0fe43af02f7bc
+    m_Address: Sprites/player/effect_player_death/effect_player_death.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 83571e248955c2f44af65ee435400117
+    m_Address: Sprites/player/effect_player_death/effect_player_death.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a57bbc3179839264594d53f2c60e80a1
+    m_Address: Sprites/player/effect_player_death/effect_player_death_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f260387fc170b3a438ec358f20947499
+    m_Address: Sprites/player/player_back/player_backR.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 957dc015e10f24b4bbb2d1646b1398a3
+    m_Address: Assets/Resources_moved/Sprites/player/player_back/player_back.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 937b3dbff47ea4a48b87c17973c16144
+    m_Address: Assets/Resources_moved/Sprites/player/player_back/player_backL.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ed07f2ab4ac7845409df49f524fc3aac
+    m_Address: Sprites/player/player_back/player_backL.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dd0e14d3e6032f646bdd486247068896
+    m_Address: Assets/Resources_moved/Sprites/player/player_back/player_backR.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 129d8182e06f52446a7e6d31468a398b
+    m_Address: Assets/Resources_moved/Sprites/player/player_back/player_back.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 659f831dd3f0b2247bdde24feaf3ca88
+    m_Address: Sprites/player/player_back/player_backR_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4640ecdfb9ea5094a945d419fa0a2983
+    m_Address: Assets/Resources_moved/Sprites/player/player_back/player_backL_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 79a4260c700c82c4bba849d191276c28
+    m_Address: Assets/Resources_moved/Sprites/player/player_back/player_back_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 566f88094dccbf04e88e6270de0516dc
+    m_Address: Sprites/player/player_back_damage/player_back_damage.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c7cbc65fd3f3f6d40aec1b77175464b5
+    m_Address: Sprites/player/player_back_damage/player_back_damage.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ea681b935a6a5ab48805417c863d0a42
+    m_Address: Sprites/player/player_back_damage/player_back_damage_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c46dd428457d15246a09fa26acc28273
+    m_Address: Sprites/player/player_convert_bullet/player_convert_bullet.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3af0803ec371a7542811ba5f3b075356
+    m_Address: Sprites/player/player_convert_bullet/player_convert_bullet_1.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 29b2326b10147ed48a67a9f6492a6251
+    m_Address: Sprites/player/player_convert_bullet/player_convert_douji.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a51d1b025cac14b49b705f102625b3ce
+    m_Address: Sprites/player/player_death/player_death2.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3bb9cba069740dd438e68dc07361f895
+    m_Address: Assets/Resources_moved/Sprites/player/player_death/player_death1.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bbe09a2002c23ce49815d7eb7c52db8e
+    m_Address: Sprites/player/player_death/player_death2.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aadcf66f60bb3d44ca13cde45595ca19
+    m_Address: Assets/Resources_moved/Sprites/player/player_death/player_death1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 563623dcc228dac4eb3f6a468c880a22
+    m_Address: Sprites/player/player_death/player_death1_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fdcc8a0070c12b048a2f08d9e1df803b
+    m_Address: Assets/Resources_moved/Sprites/player/player_death/player_death2_1.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c46bf2288e736914599bbb53d4645423
+    m_Address: Sprites/player/player_front/player_frontL.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0c38b78f227fd2c49afa50d4fbfdc7d4
+    m_Address: Assets/Resources_moved/Sprites/player/player_front/player_frontR.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9c489a9a59d24a94e9676bfc9cf453b5
+    m_Address: Assets/Resources_moved/Sprites/player/player_front/player_front.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bf2c5e6c5e90cae428e3c3e6f8118edb
+    m_Address: Sprites/player/player_front/player_front.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3432d58c1a8ea3c42a8f555612af94ce
+    m_Address: Assets/Resources_moved/Sprites/player/player_front/player_frontR.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5f08926b96e39b14c84251c283a585a0
+    m_Address: Assets/Resources_moved/Sprites/player/player_front/player_frontL.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9241fe2f75c59324eba66a3d38a6b3db
+    m_Address: Sprites/player/player_front/player_front_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aa8f6e7ad6055e64abfc04515df4904e
+    m_Address: Assets/Resources_moved/Sprites/player/player_front/player_frontL_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9f36db9edda93fb418b047b403c50fff
+    m_Address: Assets/Resources_moved/Sprites/player/player_front/player_frontR_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0cf696bb337cd3a479c1cfe888b57c6e
+    m_Address: Sprites/player/player_front_damage/player_front_damage.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0fdf1694c97a7ae4fa8661a2af7eac52
+    m_Address: Sprites/player/player_front_damage/player_front_damage.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c41d69f66f25f484d882d20edcc3b6c8
+    m_Address: Sprites/player/player_front_damage/player_front_damage_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f921abf48e18db94ebd013ad4549f67e
+    m_Address: Sprites/enemy/ingame_douji_phase2_top/ingame_douji_phase2_top.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d9c522631b7142d44a641ad7df673755
+    m_Address: Sprites/enemy/ingame_douji_phase2_top/ingame_douji_phase2_top.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1aa7bf2c681fae943938b02b481aab03
+    m_Address: Sprites/enemy/ingame_douji_phase2_top/ingame_douji_phase2_top_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dc02061144942984f8ab038f0a5e89fb
+    m_Address: Sprites/enemy/ingame_douji_phase2_right/ingame_douji_phase2_right.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bf75c3034bf90924482e3b76d95dcf7b
+    m_Address: Sprites/enemy/ingame_douji_phase2_right/ingame_douji_phase2_right.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fb97164ff107091408d0cd15f79276b4
+    m_Address: Sprites/enemy/ingame_douji_phase2_right/ingame_douji_phase2_right_1.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 93409ad043c924844bd3f420bc046827
+    m_Address: Sprites/enemy/ingame_douji_phase2_left/ingame_douji_phase2_left.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 139c31236da071445bcb445849610736
+    m_Address: Sprites/enemy/ingame_douji_phase2_left/ingame_douji_phase2_left.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0021a6bf21fd78141a3b66edc5b6f812
+    m_Address: Sprites/enemy/ingame_douji_phase2_left/ingame_douji_phase2_left_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f8af94b674e5a764bb703c851a36f291
+    m_Address: Sprites/enemy/ingame_douji_phase2_bottom/ingame_douji_phase2_bottom.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 97c1eb5182bd4be4b9fdea0d36b2b100
+    m_Address: Sprites/enemy/ingame_douji_phase2_bottom/ingame_douji_phase2_bottom.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 572215944221c4545a984da01b78be47
+    m_Address: Sprites/enemy/ingame_douji_phase2_bottom/ingame_douji_phase2_bottom_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ab4bcc214c43d4f42a9534cf521df2b5
+    m_Address: Sprites/enemy/enemy_nuigurumi/enemy_nuigurumi_normal.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 48aa260874349e34f9d25320eb64db9f
+    m_Address: Sprites/enemy/enemy_nuigurumi/enemy_nuigurumi_normal.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 242654d6d40aa4344ac0988acbe54142
+    m_Address: Sprites/enemy/enemy_nuigurumi/enemy_nuigurumi_normal_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e6a850b66196a6041a16dfcc825caf35
+    m_Address: Sprites/enemy/enemy_ibaraki/ibaraki01.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4a5a27b39208a9a4b89f89da6111e7ac
+    m_Address: Assets/Resources_moved/Sprites/enemy/enemy_ibaraki/ibaraki02.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d4016b323c4a7354c85d7b6ee88910b3
+    m_Address: Sprites/enemy/enemy_ibaraki/ibaraki02.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d875823fedd54764a9b59ff66393b697
+    m_Address: Assets/Resources_moved/Sprites/enemy/enemy_ibaraki/ibaraki01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 85de32d880e10034bb1c0a57119005e4
+    m_Address: Sprites/enemy/enemy_ibaraki/ibaraki02_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0bc6937defa98d9479350c1a217997b0
+    m_Address: Assets/Resources_moved/Sprites/enemy/enemy_ibaraki/ibaraki01_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 92fd494eb0b8df54ba831329afa6f918
+    m_Address: Sprites/enemy/enemy_ex/enemy_ex.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 08e81fe5a4053c44bac5e2712ae094b5
+    m_Address: Sprites/enemy/enemy_ex/enemy_ex.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 12c896b45ed93094a97dacaad431ca40
+    m_Address: Sprites/enemy/enemy_ex/enemy_ex_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 68e8abc4a10ced447ad63ef6692fd849
+    m_Address: Sprites/enemy/enemy04B/enemy_chouchin_drop.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9d219b58b29311a4da6da2ba0d663e99
+    m_Address: Sprites/enemy/enemy04B/enemy_chouchin_drop.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aee64a3254b456d46adb5c94f28cba6f
+    m_Address: Sprites/enemy/enemy04B/enemy_chouchin_drop_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cc12975bb378f9c4f81880eca8e767fe
+    m_Address: Sprites/enemy/enemy04/enemy_andon.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 30a93faa315808f439f2d54f5d3a935c
+    m_Address: Sprites/enemy/enemy04/enemy_andon_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 22d35586757f4e3488abdfc769783fe0
+    m_Address: Sprites/enemy/enemy04/enemy_chouchin.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fa2434ec8559a1945bb000beefbea4f7
+    m_Address: Sprites/enemy/enemy03B/enemy_do;;_drop.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 95b1af4e2b4ea0e458619ac08d20153f
+    m_Address: Sprites/enemy/enemy03B/enemy_doll_drop.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8a124de46f40c1e40b5122ce4b1abade
+    m_Address: Sprites/enemy/enemy03B/enemy_doll_drop_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 15be1b00d0ad2344295882db7a8a1b35
+    m_Address: Sprites/enemy/enemy03/enemy_doll.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 81d7a927611d389488ff7da813e1c66d
+    m_Address: Sprites/enemy/enemy03/enemy_doll_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4c6c904852632c84eb3025bf774af7da
+    m_Address: Sprites/enemy/enemy03/enemy_doll.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1a127052fa3925e40b27f9d4a5ec4caa
+    m_Address: Sprites/enemy/enemy02B/enemy_kooniB.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 030942bcfadc7024abc136226ff918a5
+    m_Address: Sprites/enemy/enemy02B/enemy_kooniB_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 45e789c637ae46b488c8ff12cf27ff8d
+    m_Address: Sprites/enemy/enemy02B/kooniB.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a38af232b0c8d4b458641b024b13261c
+    m_Address: Sprites/enemy/enemy02/enemy_kooni.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1ebb0e517ce039c4eacda2fb513733fd
+    m_Address: Sprites/enemy/enemy02/enemy_kooni.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eaed39854f46150468031dba3b38abec
+    m_Address: Sprites/enemy/enemy02/enemy_kooni_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 20bd2892283dbd34d9c7f284b948f980
+    m_Address: Sprites/enemy/enemy01B/hitodama01b.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4939ec64fd4d0204bbb30aeaa01c2016
+    m_Address: Sprites/enemy/enemy01B/hitodama01b_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e9f53ce21783d87419737116b9c0b992
+    m_Address: Sprites/enemy/enemy01B/hitodamaB.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eebee3c2b6fbe0044ad5987bc972f210
+    m_Address: Sprites/enemy/boss/boss_douji.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 795cfb4e3e45b174682a43165846977b
+    m_Address: Sprites/enemy/enemy_bullet.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: db494c6663ed48b449f09c78cf7bf59a
+    m_Address: Sprites/enemy/ingame_douji_phase2.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d36495a4fd87f2143a7ab3cb52213546
+    m_Address: Sprites/Dropitems/item_largekon.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8179279736deeac45b703d946c568d67
+    m_Address: Sprites/Dropitems/item_smallkon.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 05d2bde6195ba304cab5dc3f242f6061
+    m_Address: Sprites/Dropitems/item_smallkon_0 1.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b605671031fd09a4597caaf129850877
+    m_Address: Assets/Resources_moved/Sprites/Dropitems/item_smallkon_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 06cbfd78456328a49a14a4b888294ca4
+    m_Address: Sprites/Dropitems/item_largekon_0 1.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: da0f36fe9aac1174ea4524be9e0b5eaa
+    m_Address: Assets/Resources_moved/Sprites/Dropitems/item_largekon_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 649cdc3ed4f06164bab2db53ced83427
+    m_Address: Sprites/Dropitems/item_largekon.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5291e9d144371ac4ab32b8c2bbad7bb6
+    m_Address: Sprites/Dropitems/item_largekon 1.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4053c8732733f114192cc7f78ccf2bf4
+    m_Address: Sprites/Dropitems/item_smallkon.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 310dc9ede6e495f4faf707f7e79b5965
+    m_Address: Sounds/SFX/System/Shop/se_shop_enter01.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sounds
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5b3aa10d77fb8864c8a4fde09d38b0ce
+    m_Address: Assets/Resources_moved/Sounds/SFX/System/Shop/se_shop_enter02.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b29833943c37358478dcf188a1efbb04
+    m_Address: Assets/Resources_moved/Sounds/SFX/System/Shop/se_shop_enter03.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f4c7000d0caef2345983f7aa7c0cb3ab
+    m_Address: Assets/Resources_moved/Sounds/SFX/System/se_ingame_textnext.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ecf1efc0a78ae874bbd7ed8bbeea1b60
+    m_Address: Assets/Resources_moved/Sounds/SFX/System/se_ingame_bound.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 02b5daedc128aa940a14580392ddf44f
+    m_Address: Assets/Resources_moved/Sounds/SFX/Player/DropItems/se_player_getbomb.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6d6fdbc3b20341b44abc3671a1a68634
+    m_Address: Assets/Resources_moved/Sounds/SFX/System/se_scroll2.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4df30bfa85bcc2c40a6ba11e58579edc
+    m_Address: Assets/Resources_moved/Sounds/SFX/Player/DropItems/se_player_getheart.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e6f35b8723ae4bd48bb4fb2aeb74421e
+    m_Address: Assets/Resources_moved/Sounds/SFX/System/se_ingame_count.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ff7fccbc5080df74ca6103e8d7f26a3c
+    m_Address: Assets/Resources_moved/Sounds/SFX/System/se_gamestart.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 22c255ee21466954bb01075cf3bdcdc4
+    m_Address: Assets/Resources_moved/Sounds/SFX/System/se_decision_button.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ccdcb25eb9172444daab3351cb5ace23
+    m_Address: Sounds/SFX/System/se_hyoushigi.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sounds
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 21e255a046605034b82040acb49b96e8
+    m_Address: Sounds/SFX/Enemy/se_enemy_explosion.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sounds
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1b06f1642ae599e4aad471616cb2c5dd
+    m_Address: Sounds/SFX/Enemy/se_enemy_damage.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sounds
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bcc265e8f3492e04595782b3c427216c
+    m_Address: Sounds/SFX/Enemy/se_enemy_shot01.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sounds
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f71b88f66251ff2499fb4958d9f94d75
+    m_Address: Sounds/SFX/Enemy/DoujiStage/se_midboss_phase2.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sounds
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7eff3736aad99c04f898d7fac909dcfb
+    m_Address: Assets/Resources_moved/Sounds/SFX/Enemy/DoujiStage/se_midboss_jump.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bc6696ed13c834048b4d115b7297602f
+    m_Address: Assets/Resources_moved/Sounds/SFX/Enemy/DoujiStage/se_warning.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 82169c7d9d5744d4a8f70c178b859d92
+    m_Address: Assets/Resources_moved/Sounds/SFX/Enemy/DoujiStage/se_kooni_rush.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 49428782e1cd23247a8fd44d7b6b105b
+    m_Address: Assets/Resources_moved/Sounds/SFX/Enemy/DoujiStage/se_douji_berserkshot01.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8da92e0cbd6643943a2a10ee76e5436c
+    m_Address: Assets/Resources_moved/Sounds/SFX/Enemy/DoujiStage/se_douji_berserkshot02.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 397d2b1260ce6a5439fa01b0fe4efd03
+    m_Address: Assets/Resources_moved/Sounds/SFX/brake.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f6e810bd031977f4e8a030ca0cb11b67
+    m_Address: Sounds/SFX/dash.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sounds
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 00150acfb4457df40a1a03a3cdcd9d85
+    m_Address: Assets/Resources_moved/Sounds/Music/ending_bgm.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9069c77d5d79e314f855a344dba32794
+    m_Address: "Assets/Resources_moved/Sounds/Music/\u5BB5\u3005\u9957\u5BB4.mp3"
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d90df750a18b188488c100a8cb9a8866
+    m_Address: Assets/Resources_moved/Sounds/Music/gameover_bgm.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7073af6579876404d9f2e146712f1315
+    m_Address: Assets/Resources_moved/Sounds/Music/bgm_shop_kari.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f4fee9b33f17cef43b08199df094825d
+    m_Address: Assets/Resources_moved/Sounds/Music/result_bgm.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6d6f93f7e10033043a72494c5af873a2
+    m_Address: Assets/Resources_moved/Sounds/Music/boss01_bgm.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d4530d309f0f48643b1d3cc36d3d1b9c
+    m_Address: Assets/Resources_moved/Sounds/Music/stage01_bgm.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 02ff16128e180d74ca6a52e5abe12ca9
+    m_Address: Assets/Resources_moved/Sounds/Music/selectconvert_bgm.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eeeb2e11cde5e8d468a3f6ccea406acb
+    m_Address: Sounds/Music/title_bgm.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sounds
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5a61f23c21085e546b7f4bb1543e78f7
+    m_Address: Prefabs/UI/Panel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 25cdde146db1e4f4b9624e8e64883c31
+    m_Address: Assets/Resources_moved/Prefabs/UI/Fade.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 61c5cb3023a10cc4caf685083c093f46
+    m_Address: Assets/Resources_moved/Prefabs/UI/DangerLineSliderTop.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 30561bbf94f7a1241961f3113774e2a1
+    m_Address: Assets/Resources_moved/Prefabs/UI/BossHPSlider.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4e02186c5689e91438ceee16742fe90a
+    m_Address: Assets/Resources_moved/Prefabs/UI/konburst_cutin_douji.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7a342cdb458f78047a10e5f2ab115389
+    m_Address: Assets/Resources_moved/Prefabs/UI/MidBossSlider.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2bfc3633a5eb48c43ad3bac6a67c1f23
+    m_Address: Assets/Resources_moved/Prefabs/UI/InfoSet.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5d5864f77da2bb346aaa7c1bcd3d54b6
+    m_Address: Assets/Resources_moved/Prefabs/UI/DangerLineSliderLeft.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6b5dfabf18134ed46bdc5626136714ce
+    m_Address: Assets/Resources_moved/Prefabs/UI/DangerLineSliderBottom.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9393e2640d1bd704992d756b0b7624f0
+    m_Address: Assets/Resources_moved/Prefabs/UI/DangerLineSliderRight.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 52aa9f3f596a63f49aba5952ba61c981
+    m_Address: Assets/Resources_moved/Prefabs/UI/ScrollUI.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b9c714d886b753a46981c99b42ea3491
+    m_Address: Prefabs/Shop/DoubleUpHeartButton.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ca11b12104f6c0f40ab9ef663809fcb1
+    m_Address: Assets/Resources_moved/Prefabs/Shop/MaxLifeButton.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 08c0be1260d48b34283135032692af1f
+    m_Address: Assets/Resources_moved/Prefabs/Shop/BombButton.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ecdc2b26983f0744aac5339d9101071c
+    m_Address: Assets/Resources_moved/Prefabs/Shop/LifeButton.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 884e230a98bb4a0468676ed0dac768f6
+    m_Address: Prefabs/player/BombFade.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3c7e336fcdccf5547837493356f15710
+    m_Address: Assets/Resources_moved/Prefabs/player/SpeedIcon.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b229fa022a46b76499518ae094b2f1ab
+    m_Address: Assets/Resources_moved/Prefabs/player/title_animation_chihime.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 650ebcde89f844b43a1a3f94db334c3e
+    m_Address: Assets/Resources_moved/Prefabs/player/Canvas.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b3c081c7d5879c547bbf15456138f2c9
+    m_Address: Assets/Resources_moved/Prefabs/player/title_animation_gorozaemon_0.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 974dcf57b3241be469177ab116ec8751
+    m_Address: Assets/Resources_moved/Prefabs/player/title_animation_douji_0.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 86c10696534ec284cb5be668cf0cda19
+    m_Address: Assets/Resources_moved/Prefabs/player/PowerIcon.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 70e52a8690cfab54a8313319d5679cc1
+    m_Address: Assets/Resources_moved/Prefabs/player/BombIcon.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1fed80b57665aaa40941eeb89f94b90b
+    m_Address: Assets/Resources_moved/Prefabs/player/HeartFrame.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e320b4b9273092b45adad3b0028022ac
+    m_Address: Assets/Resources_moved/Prefabs/player/Player.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 978207b434b5ab04aba8c844c36188fe
+    m_Address: Assets/Resources_moved/Prefabs/player/title_animation_dodome_0.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: de436583a920e324fb7b34da7d924892
+    m_Address: Assets/Resources_moved/Prefabs/player/title_animation_ossan.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 15534d779a054b7428d553fa3772978b
+    m_Address: Prefabs/Live2DPrefab/Live2DPrefab.fadeMotionList.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d4cd1cee4f4beb44990f4af734013844
+    m_Address: Prefabs/Live2DPrefab/WAR VIO/Scene1.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6e5c1c3bf98c7ed4ab284f6c87be9aba
+    m_Address: Prefabs/Live2DPrefab/WAR VIO/Scene1.motion3.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b850213be65e5754b9c93f6fca02b325
+    m_Address: Prefabs/Live2DPrefab/WAR VIO/texture_00.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1a1d68e3a1e11504f869098464f772f6
+    m_Address: Prefabs/Live2DPrefab/WAR VIO/WAR VIO.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c3e51de15bafa0d41bc4621bd0120437
+    m_Address: Prefabs/Live2DPrefab/WAR VIO/WAR VIO.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8b7487a52da54b549900d60be0118887
+    m_Address: Prefabs/Live2DPrefab/WAR VIO/WAR VIO.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bdffbe7495b20b04ca68d75191886bbb
+    m_Address: Prefabs/Live2DPrefab/WAR VIO/WAR VIO.cdi3.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cbb264aaadffc794fb2744404d9e58e2
+    m_Address: Prefabs/Live2DPrefab/WAR VIO/WAR VIO.model3.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b5eb4c7f3b21fd244a9269a6fc947b53
+    m_Address: Prefabs/Live2DPrefab/WAR VIO/WAR VIOMaskTexture.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ed438a194c72ce946a89c245ff9b2281
+    m_Address: Prefabs/Live2DPrefab/WAR RED/WAR RED.1024
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9985bdc568aaba14eb6eed935d52245c
+    m_Address: Prefabs/Live2DPrefab/WAR RED/Scene1.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ec2652f582421454ca9914fd6b86fb40
+    m_Address: Prefabs/Live2DPrefab/WAR RED/Scene1.motion3.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 202e0e384b8c99342a2cf7bb263b164e
+    m_Address: Prefabs/Live2DPrefab/WAR RED/WAR RED.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 74213913e04ec7147b863f11e978ee81
+    m_Address: Prefabs/Live2DPrefab/WAR RED/WAR RED.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 192dbdfa414b68845a789a2f3e016e00
+    m_Address: Prefabs/Live2DPrefab/WAR RED/WAR RED.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5c233d0e4f9a3f14ebbbbc68574ec91a
+    m_Address: Prefabs/Live2DPrefab/WAR RED/WAR RED.cdi3.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 37fc891576c9bd040940379484c065d6
+    m_Address: Prefabs/Live2DPrefab/WAR RED/WAR RED.model3.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 64d8bfa43e610e24e9c0375e82fa8dfb
+    m_Address: Prefabs/Live2DPrefab/WAR RED/WAR REDMaskTexture.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 935d1983be3f2234dbf20e41779fda17
+    m_Address: Prefabs/konburst/TsukumoKonburstBullet.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dade1964c9f9978409ea244b00d4a2dc
+    m_Address: Assets/Resources_moved/Prefabs/konburst/player_douji_konburst.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5179d188e1fac2447985fbce19f253ba
+    m_Address: Assets/Resources_moved/Prefabs/konburst/Player_tsukumo_konburst.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6f97a9e8f6de7c644a6c8e11e90d4d3b
+    m_Address: Prefabs/GameOver/gameover_back.jpg
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8ec20e366bda02f45a3016a88c785694
+    m_Address: Prefabs/GameOver/Image.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 16309cb6d4327b947acc6b0b51af8f0f
+    m_Address: Prefabs/enemy/Stage02/enemy_chouchin_drop.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0bda7a4af3cb8b74fb4921c67f8f2473
+    m_Address: Assets/Resources_moved/Prefabs/enemy/Stage02/enemy_doll_drop.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dbc62012a33575541b3a902459a2fd25
+    m_Address: Assets/Resources_moved/Prefabs/enemy/Stage02/enemy_chouchin.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 32a9fdf97b5abe544a18d72229afeb13
+    m_Address: Assets/Resources_moved/Prefabs/enemy/Stage02/enemy_doll.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6a1104463870d4b4082dd8d0da1ab295
+    m_Address: Assets/Resources_moved/Prefabs/enemy/Stage02/enemy_nuigurumi_normal_0.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8e1ad4ed306117f42bbdf6f388dc37bc
+    m_Address: Prefabs/enemy/Stage01/kooni.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a177bf8ee0721ba4cbec64d208fc3730
+    m_Address: Assets/Resources_moved/Prefabs/enemy/Stage01/hitodamaDrop.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bf45026e46a4a754491ca8f06e64f35e
+    m_Address: Assets/Resources_moved/Prefabs/enemy/Stage01/boss_douji.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ef6d4b8c314a87a48ae21546ae4262fa
+    m_Address: Assets/Resources_moved/Prefabs/enemy/Stage01/kooniDrop.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f1f1e1124b576b246b5d7652237f9679
+    m_Address: Assets/Resources_moved/Prefabs/enemy/Stage01/hitodama.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 86c816d15291aba49b1c30b2e9c44d23
+    m_Address: Assets/Resources_moved/Prefabs/enemy/Stage01/ibaraki.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9dfc1d92d6cf74143821391cea3b4064
+    m_Address: Prefabs/enemy/bullet/enemy_blue_bullet02.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fb8a2404f5d4e7d41a925be97a4e4558
+    m_Address: Assets/Resources_moved/Prefabs/enemy/bullet/enemy_red_bullet04.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 232ee17ca9b07c942bec0e81cbb16352
+    m_Address: Assets/Resources_moved/Prefabs/enemy/bullet/ingame_douji_phase2_top.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b577be8154d1c6c46a841563382a4c49
+    m_Address: Assets/Resources_moved/Prefabs/enemy/bullet/ingame_douji_phase2_Right.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 819330938feac8c4fa556f5b283e0bd6
+    m_Address: Assets/Resources_moved/Prefabs/enemy/bullet/EnemyBullet.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6bf8bedc409acdf448a2a5adc9e533a5
+    m_Address: Assets/Resources_moved/Prefabs/enemy/bullet/ingame_douji_phase2_bottom.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ce0b1c13c84938b40b2371fdc10cfee1
+    m_Address: Assets/Resources_moved/Prefabs/enemy/bullet/enemy_blue_bullet03.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d9410ccd1d734b243870bb1bf406c09f
+    m_Address: Assets/Resources_moved/Prefabs/enemy/bullet/douji_berserk_bullet.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3f67ff490e36b50429f6e43997036c7b
+    m_Address: Assets/Resources_moved/Prefabs/enemy/bullet/enemy_red_bullet03.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1f47590793effff4ba4adecb0a1e14b6
+    m_Address: Assets/Resources_moved/Prefabs/enemy/bullet/enemy_red_bullet01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 65ce7b82bd1242347b0b27280dd20f75
+    m_Address: Assets/Resources_moved/Prefabs/enemy/bullet/enemy_red_bullet05.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f56222d274cf62c45865e55682e407e5
+    m_Address: Assets/Resources_moved/Prefabs/enemy/bullet/enemy_blue_bullet04.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 89d30bea2e0140d44a2301af02f26f54
+    m_Address: Assets/Resources_moved/Prefabs/enemy/bullet/enemy_blue_bullet05.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 47bc35134d6797345aad65eadf699057
+    m_Address: Assets/Resources_moved/Prefabs/enemy/bullet/enemy_blue_bullet01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 75cbb96328ec80446918267d0e763ecb
+    m_Address: Assets/Resources_moved/Prefabs/enemy/bullet/ingame_douji_phase2_Left.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6a177ed3617577b4a93cb415776d68fb
+    m_Address: Assets/Resources_moved/Prefabs/enemy/bullet/enemy_red_bullet02.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cc16bb4671dfe7a4591899ee544df93e
+    m_Address: Prefabs/enemy/mob.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f098f1d183635304987bda50df390136
+    m_Address: Assets/Resources_moved/Prefabs/enemy/enemy_ex.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ddc8f457e27f62043a7c712c453da581
+    m_Address: Assets/Resources_moved/Prefabs/convert/WadatsumiPlayerBullet.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1301e82ad744b8b468da77e90debaee9
+    m_Address: Assets/Resources_moved/Prefabs/Target.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 18e413331985cbf49b0901ee22d65e29
+    m_Address: Assets/Resources_moved/Prefabs/SoundManager.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bafbef7ba4335d14e82355a3ee82fcea
+    m_Address: Assets/Resources_moved/Prefabs/GameOver
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2a807c1d64b8c5543a3d0e78700d1f12
+    m_Address: Assets/Resources_moved/Prefabs/enemy
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 28205191643636a4fbdde89b52ad876e
+    m_Address: Assets/Resources_moved/Prefabs/Items
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 87069160e3ff3514aa9ce58a1d3276cf
+    m_Address: Assets/Resources_moved/Prefabs/konburst
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a14ffc2f25279d44dbc614138221e367
+    m_Address: Assets/Resources_moved/Prefabs/player
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 61f3ff54d83ca11419e259b5228e3583
+    m_Address: Prefabs/Shop
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 20cba767164e52b439e5eb2c692aac52
+    m_Address: Sounds/SFX/System
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sounds
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ace67b9d5405180448182193af8d4d0b
+    m_Address: Assets/Resources_moved/Sounds/SFX/Player
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cc7b9b2beeef4af4faf0f08848664d52
+    m_Address: Assets/Resources_moved/Sounds/SFX/Enemy
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6efa96ed67563b548b83bdba69ea1276
+    m_Address: Assets/Resources_moved/Sprites/Shop
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9c752db80e1787d43bb68344ed2c9d9e
+    m_Address: Assets/Resources_moved/Sprites/enemy
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a14ad89ff62ccfb4d9f74a2fb97180d7
+    m_Address: Sprites/title_animation
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d36fec904e6cc924db21fe214cbd1270
+    m_Address: UI/Shop
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 37717d00f8f31e5498eae6d6b8626552
+    m_Address: Assets/Resources_moved/UI/Title
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6aa47de4b03a36343b2b9b6e70a3a33d
+    m_Address: Assets/Resources_moved/UI/Intro
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d796ede7d356f194aacea5868a82fcbc
+    m_Address: Assets/Resources_moved/SubCamera.renderTexture
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f384af8f0f502f346b648634aacc52d1
+    m_Address: UI/konburst_cutin.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 5b3e9bf9194140840b980876631db859, type: 2}

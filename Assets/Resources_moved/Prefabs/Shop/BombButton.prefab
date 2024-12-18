@@ -35,6 +35,7 @@ RectTransform:
   - {fileID: 4960760940193092939}
   - {fileID: 7946788647515617161}
   - {fileID: 2083193883764208788}
+  - {fileID: 2281924053812156573}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -105,7 +106,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0, g: 0, b: 0, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -189,7 +190,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u30DC\u30E0\u3092<color=#fff600>\uFF11\u30B3\u5206</color>\u56DE\u5FA9\u3059\u308B\u3002\n\u6700\u5927<color=#fff600>5\u30B3</color>\u307E\u3067\u3057\u304B\u56DE\u5FA9\u3057\u306A\u3044\u3002"
+  m_text: "\u30DC\u30E0\u3092<color=#fff600>\uFF11\u30B3\u5206</color>\u5897\u3084\u3059\u3002\n\u6700\u5927<color=#fff600>5\u30B3</color>\u307E\u3067\u3057\u304B\u5897\u3048\u306A\u3044\u3002"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: af011c666d39f3841ab304f5024f1900, type: 2}
   m_sharedMaterial: {fileID: -6023475740174640497, guid: af011c666d39f3841ab304f5024f1900, type: 2}
@@ -543,6 +544,81 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &8057332789909305108
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2281924053812156573}
+  - component: {fileID: 6015359567847414475}
+  - component: {fileID: 4217890505095881389}
+  m_Layer: 5
+  m_Name: Soldout
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &2281924053812156573
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8057332789909305108}
+  m_LocalRotation: {x: -0, y: -0, z: -0.1468954, w: 0.9891521}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1021713456737606911}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -16.894}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 7, y: -4}
+  m_SizeDelta: {x: 110.0357, y: 361.088}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &6015359567847414475
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8057332789909305108}
+  m_CullTransparentMesh: 1
+--- !u!114 &4217890505095881389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8057332789909305108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 1225487473, guid: 000c70ad775a6c14d84b39ed0e8b47ef, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &8427287760192179460
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,7 +684,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<color=#fff600>5000\u9B42</color>"
+  m_text: "5000\u9B42"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: af011c666d39f3841ab304f5024f1900, type: 2}
   m_sharedMaterial: {fileID: -6023475740174640497, guid: af011c666d39f3841ab304f5024f1900, type: 2}
@@ -617,8 +693,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278253823
+  m_fontColor: {r: 1, g: 0.972549, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

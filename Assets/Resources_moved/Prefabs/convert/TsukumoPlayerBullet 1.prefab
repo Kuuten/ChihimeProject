@@ -10,13 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 2057930908481729092}
   - component: {fileID: 8120478058563874432}
-  - component: {fileID: 4795737728170828681}
+  - component: {fileID: 8356266684332413975}
   - component: {fileID: 4563613631376801037}
-  - component: {fileID: -5118061199590484915}
-  - component: {fileID: -6964132721849495488}
+  - component: {fileID: 7617928581634426159}
+  - component: {fileID: 2573611656227303435}
   m_Layer: 0
-  m_Name: KuchinawaPlayerBullet
-  m_TagString: KuchinawaConvert
+  m_Name: TsukumoPlayerBullet 1
+  m_TagString: TsukumoConvert
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,13 +29,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6013692122004912179}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 11}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8120478058563874432
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -77,8 +77,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: -1564548608, guid: c46dd428457d15246a09fa26acc28273, type: 3}
-  m_Color: {r: 0.5518868, g: 0.96964055, b: 1, a: 1}
+  m_Sprite: {fileID: -981101749, guid: c46dd428457d15246a09fa26acc28273, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4795737728170828681
+--- !u!114 &8356266684332413975
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,10 +97,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6013692122004912179}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5aab35fd252da04692cd97bb571221a, type: 3}
+  m_Script: {fileID: 11500000, guid: 80551c1bbbde08344b5dfceb33f68e4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifetime: 180
 --- !u!61 &4563613631376801037
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -133,20 +132,20 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0019629002, y: 0.000000014901161}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.59375, y: 1.0625}
+    oldSize: {x: 0.5, y: 0.5}
     newSize: {x: 17, y: 64}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.18, y: 1}
+  m_Size: {x: 0.709967, y: 0.75660753}
   m_EdgeRadius: 0
---- !u!50 &-5118061199590484915
+--- !u!50 &7617928581634426159
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -173,7 +172,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &-6964132721849495488
+--- !u!114 &2573611656227303435
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
