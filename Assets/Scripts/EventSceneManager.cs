@@ -405,6 +405,9 @@ public class EventSceneManager : MonoBehaviour
     {
         Debug.Log("***イベント01：ドウジ戦闘前を開始します***");
 
+        //  BGMを止める
+        SoundManager.Instance.Stop((int)AudioChannel.MUSIC);
+
         //  下をアクティブ化
         frameObject[(int)Frame.BOTTOM].SetActive(true);
 
@@ -529,7 +532,6 @@ public class EventSceneManager : MonoBehaviour
 
         Debug.Log("***ボス戦モードになりました。***");
 
-
         //  ボス戦開始フラグTRUE
         startBoss = true;
 
@@ -544,6 +546,9 @@ public class EventSceneManager : MonoBehaviour
     private IEnumerator Event02()
     {
         Debug.Log("***イベント02：ドウジ戦闘後を開始します***");
+
+        //  BGMを止める
+        SoundManager.Instance.Stop((int)AudioChannel.MUSIC);
 
         //  キャンバスをON
         eventCanvas.SetActive(true);

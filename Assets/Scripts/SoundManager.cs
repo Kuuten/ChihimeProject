@@ -28,6 +28,8 @@ using UnityEngine;
     {
         BGM_TITLE,
         BGM_TUTORIAL,
+        BGM_SELECTCONVERT,
+
         BGM_DOUJI_STAGE_ZAKO,
         BGM_DOUJI_STAGE_BOSS,
         BGM_KURAMA_STAGE_ZAKO,
@@ -40,7 +42,10 @@ using UnityEngine;
         BGM_WADATSUMI_STAGE_BOSS,
         BGM_HAKUMEN_STAGE_ZAKO,
         BGM_HAKUMEN_STAGE_BOSS,
+
+        BGM_RESULT,
         BGM_SHOP,
+        
 
 
         BGM_GAMEOVER,
@@ -57,6 +62,7 @@ using UnityEngine;
         //  タイトル
         SFX_HYOUSIGI,         //  拍子木の音
         SFX_DASH,             //  ダッシュ
+        SFX_VISUAL,           //  ヴィジュアル
         SFX_BRAKE,            //  ブレーキ
         SFX_TITLE_SELECT,     //  カーソル音
         SFX_TITLE_DECISION,   //  カーソル決定音
@@ -66,6 +72,7 @@ using UnityEngine;
 
         //  ゲーム中・ショップ
         SFX_GAMESTART,
+
         SFX_NORMAL_SHOT,
         SFX_CONVERT_SHOT_GAUGE1,
         SFX_CONVERT_SHOT_GAUGE2,
@@ -76,17 +83,25 @@ using UnityEngine;
         SFX_TSUKUMO_CONVERT_SHOT_01,
         SFX_TSUKUMO_CONVERT_SHOT_02,
         SFX_TSUKUMO_CONVERT_SHOT_03,
+        SFX_BOMB,
         SFX_KONBURST_CUTIN,
         SFX_KONBURST_DOUJI,
         SFX_KONBURST_TSUKUMO_TIMELIMIT,
         SFX_PLAYER_DAMAGE,
         SFX_PLAYER_DEATH,
+        SFX_GET_KON,
+        SFX_GET_HEART,
+        SFX_GET_BOMB,
+        SFX_GET_POWERUP,
+
         SFX_ENEMY_SHOT,
         SFX_ENEMY_DAMAGE,
+        SFX_ENEMY_DEATH,
         SFX_MIDBOSS_PHASE2,
         SFX_MIDBOSS_JUMP,
         SFX_DOUJI_WARNING,
         SFX_DOUJI_KOONIRUSH,
+
         SFX_RESULT_COUNT,
         SFX_RESULT_CASH,
         SFX_RESULT_TEXTNEXT,

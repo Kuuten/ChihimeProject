@@ -562,13 +562,11 @@ public class PlayerHealth : MonoBehaviour
 
         currentHealth = target;
 
-        //// 数値の変更
-        //DOTween.To(
-        //    () => currentHealth,          // 何を対象にするのか
-        //    num => currentHealth = num,   // 値の更新
-        //    target,                       // 最終的な値
-        //    value/2                       // アニメーション時間
-        //);
+        //  ハート画像を更新
+        CalculateHealthUI(currentHealth);
+
+        //  顔UIの絆創膏を更新
+        ChangeDamageBand();
 
         //  デバッグ表示
         Debug.Log($"プレイヤーの体力が{value}回復して\n" +
@@ -581,21 +579,34 @@ public class PlayerHealth : MonoBehaviour
     public void IncreaseHP(int value)
     {
         int target = currentMaxHealth + value;
-        //  最大体力で止める
+        //  最大体力10で止める
         if (target >= limitHealth)
         {
+            //  11以上は処理しない
+            if(target > limitHealth)
+            {
+                return;
+            }
+            //  10以上は10で止める
             target = limitHealth;
         }
 
         currentMaxHealth = target;
 
-        //// 数値の変更
-        //DOTween.To(
-        //    () => currentMaxHealth,         // 何を対象にするのか
-        //    num => currentMaxHealth = num,  // 値の更新
-        //    target,                         // 最終的な値
-        //    value                           // アニメーション時間
-        //);
+        //  親オブジェクトの子オブジェクトとしてハートフレームを生成
+        GameObject obj = Instantiate(heartFrameObj);
+        obj.GetComponent<RectTransform>().SetParent( heartRootObj.transform);
+        obj.GetComponent<RectTransform>().localScale = Vector3.one;
+        obj.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0,0,0);
+        obj.transform.GetChild((int)HeartType.Half).gameObject.SetActive(true);
+        obj.transform.GetChild((int)HeartType.Full).gameObject.SetActive(true);
+        heartList.Add( obj );   //  リストに追加
+
+        //  ハート画像を更新
+        CalculateHealthUI(currentHealth);
+
+        //  顔UIの絆創膏を更新
+        ChangeDamageBand();
 
         //  デバッグ表示
         Debug.Log($"プレイヤーの最大体力が{value}増加して\n" +
@@ -707,6 +718,9 @@ public class PlayerHealth : MonoBehaviour
     {
         //  デバッグ表示
         Debug.Log("プレイヤーが死亡しました！");
+
+        //  現在のBGMをストップ
+        SoundManager.Instance.Stop((int)AudioChannel.MUSIC);
 
         //  現在ステージをリセット
         PlayerInfoManager.stageInfo = PlayerInfoManager.StageInfo.Stage01;

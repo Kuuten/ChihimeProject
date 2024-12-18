@@ -34,7 +34,7 @@ public class PlayerBombManager : MonoBehaviour
     //  ツクモの魂バーストプレハブ
     [SerializeField] GameObject tsukumoKonburstPrefab;
     //  魂バーストカットイン画像プレハブ
-    [SerializeField] GameObject[] konburstCutinPrefab;
+    [SerializeField] GameObject konburstCutinPrefab;
     //  魂バーストの威力
     private float[] konburstShotPower = new float[(int)SHOT_TYPE.TYPE_MAX];
     //  魂バーストゲージのスライダー
@@ -66,7 +66,7 @@ public class PlayerBombManager : MonoBehaviour
     [SerializeField] private GameObject bombIconPrefab;
     //  ボムアイコンオブジェクトのリスト
     private List<GameObject> bombIconList = new List<GameObject>();
-    private int bombNum;
+     [SerializeField] private int bombNum;
     private const int bombMaxNum = 5;
     private float bombPower = 20f; //  ボム1発の威力
 
@@ -110,7 +110,7 @@ public class PlayerBombManager : MonoBehaviour
         koburstGaugeFill.GetComponent<Animator>().enabled = false;
         //  魂バーストごとの弾の威力
         konburstShotPower[(int)SHOT_TYPE.DOUJI]     = 500f;
-        konburstShotPower[(int)SHOT_TYPE.TSUKUMO]   = 0.1f;
+        konburstShotPower[(int)SHOT_TYPE.TSUKUMO]   = 0.2f;
         konburstShotPower[(int)SHOT_TYPE.KUCHINAWA] = 5f;
         konburstShotPower[(int)SHOT_TYPE.KURAMA]    = 40f;
         konburstShotPower[(int)SHOT_TYPE.WADATSUMI] = 1f;   //  ハート回復量
@@ -171,6 +171,9 @@ public class PlayerBombManager : MonoBehaviour
             bombNum++;
         }
         else bombNum = bombMaxNum;
+
+        //  ボムのアイコンを更新
+        UpdateBombIcon();
     }
 
     //  ボムを減算
@@ -184,6 +187,9 @@ public class PlayerBombManager : MonoBehaviour
         {
             bombNum = 0;
         }
+
+        //  ボムのアイコンを更新
+        UpdateBombIcon();
     }
 
     //-------------------------------------------
@@ -263,6 +269,11 @@ public class PlayerBombManager : MonoBehaviour
         PlayerHealth ph = this.GetComponent<PlayerHealth>();
         ph.SetSuperMode(true);
 
+        //  ボムSE再生
+        SoundManager.Instance.PlaySFX(
+            (int)AudioChannel.SFX_BOMB,
+            (int)SFXList.SFX_BOMB);
+
         //  弾を全て消す用のフェード板を生成
         GameObject FadeObj = bombFadeObject;
         FadeObj.gameObject.transform.SetParent( CanvasObject.transform );
@@ -331,7 +342,7 @@ public class PlayerBombManager : MonoBehaviour
 
         //  カットイン再生
         GameObject obj =
-            Instantiate(konburstCutinPrefab[(int)PlayerInfoManager.g_CONVERTSHOT]);
+            Instantiate(konburstCutinPrefab);
         obj.transform.SetParent( MainCanvasObject.transform, false );
 
         //  カットインSE再生

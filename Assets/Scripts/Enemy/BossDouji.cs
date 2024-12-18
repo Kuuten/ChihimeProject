@@ -500,6 +500,11 @@ public class BossDouji : MonoBehaviour
         //  やられエフェクト
         Instantiate(explosion, transform.position, transform.rotation);
 
+        // やられSE
+        SoundManager.Instance.PlaySFX(
+            (int)AudioChannel.SFX_ENEMY,
+            (int)SFXList.SFX_ENEMY_DEATH);
+
         //  アイテムドロップ判定
         DropItems drop = this.GetComponent<DropItems>();
         if (powerupItems == ePowerupItems.Random)
@@ -525,6 +530,11 @@ public class BossDouji : MonoBehaviour
     {
         //  やられエフェクト
         Instantiate(explosion, transform.position, transform.rotation);
+
+        // やられSE
+        SoundManager.Instance.PlaySFX(
+            (int)AudioChannel.SFX_ENEMY,
+            (int)SFXList.SFX_ENEMY_DEATH);
 
         //  アイテムドロップ判定
         DropItems drop = this.GetComponent<DropItems>();
@@ -627,17 +637,17 @@ public class BossDouji : MonoBehaviour
         //  フェーズ１
         while (!bStopPhase1)
         {
-            //yield return StartCoroutine(Douji_LoopMove(1.5f, 0.5f));
+            yield return StartCoroutine(Douji_LoopMove(1.5f, 0.5f));
 
-            //yield return StartCoroutine(Shot());
+            yield return StartCoroutine(Shot());
 
 
-            yield return StartCoroutine(Douji_LoopMove(1.0f, 1.0f));
-            yield return StartCoroutine(Warning());
-            StartCoroutine(KooniParty());
-            StartCoroutine(KooniParty());
-            StartCoroutine(KooniParty());
-            yield return StartCoroutine(KooniParty());
+            //yield return StartCoroutine(Douji_LoopMove(1.0f, 1.0f));
+            //yield return StartCoroutine(Warning());
+            //StartCoroutine(KooniParty());
+            //StartCoroutine(KooniParty());
+            //StartCoroutine(KooniParty());
+            //yield return StartCoroutine(KooniParty());
 
 
             //yield return StartCoroutine(Douji_BerserkBarrage());
@@ -898,7 +908,7 @@ public class BossDouji : MonoBehaviour
         float totalDegree = 360;        //  撃つ範囲の総角  
         int wayNum = 9;                 //  弾のway数(必ず3way以上の奇数にすること)
         float Degree = totalDegree / (wayNum-1);     //  弾一発毎にずらす角度         
-        float speed = 3.0f;             //  弾速
+        float speed = 7.0f;             //  弾速
         int chain = 10;                 //  連弾数
         float chainInterval = 0.4f;     //  連弾の間隔（秒）
 
@@ -950,7 +960,7 @@ public class BossDouji : MonoBehaviour
 
         float Degree = 15;              //  ずらす角度
         int wayNum = 3;                 //  弾のway数
-        float speed = 5.0f;            //  弾速
+        float speed = 9.0f;            //  弾速
         int chain = 3;                  //  連弾数
         float chainInterval = 1f;       //  連弾の間隔（秒）
 

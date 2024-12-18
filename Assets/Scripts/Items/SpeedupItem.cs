@@ -37,12 +37,22 @@ public class SpeedupItem : MonoBehaviour
         //  スピードレベルが最大じゃなければレベルアップ
         if(pm.GetSpeedLevel() < (int)eSpeedLevel.Lv3 )
         {
+            // アイテム獲得SE
+            SoundManager.Instance.PlaySFX(
+                (int)AudioChannel.SFX,
+                (int)SFXList.SFX_GET_POWERUP);
+
             //  スピードアップ
             pm.LevelupMoveSpeed();
             Debug.Log("自機がスピードレベル" + pm.GetSpeedLevel() + "になりました！");
         }
         else
         {
+            // アイテム獲得SE
+            SoundManager.Instance.PlaySFX(
+                (int)AudioChannel.SFX,
+                (int)SFXList.SFX_GET_KON);
+
             //  最大レベルの時取ると魂獲得
             int money = MoneyManager.Instance.GetKonNumGainedFromPowerup();
             MoneyManager.Instance.AddMoney( money );

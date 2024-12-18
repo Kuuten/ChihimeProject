@@ -41,18 +41,28 @@ public enum ePowerupItems
 public class DropItems : MonoBehaviour
 {  
     //  アイテムのプレハブ格納用
-    List<GameObject> konPrefabs = new List<GameObject>();
-    List<GameObject> powerupPrefabs = new List<GameObject>();
-    List<GameObject> speedupPrefabs = new List<GameObject>();
-    List<GameObject> bombPrefabs = new List<GameObject>();
-    List<GameObject> healPrefabs = new List<GameObject>();
+    GameObject SmallKonPrefab;
+    GameObject LargeKonPrefab;
+    List<GameObject> powerupPrefabs;
+    List<GameObject> speedupPrefabs;
+    List<GameObject> bombPrefabs;
+    List<GameObject> healPrefabs;
 
     //  パワーアップアイテムを落とすかどうか
     [SerializeField] EnemyManager.DROP_TYPE dropType;
 
     void Start()
     {
-        konPrefabs = EnemyManager.Instance.GetKonItems();
+        SmallKonPrefab = new GameObject();
+        LargeKonPrefab = new GameObject();
+        powerupPrefabs = new List<GameObject>();
+        speedupPrefabs = new List<GameObject>();
+        bombPrefabs = new List<GameObject>();
+        healPrefabs = new List<GameObject>();
+
+
+        SmallKonPrefab = EnemyManager.Instance.GetSmallKon();
+        LargeKonPrefab = EnemyManager.Instance.GetLargeKon();
         powerupPrefabs = EnemyManager.Instance.GetPowerupItems();
         speedupPrefabs = EnemyManager.Instance.GetSpeedupItems();
         bombPrefabs = EnemyManager.Instance.GetBombItems();
@@ -194,7 +204,7 @@ public class DropItems : MonoBehaviour
             //  smallKonの数だけ小魂を生成
             int small = money / smallKon;
             Debug.Log("小魂の数 :" + small);
-            DropKonPrefab(konPrefabs[(int)KonItems.smallKon], small);
+            DropKonPrefab(SmallKonPrefab, small);
         }
         else // moneyがlargeKon以上の場合
         {
@@ -209,10 +219,10 @@ public class DropItems : MonoBehaviour
             Debug.Log("小魂の数 :" + small);
 
             //  largeKonNumの数だけ大魂を生成
-            DropKonPrefab(konPrefabs[(int)KonItems.largeKon], largeKonNum);
+            DropKonPrefab(LargeKonPrefab, largeKonNum);
 
             //  remainderの数だけ小魂を生成
-            DropKonPrefab(konPrefabs[(int)KonItems.smallKon], small);
+            DropKonPrefab(SmallKonPrefab, small);
         }
     }
 }

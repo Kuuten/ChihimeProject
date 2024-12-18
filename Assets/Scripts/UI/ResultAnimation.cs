@@ -67,6 +67,9 @@ public class ResultAnimation : MonoBehaviour
     {
         Debug.Log("結果表示を開始します");
 
+        //  BGMを再生
+        SoundManager.Instance.PlayBGM((int)MusicList.BGM_RESULT);
+
         //  キャンバスを有効化
         this.gameObject.SetActive(true);
 
@@ -144,9 +147,14 @@ public class ResultAnimation : MonoBehaviour
         //  骨G画像を有効化
         honeGImage.SetActive(true);
 
+        yield return null;
+
         //  骨Gアニメーション開始
-        honeGImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-465,500);
-        honeGImage.GetComponent<RectTransform>().DOAnchorPosY(22,1.5f)
+        honeGImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(-487,660);
+
+        
+
+        honeGImage.GetComponent<RectTransform>().DOAnchorPosY(37,2.0f)
             .SetEase(Ease.OutBounce);
 
         //  アニメーションを待つ

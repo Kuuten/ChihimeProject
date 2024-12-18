@@ -40,6 +40,11 @@ public class HealItem : MonoBehaviour
         //  体力が最大じゃなければ回復
         if(ph.GetCurrentHealth() < ph.GetCurrentMaxHealth() )
         {
+            // アイテム獲得SE
+            SoundManager.Instance.PlaySFX(
+                (int)AudioChannel.SFX,
+                (int)SFXList.SFX_GET_HEART);
+
             //  回復
             int heal_health = 2;
             ph.Heal(heal_health);
@@ -47,6 +52,11 @@ public class HealItem : MonoBehaviour
         }
         else
         {
+            // アイテム獲得SE
+            SoundManager.Instance.PlaySFX(
+                (int)AudioChannel.SFX,
+                (int)SFXList.SFX_GET_KON);
+
             //  最大体力の時取ると魂獲得
             int money = MoneyManager.Instance.GetKonNumGainedFromPowerup();
             MoneyManager.Instance.AddMoney( money );

@@ -37,12 +37,23 @@ public class PowerupItem : MonoBehaviour
             //  ショットレベルが最大じゃなければレベルアップ
             if(ps.GetNormalShotLevel() < (int)eNormalShotLevel.Lv3 )
             {
+                // アイテム獲得SE
+                SoundManager.Instance.PlaySFX(
+                    (int)AudioChannel.SFX,
+                    (int)SFXList.SFX_GET_POWERUP);
+
+
                 //  パワーアップ
                 ps.LevelupNormalShot();
                 Debug.Log("通常弾のパワーレベルが" + ps.GetNormalShotLevel() + "になりました！");
             }
             else
             {
+                // アイテム獲得SE
+                SoundManager.Instance.PlaySFX(
+                    (int)AudioChannel.SFX,
+                    (int)SFXList.SFX_GET_KON);
+
                 //  最大レベルの時取ると魂獲得
                 int money = MoneyManager.Instance.GetKonNumGainedFromPowerup();
                 MoneyManager.Instance.AddMoney( money );

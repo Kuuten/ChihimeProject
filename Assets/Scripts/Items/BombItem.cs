@@ -40,6 +40,11 @@ public class BombItem : MonoBehaviour
         //  ボムが最大じゃなければ増加
         if (pb.GetBombNum() < pb.GetBombMaxNum())
         {
+            // アイテム獲得SE
+            SoundManager.Instance.PlaySFX(
+                (int)AudioChannel.SFX,
+                (int)SFXList.SFX_GET_BOMB);
+
             //  ボムを増加
             pb.AddBomb();
 
@@ -48,6 +53,11 @@ public class BombItem : MonoBehaviour
         }
         else
         {
+            // アイテム獲得SE
+            SoundManager.Instance.PlaySFX(
+                (int)AudioChannel.SFX,
+                (int)SFXList.SFX_GET_KON);
+
             //  最大体力の時取ると魂獲得
             int money = MoneyManager.Instance.GetKonNumGainedFromPowerup();
             MoneyManager.Instance.AddMoney(money);

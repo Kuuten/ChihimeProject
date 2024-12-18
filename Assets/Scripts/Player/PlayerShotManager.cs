@@ -161,7 +161,7 @@ public class PlayerShotManager : MonoBehaviour
         chargeNormalShotCount = 0;
         shotCount = 0;
         canShot = true;
-        normalShotLevel = 1; // 最初はレベル１
+        normalShotLevel = PlayerInfoManager.g_SHOT_LV; 
         gaugeValue = 0.0f;
         convertState = ConvertState.None;
         fieldObjectScale = new Vector3(3f,3f,3f);
@@ -943,8 +943,8 @@ public class PlayerShotManager : MonoBehaviour
         else
         {
             //  スケールを半分に
-            objL.transform.localScale = new Vector3(0.5f,0.5f,0.5f);
-            objR.transform.localScale = new Vector3(0.5f,0.5f,0.5f);
+            objL.transform.localScale = new Vector3(0.6f,0.6f,0.6f);
+            objR.transform.localScale = new Vector3(0.6f,0.6f,0.6f);
             convertState = ConvertState.ReleaseMidPower;
         }
     }

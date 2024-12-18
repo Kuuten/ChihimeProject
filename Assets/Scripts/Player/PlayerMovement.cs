@@ -70,8 +70,8 @@ public class PlayerMovement : MonoBehaviour
         moveSpeed[(int)eSpeedLevel.Lv2] = moveSpeedLv2;
         moveSpeed[(int)eSpeedLevel.Lv3] = moveSpeedLv3;
 
-        //  最初はLv.1
-        speedLevel = (int)eSpeedLevel.Lv1;
+        //  開始時点のスピードを設定
+        speedLevel = PlayerInfoManager.g_SPEED_LV;
 
         //  親オブジェクトの子オブジェクトとしてスピードレベルアイコンを生成
         for( int i=0; i<(int)eSpeedLevel.Max;i++ )

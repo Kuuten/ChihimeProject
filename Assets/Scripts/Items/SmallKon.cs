@@ -28,6 +28,9 @@ public class SmallKon : MonoBehaviour
         if(collision.CompareTag("Player"))
         {
             // アイテム獲得SE
+            SoundManager.Instance.PlaySFX(
+                (int)AudioChannel.SFX,
+                (int)SFXList.SFX_GET_KON);
 
             //  オブジェクトを消去
             Destroy(this. gameObject);

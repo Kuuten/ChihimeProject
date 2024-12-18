@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -117,6 +118,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject shopCanvas;
     //  再生成ボタンオブジェクト
     [SerializeField] private GameObject regenerateButton;
+    //  ShopManagerクラス
+    [SerializeField] private ShopManager shopManager;
 
     //------------------------------------------------------------------------------
     //  プロパティ
@@ -340,6 +343,8 @@ public class GameManager : MonoBehaviour
         //  敵を一定間隔でポップさせる
         //StartCoroutine(PopEnemyInIntervals(_EnemyPopInterval));
 
+        //  EnemyManagerのロード完了まで待つ
+        yield return new WaitUntil(()=> EnemyManager.Instance.GetIsCompleteLoading() == true);
         
         //  敵の出現開始
         StartCoroutine( EnemyManager.Instance.AppearEnemy() );
@@ -389,7 +394,11 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f); //  1秒待つ
 
-        yield return StartCoroutine(DataCopyAndChangeScene());
+        //  体験版ではこっちを使う
+        yield return StartCoroutine(ResetAndChangeScene("TrialEnding"));
+
+        ////  製品版ではこっちを使う
+        //yield return StartCoroutine(DataCopyAndChangeScene());
     }
 
     //  巻物を閉じるアニメーションの完了を待つ
@@ -399,13 +408,28 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f); //  1秒待つ
 
-        yield return StartCoroutine(ChangeScene());
+        yield return StartCoroutine(ResetAndChangeScene("Title"));
     }
 
     //  タイトルのBGMを止める
     public void StopBGM()
     {
         SoundManager.Instance.Stop((int)AudioChannel.MUSIC);
+    }
+
+    // 指定シーンへ情報をリセットして遷移する
+    public IEnumerator ResetAndChangeScene(string scene_name)
+    {
+        //  BGMを止める
+        StopBGM();
+
+        //  情報をリセット
+        PlayerInfoManager.ResetInfo();
+
+        //   指定シーンへ遷移
+        LoadingScene.Instance.LoadNextScene(scene_name);
+
+        yield return null;
     }
 
     // 情報保存＆シーン遷移
@@ -426,31 +450,36 @@ public class GameManager : MonoBehaviour
         //  BGMを止める
         StopBGM();
 
-        //  現在ステージを更新
-        PlayerInfoManager.stageInfo = PlayerInfoManager.StageInfo.Stage02;
-
-        //   ゲームクリアシーンへ
-        LoadingScene.Instance.LoadNextScene("TrialEnding");
-
-        ////   製品版では次のステージへ進めて魂バートセレクト画面へ
-        //LoadingScene.Instance.LoadNextScene("SelectConvert"); 
+        //  現在ステージを確認する
+        CheckStageNo();
 
         yield return null;
     }
 
-    // 情報保存＆シーン遷移
-    public IEnumerator ChangeScene()
+    //  現在ステージを更新/
+    private void CheckStageNo()
     {
-        //  BGMを止める
-        StopBGM();
-
-        //  現在ステージをリセット
-        PlayerInfoManager.stageInfo = PlayerInfoManager.StageInfo.Stage01;
-
-        //   ゲームクリアシーンへ
-        LoadingScene.Instance.LoadNextScene("Title");
-
-        yield return null;
+        //****************************************************************
+        //  一旦ステージ３までの予定で後でステージ６まで作る
+        //****************************************************************
+        int currentStageNum = (int)PlayerInfoManager.stageInfo;
+        if(currentStageNum >= (int)PlayerInfoManager.StageInfo.Stage03)
+        {
+            //  全ステージ終わっていたらエンディングへ
+            ResetAndChangeScene("Ending");
+        }
+        else
+        {
+            //  インクリメントしてstageInfoにセット
+            currentStageNum++;
+            PlayerInfoManager.stageInfo = (PlayerInfoManager.StageInfo)currentStageNum;
+            
+            //  魂バートセレクト画面へ
+            LoadingScene.Instance.LoadNextScene("SelectConvert");
+        }
+        //****************************************************************
+        //
+        //****************************************************************
     }
 
     //-----------------------------------------------------------------
@@ -468,19 +497,26 @@ public class GameManager : MonoBehaviour
         //  結果表示Cnavasを表示
         resultObject[(int)eResultObj.RESULT_CANVAS].SetActive(true);
 
-        yield return null;
+        //  シーン切り替えフラグがTRUEにまるまで待つ
+        yield return new WaitUntil(()=> sceneChangeFlag == true);
+
+        //  シーン切り替えフラグをリセット
+        sceneChangeFlag = false;
     }
 
 
     //--------------------------------------------------------------------------
     //  情報保存＆ショップへ遷移(リザルトで「次へ」ボタンが押されたら呼ばれる)
     //--------------------------------------------------------------------------
-    public void AfterResult()
+    public void OnNextButtonDownAtResult()
     {
-        if(!sceneChangeFlag)
+        if(!sceneChangeFlag)    //  連打対策
         {
             //  結果表示キャンバスを非表示にする
             resultObject[(int)eResultObj.RESULT_CANVAS].SetActive(false);
+
+            //  BGMを止める
+            SoundManager.Instance.Stop((int)AudioChannel.MUSIC);
 
             //  紙吹雪を非表示にする
             resultObject[(int)eResultObj.KAMIFUBUKI].SetActive(false);
@@ -493,17 +529,17 @@ public class GameManager : MonoBehaviour
             //------------------------------------------------------------------
             //  体験版用処理
             //------------------------------------------------------------------
-            ////  シーン切り替えフラグをTRUE
-            //sceneChangeFlag = true;
-            ////  巻物アニメーション＆情報保存
-            //StartCoroutine(WaitingForClosingScroll());
+            //  シーン切り替えフラグをTRUE
+            sceneChangeFlag = true;
+            //  巻物アニメーション＆情報保存
+            StartCoroutine(WaitingForClosingScroll());
             //------------------------------------------------------------------
 
-            //------------------------------------------------------------------
-            //  製品版用処理
-            //------------------------------------------------------------------
-            shopCanvas.SetActive(true); //  ショップキャンバスを表示
-            InstantiateRandomItems();   //  ItemListにランダムにプレハブを生成
+            ////------------------------------------------------------------------
+            ////  製品版用処理
+            ////------------------------------------------------------------------
+            //shopCanvas.SetActive(true); //  ショップキャンバスを表示
+            //InstantiateRandomItems();   //  ItemListにランダムにプレハブを生成
         }
     }
 
@@ -552,6 +588,51 @@ public class GameManager : MonoBehaviour
             //  何故かスケールが0になるので補正
             obj.transform.localScale = new Vector3(1,1,1);
 
+            //  ボタンの種類によってイベントを登録する
+            Button button = obj.GetComponent<Button>();
+            if(rand == (int)eShopItemID.RedHeart)
+            {
+                //  オブジェクトのID2の子オブジェクトから値段を取得
+                string s = obj.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text;
+                shopManager.SetRedHeartValueText(s);
+
+                shopManager.SetRedHeartButton(obj);
+                button.onClick.AddListener( ()=>Debug.Log("赤いハートを買った！"));
+                button.onClick.AddListener( ()=>shopManager.OnRedHeartButtonDown());
+            }
+            else if(rand == (int)eShopItemID.DoubleUpHeart)
+            {
+                //  オブジェクトのID2の子オブジェクトから値段を取得
+                string s = obj.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text;
+                shopManager.SetDoubleupValueText(s);
+
+                shopManager.SetDoubleupHeartButton(obj);
+                button.onClick.AddListener( ()=>Debug.Log("ダブルアップハートを買った！"));
+                button.onClick.AddListener( ()=>shopManager.OnDoubleupHeartButtonDown());
+            }
+            else if(rand == (int)eShopItemID.GoldHeart)
+            {
+                //  オブジェクトのID2の子オブジェクトから値段を取得
+                string s = obj.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text;
+                shopManager.SetGoldHeartValueText(s);
+
+                shopManager.SetGoldHeartButton(obj);
+                button.onClick.AddListener( ()=>Debug.Log("金色のハートを買った！"));
+                button.onClick.AddListener( ()=>shopManager.OnGoldHeartButtonDown());
+            }
+            else if(rand == (int)eShopItemID.HoneGBomb)
+            {
+                //  オブジェクトのID2の子オブジェクトから値段を取得
+                string s = obj.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text;
+                shopManager.SetBombValueText(s);
+
+                shopManager.SetBombButton(obj);
+                button.onClick.AddListener( ()=>Debug.Log("骨Gボムを買った！"));
+                button.onClick.AddListener( ()=>shopManager.OnHoneGBombButtonDown());
+            }
+
+
+
             //  その番号をidListから除外
             idList.RemoveAt(index);
         }
@@ -575,7 +656,7 @@ public class GameManager : MonoBehaviour
     //--------------------------------------------------------------------------
     public void ReGenerate()
     {
-        int value = 3000;   //  再入荷代金
+        int value = 3;   //  再入荷代金
 
         //  代金分魂を減らす
         if(MoneyManager.Instance.CanBuyItem(value))
@@ -592,6 +673,12 @@ public class GameManager : MonoBehaviour
             //  再生成
             InstantiateRandomItems();
         }
+        //  購入不可能ならメッセージを出す
+        else
+        {
+            //  購入失敗メッセージを出す
+            StartCoroutine(shopManager.DisplayFailedMessage());
+        }
 
         //  再生成ボタンオブジェクトを選択状態にする
         EventSystem.current.SetSelectedGameObject(
@@ -601,9 +688,9 @@ public class GameManager : MonoBehaviour
     //--------------------------------------------------------------------------
     //  ショップへ遷移(ショップで「次へ」ボタンが押されたら呼ばれる)
     //--------------------------------------------------------------------------
-    public void AfterShop()
+    public void OnNextButtonDownAtShop()
     {
-        if(!sceneChangeFlag)
+        if(!sceneChangeFlag)    //  連打対策
         {
             //  ショップキャンバスを非表示にする
             shopCanvas.SetActive(false);
@@ -618,6 +705,7 @@ public class GameManager : MonoBehaviour
 
             //  シーン切り替えフラグをTRUE
             sceneChangeFlag = true;
+
             //  巻物アニメーション＆情報保存
             StartCoroutine(WaitingForClosingScroll());
         }

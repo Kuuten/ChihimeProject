@@ -14,11 +14,18 @@ using UnityEngine.UI;
 //--------------------------------------------------------------
 public class TitleManager : MonoBehaviour
 {
+    // EnentSystemオブジェクト
+    [SerializeField] private GameObject eventSystemObj;
+
     [SerializeField] private FadeIO Fade;
     [SerializeField] private ScrollAnimation Scroll;
 
     [SerializeField] private LogoEasing logoEasing;
     [SerializeField] private LogoScaling logoScaling;
+
+    [SerializeField] private VisualEasing visualEasing;
+    [SerializeField] private VisualFadeIn visualFadeIn;
+
     [SerializeField] private GameObject Buttons;
     //[SerializeField] private GameObject Cursor;
     [SerializeField] private GameObject[] DisableObject;
@@ -45,8 +52,6 @@ public class TitleManager : MonoBehaviour
     float verticalInput;
     float horizontalInput;
 
-    bool canContorol;   //  操作可能フラグ
-
     enum TitleMode
     {
         Normal,
@@ -56,7 +61,12 @@ public class TitleManager : MonoBehaviour
     }
     TitleMode titleMode;
 
-    //[SerializeField] private EventSystem eventSystem;
+    // デフォルト解像度を設定
+    private int defaultWidth = 1280;
+    private int defaultHeight = 720;
+
+    // 現在のフルスクリーン状態を保持
+    private bool isFullScreen = false;
 
 
     //--------------------------------------------------------------
@@ -94,13 +104,11 @@ public class TitleManager : MonoBehaviour
 
     void Start()
     {
-        // 強制スクリーンサイズの指定
-        Screen.SetResolution(1280, 720, false);
+        // 初期ウィンドウサイズを設定
+        Screen.SetResolution(defaultWidth, defaultHeight, isFullScreen);
 
         //  最初は通常モード
         titleMode = TitleMode.Normal;
-
-        canContorol = false;
 
         //  キーコンフィグ設定のロード
         rebindSaveManager.Load();
@@ -118,21 +126,26 @@ public class TitleManager : MonoBehaviour
         //  巻物アニメーション
         yield return StartCoroutine(WaitingForOpeningScroll());
 
-        yield return new WaitForSeconds(2.0f); //  2秒待つ
+        yield return new WaitForSeconds(1); //  1秒待つ
 
         //  タイトルロゴイーズイン
         yield return StartCoroutine(WaitingForEasingTitlelogo());
 
-       yield return new WaitForSeconds(1); //  1秒待つ
+       yield return new WaitForSeconds(0.5f); //  0.5秒待つ
 
-        //  タイトルロゴスケーリングON
-        logoScaling.enabled = true;
+        //// ヴィジュアルイーズイン
+        //yield return StartCoroutine(WaitingForEasingTitlelVusual());
+
+        // ヴィジュアルイーズイン
+        yield return StartCoroutine(WaitingForFadeInTitlelVusual());
+
+        yield return new WaitForSeconds(0.5f); //  0.5秒待つ
+
+        //  EventSystemをアクティブにする
+        eventSystemObj.SetActive(true);
 
         //  ボタンを表示
         Buttons.SetActive(true);
-
-        //  操作可能にする
-        canContorol = true;
 
         //  タイトルBGM再生
         SoundManager.Instance.PlayBGM((int)MusicList.BGM_TITLE);
@@ -143,18 +156,20 @@ public class TitleManager : MonoBehaviour
         float repeat_time = 10f; //  繰り返す間隔（秒）
         InvokeRepeating("RunToLeftAll",0f, repeat_time);
 
+        yield return new WaitForSeconds(3); //  3秒待つ
+
+        //  タイトルロゴスケーリングON
+        logoScaling.enabled = true;
+
         yield return null;
     }
 
     void Update()
     {
-        //  操作不能ならリターン
-        if(!canContorol)return;
-
         switch(titleMode)
         {
             case TitleMode.Normal:  //  通常モード
-                //MoveTitleMenuCursor();  //  カーソル移動
+                MoveTitleMenuCursor();  //  カーソル移動
                 break;
 
             case TitleMode.Config:  //  コンフィグモード
@@ -244,6 +259,18 @@ public class TitleManager : MonoBehaviour
         yield return StartCoroutine(logoEasing.EasingTitlelogo());
     }
 
+    //  タイトルロゴのイーズインを待つ
+    IEnumerator WaitingForEasingTitlelVusual()
+    {
+        yield return StartCoroutine(visualEasing.EasingTitleVisual());
+    }
+
+    //  タイトルロゴのフェードインを待つ
+    IEnumerator WaitingForFadeInTitlelVusual()
+    {
+        yield return StartCoroutine(visualFadeIn.FadeInTitleVisual());
+    }
+
     //  コンフィグが押された時の処理
     public void OnPressedConfig()
     {
@@ -255,9 +282,6 @@ public class TitleManager : MonoBehaviour
 
         //  コンフィグキャンバスをアクティブにする
         ConfigCanvas.SetActive(true);
-
-        //  現在の画面モードに状態をセット
-        SetScreenStateText(Screen.fullScreen);
 
         //  実行モードをコンフィグモードにする
         titleMode = TitleMode.Config;
@@ -364,38 +388,41 @@ public class TitleManager : MonoBehaviour
     //---------------------------------------------------
     private void MoveTitleMenuCursor()
     {
-        //Vector2 inputNavigateAxis = nevigate.ReadValue<Vector2>();
-        //verticalInput = inputNavigateAxis.y;
-        //horizontalInput = inputNavigateAxis.x;
+        Vector2 inputNavigateAxis = nevigate.ReadValue<Vector2>();
+        verticalInput = inputNavigateAxis.y;
+        horizontalInput = inputNavigateAxis.x;
 
-        ////  入力がない場合は弾く
-        //if(!nevigate.WasPressedThisFrame())return;
-        ////  どちらも入力がある場合も弾く
-        //else if(Mathf.Abs(verticalInput) >= 1.0f && Mathf.Abs(horizontalInput) >= 1.0f)
-        //{
-        //    return;
-        //}
-        //else
-        //{
-        //    //  セレクトSE再生
-        //    SoundManager.Instance.PlaySFX((int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_SELECT);
-        //}
+        
+
+        //  入力がない場合かEventSystemが非表示の場合は弾く
+        if (!nevigate.WasPressedThisFrame() || !eventSystemObj.activeSelf) return;
+
+        //  垂直入力のみがある場合
+        if (Mathf.Abs(verticalInput) >= 1.0f && Mathf.Abs(horizontalInput) <= 0.0f)
+        {
+            //  セレクトSE再生
+            SoundManager.Instance.PlaySFX((int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_SELECT);
+        }
+        else // それ以外は弾く
+        {
+            return;
+        }
 
         //if (verticalInput < 0)
         //{
         //    if (Pos != menuNum)
         //    {
-        //        Cursor.GetComponent<RectTransform>().anchoredPosition += 
-        //        new UnityEngine.Vector2(0,-lineHeight);
+        //        Cursor.GetComponent<RectTransform>().anchoredPosition +=
+        //        new UnityEngine.Vector2(0, -lineHeight);
         //        Pos += 1;
         //    }
         //    else
         //    {
-        //        Cursor.GetComponent<RectTransform>().anchoredPosition += 
-        //        new UnityEngine.Vector2(0,lineHeight*(menuNum-1));
+        //        Cursor.GetComponent<RectTransform>().anchoredPosition +=
+        //        new UnityEngine.Vector2(0, lineHeight * (menuNum - 1));
         //        Pos = 1;
         //    }
-            
+
         //}
         //else if (verticalInput > 0)
         //{
@@ -411,7 +438,7 @@ public class TitleManager : MonoBehaviour
         //        new UnityEngine.Vector2(0, -lineHeight * (menuNum - 1));
         //        Pos = menuNum;
         //    }
-        //} 
+        //}
     }
 
     //---------------------------------------------------
@@ -446,7 +473,7 @@ public class TitleManager : MonoBehaviour
         ConfigPanel.transform.GetChild((int)eConfigPanel.KeyConfigButton)
             .GetComponent<Button>().interactable = false;
 
-        //  通常弾ボタンを選択状態にする
+        //  ウィンドウサイズボタンを選択状態にする
         EventSystem.current.SetSelectedGameObject(firstSelectedButton.gameObject);
 
     }
@@ -502,7 +529,8 @@ public class TitleManager : MonoBehaviour
 
         //  千姫くんに対しての遅延の基準時間(秒)
         float delay_BaseTime = 2.0f;
-        float gorozaemon_delay_BaseTime = 3.0f;
+        float gorozaemon_delay_BaseTime = 2.5f; //  ごろざえもん体験版仕様
+        //float gorozaemon_delay_BaseTime = 3.0f; //  ごろざえもん製品版仕様
         float ossan_delay_BaseTime_ = 4.0f;
 
         //  遅延のバイアス
@@ -533,6 +561,11 @@ public class TitleManager : MonoBehaviour
                 //  ちっちゃいおっさんを走らせる
                 RunToLeft(runObject[i],ossan_AnimeTime, ossan_delay_BaseTime_);
             }
+            //  ツクモと百は体験版では実装なし
+            else if( i == (int)RunObject.Tsukumo || i == (int)RunObject.Momo )
+            {
+                continue;
+            }
             else
             {
                 //  それ以外を走らせる
@@ -556,11 +589,12 @@ public class TitleManager : MonoBehaviour
     //---------------------------------------------------
     private void SetScreenStateText(bool isFullScreen)
     {
-        //  フルスクリーンかどうかをセット
-        Screen.fullScreen = isFullScreen;
-
         //  ローカル変数を用意
         string[] screenModeText = { "ウィンドウ", "フルスクリーン" };
+
+        // フルスクリーンモードを切り替える
+        ToggleFullScreen();
+
         int index = Convert.ToInt32(!Screen.fullScreen);
 
         //  スクリーン状態のテキストを更新
@@ -578,6 +612,23 @@ public class TitleManager : MonoBehaviour
 
         //  スクリーン状態のテキストを更新
         screenStateText.text = $"現在の画面モード:{screenModeText[index]}";
+    }
+
+    // フルスクリーンモードを切り替えるメソッド
+    private void ToggleFullScreen()
+    {
+        isFullScreen = !isFullScreen;
+
+        if (isFullScreen)
+        {
+            // フルスクリーンモードに切り替え
+            Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
+        }
+        else
+        {
+            // ウィンドウモードに切り替え
+            Screen.SetResolution(defaultWidth, defaultHeight, false);
+        }
     }
 
 }

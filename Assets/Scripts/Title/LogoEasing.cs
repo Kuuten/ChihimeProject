@@ -33,7 +33,7 @@ public class LogoEasing : MonoBehaviour
         sequence.Append
             (
                     GetComponent<RectTransform>().DOAnchorPos(
-                        new UnityEngine.Vector2(-100f,0f),0.5f)
+                        new UnityEngine.Vector2(-246f,105f),0.5f)
                     .SetEase(Ease.InOutQuint)
                     .OnStart(() => {
                         SoundManager.Instance.PlaySFX( (int)AudioChannel.SFX, (int)SFXList.SFX_DASH);

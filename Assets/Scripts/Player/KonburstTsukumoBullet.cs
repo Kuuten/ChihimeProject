@@ -33,9 +33,6 @@ public class KonburstTsukumoBullet : MonoBehaviour
 
     void Update()
     {
-        //  弾の更新
-        StartCoroutine(UpdateBullet());
-
         //  プレイヤーの座標
         GameObject player = GameManager.Instance.GetPlayer();
         Vector3 playerPos = player.transform.position;
@@ -58,6 +55,9 @@ public class KonburstTsukumoBullet : MonoBehaviour
         {
             transform.position = posR;
         }
+
+        //  弾の更新
+        UpdateBullet();
         
     }
 
@@ -74,7 +74,7 @@ public class KonburstTsukumoBullet : MonoBehaviour
     public bool GetIsL(){ return isL; }
 
     //-------------------------------------------
-    //  ダメージ時の点滅演出
+    //  点滅演出
     //-------------------------------------------
     private IEnumerator Blink(int loop_count, float flash_interval)
     {
@@ -108,7 +108,7 @@ public class KonburstTsukumoBullet : MonoBehaviour
     //-------------------------------------------
     //  人形からホーミング弾を射出し続ける
     //-------------------------------------------
-    private IEnumerator HomingShot(bool flipY)
+    private void HomingShot(bool flipY)
     {
         //  通常弾生成
         GameObject obj = Instantiate(
@@ -122,14 +122,12 @@ public class KonburstTsukumoBullet : MonoBehaviour
         //  Yを反転するかどうか設定する
         sr = obj.GetComponent<SpriteRenderer>();
         sr.flipY = flipY;
-
-        yield return null;
     }
 
     //-------------------------------------------
     //  弾を更新
     //-------------------------------------------
-    private IEnumerator UpdateBullet()
+    private void UpdateBullet()
     {
         //  GameManagerから状態を取得
         gamestatus = GameManager.Instance.GetGameState();
@@ -138,15 +136,13 @@ public class KonburstTsukumoBullet : MonoBehaviour
         switch(gamestatus)
         {
             case (int)eGameState.Zako:
-                yield return StartCoroutine(HomingShot(true));
+                HomingShot(true);
                 break;
             case (int)eGameState.Boss:
-                yield return StartCoroutine(HomingShot(false));
+                HomingShot(false);
                 break;
             case (int)eGameState.Event:
                 break;
         }
-
-        yield return null;
     }
 }

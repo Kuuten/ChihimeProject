@@ -28,13 +28,17 @@ public class LargeKon : MonoBehaviour
         if(collision.CompareTag("Player"))
         {
             // アイテム獲得SE
-
-            //  オブジェクトを消去
-            Destroy(this. gameObject);
+            SoundManager.Instance.PlaySFX(
+                (int)AudioChannel.SFX,
+                (int)SFXList.SFX_GET_KON);
 
             //  お金を増やす
             int money = MoneyManager.Instance.GetKonNumGainedFromLarge();
+
             MoneyManager.Instance.AddMoney(money);
+
+            //  オブジェクトを消去
+            Destroy(this. gameObject);
         }
     }
 }

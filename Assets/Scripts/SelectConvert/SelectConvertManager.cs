@@ -79,11 +79,12 @@ public class SelectConvertManager : MonoBehaviour
         /* ～～～～～～～～～～～演出の終了～～～～～～～～フラグ～～～ */
 
         //  BGM再生
-        //SoundManager.Instance.PlayBGM((int)MusicList.BGM_GAMEOVER);
+        SoundManager.Instance.PlayBGM((int)MusicList.BGM_SELECTCONVERT);
 
         //  最初はドウジを選択状態にする
         EventSystem.current.SetSelectedGameObject(doujiButton.gameObject);
         preSelectedObject = doujiButton.gameObject;
+        UpdateButtonScale(doujiButton.gameObject);
 
         //  動画と動画の枠を表示する
         explanationMovieBack.SetActive(true);
@@ -114,6 +115,44 @@ public class SelectConvertManager : MonoBehaviour
         preSelectedObject = EventSystem.current.currentSelectedGameObject;
     }
 
+    //  現在のステージNo.によって次の遷移先を決める
+    private void LoadNextScene()
+    {
+        //  BGMを止める
+        SoundManager.Instance.Stop((int)AudioChannel.MUSIC);
+
+        if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage01)
+        {
+            //  Introシーンへ
+            LoadingScene.Instance.LoadNextScene("Intro");
+        }
+        else if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage02)
+        {
+            //  ステージ２へ
+            LoadingScene.Instance.LoadNextScene("Stage02");
+        }
+        else if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage03)
+        {
+            //  ステージ３へ
+            LoadingScene.Instance.LoadNextScene("Stage03");
+        }
+        else if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage04)
+        {
+            //  ステージ４へ
+            LoadingScene.Instance.LoadNextScene("Stage04");
+        }
+        else if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage05)
+        {
+            //  ステージ５へ
+            LoadingScene.Instance.LoadNextScene("Stage05");
+        }
+        else if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage06)
+        {
+            //  ステージ６へ
+            LoadingScene.Instance.LoadNextScene("Stage06");
+        }
+    }
+
     //  ドウジボタンを押下した時
     public void OnDoujiButtonDown()
     {
@@ -138,9 +177,8 @@ public class SelectConvertManager : MonoBehaviour
         //  魂バート弾をセット
         PlayerInfoManager.g_CONVERTSHOT = SHOT_TYPE.DOUJI;
 
-        //  BGMを止めてIntroシーンへ
-        SoundManager.Instance.Stop((int)AudioChannel.MUSIC);
-        LoadingScene.Instance.LoadNextScene("Intro");
+        //  次のシーンをロード
+        LoadNextScene();
     }
 
     //  ツクモボタンを押下した時
@@ -167,9 +205,8 @@ public class SelectConvertManager : MonoBehaviour
         //  魂バート弾をセット
         PlayerInfoManager.g_CONVERTSHOT = SHOT_TYPE.TSUKUMO;
 
-        //  BGMを止めてIntroシーンへ
-        SoundManager.Instance.Stop((int)AudioChannel.MUSIC);
-        LoadingScene.Instance.LoadNextScene("Intro");
+        //  次のシーンをロード
+        LoadNextScene();
     }
 
 
@@ -187,15 +224,19 @@ public class SelectConvertManager : MonoBehaviour
         //wadatsumiButton.GetComponent<Button>().enabled = false;
         //hakumenButton.GetComponent<Button>().enabled = false;
 
-        //  決定音再生
-        SoundManager.Instance.PlaySFX(
-            (int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_DECISION);
+        ////  決定音再生
+        //SoundManager.Instance.PlaySFX(
+        //    (int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_DECISION);
 
-        //  巻物を閉じるアニメーションの完了を待つ
-        StartCoroutine(WaitingForClosingScroll());
+        ////  巻物を閉じるアニメーションの完了を待つ
+        //StartCoroutine(WaitingForClosingScroll());
     
-        //  魂バート弾をセット
-        PlayerInfoManager.g_CONVERTSHOT = SHOT_TYPE.KUCHINAWA;
+        ////  魂バート弾をセット
+        //PlayerInfoManager.g_CONVERTSHOT = SHOT_TYPE.KUCHINAWA;
+
+
+        //  決定不可SEを鳴らす
+        OnNotImplementedButtonDown();
     }
 
 
@@ -213,15 +254,19 @@ public class SelectConvertManager : MonoBehaviour
         //wadatsumiButton.GetComponent<Button>().enabled = false;
         //hakumenButton.GetComponent<Button>().enabled = false;
 
-        //  決定音再生
-        SoundManager.Instance.PlaySFX(
-            (int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_DECISION);
+        ////  決定音再生
+        //SoundManager.Instance.PlaySFX(
+        //    (int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_DECISION);
 
-        //  巻物を閉じるアニメーションの完了を待つ
-        StartCoroutine(WaitingForClosingScroll());
+        ////  巻物を閉じるアニメーションの完了を待つ
+        //StartCoroutine(WaitingForClosingScroll());
     
-        //  魂バート弾をセット
-        PlayerInfoManager.g_CONVERTSHOT = SHOT_TYPE.KURAMA;
+        ////  魂バート弾をセット
+        //PlayerInfoManager.g_CONVERTSHOT = SHOT_TYPE.KURAMA;
+
+
+        //  決定不可SEを鳴らす
+        OnNotImplementedButtonDown();
     }
 
 
@@ -239,15 +284,18 @@ public class SelectConvertManager : MonoBehaviour
         //wadatsumiButton.GetComponent<Button>().enabled = false;
         //hakumenButton.GetComponent<Button>().enabled = false;
 
-        //  決定音再生
-        SoundManager.Instance.PlaySFX(
-            (int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_DECISION);
+        ////  決定音再生
+        //SoundManager.Instance.PlaySFX(
+        //    (int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_DECISION);
 
-        //  巻物を閉じるアニメーションの完了を待つ
-        StartCoroutine(WaitingForClosingScroll());
+        ////  巻物を閉じるアニメーションの完了を待つ
+        //StartCoroutine(WaitingForClosingScroll());
     
-        //  魂バート弾をセット
-        PlayerInfoManager.g_CONVERTSHOT = SHOT_TYPE.WADATSUMI;
+        ////  魂バート弾をセット
+        //PlayerInfoManager.g_CONVERTSHOT = SHOT_TYPE.WADATSUMI;
+
+        //  決定不可SEを鳴らす
+        OnNotImplementedButtonDown();
     }
 
     //  ハクメンボタンを押下した時
@@ -264,15 +312,18 @@ public class SelectConvertManager : MonoBehaviour
         //wadatsumiButton.GetComponent<Button>().enabled = false;
         //hakumenButton.GetComponent<Button>().enabled = false;
 
-        //  決定音再生
-        SoundManager.Instance.PlaySFX(
-            (int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_DECISION);
+        ////  決定音再生
+        //SoundManager.Instance.PlaySFX(
+        //    (int)AudioChannel.SFX, (int)SFXList.SFX_TITLE_DECISION);
 
-        //  巻物を閉じるアニメーションの完了を待つ
-        StartCoroutine(WaitingForClosingScroll());
+        ////  巻物を閉じるアニメーションの完了を待つ
+        //StartCoroutine(WaitingForClosingScroll());
     
-        //  魂バート弾をセット
-        PlayerInfoManager.g_CONVERTSHOT = SHOT_TYPE.WADATSUMI;
+        ////  魂バート弾をセット
+        //PlayerInfoManager.g_CONVERTSHOT = SHOT_TYPE.WADATSUMI;
+
+        //  決定不可SEを鳴らす
+        OnNotImplementedButtonDown();
     }
 
     // フェードインの完了を待つ

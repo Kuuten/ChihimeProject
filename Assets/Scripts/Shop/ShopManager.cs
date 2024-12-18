@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 //--------------------------------------------------------------
 //
@@ -20,9 +21,34 @@ public class ShopManager : MonoBehaviour
         Bomb,               //  骨Gボム
 
     }
-    private readonly string failedText = "魂が足らへんで～。";  //  魂が足りない時の文字列
+
+    //  ヒエラルキーのテキストクラス
+    [SerializeField] private TextMeshProUGUI shopText;
+
+    //  通常テキスト
+    private readonly string normalText = 
+        "まいど！神蔵屋やで～。\nええもん安なってるから買ってってや～！";
+    //  買い物失敗時テキスト
+    private readonly string failedText = "魂が足らへんで～！";
+    //  買い物成功時テキスト
+    private readonly string successText = "おおきに！";
 
     bool canContorol;   //  操作可能フラグ
+
+    //  生成されるボタンのオブジェクト
+    private GameObject redheartButton,doubleupHeartButton,goldheartButton,bombButton;
+
+    //  再入荷ボタンオブジェクト
+    [SerializeField] private GameObject regenerateButton;
+
+    //  完売御礼オブジェクトの子オブエクトID
+    private static readonly int soldout_id = 4;
+
+    //  アイテムの値段をボタンから取得する用
+    private string RedHeartValueText;
+    private string DoubleupHeartValueText;
+    private string GoldHeartValueText;
+    private string BombValueText;
 
     void Start()
     {
@@ -34,24 +60,11 @@ public class ShopManager : MonoBehaviour
     //--------------------------------------------------------------
     IEnumerator StartInit()
     {
-        //**************************************************************
-        //  ここでショップの画面を表示しておく
-        //**************************************************************
-
-        //  白フェードイン
-        //yield return StartCoroutine(WaitingForWhiteFadeIn());
-
         //  ショップBGM再生
         SoundManager.Instance.PlayBGM((int)MusicList.BGM_SHOP);
 
-        //yield return new WaitForSeconds(1); //  1秒待つ
-
         //  操作可能にする
         canContorol = true;
-
-        //  赤ハートを選択状態に設定
-        //EventSystem.current.SetSelectedGameObject(menuButtonObj[(int)eMenuList.RedHeart]);
-
 
         yield return null;
     }
@@ -67,10 +80,29 @@ public class ShopManager : MonoBehaviour
     //--------------------------------------------------------------
     IEnumerator DisplayMessage(string msg)
     {
-        ////  メッセージオブジェクトを表示
-        //messageObj.SetActive(true);
+        //  メッセージオブジェクトを表示
+        shopText.text = msg;
 
-        yield return null;
+        //  １秒待つ
+        yield return new WaitForSeconds(2);
+
+        //  通常テキストに戻す
+        shopText.text = normalText;
+    }
+    
+    //--------------------------------------------------------------
+    //  失敗メッセージウィンドウを出す処理
+    //--------------------------------------------------------------
+    public IEnumerator DisplayFailedMessage()
+    {
+        //  メッセージオブジェクトを表示
+        shopText.text = failedText;
+
+        //  １秒待つ
+        yield return new WaitForSeconds(2);
+
+        //  通常テキストに戻す
+        shopText.text = normalText;
     }
 
     //--------------------------------------------------------------
@@ -78,6 +110,43 @@ public class ShopManager : MonoBehaviour
     //--------------------------------------------------------------
     public void OnRedHeartButtonDown()
     {
+        //  ボタンのテキストから直接代金を取得
+        int value = int.Parse(RemoveKonText(RedHeartValueText));
+
+        Debug.Log($"赤いハートの値段は{value}です");
+
+        //  回復量
+        int heal_value = 2;
+
+        //  購入可能なら代金分魂を減らす
+        if(MoneyManager.Instance.CanBuyItem(value))
+        { 
+            //  体力をハート１個分増やす
+            PlayerHealth ph = GameManager.Instance.GetPlayer().GetComponent<PlayerHealth>();
+            ph.Heal(heal_value);
+
+            //  ButtonのInterctiveを無効化
+            redheartButton.GetComponent<Button>().interactable = false;
+
+            //  完売御礼を表示(ボタンオブジェクトからID４の子オブジェクト)
+            redheartButton.transform.GetChild(soldout_id).gameObject.SetActive(true);
+
+            //  再入荷ボタンオブジェクトを選択状態にする
+            EventSystem.current.SetSelectedGameObject(regenerateButton);
+
+            //  メッセージ表示
+            StartCoroutine(DisplayMessage(successText));
+
+            //  現在体力を取得
+            int health = ph.GetCurrentHealth();
+            Debug.Log($"体力が{heal_value}回復して{health}になった！");
+        }
+        else
+        {
+            //  メッセージ表示
+            StartCoroutine(DisplayMessage(failedText));
+        }
+
         
     }
 
@@ -86,7 +155,54 @@ public class ShopManager : MonoBehaviour
     //--------------------------------------------------------------
     public void OnDoubleupHeartButtonDown()
     {
-        
+        //  ボタンのテキストから直接代金を取得
+        int value = int.Parse(RemoveKonText(DoubleupHeartValueText));
+
+        Debug.Log($"ダブルアップハートの値段は{value}です");
+
+        //  回復量
+        int heal_value = 0;
+
+        //  50%の確率で追加回復
+        int rand = Random.Range(1,101);
+
+        //  購入可能なら代金分魂を減らす
+        if(MoneyManager.Instance.CanBuyItem(value))
+        { 
+            if(rand % 2 == 0)   //  追加回復
+            {
+                heal_value = 4;
+            }
+            else // １だけ回復
+            {
+                heal_value = 2;
+            }
+
+            //  体力を増やす
+            PlayerHealth ph = GameManager.Instance.GetPlayer().GetComponent<PlayerHealth>();
+            ph.Heal(heal_value);
+
+            //  ButtonのInterctiveを無効化
+            doubleupHeartButton.GetComponent<Button>().interactable = false;
+
+            //  完売御礼を表示(ボタンオブジェクトからID４の子オブジェクト)
+            doubleupHeartButton.transform.GetChild(soldout_id).gameObject.SetActive(true);
+
+            //  再入荷ボタンオブジェクトを選択状態にする
+            EventSystem.current.SetSelectedGameObject(regenerateButton);
+
+            //  メッセージ表示
+            StartCoroutine(DisplayMessage(successText));
+
+            //  現在体力を取得
+            int health = ph.GetCurrentHealth();
+            Debug.Log($"体力が{heal_value}回復して{health}になった！");
+        }
+        else
+        {
+            //  メッセージ表示
+            StartCoroutine(DisplayMessage(failedText));
+        }
     }
 
     //--------------------------------------------------------------
@@ -94,7 +210,50 @@ public class ShopManager : MonoBehaviour
     //--------------------------------------------------------------
     public void OnGoldHeartButtonDown()
     {
-        
+        //  ボタンのテキストから直接代金を取得
+        int value = int.Parse(RemoveKonText(GoldHeartValueText));;
+
+        Debug.Log($"金色のハートの値段は{value}です");
+
+        //  ハート１個分の体力
+        int one_heart = int.Parse(RemoveKonText(GoldHeartValueText));
+
+        //  購入可能なら代金分魂を減らす
+        if(MoneyManager.Instance.CanBuyItem(value))
+        { 
+            //  最大体力をハート１個分増やす
+            GameManager.Instance.GetPlayer().GetComponent<PlayerHealth>()
+                .IncreaseHP(one_heart);
+
+            //  最大体力を取得
+            PlayerHealth ph = GameManager.Instance.GetPlayer().GetComponent<PlayerHealth>();
+            int limit_health = ph.GetCurrentMaxHealth();
+            
+            //  体力を全回復
+            GameManager.Instance.GetPlayer().GetComponent<PlayerHealth>()
+                .Heal(limit_health);
+
+            //  ButtonのInterctiveを無効化
+            goldheartButton.GetComponent<Button>().interactable = false;
+
+            //  完売御礼を表示(ボタンオブジェクトからID４の子オブジェクト)
+            goldheartButton.transform.GetChild(soldout_id).gameObject.SetActive(true);
+
+            //  再入荷ボタンオブジェクトを選択状態にする
+            EventSystem.current.SetSelectedGameObject(regenerateButton);
+
+            //  メッセージ表示
+            StartCoroutine(DisplayMessage(successText));
+
+            //  現在体力を取得
+            int health = ph.GetCurrentHealth();
+            Debug.Log($"最大体力が2増えて全回復した！現在体力:{health}");
+        }
+        else
+        {
+            //  メッセージ表示
+            StartCoroutine(DisplayMessage(failedText));
+        }
     }
 
     //--------------------------------------------------------------
@@ -102,6 +261,57 @@ public class ShopManager : MonoBehaviour
     //--------------------------------------------------------------
     public void OnHoneGBombButtonDown()
     {
-        
+        //  ボタンのテキストから直接代金を取得
+        int value = int.Parse(RemoveKonText(BombValueText));
+
+        Debug.Log($"ボムの値段は{value}です");
+
+        //  購入可能なら代金分魂を減らす
+        if(MoneyManager.Instance.CanBuyItem(value))
+        { 
+            PlayerBombManager.Instance.AddBomb();
+
+            //  ButtonのInterctiveを無効化
+            bombButton.GetComponent<Button>().interactable = false;
+
+            //  完売御礼を表示(ボタンオブジェクトからID４の子オブジェクト)
+            bombButton.transform.GetChild(soldout_id).gameObject.SetActive(true);
+
+            //  再入荷ボタンオブジェクトを選択状態にする
+            EventSystem.current.SetSelectedGameObject(regenerateButton);
+
+            //  メッセージ表示
+            StartCoroutine(DisplayMessage(successText));
+
+            //  現在のボム数を取得
+            int bombNum = PlayerBombManager.Instance.GetBombNum();
+            Debug.Log($"ボムが１コ増えて{bombNum}コになった！");
+        }
+        else
+        {
+            //  メッセージ表示
+            StartCoroutine(DisplayMessage(failedText));
+        }
+
     }
+
+    //--------------------------------------------------------------
+    //  文字列から魂を取り除く
+    //--------------------------------------------------------------
+    private string RemoveKonText(string s)
+    {
+        return s.Replace("魂","");
+    }
+
+    //--------------------------------------------------------------
+    //  プロパティ
+    //--------------------------------------------------------------
+    public void SetRedHeartButton(GameObject obj){ redheartButton = obj; }
+    public void SetDoubleupHeartButton(GameObject obj){ doubleupHeartButton = obj; }
+    public void SetGoldHeartButton(GameObject obj){ goldheartButton = obj; }
+    public void SetBombButton(GameObject obj){ bombButton = obj; }
+    public void SetRedHeartValueText(string s){ RedHeartValueText = s; }
+    public void SetDoubleupValueText(string s){ DoubleupHeartValueText = s; }
+    public void SetGoldHeartValueText(string s){ GoldHeartValueText = s; }
+    public void SetBombValueText(string s){ BombValueText = s; }
 }

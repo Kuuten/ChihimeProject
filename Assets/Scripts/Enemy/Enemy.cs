@@ -579,6 +579,11 @@ public class Enemy : MonoBehaviour
         //  やられエフェクト
         Instantiate(explosion, transform.position, transform.rotation);
 
+        // やられSE
+        SoundManager.Instance.PlaySFX(
+            (int)AudioChannel.SFX_ENEMY,
+            (int)SFXList.SFX_ENEMY_DEATH);
+
         //  アイテムドロップ判定
         DropItems drop = this.GetComponent<DropItems>();
         if (powerupItems == ePowerupItems.Random)
@@ -605,6 +610,11 @@ public class Enemy : MonoBehaviour
     {
         //  やられエフェクト
         Instantiate(explosion, transform.position, transform.rotation);
+
+        // やられSE
+        SoundManager.Instance.PlaySFX(
+            (int)AudioChannel.SFX_ENEMY,
+            (int)SFXList.SFX_ENEMY_DEATH);
 
         //  アイテムドロップ判定
         DropItems drop = this.GetComponent<DropItems>();
@@ -1513,9 +1523,8 @@ public class Enemy : MonoBehaviour
     //------------------------------------------------------------------
     private IEnumerator MidBoss_Phase2()
     {
-        int rand_move = 40;       //  ジャンプ移動の閾値
-        int rand_wideshot = 70;   //  バラマキ弾の閾値
-        int rand_snipeshot = 100; //  自機狙い弾の閾値
+        int rand_move = 60;    //  ジャンプ移動の閾値
+        int rand_shot = 100;   //  バラマキ弾自機狙い弾の閾値
 
         //  ジャンプ
         yield return StartCoroutine(MidBoss_Jump());
@@ -1530,12 +1539,9 @@ public class Enemy : MonoBehaviour
             {
                 yield return StartCoroutine(MidBoss_JumpAndMoveSide());
             }
-            else if(rand <= rand_wideshot)
+            else if(rand <= rand_shot)
             {
                 yield return StartCoroutine(MidBoss_WildlyShot5way());
-            }
-            else if(rand <= rand_snipeshot)
-            {
                 yield return StartCoroutine(MidBoss_SnipeShot3way());
             }
 
@@ -1601,7 +1607,7 @@ public class Enemy : MonoBehaviour
     {
         float interval = 2.0f;  //  次の行動までの時間(秒)
         float duration = 0.25f;
-        float jumpY = 7.0f;
+        float jumpY = 9.0f;
         float jump_minX = -7.0f;
         float jump_maxX = 5.0f;
 
@@ -1710,8 +1716,8 @@ public class Enemy : MonoBehaviour
         int wayNum = 5;                 //  弾のway数(必ず3way以上の奇数にすること)
         float Degree = totalDegree / (wayNum-1);     //  弾一発毎にずらす角度         
         float speed = 2.0f;             //  弾速
-        int chain = 3;                  //  連弾数
-        float chainInterval = 0.5f;     //  連弾の間隔（秒）
+        int chain = 10;                 //  連弾数
+        float chainInterval = 0.2f;     //  連弾の間隔（秒）
 
         //  敵の前方ベクトルを取得
         Vector3 vector0 = transform.up;
@@ -1757,9 +1763,9 @@ public class Enemy : MonoBehaviour
 
         float Degree = 15;              //  ずらす角度
         int wayNum = 3;                 //  弾のway数
-        float speed = 3.0f;             //  弾速
+        float speed = 7.0f;             //  弾速
         int chain = 1;                  //  連弾数
-        float chainInterval = 0.3f;     //  連弾の間隔（秒）
+        float chainInterval = 0.1f;     //  連弾の間隔（秒）
 
         //  敵からプレイヤーへのベクトルを取得
         Vector3 playerPos = GameManager.Instance.GetPlayer().transform.position;
@@ -1807,10 +1813,10 @@ public class Enemy : MonoBehaviour
         float totalDegree = 360*5;        //  撃つ範囲の総角  
         int wayNum = 24*5;                //  弾のway数
         float Degree = totalDegree / wayNum;     //  弾一発毎にずらす角度         
-        float speed = 2.0f;               //  弾速
+        float speed = 4.0f;               //  弾速
         int chain = wayNum;               //  連弾数
         float chainInterval = 0.03f;      //  連弾の間隔（秒）
-        float wait_time = 4f;             //  弾発射後の待ち時間（秒）
+        float wait_time = 2f;             //  弾発射後の待ち時間（秒）
 
         //  敵の前方ベクトルを取得
         Vector3 vector0 = transform.up;
