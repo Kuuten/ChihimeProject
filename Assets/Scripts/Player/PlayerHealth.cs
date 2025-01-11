@@ -29,8 +29,11 @@ public class PlayerHealth : MonoBehaviour
     //  ハートのタイプ
     enum HeartType
     {
-        Half,   //  半分
-        Full,   //  ハート１個分
+        Half,         //  半分
+        Full,         //  ハート１個分
+        ShieldNone,   //  シールドハート０個分
+        ShieldHalf,   //  シールド半分
+        ShieldFull,   //  シールドハート１個分
 
         Max
     }
@@ -41,6 +44,12 @@ public class PlayerHealth : MonoBehaviour
     private bool bSuperMode;
     private bool bDeath;
     private bool bDamage;
+
+    //  シングルトンなインスタンス
+    public static PlayerHealth Instance
+    {
+        get; private set;
+    }
 
     //  ダメージ演出用のAnimator
     [SerializeField] private RuntimeAnimatorController animPlayerFront;
@@ -55,6 +64,15 @@ public class PlayerHealth : MonoBehaviour
     //  死亡演出用のAnimator
     [SerializeField] private RuntimeAnimatorController animPlayerDeath1;
     [SerializeField] private RuntimeAnimatorController animPlayerDeath2;
+
+    //  シールド演出用のAnimator
+    [SerializeField] private RuntimeAnimatorController animPlayerShieldFront;
+    [SerializeField] private RuntimeAnimatorController animPlayerShieldFrontLeft;
+    [SerializeField] private RuntimeAnimatorController animPlayerShieldFrontRight;
+    [SerializeField] private RuntimeAnimatorController animPlayerShieldBack;
+    [SerializeField] private RuntimeAnimatorController animPlayerShieldBackLeft;
+    [SerializeField] private RuntimeAnimatorController animPlayerShieldBackRight;
+
 
     //  点滅させるためのSpriteRenderer
     SpriteRenderer sp;
@@ -75,6 +93,9 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private GameObject heartFrameObj;
     //  ハートフレームオブジェクトのリスト
     private List<GameObject> heartList = new List<GameObject>();
+
+    //  シールドフラグ
+    private bool isShielded;
 
     //-------------------------------------------------------------
     //  FaceUI周り
@@ -99,9 +120,16 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private GameObject DropItem;
 
 
-    void Awake()
+    private void Awake()
     {
- 
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     void Start()
@@ -149,6 +177,9 @@ public class PlayerHealth : MonoBehaviour
 
         //  最初はGameOverも非表示
         gameOver.SetActive(false);
+
+        //  最初はシールドなし
+        isShielded = PlayerInfoManager.g_IS_SHIELD;
 
         //  親オブジェクトの子オブジェクトとしてハートフレームを生成
         for( int i=0; i<currentMaxHealth/2;i++ )
@@ -200,214 +231,240 @@ public class PlayerHealth : MonoBehaviour
         //  無敵か死亡しているなら飛ばす
         if(bSuperMode || bDeath)return;
 
-        if(collision.CompareTag("Enemy") )    //  敵本体にHIT！
+        //  シールド状態
+        if(isShielded)
         {
-            //  無敵モードON
-            bSuperMode = true;
-
-            //  プレイヤーのダメージ処理
-            EnemyData ed = collision.GetComponent<Enemy>().GetEnemyData();
-
-            Damage( ed.Attack );
-
-            //  死亡フラグON
-            if(currentHealth <= 0)
+            if( collision.CompareTag("Enemy") ||    //  ザコ敵本体にHIT！
+                collision.CompareTag("Boss") ||     //  ボス本体にHIT！
+                collision.CompareTag("EnemyBullet") //  敵弾にHIT！
+            )    
             {
-                bDamage = false;
-                bDeath = true;
-                //  HitCircleを非表示にする
-                this.transform.GetChild(6).gameObject.SetActive(false);
+                //  無敵モードON
+                bSuperMode = true;
                 
-                //  ショットの無効化
-                PlayerShotManager psm = this.GetComponent<PlayerShotManager>();
-                psm.DisableShot();
+                //  シールドを削除
+                isShielded = false;
 
-                //  ボムの無効化
-                this.GetComponent<PlayerBombManager>().enabled = false;
+                //  シールド破壊SE再生
+                SoundManager.Instance.PlaySFX(
+                    (int)AudioChannel.SFX_DAMAGE,
+                    (int)SFXList.SFX_SHIELDBREAK);
 
-                StartCoroutine(Death());       //  やられ演出
-                return;
+                //  無敵演出開始
+                var taskBlink = Blink();
+                await taskBlink;
             }
-
-            //  ダメージ顔UIに変更
-            StartCoroutine(ChangeToDmageFace());
-
-            //  ダメージSE再生
-            SoundManager.Instance.PlaySFX(
-            (int)AudioChannel.SFX_DAMAGE,
-            (int)SFXList.SFX_PLAYER_DAMAGE);
-
-            //  全強化１段階ダウン
-            PlayerShotManager ps = this.GetComponent<PlayerShotManager>();
-            ps.LeveldownNormalShot();
-            PlayerMovement pm = this.GetComponent<PlayerMovement>();
-            pm.LeveldownMoveSpeed();
-
-            //  デバッグ表示
-            Debug.Log("全強化１段階ダウン！");
-            Debug.Log("ショット強化 :" + ps.GetNormalShotLevel() 
-                +"" + "スピード強化" + pm.GetSpeedLevel());
-            Debug.Log("Playerの体力 :" + currentHealth);
-
-            //  ダメージ時の赤くなる点滅演出開始
-            var task1 = DamageAnimation();
-            await task1;
-
-            //  無敵演出開始
-            var task2 = Blink();
-            await task2;
-
         }
-        else if(collision.CompareTag("Boss") )    //  敵本体にHIT！
+        //  通常状態
+        else
         {
-            //  無敵モードON
-            bSuperMode = true;
-
-            //  プレイヤーのダメージ処理
-            EnemyData ed;
-            if(collision.GetComponent<BossDouji>()) 
+            if(collision.CompareTag("Enemy") )    //  敵本体にHIT！
             {
-                ed = collision.GetComponent<BossDouji>().GetEnemyData();
+                //  無敵モードON
+                bSuperMode = true;
+
+                //  プレイヤーのダメージ処理
+                EnemyData ed = collision.GetComponent<Enemy>().GetEnemyData();
+
+                Damage( ed.Attack );
+
+                //  死亡フラグON
+                if(currentHealth <= 0)
+                {
+                    bDamage = false;
+                    bDeath = true;
+                    //  HitCircleを非表示にする
+                    this.transform.GetChild(6).gameObject.SetActive(false);
+                
+                    //  ショットの無効化
+                    PlayerShotManager psm = this.GetComponent<PlayerShotManager>();
+                    psm.DisableShot();
+
+                    //  ボムの無効化
+                    this.GetComponent<PlayerBombManager>().enabled = false;
+
+                    StartCoroutine(Death());       //  やられ演出
+                    return;
+                }
+
+                //  ダメージ顔UIに変更
+                StartCoroutine(ChangeToDmageFace());
+
+                //  ダメージSE再生
+                SoundManager.Instance.PlaySFX(
+                (int)AudioChannel.SFX_DAMAGE,
+                (int)SFXList.SFX_PLAYER_DAMAGE);
+
+                //  全強化１段階ダウン
+                PlayerShotManager ps = this.GetComponent<PlayerShotManager>();
+                ps.LeveldownNormalShot();
+                PlayerMovement pm = this.GetComponent<PlayerMovement>();
+                pm.LeveldownMoveSpeed();
+
+                //  デバッグ表示
+                Debug.Log("全強化１段階ダウン！");
+                Debug.Log("ショット強化 :" + ps.GetNormalShotLevel() 
+                    +"" + "スピード強化" + pm.GetSpeedLevel());
+                Debug.Log("Playerの体力 :" + currentHealth);
+
+                //  ダメージ時の赤くなる点滅演出開始
+                var task1 = DamageAnimation();
+                await task1;
+
+                //  無敵演出開始
+                var taskBlink = Blink();
+                await taskBlink;
             }
-            //if(collision.GetComponent<BossTsukumo>()) 
-            //{
-            //    ed = collision.GetComponent<BossTsukumo>().GetEnemyData();
-            //}
-            //if(collision.GetComponent<BossKuchinawa>()) 
-            //{
-            //    ed = collision.GetComponent<BossKuchinawa>().GetEnemyData();
-            //}
-            //if(collision.GetComponent<BossKurama>()) 
-            //{
-            //    ed = collision.GetComponent<BossKurama>().GetEnemyData();
-            //}
-            //if(collision.GetComponent<BossWadatsumi>()) 
-            //{
-            //    ed = collision.GetComponent<BossWadatsumi>().GetEnemyData();
-            //}
-            //if(collision.GetComponent<BossHakumen>()) 
-            //{
-            //    ed = collision.GetComponent<BossHakumen>().GetEnemyData();
-            //}
-            else ed = null;
-
-            Damage( ed.Attack );
-
-            //  死亡フラグON
-            if(currentHealth <= 0)
+            else if(collision.CompareTag("Boss") )    //  敵本体にHIT！
             {
-                bDamage = false;
-                bDeath = true;
-                //  HitCircleを非表示にする
-                this.transform.GetChild(6).gameObject.SetActive(false);
+                //  無敵モードON
+                bSuperMode = true;
 
-                //  ショットの無効化
-                PlayerShotManager psm = this.GetComponent<PlayerShotManager>();
-                psm.DisableShot();
+                //  プレイヤーのダメージ処理
+                EnemyData ed;
+                if(collision.GetComponent<BossDouji>()) 
+                {
+                    ed = collision.GetComponent<BossDouji>().GetEnemyData();
+                }
+                //if(collision.GetComponent<BossTsukumo>()) 
+                //{
+                //    ed = collision.GetComponent<BossTsukumo>().GetEnemyData();
+                //}
+                //if(collision.GetComponent<BossKuchinawa>()) 
+                //{
+                //    ed = collision.GetComponent<BossKuchinawa>().GetEnemyData();
+                //}
+                //if(collision.GetComponent<BossKurama>()) 
+                //{
+                //    ed = collision.GetComponent<BossKurama>().GetEnemyData();
+                //}
+                //if(collision.GetComponent<BossWadatsumi>()) 
+                //{
+                //    ed = collision.GetComponent<BossWadatsumi>().GetEnemyData();
+                //}
+                //if(collision.GetComponent<BossHakumen>()) 
+                //{
+                //    ed = collision.GetComponent<BossHakumen>().GetEnemyData();
+                //}
+                else ed = null;
 
-                //  ボムの無効化
-                this.GetComponent<PlayerBombManager>().enabled = false;
+                Damage( ed.Attack );
 
-                StartCoroutine(Death());       //  やられ演出
-                return;
+                //  死亡フラグON
+                if(currentHealth <= 0)
+                {
+                    bDamage = false;
+                    bDeath = true;
+                    //  HitCircleを非表示にする
+                    this.transform.GetChild(6).gameObject.SetActive(false);
+
+                    //  ショットの無効化
+                    PlayerShotManager psm = this.GetComponent<PlayerShotManager>();
+                    psm.DisableShot();
+
+                    //  ボムの無効化
+                    this.GetComponent<PlayerBombManager>().enabled = false;
+
+                    StartCoroutine(Death());       //  やられ演出
+                    return;
+                }
+
+                //  ダメージ顔UIに変更
+                StartCoroutine(ChangeToDmageFace());
+
+                //  ダメージSE再生
+                SoundManager.Instance.PlaySFX(
+                (int)AudioChannel.SFX_DAMAGE,
+                (int)SFXList.SFX_PLAYER_DAMAGE);
+
+                //  全強化１段階ダウン
+                PlayerShotManager ps = this.GetComponent<PlayerShotManager>();
+                ps.LeveldownNormalShot();
+                //PlayerMovement pm = this.GetComponent<PlayerMovement>();
+                //pm.LeveldownMoveSpeed();
+
+                //  デバッグ表示
+                Debug.Log("ショット強化ダウン！");
+                Debug.Log("ショット強化 :" + ps.GetNormalShotLevel());
+                Debug.Log("Playerの体力 :" + currentHealth);
+
+                //  ダメージ時の赤くなる点滅演出開始
+                var task1 = DamageAnimation();
+                await task1;
+
+                //  無敵演出開始
+                var taskBlink = Blink();
+                await taskBlink;
             }
-
-            //  ダメージ顔UIに変更
-            StartCoroutine(ChangeToDmageFace());
-
-            //  ダメージSE再生
-            SoundManager.Instance.PlaySFX(
-            (int)AudioChannel.SFX_DAMAGE,
-            (int)SFXList.SFX_PLAYER_DAMAGE);
-
-            //  全強化１段階ダウン
-            PlayerShotManager ps = this.GetComponent<PlayerShotManager>();
-            ps.LeveldownNormalShot();
-            //PlayerMovement pm = this.GetComponent<PlayerMovement>();
-            //pm.LeveldownMoveSpeed();
-
-            //  デバッグ表示
-            Debug.Log("ショット強化ダウン！");
-            Debug.Log("ショット強化 :" + ps.GetNormalShotLevel());
-            Debug.Log("Playerの体力 :" + currentHealth);
-
-            //  ダメージ時の赤くなる点滅演出開始
-            var task1 = DamageAnimation();
-            await task1;
-
-            //  無敵演出開始
-            var task2 = Blink();
-            await task2;
-
-        }
-        else if(collision.CompareTag("EnemyBullet"))    //  敵弾にHIT！
-        {
-            //  無敵モードON
-            bSuperMode = true;
-
-            //  プレイヤーのダメージ処理
-            int power = 0;
-            if(collision.GetComponent<EnemyBullet>())
+            else if(collision.CompareTag("EnemyBullet"))    //  敵弾にHIT！
             {
-                power = collision.GetComponent<EnemyBullet>().GetPower();
+                //  無敵モードON
+                bSuperMode = true;
+
+                //  プレイヤーのダメージ処理
+                int power = 0;
+                if(collision.GetComponent<EnemyBullet>())
+                {
+                    power = collision.GetComponent<EnemyBullet>().GetPower();
+                }
+                else if(collision.GetComponent<DoujiPhase2Bullet>())
+                {
+                    power = collision.GetComponent<DoujiPhase2Bullet>().GetPower();
+                }
+                else if(collision.GetComponent<DoujiPhase3Bullet>())
+                {
+                    power = collision.GetComponent<DoujiPhase3Bullet>().GetPower();
+                    Debug.Log("ダメージ！" + power);
+                }
+
+                Damage( power );
+
+                //  死亡フラグON
+                if(currentHealth <= 0)
+                {
+                    bDamage = false;
+                    bDeath = true;
+                    //  HitCircleを非表示にする
+                    this.transform.GetChild(6).gameObject.SetActive(false);
+
+                    //  ショットの無効化
+                    PlayerShotManager psm = this.GetComponent<PlayerShotManager>();
+                    psm.DisableShot();
+
+                    //  ボムの無効化
+                    this.GetComponent<PlayerBombManager>().enabled = false;
+
+                    StartCoroutine(Death());       //  やられ演出
+                    return;
+                }
+
+                //  ダメージ顔UIに変更
+                StartCoroutine(ChangeToDmageFace());
+
+                //  ダメージSE再生
+                SoundManager.Instance.PlaySFX(
+                (int)AudioChannel.SFX_DAMAGE,
+                (int)SFXList.SFX_PLAYER_DAMAGE);
+
+                //  全強化１段階ダウン
+                PlayerShotManager ps = this.GetComponent<PlayerShotManager>();
+                ps.LeveldownNormalShot();
+                //PlayerMovement pm = this.GetComponent<PlayerMovement>();
+                //pm.LeveldownMoveSpeed();
+
+                //  デバッグ表示
+                Debug.Log("ショット強化１段階ダウン！");
+                Debug.Log("ショット強化 :" + ps.GetNormalShotLevel());
+                Debug.Log("Playerの体力 :" + currentHealth);
+
+                //  ダメージ時の赤くなる点滅演出開始
+                var task1 = DamageAnimation();
+                await task1;
+
+                //  無敵演出開始
+                var taskBlink = Blink();
+                await taskBlink;
             }
-            else if(collision.GetComponent<DoujiPhase2Bullet>())
-            {
-                power = collision.GetComponent<DoujiPhase2Bullet>().GetPower();
-            }
-            else if(collision.GetComponent<DoujiPhase3Bullet>())
-            {
-                power = collision.GetComponent<DoujiPhase3Bullet>().GetPower();
-                Debug.Log("ダメージ！" + power);
-            }
-
-            Damage( power );
-
-            //  死亡フラグON
-            if(currentHealth <= 0)
-            {
-                bDamage = false;
-                bDeath = true;
-                //  HitCircleを非表示にする
-                this.transform.GetChild(6).gameObject.SetActive(false);
-
-                //  ショットの無効化
-                PlayerShotManager psm = this.GetComponent<PlayerShotManager>();
-                psm.DisableShot();
-
-                //  ボムの無効化
-                this.GetComponent<PlayerBombManager>().enabled = false;
-
-                StartCoroutine(Death());       //  やられ演出
-                return;
-            }
-
-            //  ダメージ顔UIに変更
-            StartCoroutine(ChangeToDmageFace());
-
-            //  ダメージSE再生
-            SoundManager.Instance.PlaySFX(
-            (int)AudioChannel.SFX_DAMAGE,
-            (int)SFXList.SFX_PLAYER_DAMAGE);
-
-            //  全強化１段階ダウン
-            PlayerShotManager ps = this.GetComponent<PlayerShotManager>();
-            ps.LeveldownNormalShot();
-            //PlayerMovement pm = this.GetComponent<PlayerMovement>();
-            //pm.LeveldownMoveSpeed();
-
-            //  デバッグ表示
-            Debug.Log("ショット強化１段階ダウン！");
-            Debug.Log("ショット強化 :" + ps.GetNormalShotLevel());
-            Debug.Log("Playerの体力 :" + currentHealth);
-
-            //  ダメージ時の赤くなる点滅演出開始
-            var task1 = DamageAnimation();
-            await task1;
-
-            //  無敵演出開始
-            var task2 = Blink();
-            await task2;
         }
     }
 
@@ -477,18 +534,43 @@ public class PlayerHealth : MonoBehaviour
 
                 if(check == 1)          //  入力が+方向なら
                 {
-                    this.GetComponent<Animator>().runtimeAnimatorController =
-                        animPlayerFrontRight;
+                    if(isShielded)  //  シールド状態時
+                    {
+                        this.GetComponent<Animator>().runtimeAnimatorController =
+                            animPlayerShieldFrontRight;
+                    }
+                    else
+                    {
+                        this.GetComponent<Animator>().runtimeAnimatorController =
+                            animPlayerFrontRight;
+                    }
+
                 }
                 else if(check == -1)    //  入力が-方向なら
                 {
-                    this.GetComponent<Animator>().runtimeAnimatorController =
-                        animPlayerFrontLeft;
+                    if(isShielded)  //  シールド状態時
+                    {
+                        this.GetComponent<Animator>().runtimeAnimatorController =
+                            animPlayerShieldFrontLeft;
+                    }
+                    else
+                    {
+                        this.GetComponent<Animator>().runtimeAnimatorController =
+                            animPlayerFrontLeft;
+                    }
                 }
                 else   //   入力なしなら
                 {
-                    this.GetComponent<Animator>().runtimeAnimatorController =
-                        animPlayerFront;
+                    if(isShielded)  //  シールド状態時
+                    {
+                        this.GetComponent<Animator>().runtimeAnimatorController =
+                            animPlayerShieldFront;
+                    }
+                    else
+                    {
+                        this.GetComponent<Animator>().runtimeAnimatorController =
+                            animPlayerFront;
+                    }
                 }
             }
 
@@ -507,18 +589,42 @@ public class PlayerHealth : MonoBehaviour
 
                 if(check == 1)          //  入力が+方向なら
                 {
-                    this.GetComponent<Animator>().runtimeAnimatorController =
-                        animPlayerBackRight;
+                    if(isShielded)  //  シールド状態時
+                    {
+                        this.GetComponent<Animator>().runtimeAnimatorController =
+                            animPlayerShieldBackRight;
+                    }
+                    else
+                    {
+                        this.GetComponent<Animator>().runtimeAnimatorController =
+                            animPlayerBackRight;
+                    }
                 }
                 else if(check == -1)    //  入力が-方向なら
                 {
-                    this.GetComponent<Animator>().runtimeAnimatorController =
-                        animPlayerBackLeft;
+                    if(isShielded)  //  シールド状態時
+                    {
+                        this.GetComponent<Animator>().runtimeAnimatorController =
+                            animPlayerShieldBackLeft;
+                    }
+                    else
+                    {
+                        this.GetComponent<Animator>().runtimeAnimatorController =
+                            animPlayerBackLeft;
+                    }
                 }
                 else   //   入力なしなら
                 {
-                    this.GetComponent<Animator>().runtimeAnimatorController =
-                        animPlayerBack;
+                    if(isShielded)  //  シールド状態時
+                    {
+                        this.GetComponent<Animator>().runtimeAnimatorController =
+                            animPlayerShieldBack;
+                    }
+                    else
+                    {
+                        this.GetComponent<Animator>().runtimeAnimatorController =
+                            animPlayerBack;
+                    }
                 }
             }
         }
@@ -662,8 +768,9 @@ public class PlayerHealth : MonoBehaviour
     }
 
     public void SetSuperMode( bool flag ){ bSuperMode = flag; }
-
     public bool GetSuperMode(){ return bSuperMode; }
+    public void SetIsShielded( bool flag ){ isShielded = flag; }
+    public bool GetIsShielded(){ return isShielded; }
 
     //-------------------------------------------
     //  やられ演出
@@ -794,78 +901,205 @@ public class PlayerHealth : MonoBehaviour
     //---------------------------------------------------
     //  現在体力を受け取って体力UIを計算する
     //---------------------------------------------------
-    private void CalculateHealthUI(int health)
+    public void CalculateHealthUI(int health)
     {
         if(health < 0)
         {
             health = 0;
         }
 
-            //  体力0ならハートを全部非表示にする
-            if (health == 0)
+        //  体力0ならハートを全部非表示にする
+        if (health == 0)
+        {
+            for(int i=0;i<heartList.Count;i++)
             {
-                for(int i=0;i<heartList.Count;i++)
-                {
-                    heartList[i].transform.GetChild((int)HeartType.Half)
-                        .gameObject.SetActive(false);
-                    heartList[i].transform.GetChild((int)HeartType.Full)
-                        .gameObject.SetActive(false);
-                }
+                heartList[i].transform.GetChild((int)HeartType.Half)
+                    .gameObject.SetActive(false);
+                heartList[i].transform.GetChild((int)HeartType.Full)
+                    .gameObject.SetActive(false);
+                heartList[i].transform.GetChild((int)HeartType.ShieldNone)
+                    .gameObject.SetActive(false);
+                heartList[i].transform.GetChild((int)HeartType.ShieldHalf)
+                    .gameObject.SetActive(false);
+                heartList[i].transform.GetChild((int)HeartType.ShieldFull)
+                    .gameObject.SetActive(false);
             }
-            else if(health == 1)
+        }
+        else if(health == 1)
+        {
+            for(int i=0;i<heartList.Count;i++)
             {
-                for(int i=0;i<heartList.Count;i++)
+                if(i==0)
                 {
-                    if(i==0)
+                    //  シールド状態時の処理
+                    if(isShielded)
                     {
                         heartList[i].transform.GetChild((int)HeartType.Half)
                             .gameObject.SetActive(true);
                         heartList[i].transform.GetChild((int)HeartType.Full)
                             .gameObject.SetActive(false);
+                        heartList[i].transform.GetChild((int)HeartType.ShieldNone)
+                            .gameObject.SetActive(true);
+                        heartList[i].transform.GetChild((int)HeartType.ShieldHalf)
+                            .gameObject.SetActive(true);
+                        heartList[i].transform.GetChild((int)HeartType.ShieldFull)
+                            .gameObject.SetActive(false);
                     }
+                    //  通常状態時の処理
+                    else
+                    {
+                        heartList[i].transform.GetChild((int)HeartType.Half)
+                            .gameObject.SetActive(true);
+                        heartList[i].transform.GetChild((int)HeartType.Full)
+                            .gameObject.SetActive(false);
+                        heartList[i].transform.GetChild((int)HeartType.ShieldNone)
+                            .gameObject.SetActive(false);
+                        heartList[i].transform.GetChild((int)HeartType.ShieldHalf)
+                            .gameObject.SetActive(false);
+                        heartList[i].transform.GetChild((int)HeartType.ShieldFull)
+                            .gameObject.SetActive(false);
+                    }
+                }
 
-                    //  残りを非表示にする
-                    for(int j=1;j<heartList.Count;j++)
+                //  残りを非表示にする
+                for(int j=1;j<heartList.Count;j++)
+                {
+                    //  シールド状態時の処理
+                    if(isShielded)
                     {
                         heartList[j].transform.GetChild((int)HeartType.Half)
                             .gameObject.SetActive(false);
                         heartList[j].transform.GetChild((int)HeartType.Full)
                             .gameObject.SetActive(false);
+                        heartList[j].transform.GetChild((int)HeartType.ShieldNone)
+                            .gameObject.SetActive(true);
+                        heartList[j].transform.GetChild((int)HeartType.ShieldHalf)
+                            .gameObject.SetActive(false);
+                        heartList[j].transform.GetChild((int)HeartType.ShieldFull)
+                            .gameObject.SetActive(false);
                     }
-
-                } 
-            }
-            else // 体力が２以上の時
-            {
-                //  一旦現在体力のとこまで全部フルで埋める
-                int fullNum = health / 2;
-                for(int i=0;i<fullNum;i++)
-                {
-                    heartList[i].transform.GetChild((int)HeartType.Half)
-                        .gameObject.SetActive(true);
-                    heartList[i].transform.GetChild((int)HeartType.Full)
-                        .gameObject.SetActive(true);
+                    //  通常状態時の処理
+                    else
+                    {
+                        heartList[j].transform.GetChild((int)HeartType.Half)
+                            .gameObject.SetActive(false);
+                        heartList[j].transform.GetChild((int)HeartType.Full)
+                            .gameObject.SetActive(false);
+                        heartList[j].transform.GetChild((int)HeartType.ShieldNone)
+                            .gameObject.SetActive(false);
+                        heartList[j].transform.GetChild((int)HeartType.ShieldHalf)
+                            .gameObject.SetActive(false);
+                        heartList[j].transform.GetChild((int)HeartType.ShieldFull)
+                            .gameObject.SetActive(false);
+                    }
                 }
 
-                //  奇数だった場合は最後の番号だけハーフにする
-                int taegetNum = health - fullNum;
-                if(health % 2 != 0)
+            } 
+        }
+        else // 体力が２以上の時
+        {
+            //  一旦現在体力のとこまで全部フルで埋める
+            int fullNum = health / 2;
+            for(int i=0;i<fullNum;i++)
+            {
+                    //  シールド状態時の処理
+                    if(isShielded)
+                    {
+                        heartList[i].transform.GetChild((int)HeartType.Half)
+                            .gameObject.SetActive(true);
+                        heartList[i].transform.GetChild((int)HeartType.Full)
+                            .gameObject.SetActive(true);
+                        heartList[i].transform.GetChild((int)HeartType.ShieldNone)
+                            .gameObject.SetActive(true);
+                        heartList[i].transform.GetChild((int)HeartType.ShieldHalf)
+                            .gameObject.SetActive(true);
+                        heartList[i].transform.GetChild((int)HeartType.ShieldFull)
+                            .gameObject.SetActive(true);
+                    }
+                    //  通常状態時の処理
+                    else
+                    {
+                        heartList[i].transform.GetChild((int)HeartType.Half)
+                            .gameObject.SetActive(true);
+                        heartList[i].transform.GetChild((int)HeartType.Full)
+                            .gameObject.SetActive(true);
+                        heartList[i].transform.GetChild((int)HeartType.ShieldNone)
+                            .gameObject.SetActive(false);
+                        heartList[i].transform.GetChild((int)HeartType.ShieldHalf)
+                            .gameObject.SetActive(false);
+                        heartList[i].transform.GetChild((int)HeartType.ShieldFull)
+                            .gameObject.SetActive(false);
+                    }
+            }
+
+            //  奇数だった場合は最後の番号だけハーフにする
+            int taegetNum = health - fullNum;
+            if(health % 2 != 0)
+            {
+                //  シールド状態時の処理
+                if(isShielded)
                 {
                     heartList[taegetNum-1].transform.GetChild((int)HeartType.Half)
                         .gameObject.SetActive(true);
                     heartList[taegetNum-1].transform.GetChild((int)HeartType.Full)
                         .gameObject.SetActive(false);
+                    heartList[taegetNum-1].transform.GetChild((int)HeartType.ShieldNone)
+                        .gameObject.SetActive(true);
+                    heartList[taegetNum-1].transform.GetChild((int)HeartType.ShieldHalf)
+                        .gameObject.SetActive(true);
+                    heartList[taegetNum-1].transform.GetChild((int)HeartType.ShieldFull)
+                        .gameObject.SetActive(false);
+                }
+                //  通常状態時の処理
+                else
+                {
+                    heartList[taegetNum-1].transform.GetChild((int)HeartType.Half)
+                        .gameObject.SetActive(true);
+                    heartList[taegetNum-1].transform.GetChild((int)HeartType.Full)
+                        .gameObject.SetActive(false);
+                    heartList[taegetNum-1].transform.GetChild((int)HeartType.ShieldNone)
+                        .gameObject.SetActive(false);
+                    heartList[taegetNum-1].transform.GetChild((int)HeartType.ShieldHalf)
+                        .gameObject.SetActive(false);
+                    heartList[taegetNum-1].transform.GetChild((int)HeartType.ShieldFull)
+                        .gameObject.SetActive(false);
                 }
 
-                //  残りを非表示にする
-                for(int i=taegetNum;i<heartList.Count;i++)
+            }
+
+            //  残りを非表示にする
+            for(int i=taegetNum;i<heartList.Count;i++)
+            {
+                //  シールド状態時の処理
+                if(isShielded)
                 {
                     heartList[i].transform.GetChild((int)HeartType.Half)
                         .gameObject.SetActive(false);
                     heartList[i].transform.GetChild((int)HeartType.Full)
                         .gameObject.SetActive(false);
+                    heartList[i].transform.GetChild((int)HeartType.ShieldNone)
+                        .gameObject.SetActive(true);
+                    heartList[i].transform.GetChild((int)HeartType.ShieldHalf)
+                        .gameObject.SetActive(false);
+                    heartList[i].transform.GetChild((int)HeartType.ShieldFull)
+                        .gameObject.SetActive(false);
+                }
+                //  通常状態時の処理
+                else
+                {
+                    heartList[i].transform.GetChild((int)HeartType.Half)
+                        .gameObject.SetActive(false);
+                    heartList[i].transform.GetChild((int)HeartType.Full)
+                        .gameObject.SetActive(false);
+                    heartList[i].transform.GetChild((int)HeartType.ShieldNone)
+                        .gameObject.SetActive(false);
+                    heartList[i].transform.GetChild((int)HeartType.ShieldHalf)
+                        .gameObject.SetActive(false);
+                    heartList[i].transform.GetChild((int)HeartType.ShieldFull)
+                        .gameObject.SetActive(false);
                 }
             }
+        }
     }
 
     //---------------------------------------------------

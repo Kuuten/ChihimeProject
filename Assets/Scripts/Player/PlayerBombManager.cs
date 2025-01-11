@@ -193,6 +193,8 @@ public class PlayerBombManager : MonoBehaviour
 
         //  ボムのアイコンを更新
         UpdateBombIcon();
+
+        Debug.Log($"ボムが１コ増えて{bombNum}コになった！");
     }
 
     //  ボムを減算
@@ -209,6 +211,8 @@ public class PlayerBombManager : MonoBehaviour
 
         //  ボムのアイコンを更新
         UpdateBombIcon();
+
+        Debug.Log($"ボムが１コ減って{bombNum}コになった！");
     }
 
     //-------------------------------------------

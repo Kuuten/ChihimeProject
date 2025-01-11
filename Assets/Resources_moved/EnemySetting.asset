@@ -22,13 +22,13 @@ MonoBehaviour:
     Attack: 1
     Money: 300
   - Id: Ibarakidouji
-    Hp: 1000
+    Hp: 1
     Attack: 1
     Money: 1500
   - Id: Douji
-    Hp: 3000
+    Hp: 3
     Attack: 1
-    Money: 4000
+    Money: 400000
   - Id: Ossan
     Hp: 3
     Attack: 810

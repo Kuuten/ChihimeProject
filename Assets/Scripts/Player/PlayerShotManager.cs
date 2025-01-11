@@ -290,7 +290,7 @@ public class PlayerShotManager : MonoBehaviour
     //------------------------------------------------
     //  通常弾のパワーアイコンの数を更新する
     //------------------------------------------------
-    private void UpdateShotPowerIcon()
+    public void UpdateShotPowerIcon()
     {
         if(normalShotLevel <= 0)Debug.LogError("normalShotLevelに0以下の値が入っています！");
 
@@ -592,7 +592,15 @@ public class PlayerShotManager : MonoBehaviour
     //---------------------------------------------------
     public void LevelupNormalShot()
     {
-        if(normalShotLevel < (int)eNormalShotLevel.Lv3)normalShotLevel++;
+        if(normalShotLevel < (int)eNormalShotLevel.Lv3)
+        {
+            normalShotLevel++;
+            Debug.Log($"ショットレベルが１上がって{normalShotLevel}になった！");
+        }
+        else
+        {
+            Debug.Log($"これ以上ショットレベルが上がりません！");
+        }
     }
 
 
@@ -601,7 +609,15 @@ public class PlayerShotManager : MonoBehaviour
     //---------------------------------------------------
     public void LeveldownNormalShot()
     {
-        if(normalShotLevel > (int)eNormalShotLevel.Lv1)normalShotLevel--;
+        if(normalShotLevel > (int)eNormalShotLevel.Lv1)
+        {
+            normalShotLevel--;
+            Debug.Log($"ショットレベルが１下がって{normalShotLevel}になった！");
+        }
+        else
+        {
+            Debug.Log($"これ以上ショットレベルが下がりません！");
+        }
     }
     
     //-------------------------------------------

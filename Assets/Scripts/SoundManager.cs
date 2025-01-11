@@ -94,6 +94,7 @@ using UnityEngine;
         SFX_GET_HEART,
         SFX_GET_BOMB,
         SFX_GET_POWERUP,
+        SFX_SHIELDBREAK,
 
         SFX_ENEMY_SHOT,
         SFX_ENEMY_DAMAGE,

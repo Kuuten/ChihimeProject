@@ -22,6 +22,12 @@ enum eSpeedLevel
 //--------------------------------------------------------------
 public class PlayerMovement : MonoBehaviour
 {
+    //  シングルトンなインスタンス
+    public static PlayerMovement Instance
+    {
+        get; private set;
+    }
+
     //  移動スピード
     private float[] moveSpeed = new float[(int)eSpeedLevel.Max];
 
@@ -31,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
     private const float moveSpeedLv3 = 9.0f;
 
     //  スピードレベル
-    private int speedLevel;
+    [SerializeField] private int speedLevel;
     //  スピードレベル表示用画像のプレハブ
     [SerializeField] private GameObject speedLevelIcon;
     //  スピードレベルアイコンのリスト
@@ -58,6 +64,20 @@ public class PlayerMovement : MonoBehaviour
     private int horizontalCheck;     //  X軸の入力が+か-か0か
 
     bool bCanMove;
+
+
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
@@ -116,7 +136,7 @@ public class PlayerMovement : MonoBehaviour
     //------------------------------------------------
     //  スピードレベルアイコンの数を更新する
     //------------------------------------------------
-    private void UpdateSpeedLevelIcon()
+    public void UpdateSpeedLevelIcon()
     {
         if(speedLevel < 0)Debug.LogError("normalShotLevelにマイナスの値が入っています！");
 
@@ -264,7 +284,15 @@ public class PlayerMovement : MonoBehaviour
     //---------------------------------------------------
     public void LevelupMoveSpeed()
     {
-        if(speedLevel < (int)eSpeedLevel.Lv3)speedLevel++;
+        if(speedLevel < (int)eSpeedLevel.Lv3)
+        {
+            speedLevel++;
+            Debug.Log($"スピードレベルが１上がって{speedLevel+1}になった！");
+        }
+        else
+        {
+            Debug.Log($"これ以上スピードレベルが上がりません！");
+        }
     }
 
     //---------------------------------------------------
@@ -272,7 +300,15 @@ public class PlayerMovement : MonoBehaviour
     //---------------------------------------------------
     public void LeveldownMoveSpeed()
     {
-        if(speedLevel > (int)eSpeedLevel.Lv1)speedLevel--;
+        if(speedLevel > (int)eSpeedLevel.Lv1)
+        {
+            speedLevel--;
+            Debug.Log($"スピードレベルが１下がって{speedLevel+1}になった！");
+        }
+        else
+        {
+            Debug.Log($"これ以上スピードレベルが下がりません！");
+        }
     }
 
 }

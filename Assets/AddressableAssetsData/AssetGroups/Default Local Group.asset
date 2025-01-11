@@ -2013,6 +2013,51 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 75538532e518a564fa076c8928bf4b61
+    m_Address: Assets/Resources_moved/Sprites/player/player_front_shield/player_front_shieldL.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 106521ed422bdc74e9d501ec5c1af41c
+    m_Address: Assets/Resources_moved/Sprites/player/player_front_shield/player_front_shield.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 15e8d61bbe19e8a4d90ec82087a0ae60
+    m_Address: Assets/Resources_moved/Sprites/player/player_front_shield/player_front_shieldR.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9babbd9a4ae5cf840a2e522736957d49
+    m_Address: Assets/Resources_moved/Sprites/player/player_front_shield/player_front_shieldR.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9887a1740a27e184ab7c2287bc673f83
+    m_Address: Assets/Resources_moved/Sprites/player/player_front_shield/player_front_shieldL.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1c26e7d02a7a1654baf7066cd64e31d5
+    m_Address: Assets/Resources_moved/Sprites/player/player_front_shield/player_front_shield.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 244277eb5f548e64cb9975381bfb7cdd
+    m_Address: Assets/Resources_moved/Sprites/player/player_front_shield/player_front_shieldR_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 206586a0a40332a46ac079d1bc9047fa
+    m_Address: Assets/Resources_moved/Sprites/player/player_front_shield/player_front_shieldL_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f0a68a70ed55d174080e41da1e894aaa
+    m_Address: Assets/Resources_moved/Sprites/player/player_front_shield/player_front_shield_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 5b3e9bf9194140840b980876631db859, type: 2}
   m_SchemaSet:

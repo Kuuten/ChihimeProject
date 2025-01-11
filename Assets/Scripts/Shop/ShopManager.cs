@@ -13,15 +13,6 @@ using UnityEngine.UI;
 //--------------------------------------------------------------
 public class ShopManager : MonoBehaviour
 {
-    enum eMenuList
-    {
-        RedHeart,           //  赤いハート
-        DoubleupHeart,      //  ダブルアップハート
-        GoldHeart,          //  金色のハート
-        Bomb,               //  骨Gボム
-
-    }
-
     //  ヒエラルキーのテキストクラス
     [SerializeField] private TextMeshProUGUI shopText;
 
@@ -36,7 +27,8 @@ public class ShopManager : MonoBehaviour
     bool canContorol;   //  操作可能フラグ
 
     //  生成されるボタンのオブジェクト
-    private GameObject redheartButton,doubleupHeartButton,goldheartButton,bombButton;
+    private GameObject redheartButton,doubleupHeartButton,goldheartButton,bombButton,
+        PowerupButton,SpeedupButton,ShieldButton;
 
     //  再入荷ボタンオブジェクト
     [SerializeField] private GameObject regenerateButton;
@@ -49,6 +41,9 @@ public class ShopManager : MonoBehaviour
     private string DoubleupHeartValueText;
     private string GoldHeartValueText;
     private string BombValueText;
+    private string PowerupValueText;
+    private string SpeedupValueText;
+    private string ShieldValueText;
 
     void Start()
     {
@@ -149,7 +144,6 @@ public class ShopManager : MonoBehaviour
 
         
     }
-
     //--------------------------------------------------------------
     //  ダブルアップハートボタンが押された時の処理
     //--------------------------------------------------------------
@@ -204,7 +198,6 @@ public class ShopManager : MonoBehaviour
             StartCoroutine(DisplayMessage(failedText));
         }
     }
-
     //--------------------------------------------------------------
     //  金色のハートボタンが押された時の処理
     //--------------------------------------------------------------
@@ -255,7 +248,6 @@ public class ShopManager : MonoBehaviour
             StartCoroutine(DisplayMessage(failedText));
         }
     }
-
     //--------------------------------------------------------------
     //  骨Gのボムボタンが押された時の処理
     //--------------------------------------------------------------
@@ -282,10 +274,118 @@ public class ShopManager : MonoBehaviour
 
             //  メッセージ表示
             StartCoroutine(DisplayMessage(successText));
+        }
+        else
+        {
+            //  メッセージ表示
+            StartCoroutine(DisplayMessage(failedText));
+        }
+    }
+    //--------------------------------------------------------------
+    //  ショット強化ボタンが押された時の処理
+    //--------------------------------------------------------------
+    public void OnPowerupButtonDown()
+    {
+        //  ボタンのテキストから直接代金を取得
+        int value = int.Parse(RemoveKonText(PowerupValueText));
 
-            //  現在のボム数を取得
-            int bombNum = PlayerBombManager.Instance.GetBombNum();
-            Debug.Log($"ボムが１コ増えて{bombNum}コになった！");
+        Debug.Log($"ショット強化の値段は{value}です");
+
+        //  購入可能なら代金分魂を減らす
+        if(MoneyManager.Instance.CanBuyItem(value))
+        { 
+            //  通常ショットのレベルアップ
+            PlayerShotManager.Instance.LevelupNormalShot();
+            PlayerShotManager.Instance.UpdateShotPowerIcon();
+
+            //  ButtonのInterctiveを無効化
+            PowerupButton.GetComponent<Button>().interactable = false;
+
+            //  完売御礼を表示(ボタンオブジェクトからID４の子オブジェクト)
+            PowerupButton.transform.GetChild(soldout_id).gameObject.SetActive(true);
+
+            //  再入荷ボタンオブジェクトを選択状態にする
+            EventSystem.current.SetSelectedGameObject(regenerateButton);
+
+            //  メッセージ表示
+            StartCoroutine(DisplayMessage(successText));
+        }
+        else
+        {
+            //  メッセージ表示
+            StartCoroutine(DisplayMessage(failedText));
+        }
+
+    }
+    //--------------------------------------------------------------
+    //  スピード強化ボタンが押された時の処理
+    //--------------------------------------------------------------
+    public void OnSpeedupButtonDown()
+    {
+        //  ボタンのテキストから直接代金を取得
+        int value = int.Parse(RemoveKonText(SpeedupValueText));
+
+        Debug.Log($"スピード強化の値段は{value}です");
+
+        //  購入可能なら代金分魂を減らす
+        if(MoneyManager.Instance.CanBuyItem(value))
+        { 
+            //  スピードのレベルアップ
+            PlayerMovement.Instance.LevelupMoveSpeed();
+            PlayerMovement.Instance.UpdateSpeedLevelIcon();
+
+            //  ButtonのInterctiveを無効化
+            SpeedupButton.GetComponent<Button>().interactable = false;
+
+            //  完売御礼を表示(ボタンオブジェクトからID４の子オブジェクト)
+            SpeedupButton.transform.GetChild(soldout_id).gameObject.SetActive(true);
+
+            //  再入荷ボタンオブジェクトを選択状態にする
+            EventSystem.current.SetSelectedGameObject(regenerateButton);
+
+            //  メッセージ表示
+            StartCoroutine(DisplayMessage(successText));
+        }
+        else
+        {
+            //  メッセージ表示
+            StartCoroutine(DisplayMessage(failedText));
+        }
+
+    }
+    //--------------------------------------------------------------
+    //  シールドボタンが押された時の処理
+    //--------------------------------------------------------------
+    public void OnShieldButtonDown()
+    {
+        //  ボタンのテキストから直接代金を取得
+        int value = int.Parse(RemoveKonText(ShieldValueText));
+
+        Debug.Log($"シールドの値段は{value}です");
+
+        //  購入可能なら代金分魂を減らす
+        if(MoneyManager.Instance.CanBuyItem(value))
+        {
+            // プレイヤーにシールドを追加する 
+            int hp =  PlayerHealth.Instance.GetCurrentHealth();
+            PlayerHealth.Instance.SetIsShielded(true);
+            PlayerHealth.Instance.CalculateHealthUI(hp);
+
+            //  ButtonのInterctiveを無効化
+            ShieldButton.GetComponent<Button>().interactable = false;
+
+            //  完売御礼を表示(ボタンオブジェクトからID４の子オブジェクト)
+            ShieldButton.transform.GetChild(soldout_id).gameObject.SetActive(true);
+
+            //  再入荷ボタンオブジェクトを選択状態にする
+            EventSystem.current.SetSelectedGameObject(regenerateButton);
+
+            //  メッセージ表示
+            StartCoroutine(DisplayMessage(successText));
+
+            //  シールドが付与されているかどうかを取得
+            //bool canShield = PlayerHealth.Instance.GetBombNum();
+            Debug.Log($"シールドが付与された！");
         }
         else
         {
@@ -310,8 +410,15 @@ public class ShopManager : MonoBehaviour
     public void SetDoubleupHeartButton(GameObject obj){ doubleupHeartButton = obj; }
     public void SetGoldHeartButton(GameObject obj){ goldheartButton = obj; }
     public void SetBombButton(GameObject obj){ bombButton = obj; }
+    public void SetPowerupButton(GameObject obj){ PowerupButton = obj; }
+    public void SetSpeedupButton(GameObject obj){ SpeedupButton = obj; }
+    public void SetShieldButton(GameObject obj){ ShieldButton = obj; }
+
     public void SetRedHeartValueText(string s){ RedHeartValueText = s; }
     public void SetDoubleupValueText(string s){ DoubleupHeartValueText = s; }
     public void SetGoldHeartValueText(string s){ GoldHeartValueText = s; }
     public void SetBombValueText(string s){ BombValueText = s; }
+    public void SetPowerupValueText(string s){ PowerupValueText = s; }
+    public void SetSpeedupValueText(string s){ SpeedupValueText = s; }
+    public void SetShieldValueText(string s){ ShieldValueText = s; }
 }

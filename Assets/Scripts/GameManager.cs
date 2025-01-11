@@ -37,10 +37,13 @@ public enum eResultObj
 // ショップアイテムID
 public enum eShopItemID
 {
-    RedHeart,          //   赤いハート
-    DoubleUpHeart,     //   ダブルアップハート
-    GoldHeart,         //   金色のハート
-    HoneGBomb,         //   骨Gボム
+    RedHeart,           //  赤いハート
+    DoubleupHeart,      //  ダブルアップハート
+    GoldHeart,          //  金色のハート
+    HoneGBomb,          //  骨Gボム
+    Powerup,            //  ショット強化
+    Speedup,            //  スピード強化
+    Shield,             //  シールド
 
     Max
 }
@@ -453,9 +456,10 @@ public class GameManager : MonoBehaviour
         int kon = MoneyManager.Instance.GetKonNum();
         int shotLV = player.GetComponent<PlayerShotManager>().GetNormalShotLevel();;
         int speedLV = player.GetComponent<PlayerMovement>().GetSpeedLevel();
+        bool isShield = player.GetComponent<PlayerHealth>().GetIsShielded();
 
         //  情報保存
-        PlayerInfoManager.SetInfo(maxHP,hP,kon,bombNum,shotLV,speedLV);
+        PlayerInfoManager.SetInfo(maxHP,hP,kon,bombNum,shotLV,speedLV,isShield);
 
         //  BGMを止める
         StopBGM();
@@ -621,7 +625,7 @@ public class GameManager : MonoBehaviour
                 button.onClick.AddListener( ()=>Debug.Log("赤いハートを買った！"));
                 button.onClick.AddListener( ()=>shopManager.OnRedHeartButtonDown());
             }
-            else if(rand == (int)eShopItemID.DoubleUpHeart)
+            else if(rand == (int)eShopItemID.DoubleupHeart)
             {
                 //  オブジェクトのID2の子オブジェクトから値段を取得
                 string s = obj.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text;
@@ -651,6 +655,36 @@ public class GameManager : MonoBehaviour
                 button.onClick.AddListener( ()=>Debug.Log("骨Gボムを買った！"));
                 button.onClick.AddListener( ()=>shopManager.OnHoneGBombButtonDown());
             }
+            else if(rand == (int)eShopItemID.Powerup)
+            {
+                //  オブジェクトのID2の子オブジェクトから値段を取得
+                string s = obj.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text;
+                shopManager.SetPowerupValueText(s);
+
+                shopManager.SetPowerupButton(obj);
+                button.onClick.AddListener( ()=>Debug.Log("ショット強化を買った！"));
+                button.onClick.AddListener( ()=>shopManager.OnPowerupButtonDown());
+            }
+            else if(rand == (int)eShopItemID.Speedup)
+            {
+                //  オブジェクトのID2の子オブジェクトから値段を取得
+                string s = obj.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text;
+                shopManager.SetSpeedupValueText(s);
+
+                shopManager.SetSpeedupButton(obj);
+                button.onClick.AddListener( ()=>Debug.Log("スピード強化を買った！"));
+                button.onClick.AddListener( ()=>shopManager.OnSpeedupButtonDown());
+            }
+            else if(rand == (int)eShopItemID.Shield)
+            {
+                //  オブジェクトのID2の子オブジェクトから値段を取得
+                string s = obj.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text;
+                shopManager.SetShieldValueText(s);
+
+                shopManager.SetShieldButton(obj);
+                button.onClick.AddListener( ()=>Debug.Log("シールド追加を買った！"));
+                button.onClick.AddListener( ()=>shopManager.OnShieldButtonDown());
+            }
 
 
 
@@ -677,7 +711,7 @@ public class GameManager : MonoBehaviour
     //--------------------------------------------------------------------------
     public void ReGenerate()
     {
-        int value = 3000;   //  再入荷代金
+        int value = 3;   //  再入荷代金
 
         //  代金分魂を減らす
         if(MoneyManager.Instance.CanBuyItem(value))

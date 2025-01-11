@@ -6925,6 +6925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 158924d1bcac46c4daee9319b6b539a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speedLevel: 0
   speedLevelIcon: {fileID: 6703233998130738900, guid: 3c7e336fcdccf5547837493356f15710, type: 3}
   speedLevelIconRootObj: {fileID: 4038018490641965320}
   wallLeft: {fileID: 1244551238}
@@ -7044,6 +7045,12 @@ MonoBehaviour:
   animPlayerBackDamage: {fileID: 9100000, guid: ea681b935a6a5ab48805417c863d0a42, type: 2}
   animPlayerDeath1: {fileID: 9100000, guid: 563623dcc228dac4eb3f6a468c880a22, type: 2}
   animPlayerDeath2: {fileID: 9100000, guid: fdcc8a0070c12b048a2f08d9e1df803b, type: 2}
+  animPlayerShieldFront: {fileID: 9100000, guid: f0a68a70ed55d174080e41da1e894aaa, type: 2}
+  animPlayerShieldFrontLeft: {fileID: 9100000, guid: 206586a0a40332a46ac079d1bc9047fa, type: 2}
+  animPlayerShieldFrontRight: {fileID: 9100000, guid: 244277eb5f548e64cb9975381bfb7cdd, type: 2}
+  animPlayerShieldBack: {fileID: 9100000, guid: 9d94f37138f39fb4ba1997ad19319b41, type: 2}
+  animPlayerShieldBackLeft: {fileID: 9100000, guid: 4fd78cb5efd716a49ab2de421c14cb25, type: 2}
+  animPlayerShieldBackRight: {fileID: 9100000, guid: 6643c845f713c994b9bee048db727e6d, type: 2}
   playerDeathEffect: {fileID: 5037816240314558723, guid: 9752e2d4d0a1e84499feb66e1a3ac4ae, type: 3}
   directionalLight: {fileID: 149720907}
   heartRootObj: {fileID: 6415246798089338713}
@@ -10946,6 +10953,9 @@ MonoBehaviour:
   - {fileID: 3573415494193630735, guid: b9c714d886b753a46981c99b42ea3491, type: 3}
   - {fileID: 3749860285405079689, guid: ca11b12104f6c0f40ab9ef663809fcb1, type: 3}
   - {fileID: 2206138206689128915, guid: 08c0be1260d48b34283135032692af1f, type: 3}
+  - {fileID: 2206138206689128915, guid: e1dbf49bf0ae27b49a29853fbbc2af2a, type: 3}
+  - {fileID: 2206138206689128915, guid: fa5556976fea83843a9fbb2c5ce394d4, type: 3}
+  - {fileID: 2206138206689128915, guid: 748ab62846ed3a1488aa98a9215e6a8f, type: 3}
   itemListObject: {fileID: 113736627}
   shopCanvas: {fileID: 291067432}
   regenerateButton: {fileID: 710888891}
