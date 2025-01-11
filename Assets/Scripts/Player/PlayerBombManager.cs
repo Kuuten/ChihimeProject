@@ -43,7 +43,7 @@ public class PlayerBombManager : MonoBehaviour
     [SerializeField] GameObject konburstLamp;
 
     //  ドウジ魂バーストゲージの1回あたりの増加量
-    private const float doujiKonburstPlusValue = 0.15f;
+    private const float doujiKonburstPlusValue = 0.077f;
     //  ツクモ魂バーストゲージの1回あたりの増加量
     private const float tsukumoKonburstPlusValue = 0.025f;
     //  クチナワ魂バーストゲージの1回あたりの増加量
@@ -108,8 +108,9 @@ public class PlayerBombManager : MonoBehaviour
 
         //  最初はレインボーOFF
         koburstGaugeFill.GetComponent<Animator>().enabled = false;
+
         //  魂バーストごとの弾の威力
-        konburstShotPower[(int)SHOT_TYPE.DOUJI]     = 500f;
+        konburstShotPower[(int)SHOT_TYPE.DOUJI]     = 250f;
         konburstShotPower[(int)SHOT_TYPE.TSUKUMO]   = 0.2f;
         konburstShotPower[(int)SHOT_TYPE.KUCHINAWA] = 5f;
         konburstShotPower[(int)SHOT_TYPE.KURAMA]    = 40f;
@@ -126,6 +127,24 @@ public class PlayerBombManager : MonoBehaviour
 
             bombIconList.Add( obj );   //  リストに追加
         }
+    }
+
+    //----------------------------------------------------------
+    //  ボム・魂バーストの有効化
+    //----------------------------------------------------------
+    public void EnableBomb()
+    {
+        bCanBomb = true;
+        inputBomb.Enable();
+    }
+
+    //----------------------------------------------------------
+    //  ボム・魂バーストの無効化
+    //----------------------------------------------------------
+    public void DisableBomb()
+    {
+        bCanBomb = false;
+        inputBomb.Disable();
     }
 
     void Update()

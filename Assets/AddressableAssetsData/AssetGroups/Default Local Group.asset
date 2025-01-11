@@ -237,11 +237,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f03e7d3d9dc28bd44852a3fa77f84654
-    m_Address: Assets/Resources_moved/Prefabs/convert/TsukumoPlayerBullet 1.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b514ce1637337a44798198b78893ecd9
     m_Address: Assets/Resources_moved/Prefabs/convert/KuramaPlayerBullet.prefab
     m_ReadOnly: 0
@@ -454,11 +449,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d7a76ee2abab97242878b0af0b5e080d
     m_Address: Assets/Resources_moved/UI/Intro/intro_imagesample.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: cb580fe5c5594e34db4f8eea6eeead13
-    m_Address: Assets/Resources_moved/UI/Intro/intro_image_dummy.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -1435,11 +1425,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9069c77d5d79e314f855a344dba32794
-    m_Address: "Assets/Resources_moved/Sounds/Music/\u5BB5\u3005\u9957\u5BB4.mp3"
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d90df750a18b188488c100a8cb9a8866
     m_Address: Assets/Resources_moved/Sounds/Music/gameover_bgm.ogg
     m_ReadOnly: 0
@@ -2005,6 +1990,26 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f384af8f0f502f346b648634aacc52d1
     m_Address: UI/konburst_cutin.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 133ffc160cc56824f959a4896d564fc0
+    m_Address: Assets/Resources_moved/Prefabs/enemy/Stage02/enemy_ningyou_group.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 58b09e1c05ddbf14895bee8c7afd353e
+    m_Address: Assets/Resources_moved/Sprites/enemy/Stage02/enemy_nuigurumi/enemy_nuigurumi_attack_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2a51b7bc2f7518e488c888895146ac6d
+    m_Address: Assets/Resources_moved/Sprites/enemy/Stage02/enemy_nuigurumi/enemy_nuigurumi_attack.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cd374d41edf16c44b80e7232da4487eb
+    m_Address: Assets/Resources_moved/Sprites/enemy/Stage02/enemy_nuigurumi/enemy_nuigurumi_attack.anim
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

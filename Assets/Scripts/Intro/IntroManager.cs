@@ -150,7 +150,7 @@ public class IntroManager : MonoBehaviour
         yield return new WaitForSeconds(2f); //  2•b‘Ò‚Â
 
         //  IntroBGMÄ¶
-        //SoundManager.Instance.PlayBGM((int)MusicList.BGM_SHOP);
+        SoundManager.Instance.PlayBGM((int)MusicList.BGM_INTRO);
 
         //  ‘€ì‰Â”\‚É‚·‚é
         canContorol = true;

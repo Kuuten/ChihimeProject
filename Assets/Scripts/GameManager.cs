@@ -183,6 +183,12 @@ public class GameManager : MonoBehaviour
 
     IEnumerator StartInit()
     {
+        //  ショットを無効化
+        GetPlayer().GetComponent<PlayerShotManager>().DisableShot();
+
+        //  ボムを無効化する
+        GetPlayer().GetComponent<PlayerBombManager>().DisableBomb();
+
         //  フェードイン
         yield return StartCoroutine(WaitingForFadeIn());
 
@@ -195,6 +201,12 @@ public class GameManager : MonoBehaviour
 
         //  巻物アニメが終わったので操作可能
         startFlag = true;
+
+        //  ショットを有効化
+        GetPlayer().GetComponent<PlayerShotManager>().EnableShot();
+
+        //  ボムを有効化する
+        GetPlayer().GetComponent<PlayerBombManager>().EnableBomb();
 
         //  プレイヤーにPauserを追加
         GetPlayer().AddComponent<Pauser>();
@@ -340,8 +352,6 @@ public class GameManager : MonoBehaviour
         //                                msg1speed, msg1wait
         //                            ));
 
-        //  敵を一定間隔でポップさせる
-        //StartCoroutine(PopEnemyInIntervals(_EnemyPopInterval));
 
         //  EnemyManagerのロード完了まで待つ
         yield return new WaitUntil(()=> EnemyManager.Instance.GetIsCompleteLoading() == true);
@@ -394,11 +404,11 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f); //  1秒待つ
 
-        //  体験版ではこっちを使う
-        yield return StartCoroutine(ResetAndChangeScene("TrialEnding"));
+        ////  体験版ではこっちを使う
+        //yield return StartCoroutine(ResetAndChangeScene("TrialEnding"));
 
-        ////  製品版ではこっちを使う
-        //yield return StartCoroutine(DataCopyAndChangeScene());
+        //  製品版ではこっちを使う
+        yield return StartCoroutine(DataCopyAndChangeScene());
     }
 
     //  巻物を閉じるアニメーションの完了を待つ
@@ -526,20 +536,31 @@ public class GameManager : MonoBehaviour
                 (int)AudioChannel.SFX,
                 (int)SFXList.SFX_TITLE_SELECT);
 
-            //------------------------------------------------------------------
-            //  体験版用処理
-            //------------------------------------------------------------------
-            //  シーン切り替えフラグをTRUE
-            sceneChangeFlag = true;
-            //  巻物アニメーション＆情報保存
-            StartCoroutine(WaitingForClosingScroll());
+            ////------------------------------------------------------------------
+            ////  体験版用処理
+            ////------------------------------------------------------------------
+            ////  シーン切り替えフラグをTRUE
+            //sceneChangeFlag = true;
+            ////  巻物アニメーション＆情報保存
+            //StartCoroutine(WaitingForClosingScroll());
             //------------------------------------------------------------------
 
-            ////------------------------------------------------------------------
-            ////  製品版用処理
-            ////------------------------------------------------------------------
-            //shopCanvas.SetActive(true); //  ショップキャンバスを表示
-            //InstantiateRandomItems();   //  ItemListにランダムにプレハブを生成
+            //------------------------------------------------------------------
+            //  製品版用処理
+            //------------------------------------------------------------------
+            if( PlayerInfoManager.stageInfo != PlayerInfoManager.StageInfo.Stage06 )
+            {
+                shopCanvas.SetActive(true); //  ショップキャンバスを表示
+                InstantiateRandomItems();   //  ItemListにランダムにプレハブを生成
+            }
+            else
+            {
+                //  シーン切り替えフラグをTRUE
+                sceneChangeFlag = true;
+                //  巻物アニメーション＆情報保存
+                StartCoroutine(WaitingForClosingScroll());
+            }
+
         }
     }
 
@@ -656,7 +677,7 @@ public class GameManager : MonoBehaviour
     //--------------------------------------------------------------------------
     public void ReGenerate()
     {
-        int value = 3;   //  再入荷代金
+        int value = 3000;   //  再入荷代金
 
         //  代金分魂を減らす
         if(MoneyManager.Instance.CanBuyItem(value))

@@ -13,7 +13,7 @@ public static class PlayerInfoManager
     //  デフォルト値定数
     private static readonly int MAXHP = 2 * 3;      //  必ず偶数
     private static readonly int KONNUM = 0;
-    private static readonly int BOMBNUM = 3;
+    private static readonly int BOMBNUM = 2;
     private static readonly int SHOT_LV = 1;    // 最初はレベル１
     private static readonly int SPEED_LV = 0;   // 0～2
 
@@ -26,7 +26,7 @@ public static class PlayerInfoManager
     public static int g_SPEED_LV = SPEED_LV;
 
     //  ※通常弾をセットしないように気をつける
-    public static SHOT_TYPE g_CONVERTSHOT = SHOT_TYPE.DOUJI;
+    public static SHOT_TYPE g_CONVERTSHOT = SHOT_TYPE.TSUKUMO;
 
     //  プレイヤーが今いるステージ情報
     public enum StageInfo
@@ -40,7 +40,7 @@ public static class PlayerInfoManager
 
         Max
     }
-    public static StageInfo stageInfo = StageInfo.Stage01;
+    public static StageInfo stageInfo = StageInfo.Stage02;
 
     //  情報を一括でセット
     public static void SetInfo(int maxHp,int currentHp,int konNum,int bombNum, int shotLv, int speedLv)

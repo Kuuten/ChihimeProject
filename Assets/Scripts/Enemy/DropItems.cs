@@ -53,8 +53,8 @@ public class DropItems : MonoBehaviour
 
     void Start()
     {
-        SmallKonPrefab = new GameObject();
-        LargeKonPrefab = new GameObject();
+        //SmallKonPrefab = new GameObject();
+        //LargeKonPrefab = new GameObject();
         powerupPrefabs = new List<GameObject>();
         speedupPrefabs = new List<GameObject>();
         bombPrefabs = new List<GameObject>();

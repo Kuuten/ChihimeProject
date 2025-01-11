@@ -222,6 +222,9 @@ public class PlayerHealth : MonoBehaviour
                 PlayerShotManager psm = this.GetComponent<PlayerShotManager>();
                 psm.DisableShot();
 
+                //  ボムの無効化
+                this.GetComponent<PlayerBombManager>().enabled = false;
+
                 StartCoroutine(Death());       //  やられ演出
                 return;
             }
@@ -302,6 +305,9 @@ public class PlayerHealth : MonoBehaviour
                 PlayerShotManager psm = this.GetComponent<PlayerShotManager>();
                 psm.DisableShot();
 
+                //  ボムの無効化
+                this.GetComponent<PlayerBombManager>().enabled = false;
+
                 StartCoroutine(Death());       //  やられ演出
                 return;
             }
@@ -368,6 +374,9 @@ public class PlayerHealth : MonoBehaviour
                 //  ショットの無効化
                 PlayerShotManager psm = this.GetComponent<PlayerShotManager>();
                 psm.DisableShot();
+
+                //  ボムの無効化
+                this.GetComponent<PlayerBombManager>().enabled = false;
 
                 StartCoroutine(Death());       //  やられ演出
                 return;
@@ -760,6 +769,9 @@ public class PlayerHealth : MonoBehaviour
 
         //  プレイヤーを非表示にする
         this.GetComponent<SpriteRenderer>().enabled = false;
+
+        //  プレイヤーの影(７番目の子オブジェクト)も非表示にする
+        this.transform.GetChild(7).gameObject.SetActive(false);
 
         //  プレイヤーのやられエフェクト
         GameObject obj = Instantiate(

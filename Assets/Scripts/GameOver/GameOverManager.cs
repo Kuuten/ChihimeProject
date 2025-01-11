@@ -26,7 +26,7 @@ public class GameOverManager : MonoBehaviour
     [SerializeField] private ScrollAnimation Scroll;    //  Šª•¨
     [SerializeField] private GameObject soundManager;   //  SoundManager
 
-    IEnumerator Start()
+    void Start()
     {
         // InputAction‚ÉAnyButton‚ğİ’è
         input = GetComponent<PlayerInput>();
@@ -42,6 +42,12 @@ public class GameOverManager : MonoBehaviour
             Instantiate(soundManager);
         }
 
+        //  ‰Šú‰»ŠJn
+        StartCoroutine(StartInit());
+    }
+
+    IEnumerator StartInit()
+    {
         /* ```````````‰‰o‚ÌŠJn``````````` */
 
         //  ƒtƒF[ƒhƒCƒ“
@@ -66,7 +72,6 @@ public class GameOverManager : MonoBehaviour
 
         //  PressAnyButton‚ğ•\¦
         pressAnyButton.SetActive(true);
-
     }
 
     void Update()

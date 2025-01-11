@@ -15,22 +15,35 @@ public class Audio : MonoBehaviour
 
     //  それぞれのスライダーを入れるとこ
     [SerializeField] Slider BGMSlider;
-    [SerializeField] Slider SESlider;
+    [SerializeField] Slider SFXSlider;
+
+    //  変更前のコンフィグに入った瞬間の値を保存する変数
+    float preBGMVolume;
+    float preSFXVolume;
 
     //  それぞれの初期値
-    const float initialBGMVolume = 6.0f;
-    const float initialSFXVolume = 6.0f;
+    static readonly float initialBGMVolume = 6.0f;
+    static readonly float initialSFXVolume = 6.0f;
 
     //  値の範囲
-    const float AudioMixerMinVolume = -80f;
-    const float AudioMixerVolumeRange = 90f;
-    const float SliderValueRange = 10f;
+    static readonly float AudioMixerMinVolume = -80f;
+    static readonly float AudioMixerVolumeRange = 90f;
+    static readonly float SliderValueRange = 10f;
 
     // 上書き情報の保存先
     private string BGM_savePath = "bgm_config.json";
     private string SFX_savePath = "sfx_config.json";
 
     private void Start()
+    {
+        //  初期化
+        Init();
+    }
+
+    //---------------------------------------------------------------------
+    //  初期化
+    //---------------------------------------------------------------------
+    public void Init()
     {
         //  AudioMixerのBGMのボリューム値を取得してスライダーに設定
         LoadBGM();
@@ -51,11 +64,39 @@ public class Audio : MonoBehaviour
         audioMixer.SetFloat("BGM", value);
     }
 
-    public void SetSE()
+    public void SetBGM(float base_value)
+    {
+        //  0～10(スライダー)の値を-80～0（AudioMixer）の値にする
+        float value = AudioMixerMinVolume + 
+            (AudioMixerVolumeRange/SliderValueRange) * base_value;
+
+        audioMixer.SetFloat("BGM", value);
+    }
+
+    public void SetSFX()
     {
         //  0～10(スライダー)の値を-80～0（AudioMixer）の値にする
         float base_value = AudioMixerMinVolume + 
-            (AudioMixerVolumeRange/SliderValueRange) * SESlider.value;
+            (AudioMixerVolumeRange/SliderValueRange) * SFXSlider.value;
+
+        //  CONVERT_SHOTを基準とする
+        audioMixer.SetFloat("CONVERT_SHOT", base_value);
+        audioMixer.SetFloat("SFX", base_value-10);
+        audioMixer.SetFloat("SFX_ENEMY", base_value-20f);
+        audioMixer.SetFloat("ENEMY_SHOT", base_value-10);
+        audioMixer.SetFloat("SFX_DAMAGE", base_value-10);
+        audioMixer.SetFloat("SFX_SYSTEM", base_value-10);
+        audioMixer.SetFloat("SFX_SYSTEM2", base_value);
+        audioMixer.SetFloat("NORMAL_SHOT", base_value-20);
+        audioMixer.SetFloat("BOMB", base_value);
+        audioMixer.SetFloat("SFX_LOOP", base_value-20);
+    }
+
+    public void SetSFX(float baseValue)
+    {
+        //  0～10(スライダー)の値を-80～0（AudioMixer）の値にする
+        float base_value = AudioMixerMinVolume + 
+            (AudioMixerVolumeRange/SliderValueRange) * baseValue;
 
         //  CONVERT_SHOTを基準とする
         audioMixer.SetFloat("CONVERT_SHOT", base_value);
@@ -87,10 +128,10 @@ public class Audio : MonoBehaviour
 
     public void SaveSFX()
     {
-        //  SESlider.valueをJson形式で保存
+        //  SFXSlider.valueをJson形式で保存
 
         //  スライダーの値をstring型にして格納
-        string data = SESlider.value.ToString();
+        string data = SFXSlider.value.ToString();
 
         // ファイルに保存
         var path = Path.Combine(Application.persistentDataPath, SFX_savePath);
@@ -111,17 +152,20 @@ public class Audio : MonoBehaviour
             
             //  とりあえず規定値を設定
             BGMSlider.value = initialBGMVolume;
-
-            return;
         }
+        else
+        {
+             Debug.Log("bgm_config.jsonが見つかりました！\n" +
+                    "ロードします。");
 
-         Debug.Log("bgm_config.jsonが見つかりました！\n" +
-                "ロードします。");
+            var json = File.ReadAllText(path);
 
-        var json = File.ReadAllText(path);
-
-        // JSONファイルの情報をスライダーに設定
-        BGMSlider.value = int.Parse(json);
+            // JSONファイルの情報をスライダーに設定
+            BGMSlider.value = int.Parse(json);
+        }
+        
+        //  この時点の値を保存
+        preBGMVolume = BGMSlider.value;
 
         //  AudioMixerに反映
         SetBGM();
@@ -139,21 +183,34 @@ public class Audio : MonoBehaviour
                 "このまま続行します。");
 
             //  とりあえず規定値を設定
-            SESlider.value = initialSFXVolume;
-            return;
+            SFXSlider.value = initialSFXVolume;
+        }
+        else
+        {
+             Debug.Log("sfx_config.jsonが見つかりました！\n" +
+                    "ロードします。");
+
+            var json = File.ReadAllText(path);
+
+            // JSONファイルの情報をスライダーに設定
+            SFXSlider.value = int.Parse(json);
         }
 
-         Debug.Log("sfx_config.jsonが見つかりました！\n" +
-                "ロードします。");
-
-        var json = File.ReadAllText(path);
-
-        // JSONファイルの情報をスライダーに設定
-        SESlider.value = int.Parse(json);
+        //  この時点の値を保存
+        preSFXVolume = SFXSlider.value;
 
         //  AudioMixerに反映
-        SetBGM();
+        SetSFX();
 
         Debug.Log("ロード完了"); 
+    }
+
+    //---------------------------------------------------------------------
+    //  サウンドコンフィグでキャンセルが押された時の処理
+    //---------------------------------------------------------------------
+    public void OnCancelButtonDown()
+    {
+        //  初期化
+        Init();
     }
 }

@@ -5,10 +5,10 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using System;
-using UnityEngine.Experimental.GlobalIllumination;
+using TMPro;
+using DG.Tweening;
 
 //  ボスの種類
 public enum BossType
@@ -44,8 +44,16 @@ public class EnemyManager : MonoBehaviour
         E01_B,      //  ザコ１（ドロップ有り）
         E02,        //  ザコ２
         E02_B,      //  ザコ２（ドロップ有り）
-        MidBoss01,  //  中ボス
+        MidBoss,  //  中ボス
         EX,         //  ちっちゃいおっさん
+
+        Max
+    }
+
+    // 特殊な敵の出現セット(全ステージ共通規格)
+    public enum SpecialEnemyPattern
+    {
+        DollSiege,  // 人形包囲陣
 
         Max
     }
@@ -57,6 +65,7 @@ public class EnemyManager : MonoBehaviour
     }
 
     [SerializeField] private GameObject[] enemyPrefab;
+    [SerializeField] private GameObject[] specialEnemyPrefab;
     private const float appearY = -6.5f;
 
 
@@ -133,6 +142,18 @@ public class EnemyManager : MonoBehaviour
     //  HPスライダーのボス名
     [SerializeField] private GameObject[] bossNameHPSlider;
 
+    //  ステージ開始時に表示するテキスト
+    [SerializeField] private TextMeshProUGUI stageStartingText;
+    private static readonly string[] stageName = 
+        {
+            "ステージ１\n鬼の棲む山",
+            "ステージ２\n九十九長屋",
+            "ステージ３\n☆十二支喫茶えとわーる☆",
+            "ステージ４\nライブ会場",
+            "ステージ５\n洞窟",
+            "ステージ６\n神殿",
+        };
+
 
     void Awake()
     {
@@ -208,8 +229,8 @@ public class EnemyManager : MonoBehaviour
     //-----------------------------------------------------------------
     private async UniTask LoadPrefab()
     {
-        smallKonItem = new GameObject();
-        largeKonItem = new GameObject();
+        //smallKonItem = new GameObject();
+        //largeKonItem = new GameObject();
         powerupItems = new List<GameObject>();
         speedupItems = new List<GameObject>();
         bombItems = new List<GameObject>();
@@ -374,13 +395,43 @@ public class EnemyManager : MonoBehaviour
 
     void Update()
     {
-        //  敵リストを監視して死んでいたらリストから削除
-        for(int i = 0;i<enemyObjList.Count;i++)
+        
+    }
+
+    //------------------------------------------------
+    //  敵が死んでいたらリストから削除
+    //------------------------------------------------
+    public void DeleteEnemyFromList(GameObject obj)
+    {
+        if(obj == null)
         {
-            if(enemyObjList[i].gameObject == null)
-            {
-                enemyObjList.Remove(enemyObjList[i]);
-            }
+            enemyObjList.Remove(obj);
+        } 
+    }
+
+    //------------------------------------------------
+    //  敵を全削除
+    //------------------------------------------------
+    public void DeleteAllEnemy()
+    {
+        foreach(GameObject obj in enemyObjList)
+        {
+            if(obj)Destroy(obj);
+        }
+    }
+
+    //------------------------------------------------
+    //  リストに敵オブジェクトを追加
+    //------------------------------------------------
+    public void AddEnemyFromList(GameObject obj)
+    {
+        if(obj != null)
+        {
+            enemyObjList.Add(obj);
+        }
+        else
+        {
+            Debug.LogError("空のオブジェクトが引数に指定されています！");
         }
     }
 
@@ -404,6 +455,8 @@ public class EnemyManager : MonoBehaviour
     public GameObject GetEnemyPrefab(int n){ return enemyPrefab[n]; }
     public GameObject GetDangerLineCanvas(){ return dangerLineCanvas;}
     public bool GetIsCompleteLoading(){ return isCompleteLoading; }
+    public List<GameObject> GetEnemyObjectList(){ return enemyObjList; }
+    public EnemySetting GetEnemySetting(){ return enemySetting; }
 
     //------------------------------------------------
     //  ランダムなX座標を返す
@@ -425,6 +478,39 @@ public class EnemyManager : MonoBehaviour
         enemyObjList.Last().GetComponent<Enemy>().SetEnemyData(enemySetting, item);
 
         return enemyObjList.Last();
+    }
+
+    //------------------------------------------------
+    //  画面中央を中心として周りに人形を展開
+    //------------------------------------------------
+    public void SetDollGroup(ePowerupItems item = ePowerupItems.None)
+    {
+        float totalDegree = 360;        //  撃つ範囲の総角  
+        int wayNum = 8;                 //  弾のway数
+        float Degree = totalDegree / wayNum;     //  弾一発毎にずらす角度88888888
+        float distance = 5f;            //  プレイヤーから離す距離
+
+        //  プレイヤーの前方ベクトルを取得
+        Vector3 vector0 = GameManager.Instance.GetPlayer().transform.up;
+        Vector3[] vector = new Vector3[wayNum];
+
+        for (int i = 0; i < wayNum; i++)
+        {
+            //  ベクトルの角度を設定
+            vector[i] = Quaternion.Euler
+                (0, 0, -Degree * i) * vector0;
+            vector[i].z = 0f;
+
+            //  敵を生成する座標を計算
+            Vector3 playerPos = new Vector3(0,2,0);
+            Vector3 pos = distance * vector[i] + playerPos;
+
+            //  人形オブジェクトを生成
+            enemyObjList.Add(Instantiate(specialEnemyPrefab[(int)SpecialEnemyPattern.DollSiege],pos,transform.rotation));
+
+            //  敵情報の設定
+            enemyObjList.Last().GetComponent<Enemy>().SetEnemyData(enemySetting, item);
+        }
     }
 
     //------------------------------------------------
@@ -501,6 +587,8 @@ public class EnemyManager : MonoBehaviour
 
         for(int i = 0;i<enemyObjList.Count;i++)
         {
+            if(enemyObjList[i].gameObject == null)continue;
+
             //  リストのi番目の敵とプレイヤーの距離を算出
             d1 = Vector3.Distance(enemyObjList[i].transform.position, playerPos);
 
@@ -513,7 +601,33 @@ public class EnemyManager : MonoBehaviour
                 nearestNum = i;
             }
         }
+
+        //  エラー回避
+        if(nearestNum == -1)return null;
+
         return enemyObjList[nearestNum];
+    }
+
+    //-----------------------------------------------------------
+    //  各ステージ開始時のステージ名演出
+    //-----------------------------------------------------------
+    private IEnumerator StagingLevelBeginning()
+    {
+        float fade_time = 2f;   //  フェードに要する時間(秒)
+
+        //  ステージに応じたテキストを設定する
+        stageStartingText.text = stageName[(int)PlayerInfoManager.stageInfo];
+
+        //  テキストをフェードインさせる
+        stageStartingText.DOFade(1.0f, fade_time);
+
+        //  待つ
+        yield return new WaitForSeconds(fade_time);
+
+        //  テキストをフェードアウトさせる
+        stageStartingText.DOFade(0.0f, fade_time);
+
+        yield return null;
     }
 
     //-----------------------------------------------------------
@@ -523,6 +637,9 @@ public class EnemyManager : MonoBehaviour
     {
         //  ザコ戦BGM開始
         SoundManager.Instance.PlayBGM((int)MusicList.BGM_DOUJI_STAGE_ZAKO);
+
+        //  ステージ開始演出
+        yield return StartCoroutine( StagingLevelBeginning() );
 
         yield return new WaitForSeconds(3f);
 
@@ -586,7 +703,7 @@ public class EnemyManager : MonoBehaviour
 
         SetEnemy(
         enemyPrefab[(int)EnemyPattern.E02_B],
-        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.Random);
+        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.SpeedUp);
 
         yield return new WaitForSeconds(5.0f);
 
@@ -605,7 +722,7 @@ public class EnemyManager : MonoBehaviour
 
         SetEnemy(
         enemyPrefab[(int)EnemyPattern.E01_B],
-        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.Random);
+        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.Bomb);
 
         yield return new WaitForSeconds(0.3f);
 
@@ -839,7 +956,7 @@ public class EnemyManager : MonoBehaviour
 
         SetEnemy(
         enemyPrefab[(int)EnemyPattern.E01_B],
-        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.Random);
+        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.Bomb);
 
         SetEnemy(
         enemyPrefab[(int)EnemyPattern.E02],
@@ -861,7 +978,7 @@ public class EnemyManager : MonoBehaviour
 
         //  Wave11
         GameObject MidBoss = SetEnemy(
-                                    enemyPrefab[(int)EnemyPattern.MidBoss01],
+                                    enemyPrefab[(int)EnemyPattern.MidBoss],
                                     new Vector3(0, -4, 0),
                                     ePowerupItems.PowerUp
                                 );
@@ -876,12 +993,18 @@ public class EnemyManager : MonoBehaviour
         //  ザコ戦終了フラグがTRUEになるまで待つ
         yield return new WaitUntil(() => endZakoStage == true);
 
+        //  ザコ敵全削除
+        DeleteAllEnemy();
+
         //  中ボスのスライダーを削除
         Destroy(midSliderObject);
 
         //  PlayerのShotManagerを初期化する
         GameObject player = GameManager.Instance.GetPlayer();
         player.GetComponent<PlayerShotManager>().DisableShot();
+
+        //  BombManagerを無効化する
+        player.GetComponent<PlayerBombManager>().DisableBomb();
 
         //  プレイヤーが死んでいたらbreak
         PlayerHealth ph = player.GetComponent<PlayerHealth>();
@@ -915,6 +1038,9 @@ public class EnemyManager : MonoBehaviour
 
         //  ショットを有効化
         player.GetComponent<PlayerShotManager>().EnableShot();
+
+        //  BombManagerを有効化する
+        player.GetComponent<PlayerBombManager>().EnableBomb();
 
         //  ボスのHPスライダーを生成
         GameObject sliderObject = Instantiate(bossSlider);
@@ -980,6 +1106,9 @@ public class EnemyManager : MonoBehaviour
         // ショットを無効化
         player.GetComponent<PlayerShotManager>().DisableShot();
 
+        //  BombManagerを無効化する
+        player.GetComponent<PlayerBombManager>().DisableBomb();
+
         //  ５秒待つ
         yield return new WaitForSeconds(5);
 
@@ -998,7 +1127,497 @@ public class EnemyManager : MonoBehaviour
     //-----------------------------------------------------------
     public IEnumerator AppearEnemy_Stage02()
     {
-        yield return null;
+        //  ザコ戦BGM開始
+        SoundManager.Instance.PlayBGM((int)MusicList.BGM_TSUKUMO_STAGE_ZAKO);
+
+        //  ステージ開始演出
+        yield return StartCoroutine(StagingLevelBeginning());
+
+        yield return new WaitForSeconds(3f);
+
+        //  Wave1
+        SetEnemy(
+            enemyPrefab[(int)EnemyPattern.E01],
+            new Vector3(GetRandomX(), appearY, 0)
+        );
+
+        //  Wave2
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(0.32f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(1.0f);
+
+        //  Wave3
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(0.32f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(0.3f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.PowerUp);
+
+        yield return new WaitForSeconds(1.0f);
+
+        //  Wave4
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E02],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        //  人形包囲陣
+        SetDollGroup();
+
+        yield return new WaitForSeconds(1.0f);
+
+        //  Wave5
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E02],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(1.0f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E02],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(1.0f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E02_B],
+        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.SpeedUp);
+
+        yield return new WaitForSeconds(5.0f);
+
+        //  Wave6
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(0.32f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(0.3f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01_B],
+        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.Bomb);
+
+        yield return new WaitForSeconds(0.3f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(0.3f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(0.3f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01_B],
+        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.PowerUp);
+
+        yield return new WaitForSeconds(1.0f);
+
+        //  Wave7
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(0.32f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(0.3f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01_B],
+        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.Heal);
+
+        yield return new WaitForSeconds(0.3f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(0.32f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(0.3f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01_B],
+        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.Random);
+
+        yield return new WaitForSeconds(0.3f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(0.3f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(0.3f);
+
+        yield return new WaitForSeconds(1.0f);
+
+        //  Wave8
+        //  人形包囲陣
+        SetDollGroup();
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(0.32f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(0.3f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(0.3f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(0.32f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(0.3f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(0.3f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(0.32f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(0.3f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(0.3f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01_B],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(0.3f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E02],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(1.0f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E02],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(1.0f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E02_B],
+        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.PowerUp);
+
+        yield return new WaitForSeconds(1.0f);
+
+        //  Wave9
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01_B],
+        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.Random);
+
+        yield return new WaitForSeconds(1.0f);
+
+        //  wave10
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E01_B],
+        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.Bomb);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E02],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(1.0f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E02],
+        new Vector3(GetRandomX(), appearY, 0));
+
+        yield return new WaitForSeconds(1.0f);
+
+        SetEnemy(
+        enemyPrefab[(int)EnemyPattern.E02_B],
+        new Vector3(GetRandomX(), appearY, 0), ePowerupItems.PowerUp);
+
+        yield return new WaitForSeconds(8.0f);
+
+        //  WaveX
+        GameObject MidBoss = SetEnemy(
+                                    enemyPrefab[(int)EnemyPattern.MidBoss],
+                                    new Vector3(0, -6, 0),
+                                    ePowerupItems.PowerUp
+                                );
+
+        //  中ボスのHPスライダーを生成
+        GameObject midSliderObject = Instantiate(midBossSlider);
+        midSliderObject.transform.SetParent(bossCanavs.transform, false);
+
+        //  HPスライダーを設定
+        MidBoss.GetComponent<Enemy>().SetHpSlider(midSliderObject.GetComponent<Slider>());
+
+        //  ザコ戦終了フラグがTRUEになるまで待つ
+        yield return new WaitUntil(() => endZakoStage == true);
+
+        //  ザコ敵全削除
+        DeleteAllEnemy();
+
+        //  中ボスのスライダーを削除
+        Destroy(midSliderObject);
+
+        //  PlayerのShotManagerを初期化する
+        GameObject player = GameManager.Instance.GetPlayer();
+        player.GetComponent<PlayerShotManager>().DisableShot();
+
+        //  BombManagerを無効化する
+        player.GetComponent<PlayerBombManager>().DisableBomb();
+
+        //  プレイヤーが死んでいたらbreak
+        PlayerHealth ph = player.GetComponent<PlayerHealth>();
+        if (ph.GetCurrentHealth() <= 0) yield break;
+
+        //  ５秒待つ
+        yield return new WaitForSeconds(5);
+
+        //  ポーズを無効化
+        GameManager.Instance.GetPauseAction().Disable();
+
+        //  イベントモードへ移行
+        GameManager.Instance.SetGameState((int)eGameState.Event);
+
+        //  イベントシーンマネージャーを有効化
+        eventSceneManager.SetActive(true);
+
+        //  ボス戦開始フラグがTRUEになるまで待つ(ボス戦モード)
+        yield return new WaitUntil(() => EventSceneManager.Instance.GetStartBoss());
+
+        ///***********************ここからボス戦***********************/
+
+        ////  ポーズを有効化
+        //GameManager.Instance.GetPauseAction().Enable();
+
+        ////  ボスBGM再生
+        //SoundManager.Instance.PlayBGM((int)MusicList.BGM_DOUJI_STAGE_BOSS);
+
+        ////  イベントシーンマネージャーを無効化
+        //eventSceneManager.SetActive(false);
+
+        ////  ショットを有効化
+        //player.GetComponent<PlayerShotManager>().EnableShot();
+
+        ////  BombManagerを有効化する
+        //player.GetComponent<PlayerBombManager>().EnableBomb();
+
+        ////  ボスのHPスライダーを生成
+        //GameObject sliderObject = Instantiate(bossSlider);
+        //sliderObject.transform.SetParent(bossCanavs.transform, false);
+
+        ////  ボスごとにHPスライダーを設定
+        //GameObject BossObj = EventSceneManager.Instance.GetBossObject();
+        //if (BossObj.GetComponent<BossDouji>())
+        //{
+        //    BossObj.GetComponent<BossDouji>()
+        //        .SetHpSlider(sliderObject.GetComponent<Slider>());
+        //    bossNameHPSlider[(int)BossType.Douji].SetActive(true);
+        //}
+        ////else if (BossObj.GetComponent<BossTsukumo>())
+        ////{
+        ////    BossObj.GetComponent<BossTsukumo>()
+        ////        .SetHpSlider(sliderObject.GetComponent<Slider>());
+        ////    bossNameHPSlider[(int)BossType.Tsukumo].SetActive(true);
+        ////}
+        ////else if (BossObj.GetComponent<BossKuchinawa>())
+        ////{
+        ////    BossObj.GetComponent<BossKuchinawa>()
+        ////        .SetHpSlider(sliderObject.GetComponent<Slider>());
+        ////    bossNameHPSlider[(int)BossType.Kuchinawa].SetActive(true);
+        ////}
+        ////else if (BossObj.GetComponent<BossKurama>())
+        ////{
+        ////    BossObj.GetComponent<BossKurama>()
+        ////        .SetHpSlider(sliderObject.GetComponent<Slider>());
+        ////    bossNameHPSlider[(int)BossType.Kurama].SetActive(true);
+        ////}
+        ////else if (BossObj.GetComponent<BossWadatsumi>())
+        ////{
+        ////    BossObj.GetComponent<BossWadatsumi>()
+        ////        .SetHpSlider(sliderObject.GetComponent<Slider>());
+        ////    bossNameHPSlider[(int)BossType.Wadatsumi].SetActive(true);
+        ////}
+        ////else if (BossObj.GetComponent<BossHakumen>())
+        ////{
+        ////    BossObj.GetComponent<BossHakumen>()
+        ////        .SetHpSlider(sliderObject.GetComponent<Slider>());
+        ////    bossNameHPSlider[(int)BossType.Hakumen].SetActive(true);
+        ////}
+
+        ////  ボスコンポーネントを有効化
+        //GameObject boss = EventSceneManager.Instance.GetBossObject();
+        //boss.GetComponent<BossDouji>().enabled = true;
+        //boss.GetComponent<BoxCollider2D>().enabled = true;
+
+        ////  ボス戦終了フラグがTRUEになるまで待つ
+        //yield return new WaitUntil(() => GameManager.Instance.GetStageClearFlag());
+
+        ////  ポーズを無効化
+        //GameManager.Instance.GetPauseAction().Disable();
+
+        ////  左右の障気オブジェクトを無効化
+        //EventSceneManager.Instance.GetFogObjectL().SetActive(false);
+        //EventSceneManager.Instance.GetFogObjectR().SetActive(false);
+
+        ////  ボスのHPキャンバスを非表示
+        //bossCanavs.SetActive(false);
+
+        //// ショットを無効化
+        //player.GetComponent<PlayerShotManager>().DisableShot();
+
+        ////  BombManagerを無効化する
+        //player.GetComponent<PlayerBombManager>().DisableBomb();
+
+        ////  ５秒待つ
+        //yield return new WaitForSeconds(5);
+
+        ////  Playerのショットを初期化
+        //player.GetComponent<PlayerShotManager>().InitShot();
+
+        ////  イベントモードへ移行
+        //GameManager.Instance.SetGameState((int)eGameState.Event);
+
+        ////  イベントシーンマネージャーを有効化
+        //eventSceneManager.SetActive(true);
     }
 
     //-----------------------------------------------------------

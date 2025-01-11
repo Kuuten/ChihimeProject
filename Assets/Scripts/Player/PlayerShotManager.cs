@@ -156,17 +156,12 @@ public class PlayerShotManager : MonoBehaviour
         shotConvert = playerInput.actions["ConvertShot"];
 
         normalShotPower = normalShotPower_normal;
-        normalShotChargeFlag = false;
-        chargeTimer =0f;
-        chargeNormalShotCount = 0;
-        shotCount = 0;
-        canShot = true;
         normalShotLevel = PlayerInfoManager.g_SHOT_LV; 
-        gaugeValue = 0.0f;
-        convertState = ConvertState.None;
-        fieldObjectScale = new Vector3(3f,3f,3f);
-        canConvert =true;
+
         convertIsFullPower = false;
+
+        //  ショット初期化
+        InitShot();
 
         //  魂バート弾ごとの弾の威力
         convertShotPowerHalf[(int)SHOT_TYPE.DOUJI] = 30f;
@@ -224,7 +219,7 @@ public class PlayerShotManager : MonoBehaviour
         fieldObjectScale = new Vector3(3f,3f,3f);
 
         //  吸魂フィールドのスケール初期化
-        KonFieldAlphaAnimation(0.784f,0.0f,0.5f);
+        KonFieldAlphaAnimation(0.0f,0.0f,0.5f);
         fieldObject.transform.DOScale(
             new Vector3(3f,3f,3f),
             0.5f);

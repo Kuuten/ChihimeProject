@@ -17,7 +17,7 @@ public class LogoScaling : MonoBehaviour
     void Start()
     {
         transform.localScale = new Vector3(1f,1f,1f);
-        transform.DOScale(0.9f,0.4f)
+        transform.DOScale(0.9f,0.35f)
             .SetEase(Ease.OutElastic)
             .SetLoops(-1); 
     }

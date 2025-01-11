@@ -174,16 +174,16 @@ public class EventSceneManager : MonoBehaviour
             {
                 Event01(),
                 Event02(),
+                Event03(),
+                Event04(),
                 Event01(),
+                Event02(),
                 Event01(),
+                Event02(),
                 Event01(),
+                Event02(),
                 Event01(),
-                Event01(),
-                Event01(),
-                Event01(),
-                Event01(),
-                Event01(),
-                Event01(),
+                Event02(),
             };
 
 
@@ -546,6 +546,235 @@ public class EventSceneManager : MonoBehaviour
     private IEnumerator Event02()
     {
         Debug.Log("***イベント02：ドウジ戦闘後を開始します***");
+
+        //  BGMを止める
+        SoundManager.Instance.Stop((int)AudioChannel.MUSIC);
+
+        //  キャンバスをON
+        eventCanvas.SetActive(true);
+
+        //  上をアクティブ化
+        frameObject[(int)Frame.TOP].SetActive(true);
+
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.DOUJI_SURPRISED,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        //  上をアクティブ化
+        frameObject[(int)Frame.BOTTOM].SetActive(true);
+
+        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_NORMAL,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.DODOME_NORMAL,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_EXCITE,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.DODOME_NORMAL,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_SURPRISED,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.DODOME_NORMAL,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_EXCITE,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.DOUJI_ANGRY,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.DOUJI_ANGRY,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        //  フレームオブジェクトを非表示にする
+        frameObject[(int)Frame.TOP].SetActive(false);
+        frameObject[(int)Frame.BOTTOM].SetActive(false);
+
+        //  Pauserが付いたオブジェクトをポーズ
+        Pauser.Pause();
+
+        //  プレイヤーのAnimatorを無効化
+        GameManager.Instance.GetPlayer().GetComponent<Animator>().enabled = false;
+
+        //  結果表示開始フラグTRUE
+        startResult = true;
+
+        Debug.Log("***結果表示モードになりました。***");
+
+        //*********結果表示へ***********
+    }
+
+    //-------------------------------------------------------------
+    //  イベント03：ツクモ戦闘前
+    //-------------------------------------------------------------
+    private IEnumerator Event03()
+    {
+        Debug.Log("***イベント03：ドウジ戦闘前を開始します***");
+
+        //  BGMを止める
+        SoundManager.Instance.Stop((int)AudioChannel.MUSIC);
+
+        //  下をアクティブ化
+        frameObject[(int)Frame.BOTTOM].SetActive(true);
+
+        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_NORMAL,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        //  ボスを生成＆移動
+        StartCoroutine(CreateBossAndMove(BossType.Douji,new Vector2(-1,5.5f)));
+
+        //  上をアクティブ化
+        frameObject[(int)Frame.TOP].SetActive(true);
+
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.DOUJI_NORMAL,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_EXCITE,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.DOUJI_NORMAL,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.DODOME_NORMAL,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.DOUJI_NORMAL,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.DODOME_NORMAL,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.DOUJI_NORMAL,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.CHIHIME_EXCITE,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.DOUJI_SURPRISED,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.DODOME_NORMAL,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.DOUJI_ANGRY,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.DODOME_NORMAL,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_EXCITE,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.DODOME_NORMAL,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_EXCITE,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.DOUJI_NORMAL,gameText);
+
+        //  入力待ち
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+
+        //  キャンバスをOFF
+        eventCanvas.SetActive(false);
+
+        //  左右の障気オブジェクトを有効化
+        bossFogObjectL.SetActive(true);
+        bossFogObjectR.SetActive(true);
+
+        //  夜用の背景オブジェクトを有効化
+        bossBackGroundObj[(int)StageInfo.Stage01].SetActive(true);
+
+        //  ボス登場SE再生
+        SoundManager.Instance.PlaySFX(
+            (int)AudioChannel.SFX_SYSTEM,
+            (int)SFXList.SFX_BOSS_APPEAR);
+
+        //  ボスの名前をアルファアニメさせる
+        StartCoroutine(AlphaAnimationBossName());
+
+        //  ７秒待つ
+        yield return new WaitForSeconds(7);
+
+        //  ボスモードへ移行
+        GameManager.Instance.SetGameState((int)eGameState.Boss);
+
+        //  BossDoujiコンポーネントを無効化
+        BossObject.GetComponent<BossDouji>().enabled = false;
+
+        Debug.Log("***ボス戦モードになりました。***");
+
+        //  ボス戦開始フラグTRUE
+        startBoss = true;
+
+        //  イベントシーンマネージャーを無効化
+        this.gameObject.SetActive(false);
+    }
+
+    //-------------------------------------------------------------
+    //  イベント04：ドウジ戦闘後
+    //-------------------------------------------------------------
+    private IEnumerator Event04()
+    {
+        Debug.Log("***イベント04：ドウジ戦闘後を開始します***");
 
         //  BGMを止める
         SoundManager.Instance.Stop((int)AudioChannel.MUSIC);

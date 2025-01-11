@@ -59,7 +59,7 @@ public class PlayerHomingBullet : MonoBehaviour
         //  “G‚ª‚¢‚È‚¯‚ê‚Î’e‚ğÁ‹‚µ‚Ä–ß‚é
         if(target == null)
         {
-            Debug.Log("“G‚ª‚¢‚È‚¢I");
+            //Debug.Log("“G‚ª‚¢‚È‚¢I");
             Destroy(this.gameObject);
             return;
         }

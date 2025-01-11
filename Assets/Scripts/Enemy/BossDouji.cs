@@ -168,6 +168,7 @@ public class BossDouji : MonoBehaviour
         {
             if(!bStopPhase1)
             {
+                hp = enemyData.Hp*phase1_end;
                 bStopPhase1 = true;
             }
         }
@@ -175,6 +176,7 @@ public class BossDouji : MonoBehaviour
         {
             if(!bStopPhase2)
             {
+                hp = enemyData.Hp*phase2_end;
                 bStopPhase2 = true;
             }
         }

@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -49,6 +50,7 @@ public class TitleManager : MonoBehaviour
 
     PlayerInput _input;
     InputAction nevigate;
+    InputAction submit;
     float verticalInput;
     float horizontalInput;
 
@@ -62,8 +64,8 @@ public class TitleManager : MonoBehaviour
     TitleMode titleMode;
 
     // デフォルト解像度を設定
-    private int defaultWidth = 1280;
-    private int defaultHeight = 720;
+    private readonly int defaultWidth = 1280;
+    private readonly int defaultHeight = 720;
 
     // 現在のフルスクリーン状態を保持
     private bool isFullScreen = false;
@@ -101,11 +103,18 @@ public class TitleManager : MonoBehaviour
     [SerializeField] private Button windowSwitchButton;
     [SerializeField] private TextMeshProUGUI screenStateText;
 
+    // 起動時に設定を適用
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void InitializeScreenSettings()
+    {
+        Screen.SetResolution(1280, 720, false);
+    }
 
     void Start()
     {
-        // 初期ウィンドウサイズを設定
-        Screen.SetResolution(defaultWidth, defaultHeight, isFullScreen);
+        //  最初は操作無効
+        nevigate.Disable();
+        submit.Disable();
 
         //  最初は通常モード
         titleMode = TitleMode.Normal;
@@ -131,18 +140,16 @@ public class TitleManager : MonoBehaviour
         //  タイトルロゴイーズイン
         yield return StartCoroutine(WaitingForEasingTitlelogo());
 
-       yield return new WaitForSeconds(0.5f); //  0.5秒待つ
+        yield return new WaitForSeconds(0.5f); //  0.5秒待つ
 
-        //// ヴィジュアルイーズイン
-        //yield return StartCoroutine(WaitingForEasingTitlelVusual());
-
-        // ヴィジュアルイーズイン
+        // ヴィジュアルフェードイン
         yield return StartCoroutine(WaitingForFadeInTitlelVusual());
 
         yield return new WaitForSeconds(0.5f); //  0.5秒待つ
 
-        //  EventSystemをアクティブにする
-        eventSystemObj.SetActive(true);
+        //  操作を有効にする
+        nevigate.Enable();
+        submit.Enable();
 
         //  ボタンを表示
         Buttons.SetActive(true);
@@ -156,12 +163,10 @@ public class TitleManager : MonoBehaviour
         float repeat_time = 10f; //  繰り返す間隔（秒）
         InvokeRepeating("RunToLeftAll",0f, repeat_time);
 
-        yield return new WaitForSeconds(3); //  3秒待つ
+        yield return new WaitForSeconds(3.2f); //  3秒待つ
 
-        //  タイトルロゴスケーリングON
+        //  タイトルロゴスケーリング開始
         logoScaling.enabled = true;
-
-        yield return null;
     }
 
     void Update()
@@ -186,6 +191,9 @@ public class TitleManager : MonoBehaviour
         // InputActionにNavigateを設定
         _input = GetComponent<PlayerInput>();
         nevigate = _input.actions["Navigate"];
+
+        // InputActionにSubmitを設定
+        submit = _input.actions["Submit"];
 
         //  アクションマップを設定
         InputActionMap player = _input.actions.FindActionMap("Player");
@@ -347,7 +355,7 @@ public class TitleManager : MonoBehaviour
         titleMode = TitleMode.Normal;
     }
 
-     //  コンフィグ画面でもどるが押された時の処理
+     //  コンフィグ画面でキャンセルが押された時の処理
     public void OnPressedCancel()
     {
         //  決定音再生
