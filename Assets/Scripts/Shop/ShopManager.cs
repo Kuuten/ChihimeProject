@@ -204,12 +204,12 @@ public class ShopManager : MonoBehaviour
     public void OnGoldHeartButtonDown()
     {
         //  ボタンのテキストから直接代金を取得
-        int value = int.Parse(RemoveKonText(GoldHeartValueText));;
+        int value = int.Parse(RemoveKonText(GoldHeartValueText));
 
         Debug.Log($"金色のハートの値段は{value}です");
 
         //  ハート１個分の体力
-        int one_heart = int.Parse(RemoveKonText(GoldHeartValueText));
+        int one_heart = 2;
 
         //  購入可能なら代金分魂を減らす
         if(MoneyManager.Instance.CanBuyItem(value))

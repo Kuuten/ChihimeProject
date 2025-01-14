@@ -96,6 +96,9 @@ public class Enemy : MonoBehaviour
     //  HPスライダー
     private Slider hpSlider;
 
+    //  フェーズ切り替えフラグ
+    private bool bSwitchPhase;
+
     //  ドロップパワーアップアイテム一覧
     private ePowerupItems powerupItems;
 
@@ -123,6 +126,8 @@ public class Enemy : MonoBehaviour
         dollAnimSpeed = 0.3f;
         //  人形包囲陣の突撃フラグ
         dollRotateFlag = false;
+        //  フェーズ切り替えフラグ
+        bSwitchPhase = false;
 
 
         //  敵情報のアサーション（満たさなければいけない条件）
@@ -186,6 +191,9 @@ public class Enemy : MonoBehaviour
     {
         //  スライダーを更新
         if(hpSlider != null)hpSlider.value = hp / enemyData.Hp;
+
+        //  ボスのフェーズ切り替え監視
+        SwitchBossPhase();
 
         //  行動パターン
         switch(moveType)
@@ -285,6 +293,8 @@ public class Enemy : MonoBehaviour
     public float GetHp(){ return hp; }
     public void SetSuperMode(bool flag){ bSuperMode = flag; }
     public bool GetSuperMode(){ return bSuperMode; }
+    public void SetSwitchPhase(bool flag){ bSwitchPhase = flag; }
+    public bool GetSwitchPhase(){ return bSwitchPhase; }
 
     //------------------------------------------------------
     //  中ボス用のHPスライダーをセットする
@@ -1657,6 +1667,27 @@ public class Enemy : MonoBehaviour
         yield return null;
     }
     //------------------------------------------------------------------
+    //  中ボスの体力監視用
+    //------------------------------------------------------------------
+    private void SwitchBossPhase()
+    {
+        //  ザコ敵は除外
+        if(isMidBoss == IS_MID_BOSS.No)return;
+
+        //  フェーズ切り替えの体力閾値
+        float hp_threshold = 0.7f;
+
+        //  体力が最大体力x閾値かつフェーズ切り替えがFalseだったら
+        if(hp <= enemyData.Hp * hp_threshold && !bSwitchPhase)
+        {
+            //  フェーズ切り替えフラグをTRUE
+            bSwitchPhase = true;
+
+            //  無敵フラグをTRUE
+            bSuperMode = true;
+        }
+    }
+    //------------------------------------------------------------------
     //  中ボス・Phase1
     //------------------------------------------------------------------
     private IEnumerator MidBoss_Phase1()
@@ -1705,8 +1736,8 @@ public class Enemy : MonoBehaviour
             //  360度バラマキ弾
             yield return StartCoroutine(MidBoss_WildlyShot360());
 
-            //  HPが半分を切ったら抜ける
-            if(hp <= enemyData.Hp*0.7)break;
+            //  HPが閾値を切ったら抜ける
+            if(bSwitchPhase)break;
 
             transform.DOLocalMoveX(-5f, duration)
             .SetEase(Ease.OutBack);
@@ -1717,8 +1748,8 @@ public class Enemy : MonoBehaviour
             //  360度バラマキ弾
             yield return StartCoroutine(MidBoss_WildlyShot360());
 
-            //  HPが半分を切ったら抜ける
-            if(hp <= enemyData.Hp*0.7)break;
+            //  HPが閾値を切ったら抜ける
+            if(bSwitchPhase)break;
         }
     }
     //------------------------------------------------------------------
@@ -1735,32 +1766,20 @@ public class Enemy : MonoBehaviour
             //  移動時間待つ
             yield return new WaitForSeconds(duration);
 
-            //  HPが半分を切ったら抜ける
-            if (hp <= enemyData.Hp * 0.7)
-            {
-                hp = enemyData.Hp * 0.7f;
-                break;
-            }
+            //  HPが閾値を切ったら抜ける
+            if(bSwitchPhase)break;
 
             //  爪痕状攻撃
             yield return StartCoroutine(MidBoss_ClawShot());
 
-            //  HPが半分を切ったら抜ける
-            if (hp <= enemyData.Hp * 0.7)
-            {
-                hp = enemyData.Hp * 0.7f;
-                break;
-            }
+            //  HPが閾値を切ったら抜ける
+            if(bSwitchPhase)break;
 
             //  360度攻撃
             yield return StartCoroutine(MidBoss_WildlyShot360());
 
-            //  HPが半分を切ったら抜ける
-            if (hp <= enemyData.Hp * 0.7)
-            {
-                hp = enemyData.Hp * 0.7f;
-                break;
-            }
+            //  HPが閾値を切ったら抜ける
+            if(bSwitchPhase)break;
         }
     }
     //------------------------------------------------------------------
@@ -1805,6 +1824,9 @@ public class Enemy : MonoBehaviour
         //  ジャンプ
         yield return StartCoroutine(MidBoss_Jump());
 
+        //  無敵モードOFF
+        bSuperMode = false;
+
         //  ２秒待つ
         yield return new WaitForSeconds(2);
 
@@ -1833,6 +1855,9 @@ public class Enemy : MonoBehaviour
         //  プレイヤーに接近する時間
         float duration = 2f;
 
+        //  無敵モードOFF
+        bSuperMode = false;
+
         //  中央に戻る
         yield return StartCoroutine(MidBoss_ReturnToCenter());
 
@@ -1860,6 +1885,9 @@ public class Enemy : MonoBehaviour
     private IEnumerator MidBoss_Jump()
     {
         float duration = 0.1f;
+
+        //  無敵フラグをTRUE
+        bSuperMode = true;
 
         //  汽笛SE再生
         SoundManager.Instance.PlaySFX(

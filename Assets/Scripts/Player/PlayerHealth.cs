@@ -326,10 +326,10 @@ public class PlayerHealth : MonoBehaviour
                 {
                     ed = collision.GetComponent<BossDouji>().GetEnemyData();
                 }
-                //if(collision.GetComponent<BossTsukumo>()) 
-                //{
-                //    ed = collision.GetComponent<BossTsukumo>().GetEnemyData();
-                //}
+                if (collision.GetComponent<BossTsukumo>())
+                {
+                    ed = collision.GetComponent<BossTsukumo>().GetEnemyData();
+                }
                 //if(collision.GetComponent<BossKuchinawa>()) 
                 //{
                 //    ed = collision.GetComponent<BossKuchinawa>().GetEnemyData();
@@ -398,9 +398,6 @@ public class PlayerHealth : MonoBehaviour
             }
             else if(collision.CompareTag("EnemyBullet"))    //  敵弾にHIT！
             {
-                //  無敵モードON
-                bSuperMode = true;
-
                 //  プレイヤーのダメージ処理
                 int power = 0;
                 if(collision.GetComponent<EnemyBullet>())
@@ -414,10 +411,24 @@ public class PlayerHealth : MonoBehaviour
                 else if(collision.GetComponent<DoujiPhase3Bullet>())
                 {
                     power = collision.GetComponent<DoujiPhase3Bullet>().GetPower();
-                    Debug.Log("ダメージ！" + power);
                 }
+                else if(collision.GetComponent<TsukumoHomingBullet>())
+                {
+                    power = collision.GetComponent<TsukumoHomingBullet>().GetPower();
+                }
+                else if(collision.GetComponent<TsukumoPhase2Bullet>())
+                {
+                    power = collision.GetComponent<TsukumoPhase2Bullet>().GetPower();
+                }
+                //else if(collision.GetComponent<TsukumoPhase3Bullet>())
+                //{
+                //    power = collision.GetComponent<TsukumoPhase3Bullet>().GetPower();
+                //}
 
                 Damage( power );
+
+                //  無敵モードON
+                bSuperMode = true;
 
                 //  死亡フラグON
                 if(currentHealth <= 0)
@@ -713,8 +724,8 @@ public class PlayerHealth : MonoBehaviour
         obj.GetComponent<RectTransform>().SetParent( heartRootObj.transform);
         obj.GetComponent<RectTransform>().localScale = Vector3.one;
         obj.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0,0,0);
-        obj.transform.GetChild((int)HeartType.Half).gameObject.SetActive(true);
-        obj.transform.GetChild((int)HeartType.Full).gameObject.SetActive(true);
+        //obj.transform.GetChild((int)HeartType.Half).gameObject.SetActive(true);
+        //obj.transform.GetChild((int)HeartType.Full).gameObject.SetActive(true);
         heartList.Add( obj );   //  リストに追加
 
         //  ハート画像を更新

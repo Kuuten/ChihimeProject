@@ -324,8 +324,31 @@ public class EventSceneManager : MonoBehaviour
         //  ボス情報セット
         EnemyManager.Instance.SetBoss(type, ePowerupItems.PowerUp);
 
-        //  BossDoujiコンポーネントを無効化
-        BossObject.GetComponent<BossDouji>().enabled = false;
+        //  ボスのタイプによってコンポーネントを無効化
+        if(type == BossType.Douji)
+        {
+            BossObject.GetComponent<BossDouji>().enabled = false;
+        }
+        else if(type == BossType.Tsukumo)
+        {
+            BossObject.GetComponent<BossTsukumo>().enabled = false;
+        }
+        else if(type == BossType.Kuchinawa)
+        {
+            BossObject.GetComponent<BossDouji>().enabled = false;
+        }
+        else if(type == BossType.Kurama)
+        {
+            BossObject.GetComponent<BossDouji>().enabled = false;
+        }
+        else if(type == BossType.Wadatsumi)
+        {
+            BossObject.GetComponent<BossDouji>().enabled = false;
+        }
+        else if(type == BossType.Hakumen)
+        {
+            BossObject.GetComponent<BossDouji>().enabled = false;
+        }
         BossObject.GetComponent<BoxCollider2D>().enabled = false;
 
         //  目標座標に向かって移動開始
@@ -647,7 +670,7 @@ public class EventSceneManager : MonoBehaviour
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
         //  ボスを生成＆移動
-        StartCoroutine(CreateBossAndMove(BossType.Douji,new Vector2(-1,5.5f)));
+        StartCoroutine(CreateBossAndMove(BossType.Tsukumo,new Vector2(-1,5.5f)));
 
         //  上をアクティブ化
         frameObject[(int)Frame.TOP].SetActive(true);
@@ -758,7 +781,7 @@ public class EventSceneManager : MonoBehaviour
         GameManager.Instance.SetGameState((int)eGameState.Boss);
 
         //  BossDoujiコンポーネントを無効化
-        BossObject.GetComponent<BossDouji>().enabled = false;
+        BossObject.GetComponent<BossTsukumo>().enabled = false;
 
         Debug.Log("***ボス戦モードになりました。***");
 
@@ -770,7 +793,7 @@ public class EventSceneManager : MonoBehaviour
     }
 
     //-------------------------------------------------------------
-    //  イベント04：ドウジ戦闘後
+    //  イベント04：ツクモ戦闘後
     //-------------------------------------------------------------
     private IEnumerator Event04()
     {

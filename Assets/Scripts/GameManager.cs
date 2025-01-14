@@ -604,14 +604,8 @@ public class GameManager : MonoBehaviour
             int index = UnityEngine.Random.Range(0, (int)idList.Count);
             int rand = idList[index];
 
-            //  オブジェクトをを生成する
-            GameObject obj = Instantiate(itemButtonPrefab[rand]);
-
-            //  ItemListオブジェクトの子にする
-            obj.transform.parent = itemListObject.transform;
-
-            //  何故かスケールが0になるので補正
-            obj.transform.localScale = new Vector3(1,1,1);
+            //  ItemListオブジェクトの子としてオブジェクトをを生成する
+            GameObject obj = Instantiate(itemButtonPrefab[rand],itemListObject.transform);
 
             //  ボタンの種類によってイベントを登録する
             Button button = obj.GetComponent<Button>();
@@ -711,7 +705,7 @@ public class GameManager : MonoBehaviour
     //--------------------------------------------------------------------------
     public void ReGenerate()
     {
-        int value = 3;   //  再入荷代金
+        int value = 3000;   //  再入荷代金
 
         //  代金分魂を減らす
         if(MoneyManager.Instance.CanBuyItem(value))

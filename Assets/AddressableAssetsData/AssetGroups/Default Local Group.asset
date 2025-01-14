@@ -2058,6 +2058,32 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 883e3012f22797043823d2003b023706
+    m_Address: Assets/Resources_moved/Sprites/enemy/Stage01/boss/boss_douji.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 022bbf73b1ddc5e47938691c7e166995
+    m_Address: Assets/Resources_moved/Sprites/enemy/Stage01/boss/boss_douji 1_0.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e1dbf49bf0ae27b49a29853fbbc2af2a
+    m_Address: Prefabs/Shop/PowerupButton.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fa5556976fea83843a9fbb2c5ce394d4
+    m_Address: Assets/Resources_moved/Prefabs/Shop/SpeedupButton.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 748ab62846ed3a1488aa98a9215e6a8f
+    m_Address: Assets/Resources_moved/Prefabs/Shop/ShieldButton.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 5b3e9bf9194140840b980876631db859, type: 2}
   m_SchemaSet:

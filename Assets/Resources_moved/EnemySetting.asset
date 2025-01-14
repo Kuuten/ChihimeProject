@@ -28,7 +28,7 @@ MonoBehaviour:
   - Id: Douji
     Hp: 3
     Attack: 1
-    Money: 400000
+    Money: 4000
   - Id: Ossan
     Hp: 3
     Attack: 810
@@ -42,10 +42,10 @@ MonoBehaviour:
     Attack: 1
     Money: 300
   - Id: Nuigurumi
-    Hp: 1000
+    Hp: 1
     Attack: 1
     Money: 1500
   - Id: Tsukumo
-    Hp: 3000
+    Hp: 3
     Attack: 1
     Money: 4000
