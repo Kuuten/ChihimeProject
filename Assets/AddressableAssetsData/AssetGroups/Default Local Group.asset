@@ -88,11 +88,10 @@ MonoBehaviour:
     m_SerializedLabels:
     - Sprites
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3c709065fbb222c4db35d97ad735d9ca
-    m_Address: Sprites/enemy/enemy02
+  - m_GUID: 6db9e83e55be8d34b8426b7960e20818
+    m_Address: Assets/Resources_moved/Sprites/enemy/Stage01/enemy_ibaraki
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Sprites
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3b5606a82218553448d4f27b50d5adfd
     m_Address: Sprites/enemy/enemy01/enemy01.anim
@@ -569,11 +568,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b68db6697aa1b384992d8c1d98b0efb9
     m_Address: Assets/Resources_moved/UI/ingame_ui_warning02.gif
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a7ff66446629d3844b960b7f7c743047
-    m_Address: UI/ui_scroll_back.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -2081,6 +2075,101 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 748ab62846ed3a1488aa98a9215e6a8f
     m_Address: Assets/Resources_moved/Prefabs/Shop/ShieldButton.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 238f8ac5d2902a24cb334dff247b28dd
+    m_Address: Assets/Resources_moved/Sounds/SFX/Enemy/DoujiStage
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6a3d0055711a04247be00bd4737b2539
+    m_Address: Assets/Resources_moved/Sounds/SFX/Enemy/TsukumoStage
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0f944a15bde537e4d8534057c30bbaee
+    m_Address: Assets/Resources_moved/Sprites/enemy/Assets/Resources_moved/Sprites/enemy
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 18ab3f321067e0747b8b12257727c98a
+    m_Address: Assets/Resources_moved/Sprites/enemy/Stage02/enemy03B
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f30782425156cd54d80ac255a8f76e13
+    m_Address: Assets/Resources_moved/Sprites/enemy/Stage02/enemy04
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 117106e22b926fd45a67e47e66e57e42
+    m_Address: Assets/Resources_moved/Sprites/enemy/Stage02/enemy04B
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0e40e9149a9f7f9479684144af0a5f7b
+    m_Address: Assets/Resources_moved/Sprites/enemy/Stage02/enemy_nuigurumi
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6cce083325d8b3e458f5b619b1dbd307
+    m_Address: Assets/Resources_moved/Sprites/enemy/Stage01/enemy02B
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4e7472d592fc73c4e896acb59651d6e1
+    m_Address: Assets/Resources_moved/Sprites/enemy/Stage01/enemy02
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6d9f7155222c8104495efe19d6a2a1c6
+    m_Address: Assets/Resources_moved/Sprites/enemy/Stage01/enemy01B
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3c709065fbb222c4db35d97ad735d9ca
+    m_Address: Assets/Resources_moved/Sprites/enemy/Stage01/enemy01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d374429e47e74914188a0893c7ee4460
+    m_Address: Assets/Resources_moved/Sprites/enemy/Stage03/enemy05
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2df12b1d99353824b9eaac3529fd25ec
+    m_Address: Assets/Resources_moved/Sprites/enemy/Stage03/enemy05B
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b31838c7208333d46b7f4026dd4421e0
+    m_Address: Assets/Resources_moved/Sprites/enemy/Stage03/enemy06
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e7eb756eb671af24c9a128389dc69c4d
+    m_Address: Assets/Resources_moved/Sprites/enemy/Stage03/enemy06B
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fa59c9b60a78f7b4c9c92c65c4e24884
+    m_Address: Assets/Resources_moved/Sprites/enemy/Stage03/enemy_maid
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 82d6ce2554bc7574fb855b6c7cb04403
+    m_Address: UI/ScrollIUI.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cfeb202c765a0fc428146e29a0f9f909
+    m_Address: UI/ingame_bossHP_gauge_back_1.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e4d89e522cc0f574998eae5027b5f1af
+    m_Address: UI/Fill.controller
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

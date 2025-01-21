@@ -28,6 +28,7 @@ TagManager:
   - HakumenKonburst
   - Boss
   - ConverterBullet
+  - UICamera
   layers:
   - Default
   - TransparentFX

@@ -121,6 +121,7 @@ public class SelectConvertManager : MonoBehaviour
         //  BGM‚ğ~‚ß‚é
         SoundManager.Instance.Stop((int)AudioChannel.MUSIC);
 
+
         if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage01)
         {
             //  IntroƒV[ƒ“‚Ö

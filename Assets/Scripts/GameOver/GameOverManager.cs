@@ -89,6 +89,20 @@ public class GameOverManager : MonoBehaviour
         }
     }
 
+
+    // 指定シーンへ情報をリセットして遷移する
+    private void ResetAndChangeScene(string scene_name)
+    {
+        //  BGMを止める
+        SoundManager.Instance.Stop((int)AudioChannel.MUSIC);
+
+        //  情報をリセット
+        PlayerInfoManager.ResetInfoStage();
+
+        //  シーンをロード
+        LoadingScene.Instance.LoadNextScene(scene_name);
+    }
+
     //  ゲームオーバーのBGMを止める
     public void StopBGM()
     {
@@ -122,6 +136,10 @@ public class GameOverManager : MonoBehaviour
 
         //  BGMを止めてタイトルへ
         StopBGM();
-        LoadingScene.Instance.LoadNextScene("Title");
+
+        //  リセット
+        ResetAndChangeScene("Title");
+
+        //LoadingScene.Instance.LoadNextScene("Title");
     }
 }

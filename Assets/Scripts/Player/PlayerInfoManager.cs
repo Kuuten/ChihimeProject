@@ -68,4 +68,11 @@ public static class PlayerInfoManager
         //  ステージ情報もリセット
         stageInfo = StageInfo.Stage01;
     }
+
+    //  情報を一括でリセット(ステージNo以外)
+    public static void ResetInfoStage()
+    {
+        //  初期値でリセット
+        SetInfo(MAXHP, MAXHP, KONNUM, BOMBNUM, SHOT_LV, SPEED_LV, IS_SHIELD);
+    }
 }

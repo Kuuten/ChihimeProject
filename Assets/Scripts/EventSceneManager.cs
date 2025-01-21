@@ -202,23 +202,23 @@ public class EventSceneManager : MonoBehaviour
         }
         else  if( PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage03 )
         {
-            if(!startBoss)textFile = TextFile[(int)EventType.Ev04];
-            else textFile = TextFile[(int)EventType.Ev05];
+            if(!startBoss)textFile = TextFile[(int)EventType.Ev05];
+            else textFile = TextFile[(int)EventType.Ev06];
         }
         else  if( PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage04 )
         {
-            if(!startBoss)textFile = TextFile[(int)EventType.Ev06];
-            else textFile = TextFile[(int)EventType.Ev07];
+            if(!startBoss)textFile = TextFile[(int)EventType.Ev07];
+            else textFile = TextFile[(int)EventType.Ev08];
         }
         else  if( PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage05 )
         {
-            if(!startBoss)textFile = TextFile[(int)EventType.Ev08];
-            else textFile = TextFile[(int)EventType.Ev09];
+            if(!startBoss)textFile = TextFile[(int)EventType.Ev09];
+            else textFile = TextFile[(int)EventType.Ev10];
         }
         else  if( PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage06 )
         {
-            if(!startBoss)textFile = TextFile[(int)EventType.Ev10];
-            else textFile = TextFile[(int)EventType.Ev11];
+            if(!startBoss)textFile = TextFile[(int)EventType.Ev11];
+            else textFile = TextFile[(int)EventType.Ev12];
         }
 
         //  テキスト読み込み＆行ごとに保存
@@ -656,7 +656,7 @@ public class EventSceneManager : MonoBehaviour
     //-------------------------------------------------------------
     private IEnumerator Event03()
     {
-        Debug.Log("***イベント03：ドウジ戦闘前を開始します***");
+        Debug.Log("***イベント03：ツクモ戦闘前を開始します***");
 
         //  BGMを止める
         SoundManager.Instance.Stop((int)AudioChannel.MUSIC);
@@ -797,7 +797,7 @@ public class EventSceneManager : MonoBehaviour
     //-------------------------------------------------------------
     private IEnumerator Event04()
     {
-        Debug.Log("***イベント04：ドウジ戦闘後を開始します***");
+        Debug.Log("***イベント04：ツクモ戦闘後を開始します***");
 
         //  BGMを止める
         SoundManager.Instance.Stop((int)AudioChannel.MUSIC);
