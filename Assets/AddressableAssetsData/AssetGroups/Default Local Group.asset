@@ -2195,11 +2195,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7068c625245109546bfde23674cb36f4
-    m_Address: Assets/Resources_moved/Prefabs/enemy/bullet/ingame_tsukumo_phase1_bottom.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 86f7c3d4f0a6bb74da72255bda59ef59
     m_Address: Assets/Resources_moved/Prefabs/enemy/bullet/ingame_tsukumo_phase1_top.prefab
     m_ReadOnly: 0
