@@ -477,10 +477,13 @@ public class GameManager : MonoBehaviour
         //  一旦ステージ３までの予定で後でステージ６まで作る
         //****************************************************************
         int currentStageNum = (int)PlayerInfoManager.stageInfo;
-        if(currentStageNum >= (int)PlayerInfoManager.StageInfo.Stage03)
+        if(currentStageNum >= (int)PlayerInfoManager.StageInfo.Stage02)
         {
             //  全ステージ終わっていたらエンディングへ
-            ResetAndChangeScene("Ending");
+            //ResetAndChangeScene("Ending");
+
+            //  暫定処理でタイトルに戻る
+            LoadingScene.Instance.LoadNextScene("Title");
         }
         else
         {

@@ -42,7 +42,7 @@ public static class PlayerInfoManager
 
         Max
     }
-    public static StageInfo stageInfo = StageInfo.Stage02;
+    public static StageInfo stageInfo = StageInfo.Stage01;
 
     //  情報を一括でセット
     public static void SetInfo(int maxHp,int currentHp,int konNum,int bombNum, int shotLv, int speedLv, bool isShield)
@@ -67,5 +67,12 @@ public static class PlayerInfoManager
 
         //  ステージ情報もリセット
         stageInfo = StageInfo.Stage01;
+    }
+
+    //  情報を一括でリセット(ステージNo以外)
+    public static void ResetInfoStage()
+    {
+        //  初期値でリセット
+        SetInfo(MAXHP, MAXHP, KONNUM, BOMBNUM, SHOT_LV, SPEED_LV, IS_SHIELD);
     }
 }

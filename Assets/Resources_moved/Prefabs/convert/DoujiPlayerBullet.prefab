@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1407801192080539371}
   - component: {fileID: 3353881826070263621}
   - component: {fileID: 1517683543735398807}
-  - component: {fileID: -6787962366889189233}
+  - component: {fileID: 545669633263443940}
   m_Layer: 0
   m_Name: DoujiPlayerBullet
   m_TagString: DoujiConvert
@@ -173,7 +173,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.546875, y: 1.765625}
+    oldSize: {x: 1.546875, y: 1.6875}
     newSize: {x: 17, y: 64}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -194,7 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d562de92d05e87449aba073ff834833a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-6787962366889189233
+--- !u!114 &545669633263443940
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -203,6 +203,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6013692122004912179}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0ed35f60ad413241b15bb58085cb1cc, type: 3}
+  m_Script: {fileID: 11500000, guid: a2558020ebbb11448affb69185c00815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

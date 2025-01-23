@@ -131,10 +131,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 302528428}
     m_Modifications:
-    - target: {fileID: 2196273057407428853, guid: 52aa9f3f596a63f49aba5952ba61c981, type: 3}
-      propertyPath: Sound
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 5470602848136937225, guid: 52aa9f3f596a63f49aba5952ba61c981, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -161,7 +157,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5470602848136937225, guid: 52aa9f3f596a63f49aba5952ba61c981, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 81
+      value: 82
       objectReference: {fileID: 0}
     - target: {fileID: 5470602848136937225, guid: 52aa9f3f596a63f49aba5952ba61c981, type: 3}
       propertyPath: m_SizeDelta.y
@@ -197,7 +193,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5470602848136937225, guid: 52aa9f3f596a63f49aba5952ba61c981, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1240.5
+      value: 1241
       objectReference: {fileID: 0}
     - target: {fileID: 5470602848136937225, guid: 52aa9f3f596a63f49aba5952ba61c981, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -218,10 +214,6 @@ PrefabInstance:
     - target: {fileID: 5828105596134227604, guid: 52aa9f3f596a63f49aba5952ba61c981, type: 3}
       propertyPath: m_Name
       value: ScrollUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 5828105596134227604, guid: 52aa9f3f596a63f49aba5952ba61c981, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

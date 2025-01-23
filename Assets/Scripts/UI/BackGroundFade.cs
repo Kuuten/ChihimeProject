@@ -22,7 +22,7 @@ public class BackGroundFade : MonoBehaviour
         StartCoroutine(StartFadeOut());
     }
 
-    // フェードアウト 
+    // フェードイン
     public IEnumerator StartFadeOut()
     {
         bool complete = false;

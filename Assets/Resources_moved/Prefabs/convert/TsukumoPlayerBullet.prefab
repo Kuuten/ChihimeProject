@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2057930908481729092}
   - component: {fileID: 8120478058563874432}
-  - component: {fileID: 8356266684332413975}
   - component: {fileID: 4563613631376801037}
   - component: {fileID: 7617928581634426159}
   - component: {fileID: 2573611656227303435}
+  - component: {fileID: 7102449279013670936}
   m_Layer: 0
   m_Name: TsukumoPlayerBullet
   m_TagString: TsukumoConvert
@@ -88,18 +88,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8356266684332413975
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6013692122004912179}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80551c1bbbde08344b5dfceb33f68e4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &4563613631376801037
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -182,5 +170,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d562de92d05e87449aba073ff834833a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7102449279013670936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6013692122004912179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10963342f09326c4dbe6952c3a7ea4ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -81,13 +81,21 @@ public class EventSceneManager : MonoBehaviour
         CHIHIME_EXCITE,     //  千姫・><。
         CHIHIME_SURPRISED,  //  千姫・きょとん
 
+        DODOME_NORMAL,      //  百々目・通常
+
+        HONEG_NORMAL,       //  骨G・通常
+        HONEG_EXCITE,       //  骨G・><
+        HONEG_CONFUSE,      //  骨G・困惑
+
         DOUJI_NORMAL,       //  ドウジ・通常
         DOUJI_ANGRY,        //  ドウジ・怒り
         DOUJI_SURPRISED,    //  ドウジ・驚き
 
-        DODOME_NORMAL,      //  百々目・通常
+        TSUKUMO_NORMAL,     //  ツクモ・通常
+        TSUKUMO_ANGRY,      //  ツクモ・プチおこ
+        TSUKUMO_CLOSEEYE,   //  ツクモ・目閉じ
+        TSUKUMO_SMILE,      //  ツクモ・暗黒微笑
 
-        HONEG_NORMAL,       //  骨G・通常
 
         Max
     }
@@ -202,23 +210,23 @@ public class EventSceneManager : MonoBehaviour
         }
         else  if( PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage03 )
         {
-            if(!startBoss)textFile = TextFile[(int)EventType.Ev04];
-            else textFile = TextFile[(int)EventType.Ev05];
+            if(!startBoss)textFile = TextFile[(int)EventType.Ev05];
+            else textFile = TextFile[(int)EventType.Ev06];
         }
         else  if( PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage04 )
         {
-            if(!startBoss)textFile = TextFile[(int)EventType.Ev06];
-            else textFile = TextFile[(int)EventType.Ev07];
+            if(!startBoss)textFile = TextFile[(int)EventType.Ev07];
+            else textFile = TextFile[(int)EventType.Ev08];
         }
         else  if( PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage05 )
         {
-            if(!startBoss)textFile = TextFile[(int)EventType.Ev08];
-            else textFile = TextFile[(int)EventType.Ev09];
+            if(!startBoss)textFile = TextFile[(int)EventType.Ev09];
+            else textFile = TextFile[(int)EventType.Ev10];
         }
         else  if( PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage06 )
         {
-            if(!startBoss)textFile = TextFile[(int)EventType.Ev10];
-            else textFile = TextFile[(int)EventType.Ev11];
+            if(!startBoss)textFile = TextFile[(int)EventType.Ev11];
+            else textFile = TextFile[(int)EventType.Ev12];
         }
 
         //  テキスト読み込み＆行ごとに保存
@@ -656,7 +664,7 @@ public class EventSceneManager : MonoBehaviour
     //-------------------------------------------------------------
     private IEnumerator Event03()
     {
-        Debug.Log("***イベント03：ドウジ戦闘前を開始します***");
+        Debug.Log("***イベント03：ツクモ戦闘前を開始します***");
 
         //  BGMを止める
         SoundManager.Instance.Stop((int)AudioChannel.MUSIC);
@@ -665,96 +673,73 @@ public class EventSceneManager : MonoBehaviour
         frameObject[(int)Frame.BOTTOM].SetActive(true);
 
         yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_NORMAL,gameText);
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
-        //  入力待ち
+        //  上をアクティブ化
+        frameObject[(int)Frame.TOP].SetActive(true);
+
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.HONEG_CONFUSE,gameText);
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.HONEG_EXCITE,gameText);
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_EXCITE,gameText);
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.HONEG_CONFUSE,gameText);
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_SURPRISED,gameText);
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.HONEG_EXCITE,gameText);
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_NORMAL,gameText);
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.HONEG_NORMAL,gameText);
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_NORMAL,gameText);
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
         //  ボスを生成＆移動
         StartCoroutine(CreateBossAndMove(BossType.Tsukumo,new Vector2(-1,5.5f)));
 
-        //  上をアクティブ化
-        frameObject[(int)Frame.TOP].SetActive(true);
-
-        yield return ChangeFaceAndText(Frame.TOP,FaceType.DOUJI_NORMAL,gameText);
-
-        //  入力待ち
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.TSUKUMO_CLOSEEYE,gameText);
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
         yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_EXCITE,gameText);
-
-        //  入力待ち
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
-        yield return ChangeFaceAndText(Frame.TOP,FaceType.DOUJI_NORMAL,gameText);
-
-        //  入力待ち
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.TSUKUMO_ANGRY,gameText);
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
-        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.DODOME_NORMAL,gameText);
-
-        //  入力待ち
+        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_SURPRISED,gameText);
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
-        yield return ChangeFaceAndText(Frame.TOP,FaceType.DOUJI_NORMAL,gameText);
-
-        //  入力待ち
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.HONEG_NORMAL,gameText);
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
-        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.DODOME_NORMAL,gameText);
-
-        //  入力待ち
+        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_NORMAL,gameText);
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
-        yield return ChangeFaceAndText(Frame.TOP,FaceType.DOUJI_NORMAL,gameText);
-
-        //  入力待ち
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.HONEG_EXCITE,gameText);
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
-        yield return ChangeFaceAndText(Frame.TOP,FaceType.CHIHIME_EXCITE,gameText);
-
-        //  入力待ち
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.TSUKUMO_NORMAL,gameText);
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
-        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.DOUJI_SURPRISED,gameText);
-
-        //  入力待ち
+        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_SURPRISED,gameText);
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
-        yield return ChangeFaceAndText(Frame.TOP,FaceType.DODOME_NORMAL,gameText);
-
-        //  入力待ち
-        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
-
-        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.DOUJI_ANGRY,gameText);
-
-        //  入力待ち
-        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
-
-        yield return ChangeFaceAndText(Frame.TOP,FaceType.DODOME_NORMAL,gameText);
-
-        //  入力待ち
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.TSUKUMO_SMILE,gameText);
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
         yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_EXCITE,gameText);
-
-        //  入力待ち
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
-
-        yield return ChangeFaceAndText(Frame.TOP,FaceType.DODOME_NORMAL,gameText);
-
-        //  入力待ち
-        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
-
-        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_EXCITE,gameText);
-
-        //  入力待ち
-        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
-
-        yield return ChangeFaceAndText(Frame.TOP,FaceType.DOUJI_NORMAL,gameText);
-
-        //  入力待ち
-        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
-
 
         //  キャンバスをOFF
         eventCanvas.SetActive(false);
@@ -797,7 +782,7 @@ public class EventSceneManager : MonoBehaviour
     //-------------------------------------------------------------
     private IEnumerator Event04()
     {
-        Debug.Log("***イベント04：ドウジ戦闘後を開始します***");
+        Debug.Log("***イベント04：ツクモ戦闘後を開始します***");
 
         //  BGMを止める
         SoundManager.Instance.Stop((int)AudioChannel.MUSIC);
@@ -808,58 +793,31 @@ public class EventSceneManager : MonoBehaviour
         //  上をアクティブ化
         frameObject[(int)Frame.TOP].SetActive(true);
 
-        yield return ChangeFaceAndText(Frame.TOP,FaceType.DOUJI_SURPRISED,gameText);
-
-        //  入力待ち
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.TSUKUMO_SMILE,gameText);
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
-        //  上をアクティブ化
+        //  下をアクティブ化
         frameObject[(int)Frame.BOTTOM].SetActive(true);
+        
+        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_EXCITE,gameText);
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
+
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.TSUKUMO_CLOSEEYE,gameText);
+        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
         yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_NORMAL,gameText);
-
-        //  入力待ち
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
-        yield return ChangeFaceAndText(Frame.TOP,FaceType.DODOME_NORMAL,gameText);
-
-        //  入力待ち
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.HONEG_CONFUSE,gameText);
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
-        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_EXCITE,gameText);
-
-        //  入力待ち
-        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
-
-        yield return ChangeFaceAndText(Frame.TOP,FaceType.DODOME_NORMAL,gameText);
-
-        //  入力待ち
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.TSUKUMO_NORMAL,gameText);
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
         yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_SURPRISED,gameText);
-
-        //  入力待ち
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
-
-        yield return ChangeFaceAndText(Frame.TOP,FaceType.DODOME_NORMAL,gameText);
-
-        //  入力待ち
-        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
-
-        yield return ChangeFaceAndText(Frame.BOTTOM,FaceType.CHIHIME_EXCITE,gameText);
-
-        //  入力待ち
-        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
-
-        yield return ChangeFaceAndText(Frame.TOP,FaceType.DOUJI_ANGRY,gameText);
-
-        //  入力待ち
-        yield return new WaitUntil(() => textNext.WasPressedThisFrame());
-
-        yield return ChangeFaceAndText(Frame.TOP,FaceType.DOUJI_ANGRY,gameText);
-
-        //  入力待ち
+        yield return ChangeFaceAndText(Frame.TOP,FaceType.TSUKUMO_SMILE,gameText);
         yield return new WaitUntil(() => textNext.WasPressedThisFrame());
 
         //  フレームオブジェクトを非表示にする

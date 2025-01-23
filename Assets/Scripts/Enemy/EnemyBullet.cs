@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,11 @@ public class EnemyBullet : MonoBehaviour
         speed = 0f;
         power = 0;
         velocity = Vector3.zero;
+    }
+
+    private void Start()
+    {
+
     }
 
     void Update()
@@ -48,4 +54,5 @@ public class EnemyBullet : MonoBehaviour
     public void SetSpeed(float s){ speed = s; }
     public void SetPower(int p){ power = p; }
     public int GetPower(){ return power; }
+
 }

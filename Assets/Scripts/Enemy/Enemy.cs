@@ -8,6 +8,31 @@ using UnityEngine.Assertions;
 using UnityEngine.UI;
 using static EnemyManager;
 
+// 動きの種類
+[SerializeField]  enum MOVE_TYPE {
+    None,                       // 未設定
+    Appear,                     // 現れるだけ
+    ClampL,                     // カクカク移動左スタート
+    ClampR,                     // カクカク移動右スタート
+    ClampRandom,                // カクカク移動ランダムスタート
+    ChargeToPlayer,             // 直進して現れてプレイヤーに突進
+    Charge,                     // プレイヤーに突進
+    RandomCharge,               // 適当なスポナーからプレイヤーに突進
+    Straight,                   // 直線移動
+    AdjustLine,                 // 軸合わせ
+    Curve,                      // 放物線
+    OssanMove,                  // おっさんムーブ
+    DollSiege,                  // 人形包囲
+
+    CurveAndShoot,              //  放物線移動&弾を撃って帰っていく
+    SnipeShot3way,              //  自機狙い弾を撃つ
+    WildlyShot3way,             //  バラマキ弾を撃つ
+    CounterShot3way,            //  ３wayの撃ち返し弾を撃つ
+
+    MidBoss_Appearance,         //  中ボス登場
+    MidBoss_MoveSide            //  中ボス左右繰り返し移動
+}
+
 //--------------------------------------------------------------
 //
 //  ザコ敵の基本クラス
@@ -15,29 +40,6 @@ using static EnemyManager;
 //--------------------------------------------------------------
 public class Enemy : MonoBehaviour
 {
-    // 動きの種類
-    [SerializeField] private enum MOVE_TYPE {
-        None,                       // 未設定
-        Appear,                     // 現れるだけ
-        ClampL,                     // カクカク移動左スタート
-        ClampR,                     // カクカク移動右スタート
-        ClampRandom,                // カクカク移動ランダムスタート
-        ChargeToPlayer,             // プレイヤーに突進
-        RandomCharge,               // 適当なスポナーからプレイヤーに突進
-        Straight,                   // 直線移動
-        AdjustLine,                 // 軸合わせ
-        Curve,                      // 放物線
-        OssanMove,                  // おっさんムーブ
-        DollSiege,                  // 人形包囲
-
-        CurveAndShoot,              //  放物線移動&弾を撃って帰っていく
-        SnipeShot3way,              //  自機狙い弾を撃つ
-        WildlyShot3way,             //  バラマキ弾を撃つ
-        CounterShot3way,            //  ３wayの撃ち返し弾を撃つ
-
-        MidBoss_Appearance,         //  中ボス登場
-        MidBoss_MoveSide            //  中ボス左右繰り返し移動
-    }
     // 動きの種類
     [SerializeField] private MOVE_TYPE moveType = MOVE_TYPE.None;
 
@@ -216,6 +218,9 @@ public class Enemy : MonoBehaviour
             case MOVE_TYPE.ChargeToPlayer:
                 SetCoroutine( ChargeToPlayer() );
                 break;
+            case MOVE_TYPE.Charge:
+                SetCoroutine( Charge() );
+                break;
             case MOVE_TYPE.RandomCharge:
                 SetCoroutine( RandomPopAndCharge() );
                 break;
@@ -232,7 +237,7 @@ public class Enemy : MonoBehaviour
                 SetCoroutine( OssanMove() );
                 break;
             case MOVE_TYPE.DollSiege:   //  人形包囲陣（特殊処理）
-                SetCoroutine( FadeInAndChargeToPlayer() );
+                SetCoroutine( FadeInAndChargeToPlayer(3.0f) );
                 break;
 
             //  中級ザコ
@@ -295,6 +300,7 @@ public class Enemy : MonoBehaviour
     public bool GetSuperMode(){ return bSuperMode; }
     public void SetSwitchPhase(bool flag){ bSwitchPhase = flag; }
     public bool GetSwitchPhase(){ return bSwitchPhase; }
+    public void SetMoveType(int type){ moveType = (MOVE_TYPE)type; }
 
     //------------------------------------------------------
     //  中ボス用のHPスライダーをセットする
@@ -969,15 +975,15 @@ public class Enemy : MonoBehaviour
 
     }
     //------------------------------------------------------------------
-    //  フェードインで現れる
+    //  フェードインで現れる(フェードインにかかる時間)
     //------------------------------------------------------------------
-    private IEnumerator FadeInAndChargeToPlayer()
+    private IEnumerator FadeInAndChargeToPlayer(float duration)
     {
         //  フェードイン
         this.GetComponent<SpriteRenderer>().DOFade(1.0f,3.0f);
 
         //  ３秒待つ
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(duration);
 
         //  ヒットボックス有効化
         this.GetComponent<BoxCollider2D>().enabled = true;
@@ -989,7 +995,7 @@ public class Enemy : MonoBehaviour
         dollRotateFlag = true;
 
         //  回転時間待つ
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(duration + 2.0f);
 
         //  回転を止める
         dollRotateFlag = false;
@@ -1884,7 +1890,7 @@ public class Enemy : MonoBehaviour
     //------------------------------------------------------------------
     private IEnumerator MidBoss_Jump()
     {
-        float duration = 0.1f;
+        float duration = 0.3f;
 
         //  無敵フラグをTRUE
         bSuperMode = true;
@@ -1938,14 +1944,16 @@ public class Enemy : MonoBehaviour
     //------------------------------------------------------------------
     private IEnumerator MidBoss_JumpAndMoveSide()
     {
-        float interval = 2.0f;  //  次の行動までの時間(秒)
-        float duration = 0.25f;
+        float interval = 4.0f;  //  次の行動までの時間(秒)
+        float duration = 0.5f;
         float jumpY = 9.0f;
         float jump_minX = -7.0f;
         float jump_maxX = 5.0f;
 
+        //---------------------------------------------------------------------
         //  予備動作で２回小ジャンプする
         //---------------------------------------------------------------------
+        
         //  ジャンプする
         transform.DOLocalMoveY(2f, duration)
                 .SetEase(Ease.OutExpo)
@@ -2102,9 +2110,6 @@ public class Enemy : MonoBehaviour
 
         //  AnimatorのSummonをTrue
         this.GetComponent<Animator>().SetBool("Summon", true);
-        
-        //  １秒待つ
-        yield return new WaitForSeconds(1);
 
         for(int i=0;i<10;i++)
         {

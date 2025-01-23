@@ -113,7 +113,10 @@ using UnityEngine;
         SFX_DOUJI_SHOT1,
         SFX_DOUJI_SHOT2,
 
-        SFX_TSUKUMO_SHOT,
+        SFX_TSUKUMO_SHOT1,
+        SFX_TSUKUMO_SHOT2,
+        SFX_TSUKUMO_SHOT3,
+
         SFX_KUCHINAWA_SHOT,
         SFX_KURAMA_SHOT,
         SFX_WADATSUMI_SHOT,

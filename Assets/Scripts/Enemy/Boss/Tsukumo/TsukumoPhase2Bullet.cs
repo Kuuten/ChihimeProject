@@ -50,7 +50,7 @@ public class TsukumoPhase2Bullet : MonoBehaviour
     //---------------------------------------------------------------
     public IEnumerator BulletMove()
     {
-        float duration = 3.0f;  //  アニメーション時間
+        float duration = 12.0f;  //  アニメーション時間
 
         //  寿命を設定
         Destroy(gameObject, duration);

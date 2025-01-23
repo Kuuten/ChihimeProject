@@ -404,6 +404,10 @@ public class PlayerHealth : MonoBehaviour
                 {
                     power = collision.GetComponent<EnemyBullet>().GetPower();
                 }
+                else if(collision.GetComponent<TsukumoFireworks>())
+                {
+                    power = collision.GetComponent<TsukumoFireworks>().GetPower();
+                }
                 else if(collision.GetComponent<DoujiPhase2Bullet>())
                 {
                     power = collision.GetComponent<DoujiPhase2Bullet>().GetPower();
@@ -420,10 +424,10 @@ public class PlayerHealth : MonoBehaviour
                 {
                     power = collision.GetComponent<TsukumoPhase2Bullet>().GetPower();
                 }
-                //else if(collision.GetComponent<TsukumoPhase3Bullet>())
-                //{
-                //    power = collision.GetComponent<TsukumoPhase3Bullet>().GetPower();
-                //}
+                else if (collision.GetComponent<TsukumoPhase3Bullet>())
+                {
+                    power = collision.GetComponent<TsukumoPhase3Bullet>().GetPower();
+                }
 
                 Damage( power );
 
@@ -475,6 +479,10 @@ public class PlayerHealth : MonoBehaviour
                 //  無敵演出開始
                 var taskBlink = Blink();
                 await taskBlink;
+            }
+            else if(collision.CompareTag("Obstacles"))    //  障害物にHIT！
+            {
+
             }
         }
     }

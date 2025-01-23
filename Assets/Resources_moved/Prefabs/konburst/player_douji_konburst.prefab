@@ -96,10 +96,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2148900806719592490}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da3594d1bf7f0374a9f746a445360bb5, type: 3}
+  m_Script: {fileID: 11500000, guid: 99c5ac3ff1160b64aa44701e41f4fc03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionStrength: {x: 0.2, y: 0.2, z: 0.2}
+  positionStrength: {x: 0, y: 0, z: 0}
   rotationStrength: {x: 0, y: 0, z: 0}
 --- !u!50 &722209678591530019
 Rigidbody2D:
