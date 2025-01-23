@@ -15,7 +15,11 @@ GameObject:
   - component: {fileID: 3343182236528074865}
   - component: {fileID: 3473620363743591814}
   m_Layer: 0
+<<<<<<<< HEAD:Assets/Resources_moved/Prefabs/enemy/bullet/ingame_tsukumo_phase1_bottom.prefab
   m_Name: ingame_tsukumo_phase1_bottom
+========
+  m_Name: ingame_tsukumo_phase1_top
+>>>>>>>> 15a805977e3b8e00547ecb515784b395773261bc:Assets/Resources_moved/Prefabs/enemy/bullet/ingame_tsukumo_phase1_top.prefab
   m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -147,7 +151,11 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
+<<<<<<<< HEAD:Assets/Resources_moved/Prefabs/enemy/bullet/ingame_tsukumo_phase1_bottom.prefab
   m_Offset: {x: -0.0066334605, y: 0.007856488}
+========
+  m_Offset: {x: -0.004033327, y: -0.00029110909}
+>>>>>>>> 15a805977e3b8e00547ecb515784b395773261bc:Assets/Resources_moved/Prefabs/enemy/bullet/ingame_tsukumo_phase1_top.prefab
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -158,7 +166,11 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
+<<<<<<<< HEAD:Assets/Resources_moved/Prefabs/enemy/bullet/ingame_tsukumo_phase1_bottom.prefab
   m_Size: {x: 2.0342064, y: 1.0458841}
+========
+  m_Size: {x: 2.0384107, y: 1.0513322}
+>>>>>>>> 15a805977e3b8e00547ecb515784b395773261bc:Assets/Resources_moved/Prefabs/enemy/bullet/ingame_tsukumo_phase1_top.prefab
   m_EdgeRadius: 0
 --- !u!114 &3343182236528074865
 MonoBehaviour:
