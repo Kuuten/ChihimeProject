@@ -9,6 +9,8 @@ using UnityEngine.UI;
 using System;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.Rendering;
+using NaughtyAttributes;
 
 //  ボスの種類
 public enum BossType
@@ -105,8 +107,11 @@ public class EnemyManager : MonoBehaviour
         Drop,                //  あり
     }
 
-    [SerializeField] private GameObject[] enemyPrefab;
-    [SerializeField] private GameObject[] specialEnemyPrefab;
+    [SerializeField,ShowAssetPreview,EnumIndex(typeof(EnemyPattern))]
+    private GameObject[] enemyPrefab;
+
+    [SerializeField,ShowAssetPreview,EnumIndex(typeof(SpecialEnemyPattern))]
+    private GameObject[] specialEnemyPrefab;
     private const float appearY = -6.5f;
 
 
@@ -148,7 +153,8 @@ public class EnemyManager : MonoBehaviour
     private EnemyData enemyData;
 
     //  敵の弾プレハブ
-    [SerializeField] private GameObject[] enemyBullet;
+    [SerializeField,ShowAssetPreview,EnumIndex(typeof(BULLET_TYPE))]
+    private GameObject[] enemyBullet;
 
     //  ドロップアイテムのロード完了フラグ
     private bool isCompleteLoading;
@@ -566,20 +572,39 @@ public class EnemyManager : MonoBehaviour
     {
         //  敵情報の設定
         GameObject obj = EventSceneManager.Instance.GetBossObject();
+        if(!obj)Debug.LogError("ボスオブジェクトが生成されていません！");
+
+
+        //  ボスコンポーネントの取得
+        BossBase BossCompornent = null;
+        switch(bossType)
+        {
+            case BossType.Douji:
+                BossCompornent = obj.GetComponent<BossDouji>();
+                break;
+            case BossType.Tsukumo:
+                BossCompornent = obj.GetComponent<BossTsukumo>();
+                break;
+            case BossType.Kuchinawa:
+                BossCompornent = obj.GetComponent<BossDouji>();
+                break;
+            case BossType.Kurama:
+                BossCompornent = obj.GetComponent<BossDouji>();
+                break;
+            case BossType.Wadatsumi:
+                BossCompornent = obj.GetComponent<BossDouji>();
+                break;
+            case BossType.Hakumen:
+                BossCompornent = obj.GetComponent<BossDouji>();
+                break;
+        }
+        if(!BossCompornent)Debug.LogError("ボスコンポーネントの取得に失敗しました" +
+            "ステージのSceneとPlayerInfoManager.stageInfoが合っているか確認してください");
+
 
         //  ステータスを設定
-        if(bossType == BossType.Douji)
-            obj.GetComponent<BossDouji>().SetBossData(enemySetting,item);
-        else if (bossType == BossType.Tsukumo)
-            obj.GetComponent<BossTsukumo>().SetBossData(enemySetting,item);
-        //else if(bossType == BossType.Kuchinawa)
-        //    obj.GetComponent<BossKuchinawa>().SetBossData(enemySetting,item);
-        //else if(bossType == BossType.Kurama)
-        //    obj.GetComponent<BossKurama>().SetBossData(enemySetting,item);
-        //else if(bossType == BossType.Wadatsumi)
-        //    obj.GetComponent<BossWadatsumi>().SetBossData(enemySetting,item);
-        //else if(bossType == BossType.Hakumen)
-        //    obj.GetComponent<BossHakumen>().SetBossData(enemySetting,item);
+        if(!enemySetting)Debug.LogError("enemySettingがnullになっています！");
+        BossCompornent.SetBossData(enemySetting,item);
     }
 
     //-----------------------------------------------------------
@@ -587,29 +612,26 @@ public class EnemyManager : MonoBehaviour
     //-----------------------------------------------------------
     public IEnumerator AppearEnemy()
     {
-        if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage01)
+        switch(PlayerInfoManager.stageInfo)
         {
-            StartCoroutine(AppearEnemy_Stage01());
-        }
-        else if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage02)
-        {
-            StartCoroutine(AppearEnemy_Stage02());
-        }
-        else if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage03)
-        {
-            StartCoroutine(AppearEnemy_Stage03());
-        }
-        else if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage04)
-        {
-            StartCoroutine(AppearEnemy_Stage04());
-        }
-        else if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage05)
-        {
-            StartCoroutine(AppearEnemy_Stage05());
-        }
-        else if(PlayerInfoManager.stageInfo == PlayerInfoManager.StageInfo.Stage06)
-        {
-            StartCoroutine(AppearEnemy_Stage06());
+            case PlayerInfoManager.StageInfo.Stage01:
+                StartCoroutine(AppearEnemy_Stage01());
+                break;
+            case PlayerInfoManager.StageInfo.Stage02:
+                StartCoroutine(AppearEnemy_Stage02());
+                break;
+            case PlayerInfoManager.StageInfo.Stage03:
+                StartCoroutine(AppearEnemy_Stage03());
+                break;
+            case PlayerInfoManager.StageInfo.Stage04:
+                StartCoroutine(AppearEnemy_Stage04());
+                break;
+            case PlayerInfoManager.StageInfo.Stage05:
+                StartCoroutine(AppearEnemy_Stage05());
+                break;
+            case PlayerInfoManager.StageInfo.Stage06:
+                StartCoroutine(AppearEnemy_Stage06());
+                break;
         }
 
         yield return null;
@@ -674,6 +696,165 @@ public class EnemyManager : MonoBehaviour
         stageStartingText.DOFade(0.0f, fade_time);
 
         yield return null;
+    }
+
+    //-----------------------------------------------------------
+    //  中ボス出現～ボス出現までの処理
+    //-----------------------------------------------------------
+    private IEnumerator MidBossProcess()
+    {
+        //  Wave11
+        GameObject MidBoss = SetEnemy(
+                                    enemyPrefab[(int)EnemyPattern.MidBoss],
+                                    new Vector3(0, -4, 0),
+                                    ePowerupItems.PowerUp
+                                );
+
+        //  中ボスのHPスライダーを生成
+        GameObject midSliderObject = Instantiate(midBossSlider);
+        midSliderObject.transform.SetParent(bossCanavs.transform, false);
+
+        //  HPスライダーを設定
+        MidBoss.GetComponent<Enemy>().SetHpSlider(midSliderObject.GetComponent<Slider>());
+
+        //  ザコ戦終了フラグがTRUEになるまで待つ
+        yield return new WaitUntil(() => endZakoStage == true);
+
+        //  ザコ敵全削除
+        DeleteAllEnemy();
+
+        //  中ボスのスライダーを削除
+        Destroy(midSliderObject);
+
+        //  PlayerのShotManagerを初期化する
+        GameObject player = GameManager.Instance.GetPlayer();
+        player.GetComponent<PlayerShotManager>().DisableShot();
+
+        //  BombManagerを無効化する
+        player.GetComponent<PlayerBombManager>().DisableBomb();
+
+        //  プレイヤーが死んでいたらbreak
+        PlayerHealth ph = player.GetComponent<PlayerHealth>();
+        if (ph.GetCurrentHealth() <= 0) yield break;
+
+        //  ５秒待つ
+        yield return new WaitForSeconds(5);
+
+        //  ポーズを無効化
+        GameManager.Instance.GetPauseAction().Disable();
+
+        //  イベントモードへ移行
+        GameManager.Instance.SetGameState((int)eGameState.Event);
+
+        //  イベントシーンマネージャーを有効化
+        eventSceneManager.SetActive(true);
+
+        //  ボス戦開始フラグがTRUEになるまで待つ(ボス戦モード)
+        yield return new WaitUntil(() => EventSceneManager.Instance.GetStartBoss());
+    }
+
+    //-----------------------------------------------------------
+    //  ボス出現～ボス撃破までの処理
+    //-----------------------------------------------------------
+    private IEnumerator BossProcess()
+    {
+
+        //  ポーズを有効化
+        GameManager.Instance.GetPauseAction().Enable();
+
+        //  ボスBGM再生
+        SoundManager.Instance.PlayBGM((int)MusicList.BGM_DOUJI_STAGE_BOSS);
+
+        //  イベントシーンマネージャーを無効化
+        eventSceneManager.SetActive(false);
+
+        //  ショットを有効化
+        GameObject player = GameManager.Instance.GetPlayer();
+        player.GetComponent<PlayerShotManager>().EnableShot();
+
+        //  BombManagerを有効化する
+        player.GetComponent<PlayerBombManager>().EnableBomb();
+
+        //  ボスのHPスライダーを生成
+        GameObject sliderObject = Instantiate(bossSlider);
+        sliderObject.transform.SetParent(bossCanavs.transform, false);
+
+
+        //  ボスオブジェクトを取得
+        GameObject BossObj = EventSceneManager.Instance.GetBossObject();
+        if(!BossObj) Debug.LogError("ボスオブジェクトがnullになっています！");
+
+
+        //  ボスコンポーネントを取得
+        BossBase boss = null;
+        switch(PlayerInfoManager.stageInfo)
+        {
+            case PlayerInfoManager.StageInfo.Stage01:
+                boss = BossObj.GetComponent<BossDouji>();
+                break;
+            case PlayerInfoManager.StageInfo.Stage02:
+                boss = BossObj.GetComponent<BossTsukumo>();
+                break;
+            case PlayerInfoManager.StageInfo.Stage03:
+                boss = BossObj.GetComponent<BossDouji>();
+                break;
+            case PlayerInfoManager.StageInfo.Stage04:
+                boss = BossObj.GetComponent<BossDouji>();
+                break;
+            case PlayerInfoManager.StageInfo.Stage05:
+                boss = BossObj.GetComponent<BossDouji>();
+                break;
+            case PlayerInfoManager.StageInfo.Stage06:
+                boss = BossObj.GetComponent<BossDouji>();
+                break;
+            default:
+                Debug.LogError($"PlayerInfoManager.stageInfoに不正な値が入っています" +
+                    $"{PlayerInfoManager.stageInfo}");
+                break;
+        
+        }
+        if(!boss)Debug.LogError("ボスはステージ数に対応したBossコンポーネントを持っていません！\n" +
+            "PlayerInfoManager.stageInfoの値を確認してください");
+
+
+        //  ボスごとにHPスライダーを設定
+        boss.SetHpSlider(sliderObject.GetComponent<Slider>());
+        bossNameHPSlider[(int)BossType.Tsukumo].SetActive(true);
+
+        //  ボスコンポーネントを有効化
+        boss.enabled = true;
+        BossObj.GetComponent<BoxCollider2D>().enabled = true;
+
+        //  ボス戦終了フラグがTRUEになるまで待つ
+        yield return new WaitUntil(() => GameManager.Instance.GetStageClearFlag());
+
+        //  ポーズを無効化
+        GameManager.Instance.GetPauseAction().Disable();
+
+        //  左右の障気オブジェクトを無効化
+        EventSceneManager.Instance.GetFogObjectL().SetActive(false);
+        EventSceneManager.Instance.GetFogObjectR().SetActive(false);
+
+        //  ボスのHPキャンバスを非表示
+        bossCanavs.SetActive(false);
+
+        // ショットを無効化
+        player.GetComponent<PlayerShotManager>().DisableShot();
+
+        //  BombManagerを無効化する
+        player.GetComponent<PlayerBombManager>().DisableBomb();
+
+        //  ５秒待つ
+        yield return new WaitForSeconds(5);
+
+        //  Playerのショットを初期化
+        player.GetComponent<PlayerShotManager>().InitShot();
+
+        //  イベントモードへ移行
+        GameManager.Instance.SetGameState((int)eGameState.Event);
+
+        //  イベントシーンマネージャーを有効化
+        eventSceneManager.SetActive(true);
     }
 
     //-----------------------------------------------------------
@@ -1022,126 +1203,18 @@ public class EnemyManager : MonoBehaviour
 
         //yield return new WaitForSeconds(5.0f);
 
-        //  Wave11
-        GameObject MidBoss = SetEnemy(
-                                    enemyPrefab[(int)EnemyPattern.MidBoss],
-                                    new Vector3(0, -4, 0),
-                                    ePowerupItems.PowerUp
-                                );
-
-        //  中ボスのHPスライダーを生成
-        GameObject midSliderObject = Instantiate(midBossSlider);
-        midSliderObject.transform.SetParent(bossCanavs.transform, false);
-
-        //  HPスライダーを設定
-        MidBoss.GetComponent<Enemy>().SetHpSlider(midSliderObject.GetComponent<Slider>());
-
-        //  ザコ戦終了フラグがTRUEになるまで待つ
-        yield return new WaitUntil(() => endZakoStage == true);
-
-        //  ザコ敵全削除
-        DeleteAllEnemy();
-
-        //  中ボスのスライダーを削除
-        Destroy(midSliderObject);
-
-        //  PlayerのShotManagerを初期化する
-        GameObject player = GameManager.Instance.GetPlayer();
-        player.GetComponent<PlayerShotManager>().DisableShot();
-
-        //  BombManagerを無効化する
-        player.GetComponent<PlayerBombManager>().DisableBomb();
-
-        //  プレイヤーが死んでいたらbreak
-        PlayerHealth ph = player.GetComponent<PlayerHealth>();
-        if (ph.GetCurrentHealth() <= 0) yield break;
-
-        //  ５秒待つ
-        yield return new WaitForSeconds(5);
-
-        //  ポーズを無効化
-        GameManager.Instance.GetPauseAction().Disable();
-
-        //  イベントモードへ移行
-        GameManager.Instance.SetGameState((int)eGameState.Event);
-
-        //  イベントシーンマネージャーを有効化
-        eventSceneManager.SetActive(true);
-
-        //  ボス戦開始フラグがTRUEになるまで待つ(ボス戦モード)
-        yield return new WaitUntil(() => EventSceneManager.Instance.GetStartBoss());
-
-        /***********************ここからボス戦***********************/
-
-        //  ポーズを有効化
-        GameManager.Instance.GetPauseAction().Enable();
-
-        //  ボスBGM再生
-        SoundManager.Instance.PlayBGM((int)MusicList.BGM_DOUJI_STAGE_BOSS);
-
-        //  イベントシーンマネージャーを無効化
-        eventSceneManager.SetActive(false);
-
-        //  ショットを有効化
-        player.GetComponent<PlayerShotManager>().EnableShot();
-
-        //  BombManagerを有効化する
-        player.GetComponent<PlayerBombManager>().EnableBomb();
-
-        //  ボスのHPスライダーを生成
-        GameObject sliderObject = Instantiate(bossSlider);
-        sliderObject.transform.SetParent(bossCanavs.transform, false);
 
 
-        //  ボスオブジェクトを取得
-        GameObject BossObj = EventSceneManager.Instance.GetBossObject();
-        if(!BossObj) Debug.LogError("ボスオブジェクトがnullになっています！");
 
 
-        //  ボスコンポーネントを取得
-        BossDouji boss_douji = BossObj.GetComponent<BossDouji>();
-        if(!boss_douji)Debug.LogError("ボスはBossDoujiコンポーネントを持っていません！\n" +
-            "PlayerInfoManager.stageInfoの値を確認してください");
+        //  中ボス出現～ボス出現までの処理
+        yield return StartCoroutine(MidBossProcess());
 
 
-        //  ボスごとにHPスライダーを設定
-        boss_douji.SetHpSlider(sliderObject.GetComponent<Slider>());
-        bossNameHPSlider[(int)BossType.Tsukumo].SetActive(true);
 
-        //  ボスコンポーネントを有効化
-        boss_douji.enabled = true;
-        BossObj.GetComponent<BoxCollider2D>().enabled = true;
 
-        //  ボス戦終了フラグがTRUEになるまで待つ
-        yield return new WaitUntil(() => GameManager.Instance.GetStageClearFlag());
-
-        //  ポーズを無効化
-        GameManager.Instance.GetPauseAction().Disable();
-
-        //  左右の障気オブジェクトを無効化
-        EventSceneManager.Instance.GetFogObjectL().SetActive(false);
-        EventSceneManager.Instance.GetFogObjectR().SetActive(false);
-
-        //  ボスのHPキャンバスを非表示
-        bossCanavs.SetActive(false);
-
-        // ショットを無効化
-        player.GetComponent<PlayerShotManager>().DisableShot();
-
-        //  BombManagerを無効化する
-        player.GetComponent<PlayerBombManager>().DisableBomb();
-
-        //  ５秒待つ
-        yield return new WaitForSeconds(5);
-
-        //  Playerのショットを初期化
-        player.GetComponent<PlayerShotManager>().InitShot();
-
-        //  イベントモードへ移行
-        GameManager.Instance.SetGameState((int)eGameState.Event);
-
-        //  イベントシーンマネージャーを有効化
-        eventSceneManager.SetActive(true);
+        //  ボス出現～ボス撃破までの処理
+        yield return StartCoroutine(BossProcess());
     }
 
     //-----------------------------------------------------------
@@ -1496,126 +1569,17 @@ public class EnemyManager : MonoBehaviour
 
         //yield return new WaitForSeconds(8.0f);
 
-        //  WaveX
-        GameObject MidBoss = SetEnemy(
-                                    enemyPrefab[(int)EnemyPattern.MidBoss],
-                                    new Vector3(0, -6, 0),
-                                    ePowerupItems.PowerUp
-                                );
-
-        //  中ボスのHPスライダーを生成
-        GameObject midSliderObject = Instantiate(midBossSlider);
-        midSliderObject.transform.SetParent(bossCanavs.transform, false);
-
-        //  HPスライダーを設定
-        MidBoss.GetComponent<Enemy>().SetHpSlider(midSliderObject.GetComponent<Slider>());
-
-        //  ザコ戦終了フラグがTRUEになるまで待つ
-        yield return new WaitUntil(() => endZakoStage == true);
-
-        //  ザコ敵全削除
-        DeleteAllEnemy();
-
-        //  中ボスのスライダーを削除
-        Destroy(midSliderObject);
-
-        //  PlayerのShotManagerを初期化する
-        GameObject player = GameManager.Instance.GetPlayer();
-        player.GetComponent<PlayerShotManager>().DisableShot();
-
-        //  BombManagerを無効化する
-        player.GetComponent<PlayerBombManager>().DisableBomb();
-
-        //  プレイヤーが死んでいたらbreak
-        PlayerHealth ph = player.GetComponent<PlayerHealth>();
-        if (ph.GetCurrentHealth() <= 0) yield break;
-
-        //  ５秒待つ
-        yield return new WaitForSeconds(5);
-
-        //  ポーズを無効化
-        GameManager.Instance.GetPauseAction().Disable();
-
-        //  イベントモードへ移行
-        GameManager.Instance.SetGameState((int)eGameState.Event);
-
-        //  イベントシーンマネージャーを有効化
-        eventSceneManager.SetActive(true);
-
-        //  ボス戦開始フラグがTRUEになるまで待つ(ボス戦モード)
-        yield return new WaitUntil(() => EventSceneManager.Instance.GetStartBoss());
-
-        ///***********************ここからボス戦***********************/
-
-        //  ポーズを有効化
-        GameManager.Instance.GetPauseAction().Enable();
-
-        //  ボスBGM再生
-        SoundManager.Instance.PlayBGM((int)MusicList.BGM_TSUKUMO_STAGE_BOSS);
-
-        //  イベントシーンマネージャーを無効化
-        eventSceneManager.SetActive(false);
-
-        //  ショットを有効化
-        player.GetComponent<PlayerShotManager>().EnableShot();
-
-        //  BombManagerを有効化する
-        player.GetComponent<PlayerBombManager>().EnableBomb();
-
-        //  ボスのHPスライダーを生成
-        GameObject sliderObject = Instantiate(bossSlider);
-        sliderObject.transform.SetParent(bossCanavs.transform, false);
 
 
-        //  ボスオブジェクトを取得
-        GameObject BossObj = EventSceneManager.Instance.GetBossObject();
-        if(!BossObj) Debug.LogError("ボスオブジェクトがnullになっています！");
+
+        //  中ボス出現～ボス出現までの処理
+        yield return StartCoroutine(MidBossProcess());
 
 
-        //  ボスコンポーネントを取得
-        BossTsukumo boss_tsukumo = BossObj.GetComponent<BossTsukumo>();
-        if(!boss_tsukumo)Debug.LogError("ボスはBossTsukumoコンポーネントを持っていません！\n" +
-            "PlayerInfoManager.stageInfoの値を確認してください");
 
 
-        //  ボスごとにHPスライダーを設定
-        boss_tsukumo.SetHpSlider(sliderObject.GetComponent<Slider>());
-        bossNameHPSlider[(int)BossType.Tsukumo].SetActive(true);
-
-        //  ボスコンポーネントを有効化
-        boss_tsukumo.enabled = true;
-        BossObj.GetComponent<BoxCollider2D>().enabled = true;
-
-        //  ボス戦終了フラグがTRUEになるまで待つ
-        yield return new WaitUntil(() => GameManager.Instance.GetStageClearFlag());
-
-        //  ポーズを無効化
-        GameManager.Instance.GetPauseAction().Disable();
-
-        //  左右の障気オブジェクトを無効化
-        EventSceneManager.Instance.GetFogObjectL().SetActive(false);
-        EventSceneManager.Instance.GetFogObjectR().SetActive(false);
-
-        //  ボスのHPキャンバスを非表示
-        bossCanavs.SetActive(false);
-
-        // ショットを無効化
-        player.GetComponent<PlayerShotManager>().DisableShot();
-
-        //  BombManagerを無効化する
-        player.GetComponent<PlayerBombManager>().DisableBomb();
-
-        //  ５秒待つ
-        yield return new WaitForSeconds(5);
-
-        //  Playerのショットを初期化
-        player.GetComponent<PlayerShotManager>().InitShot();
-
-        //  イベントモードへ移行
-        GameManager.Instance.SetGameState((int)eGameState.Event);
-
-        //  イベントシーンマネージャーを有効化
-        eventSceneManager.SetActive(true);
+        //  ボス出現～ボス撃破までの処理
+        yield return StartCoroutine(BossProcess());
     }
 
     //-----------------------------------------------------------

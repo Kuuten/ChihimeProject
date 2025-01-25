@@ -1593,120 +1593,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 15534d779a054b7428d553fa3772978b
-    m_Address: Prefabs/Live2DPrefab/Live2DPrefab.fadeMotionList.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Prefabs
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d4cd1cee4f4beb44990f4af734013844
-    m_Address: Prefabs/Live2DPrefab/WAR VIO/Scene1.anim
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Prefabs
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6e5c1c3bf98c7ed4ab284f6c87be9aba
-    m_Address: Prefabs/Live2DPrefab/WAR VIO/Scene1.motion3.json
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Prefabs
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b850213be65e5754b9c93f6fca02b325
-    m_Address: Prefabs/Live2DPrefab/WAR VIO/texture_00.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Prefabs
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1a1d68e3a1e11504f869098464f772f6
-    m_Address: Prefabs/Live2DPrefab/WAR VIO/WAR VIO.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Prefabs
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c3e51de15bafa0d41bc4621bd0120437
-    m_Address: Prefabs/Live2DPrefab/WAR VIO/WAR VIO.controller
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Prefabs
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8b7487a52da54b549900d60be0118887
-    m_Address: Prefabs/Live2DPrefab/WAR VIO/WAR VIO.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Prefabs
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: bdffbe7495b20b04ca68d75191886bbb
-    m_Address: Prefabs/Live2DPrefab/WAR VIO/WAR VIO.cdi3.json
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Prefabs
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: cbb264aaadffc794fb2744404d9e58e2
-    m_Address: Prefabs/Live2DPrefab/WAR VIO/WAR VIO.model3.json
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Prefabs
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b5eb4c7f3b21fd244a9269a6fc947b53
-    m_Address: Prefabs/Live2DPrefab/WAR VIO/WAR VIOMaskTexture.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Prefabs
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ed438a194c72ce946a89c245ff9b2281
-    m_Address: Prefabs/Live2DPrefab/WAR RED/WAR RED.1024
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Prefabs
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9985bdc568aaba14eb6eed935d52245c
-    m_Address: Prefabs/Live2DPrefab/WAR RED/Scene1.anim
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Prefabs
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ec2652f582421454ca9914fd6b86fb40
-    m_Address: Prefabs/Live2DPrefab/WAR RED/Scene1.motion3.json
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Prefabs
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 202e0e384b8c99342a2cf7bb263b164e
-    m_Address: Prefabs/Live2DPrefab/WAR RED/WAR RED.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Prefabs
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 74213913e04ec7147b863f11e978ee81
-    m_Address: Prefabs/Live2DPrefab/WAR RED/WAR RED.controller
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Prefabs
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 192dbdfa414b68845a789a2f3e016e00
-    m_Address: Prefabs/Live2DPrefab/WAR RED/WAR RED.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Prefabs
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5c233d0e4f9a3f14ebbbbc68574ec91a
-    m_Address: Prefabs/Live2DPrefab/WAR RED/WAR RED.cdi3.json
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Prefabs
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 37fc891576c9bd040940379484c065d6
-    m_Address: Prefabs/Live2DPrefab/WAR RED/WAR RED.model3.json
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Prefabs
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 64d8bfa43e610e24e9c0375e82fa8dfb
-    m_Address: Prefabs/Live2DPrefab/WAR RED/WAR REDMaskTexture.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Prefabs
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 935d1983be3f2234dbf20e41779fda17
     m_Address: Prefabs/konburst/TsukumoKonburstBullet.prefab
     m_ReadOnly: 0
@@ -2197,6 +2083,81 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 86f7c3d4f0a6bb74da72255bda59ef59
     m_Address: Assets/Resources_moved/Prefabs/enemy/bullet/ingame_tsukumo_phase1_top.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8b7487a52da54b549900d60be0118887
+    m_Address: Assets/Resources_moved/Prefabs/Live2DPrefab/WAR VIO/WAR VIO.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 15534d779a054b7428d553fa3772978b
+    m_Address: Assets/Resources_moved/Prefabs/Live2DPrefab/Live2DPrefab.fadeMotionList.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f93f24457ef0ef1438e8c9066adb9953
+    m_Address: Assets/Resources_moved/Prefabs/Live2DPrefab/WAR VIO
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 82c7c695c38dc824c8abfe77729a444b
+    m_Address: Assets/Resources_moved/Prefabs/Live2DPrefab/WAR VIO/WAR VIO.1024/texture_00.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2de5700c612aaa840980e46c8abc343c
+    m_Address: Assets/Resources_moved/Prefabs/Live2DPrefab/WAR VIO/WAR VIO.1024
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d4cd1cee4f4beb44990f4af734013844
+    m_Address: Assets/Resources_moved/Prefabs/Live2DPrefab/WAR VIO/Scene1.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0be453586d9c20741af26ad7d7ada8ec
+    m_Address: Assets/Resources_moved/Prefabs/Live2DPrefab/WAR VIO/Scene1.fade.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6e5c1c3bf98c7ed4ab284f6c87be9aba
+    m_Address: Assets/Resources_moved/Prefabs/Live2DPrefab/WAR VIO/Scene1.motion3.json
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1a1d68e3a1e11504f869098464f772f6
+    m_Address: Assets/Resources_moved/Prefabs/Live2DPrefab/WAR VIO/WAR VIO.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c3e51de15bafa0d41bc4621bd0120437
+    m_Address: Assets/Resources_moved/Prefabs/Live2DPrefab/WAR VIO/WAR VIO.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6eadceabf6b12f046b7e7018db793143
+    m_Address: Assets/Resources_moved/Prefabs/Live2DPrefab/WAR VIO/WAR VIO.moc3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c601d049a2d548e4fa144872a9e9fdff
+    m_Address: Assets/Resources_moved/Prefabs/Live2DPrefab/WAR VIO/WAR VIO 1.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bdffbe7495b20b04ca68d75191886bbb
+    m_Address: Assets/Resources_moved/Prefabs/Live2DPrefab/WAR VIO/WAR VIO.cdi3.json
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cbb264aaadffc794fb2744404d9e58e2
+    m_Address: Assets/Resources_moved/Prefabs/Live2DPrefab/WAR VIO/WAR VIO.model3.json
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b5eb4c7f3b21fd244a9269a6fc947b53
+    m_Address: Assets/Resources_moved/Prefabs/Live2DPrefab/WAR VIO/WAR VIOMaskTexture.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

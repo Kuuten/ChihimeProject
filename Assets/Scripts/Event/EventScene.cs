@@ -66,30 +66,34 @@ public abstract class EventScene : MonoBehaviour
 
         //  ボスのタイプによってコンポーネントを無効化
         GameObject bossObject = EventSceneManager.Instance.GetBossObject();
-        if(type == BossType.Douji)
+        if(!bossObject)Debug.LogError("bossObjectの取得に失敗しました！");
+
+        BossBase boss = null;
+        switch(type)
         {
-            bossObject.GetComponent<BossDouji>().enabled = false;
+            case BossType.Douji:
+                boss = bossObject.GetComponent<BossDouji>();
+                break;
+            case BossType.Tsukumo:
+                boss = bossObject.GetComponent<BossTsukumo>();
+                break;
+            case BossType.Kuchinawa:
+                boss = bossObject.GetComponent<BossDouji>();
+                break;
+            case BossType.Kurama:
+                boss = bossObject.GetComponent<BossDouji>();
+                break;
+            case BossType.Wadatsumi:
+                boss = bossObject.GetComponent<BossDouji>();
+                break;
+            case BossType.Hakumen:
+                boss = bossObject.GetComponent<BossDouji>();
+                break;
+            default:
+                Debug.LogError("存在しないBossTypeです！");
+                break;
         }
-        else if(type == BossType.Tsukumo)
-        {
-            bossObject.GetComponent<BossTsukumo>().enabled = false;
-        }
-        else if(type == BossType.Kuchinawa)
-        {
-            bossObject.GetComponent<BossDouji>().enabled = false;
-        }
-        else if(type == BossType.Kurama)
-        {
-            bossObject.GetComponent<BossDouji>().enabled = false;
-        }
-        else if(type == BossType.Wadatsumi)
-        {
-            bossObject.GetComponent<BossDouji>().enabled = false;
-        }
-        else if(type == BossType.Hakumen)
-        {
-            bossObject.GetComponent<BossDouji>().enabled = false;
-        }
+        boss.enabled = false;
         bossObject.GetComponent<BoxCollider2D>().enabled = false;
 
         //  目標座標に向かって移動開始
@@ -158,7 +162,8 @@ public abstract class EventScene : MonoBehaviour
         EventSceneManager.Instance.SetFogObjectActiveR(true);
 
         //  夜用の背景オブジェクトを有効化
-        EventSceneManager.Instance.SetBossBackGroundObj(true);
+        EventSceneManager.Instance.GetBossBackGroundObj()
+            .GetComponent<BackGroundFade>().enabled = true;
 
         //  ボス登場SE再生
         SoundManager.Instance.PlaySFX(

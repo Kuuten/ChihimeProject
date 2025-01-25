@@ -2,18 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.InputSystem;
 using System;
 using DG.Tweening;
-using Unity.VisualScripting;
-using System.ComponentModel;
 using Cysharp.Threading.Tasks;
-using static Unity.Collections.AllocatorManager;
-using System.Threading;
-using DG.Tweening.Core.Easing;
 using UnityEngine.UI;
-using static UnityEngine.GraphicsBuffer;
-using UnityEngine.AddressableAssets;
 
 //--------------------------------------------------------------
 //
@@ -41,6 +33,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private int currentMaxHealth;  //  必ず偶数
     [SerializeField] private int currentHealth;
     private const int limitHealth = 10;
+    //[Watch]public bool bSuperMode;
     private bool bSuperMode;
     private bool bDeath;
     private bool bDamage;
@@ -228,12 +221,15 @@ public class PlayerHealth : MonoBehaviour
     //----------------------------------------------------------------
     private async void OnTriggerEnter2D(Collider2D collision)
     {
-        //  無敵か死亡しているなら飛ばす
-        if(bSuperMode || bDeath)return;
+        //  死亡しているなら飛ばす
+        if(bDeath)return;
 
         //  シールド状態
         if(isShielded)
         {
+            //  無敵モードなら飛ばす
+            if(bSuperMode)return;
+
             if( collision.CompareTag("Enemy") ||    //  ザコ敵本体にHIT！
                 collision.CompareTag("Boss") ||     //  ボス本体にHIT！
                 collision.CompareTag("EnemyBullet") //  敵弾にHIT！
@@ -260,146 +256,79 @@ public class PlayerHealth : MonoBehaviour
         {
             if(collision.CompareTag("Enemy") )    //  敵本体にHIT！
             {
+                //  無敵モードなら飛ばす
+                if(bSuperMode)return;
+
                 //  無敵モードON
                 bSuperMode = true;
 
                 //  プレイヤーのダメージ処理
                 EnemyData ed = collision.GetComponent<Enemy>().GetEnemyData();
 
-                Damage( ed.Attack );
 
-                //  死亡フラグON
-                if(currentHealth <= 0)
-                {
-                    bDamage = false;
-                    bDeath = true;
-                    //  HitCircleを非表示にする
-                    this.transform.GetChild(6).gameObject.SetActive(false);
-                
-                    //  ショットの無効化
-                    PlayerShotManager psm = this.GetComponent<PlayerShotManager>();
-                    psm.DisableShot();
+                //  ダメージ関連処理
+                await AfterDamage( ed.Attack );
 
-                    //  ボムの無効化
-                    this.GetComponent<PlayerBombManager>().enabled = false;
-
-                    StartCoroutine(Death());       //  やられ演出
-                    return;
-                }
-
-                //  ダメージ顔UIに変更
-                StartCoroutine(ChangeToDmageFace());
-
-                //  ダメージSE再生
-                SoundManager.Instance.PlaySFX(
-                (int)AudioChannel.SFX_DAMAGE,
-                (int)SFXList.SFX_PLAYER_DAMAGE);
-
-                //  全強化１段階ダウン
-                PlayerShotManager ps = this.GetComponent<PlayerShotManager>();
-                ps.LeveldownNormalShot();
-                PlayerMovement pm = this.GetComponent<PlayerMovement>();
-                pm.LeveldownMoveSpeed();
-
-                //  デバッグ表示
-                Debug.Log("全強化１段階ダウン！");
-                Debug.Log("ショット強化 :" + ps.GetNormalShotLevel() 
-                    +"" + "スピード強化" + pm.GetSpeedLevel());
-                Debug.Log("Playerの体力 :" + currentHealth);
-
-                //  ダメージ時の赤くなる点滅演出開始
-                var task1 = DamageAnimation();
-                await task1;
-
-                //  無敵演出開始
-                var taskBlink = Blink();
-                await taskBlink;
             }
             else if(collision.CompareTag("Boss") )    //  敵本体にHIT！
             {
+                //  ノックバック！
+                KnockBack(collision);
+
+                 //  無敵モードなら飛ばす
+                if(bSuperMode)return;
+
                 //  無敵モードON
                 bSuperMode = true;
 
                 //  プレイヤーのダメージ処理
-                EnemyData ed;
-                if(collision.GetComponent<BossDouji>()) 
+                EnemyData ed = null;
+                
+                BossBase　boss = null;
+                switch(PlayerInfoManager.stageInfo)
                 {
-                    ed = collision.GetComponent<BossDouji>().GetEnemyData();
+                    case PlayerInfoManager.StageInfo.Stage01:
+                        boss = collision.GetComponent<BossDouji>();
+                        break;
+                    case PlayerInfoManager.StageInfo.Stage02:
+                        boss = collision.GetComponent<BossTsukumo>();
+                        break;
+                    //case PlayerInfoManager.StageInfo.Stage03:
+                    //    boss = collision.GetComponent<BossKuchinawa>();
+                    //    break;
+                    //case PlayerInfoManager.StageInfo.Stage04:
+                    //    boss = collision.GetComponent<BossKurama>();
+                    //    break;
+                    //case PlayerInfoManager.StageInfo.Stage05:
+                    //    boss = collision.GetComponent<BossWadatsumi>();
+                    //    break;
+                    //case PlayerInfoManager.StageInfo.Stage06:
+                    //    boss = collision.GetComponent<BossHakumen>();
+                    //    break;
+                    default:
+                        Debug.LogError("PlayerInfoManager.stageInfoに範囲外の値が入っています");
+                        break;
                 }
-                if (collision.GetComponent<BossTsukumo>())
-                {
-                    ed = collision.GetComponent<BossTsukumo>().GetEnemyData();
-                }
-                //if(collision.GetComponent<BossKuchinawa>()) 
-                //{
-                //    ed = collision.GetComponent<BossKuchinawa>().GetEnemyData();
-                //}
-                //if(collision.GetComponent<BossKurama>()) 
-                //{
-                //    ed = collision.GetComponent<BossKurama>().GetEnemyData();
-                //}
-                //if(collision.GetComponent<BossWadatsumi>()) 
-                //{
-                //    ed = collision.GetComponent<BossWadatsumi>().GetEnemyData();
-                //}
-                //if(collision.GetComponent<BossHakumen>()) 
-                //{
-                //    ed = collision.GetComponent<BossHakumen>().GetEnemyData();
-                //}
-                else ed = null;
+                if(!boss)Debug.LogError("BossBaseクラスの'boss'がnullになっています");
 
-                Damage( ed.Attack );
 
-                //  死亡フラグON
-                if(currentHealth <= 0)
-                {
-                    bDamage = false;
-                    bDeath = true;
-                    //  HitCircleを非表示にする
-                    this.transform.GetChild(6).gameObject.SetActive(false);
+                //  ダメージ量の設定
+                ed = boss.GetEnemyData();
+                if(ed == null )Debug.LogError("EnemyDataの取得に失敗しました");
 
-                    //  ショットの無効化
-                    PlayerShotManager psm = this.GetComponent<PlayerShotManager>();
-                    psm.DisableShot();
 
-                    //  ボムの無効化
-                    this.GetComponent<PlayerBombManager>().enabled = false;
+                //  ダメージ関連処理
+                await AfterDamage( ed.Attack );
 
-                    StartCoroutine(Death());       //  やられ演出
-                    return;
-                }
-
-                //  ダメージ顔UIに変更
-                StartCoroutine(ChangeToDmageFace());
-
-                //  ダメージSE再生
-                SoundManager.Instance.PlaySFX(
-                (int)AudioChannel.SFX_DAMAGE,
-                (int)SFXList.SFX_PLAYER_DAMAGE);
-
-                //  全強化１段階ダウン
-                PlayerShotManager ps = this.GetComponent<PlayerShotManager>();
-                ps.LeveldownNormalShot();
-                //PlayerMovement pm = this.GetComponent<PlayerMovement>();
-                //pm.LeveldownMoveSpeed();
-
-                //  デバッグ表示
-                Debug.Log("ショット強化ダウン！");
-                Debug.Log("ショット強化 :" + ps.GetNormalShotLevel());
-                Debug.Log("Playerの体力 :" + currentHealth);
-
-                //  ダメージ時の赤くなる点滅演出開始
-                var task1 = DamageAnimation();
-                await task1;
-
-                //  無敵演出開始
-                var taskBlink = Blink();
-                await taskBlink;
             }
             else if(collision.CompareTag("EnemyBullet"))    //  敵弾にHIT！
             {
+                //  無敵モードなら飛ばす
+                if(bSuperMode)return;
+
                 //  プレイヤーのダメージ処理
                 int power = 0;
+
                 if(collision.GetComponent<EnemyBullet>())
                 {
                     power = collision.GetComponent<EnemyBullet>().GetPower();
@@ -429,62 +358,73 @@ public class PlayerHealth : MonoBehaviour
                     power = collision.GetComponent<TsukumoPhase3Bullet>().GetPower();
                 }
 
-                Damage( power );
+                //  ダメージ関連処理
+                await AfterDamage( power );
 
-                //  無敵モードON
-                bSuperMode = true;
-
-                //  死亡フラグON
-                if(currentHealth <= 0)
-                {
-                    bDamage = false;
-                    bDeath = true;
-                    //  HitCircleを非表示にする
-                    this.transform.GetChild(6).gameObject.SetActive(false);
-
-                    //  ショットの無効化
-                    PlayerShotManager psm = this.GetComponent<PlayerShotManager>();
-                    psm.DisableShot();
-
-                    //  ボムの無効化
-                    this.GetComponent<PlayerBombManager>().enabled = false;
-
-                    StartCoroutine(Death());       //  やられ演出
-                    return;
-                }
-
-                //  ダメージ顔UIに変更
-                StartCoroutine(ChangeToDmageFace());
-
-                //  ダメージSE再生
-                SoundManager.Instance.PlaySFX(
-                (int)AudioChannel.SFX_DAMAGE,
-                (int)SFXList.SFX_PLAYER_DAMAGE);
-
-                //  全強化１段階ダウン
-                PlayerShotManager ps = this.GetComponent<PlayerShotManager>();
-                ps.LeveldownNormalShot();
-                //PlayerMovement pm = this.GetComponent<PlayerMovement>();
-                //pm.LeveldownMoveSpeed();
-
-                //  デバッグ表示
-                Debug.Log("ショット強化１段階ダウン！");
-                Debug.Log("ショット強化 :" + ps.GetNormalShotLevel());
-                Debug.Log("Playerの体力 :" + currentHealth);
-
-                //  ダメージ時の赤くなる点滅演出開始
-                var task1 = DamageAnimation();
-                await task1;
-
-                //  無敵演出開始
-                var taskBlink = Blink();
-                await taskBlink;
             }
             else if(collision.CompareTag("Obstacles"))    //  障害物にHIT！
             {
 
             }
         }
+    }
+
+    //-------------------------------------------
+    //  ダメージの一連の処理
+    //-------------------------------------------
+    private async UniTask AfterDamage(int damage_value)
+    {
+        //  無敵モードON
+        bSuperMode = true;
+
+        //  ダメージ処理
+        Damage( damage_value );
+
+        //  死亡フラグON
+        if(currentHealth <= 0)
+        {
+            bDamage = false;
+            bDeath = true;
+            //  HitCircleを非表示にする
+            this.transform.GetChild(6).gameObject.SetActive(false);
+
+            //  ショットの無効化
+            PlayerShotManager psm = this.GetComponent<PlayerShotManager>();
+            psm.DisableShot();
+
+            //  ボムの無効化
+            this.GetComponent<PlayerBombManager>().enabled = false;
+
+            StartCoroutine(Death());       //  やられ演出
+            return;
+        }
+
+        //  ダメージ顔UIに変更
+        StartCoroutine(ChangeToDmageFace());
+
+        //  ダメージSE再生
+        SoundManager.Instance.PlaySFX(
+        (int)AudioChannel.SFX_DAMAGE,
+        (int)SFXList.SFX_PLAYER_DAMAGE);
+
+        //  全強化１段階ダウン
+        PlayerShotManager ps = this.GetComponent<PlayerShotManager>();
+        ps.LeveldownNormalShot();
+        //PlayerMovement pm = this.GetComponent<PlayerMovement>();
+        //pm.LeveldownMoveSpeed();
+
+        //  デバッグ表示
+        Debug.Log("ショット強化１段階ダウン！");
+        Debug.Log("ショット強化 :" + ps.GetNormalShotLevel());
+        Debug.Log("Playerの体力 :" + currentHealth);
+
+        //  ダメージ時の赤くなる点滅演出開始
+        var task1 = DamageAnimation();
+        await task1;
+
+        //  無敵演出開始
+        var taskBlink = Blink();
+        await taskBlink;
     }
 
     //-------------------------------------------
@@ -1151,5 +1091,31 @@ public class PlayerHealth : MonoBehaviour
             faceBand2.SetActive(true);
         else faceBand2.SetActive(false);
 
+    }
+
+    //------------------------------------------------------
+    //  ノックバック
+    //------------------------------------------------------
+    private void KnockBack(Collider2D collision)
+    {
+        float distance = 5.0f;  //  ノックバック距離
+        float duration = 0.1f; //  移動にかかる時間（秒）
+
+        //  ボスからのベクトルを計算
+        Vector3 vec = -collision.transform.up;
+        Vector3 ppos = collision.transform.position;
+        Vector3 direction = default;    //  ノックバック方向
+
+        //Debug.Log($"<color=yellow>ノックバック！</color>");
+
+        //  問答無用でボスの前にノックバックする
+        direction = vec;
+
+        //  ノックバック後の座標を計算
+        Vector3 pos = ppos + direction * distance;
+
+        //  移動開始
+        this.transform.DOMove(pos, duration)
+            .SetEase(Ease.Linear);
     }
 }

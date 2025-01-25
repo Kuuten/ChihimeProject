@@ -19,11 +19,11 @@ public class BackGroundFade : MonoBehaviour
 
     private void OnEnable()
     {
-        StartCoroutine(StartFadeOut());
+        StartCoroutine(StartFadeIn());
     }
 
     // フェードイン
-    public IEnumerator StartFadeOut()
+    public IEnumerator StartFadeIn()
     {
         bool complete = false;
         float duration = 3.0f;  //  アニメーション時間
