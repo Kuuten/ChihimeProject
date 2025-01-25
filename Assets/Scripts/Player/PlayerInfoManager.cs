@@ -42,7 +42,7 @@ public static class PlayerInfoManager
 
         Max
     }
-    public static StageInfo stageInfo = StageInfo.Stage01;
+    public static StageInfo stageInfo = StageInfo.Stage02;
 
     //  î•ñ‚ğˆêŠ‡‚ÅƒZƒbƒg
     public static void SetInfo(int maxHp,int currentHp,int konNum,int bombNum, int shotLv, int speedLv, bool isShield)

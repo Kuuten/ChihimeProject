@@ -4325,7 +4325,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ba77fe63a82a0f499893a06b9a3d65d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BossPrefab: {fileID: 952405892329829615, guid: bf45026e46a4a754491ca8f06e64f35e, type: 3}
+  TextFile:
+  - {fileID: 4900000, guid: 2d3baea6ed68f45449275cc818c982cb, type: 3}
+  - {fileID: 4900000, guid: 8d674ea4822b7b94aa88a855ca205f55, type: 3}
   eventCanvas: {fileID: 206983658}
+  frameObject:
+  - {fileID: 1166290310}
+  - {fileID: 1187188954}
+  faceImage:
+  - {fileID: 442352217}
+  - {fileID: 184853207}
+  TextObject:
+  - {fileID: 1565079346}
+  - {fileID: 1154161769}
+  bossFogObjectL: {fileID: 107021208}
+  bossFogObjectR: {fileID: 44319982}
+  bossNameTextObj: {fileID: 912660412}
   faceSprite:
   - {fileID: 818138755, guid: 2ee992dbc94cd5242aa76cce745f500f, type: 3}
   - {fileID: -194535605, guid: 2ee992dbc94cd5242aa76cce745f500f, type: 3}
@@ -4341,31 +4357,7 @@ MonoBehaviour:
   - {fileID: -1862827021, guid: 2ee992dbc94cd5242aa76cce745f500f, type: 3}
   - {fileID: 1153824428, guid: 2ee992dbc94cd5242aa76cce745f500f, type: 3}
   - {fileID: -1380288206, guid: 2ee992dbc94cd5242aa76cce745f500f, type: 3}
-  frameObject:
-  - {fileID: 1166290310}
-  - {fileID: 1187188954}
-  faceImage:
-  - {fileID: 442352217}
-  - {fileID: 184853207}
-  TextObject:
-  - {fileID: 1565079346}
-  - {fileID: 1154161769}
-  TextFile:
-  - {fileID: 4900000, guid: 2d3baea6ed68f45449275cc818c982cb, type: 3}
-  - {fileID: 4900000, guid: 8d674ea4822b7b94aa88a855ca205f55, type: 3}
-  BossPrefab:
-  - {fileID: 952405892329829615, guid: bf45026e46a4a754491ca8f06e64f35e, type: 3}
-  - {fileID: 952405892329829615, guid: 2f14c009c421bd64fbda4256ec9491db, type: 3}
-  - {fileID: 952405892329829615, guid: bf45026e46a4a754491ca8f06e64f35e, type: 3}
-  - {fileID: 952405892329829615, guid: bf45026e46a4a754491ca8f06e64f35e, type: 3}
-  - {fileID: 952405892329829615, guid: bf45026e46a4a754491ca8f06e64f35e, type: 3}
-  - {fileID: 952405892329829615, guid: bf45026e46a4a754491ca8f06e64f35e, type: 3}
-  bossFogObjectL: {fileID: 107021208}
-  bossFogObjectR: {fileID: 44319982}
-  bossNameText: {fileID: 912660412}
-  bossBackGroundObj:
-  - {fileID: 1345719666}
-  - {fileID: 1345719666}
+  bossBackGroundObj: {fileID: 1345719666}
 --- !u!1 &539985219
 GameObject:
   m_ObjectHideFlags: 0
