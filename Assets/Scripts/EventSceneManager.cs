@@ -296,20 +296,20 @@ public class EventSceneManager : MonoBehaviour
                 else currentEventScene = gameObject.AddComponent<EventScene04>();
                 break;
             case (int)PlayerInfoManager.StageInfo.Stage03:
-                //if(!startBoss)currentEventScene = gameObject.AddComponent<EventScene05>();
-                //else currentEventScene = gameObject.AddComponent<EventScene06>();
+                if (!startBoss) currentEventScene = gameObject.AddComponent<EventScene05>();
+                else currentEventScene = gameObject.AddComponent<EventScene06>();
                 break;
             case (int)PlayerInfoManager.StageInfo.Stage04:
-                //if(!startBoss)currentEventScene = gameObject.AddComponent<EventScene07>();
-                //else currentEventScene = gameObject.AddComponent<EventScene08>();
+                if (!startBoss) currentEventScene = gameObject.AddComponent<EventScene07>();
+                else currentEventScene = gameObject.AddComponent<EventScene08>();
                 break;
             case (int)PlayerInfoManager.StageInfo.Stage05:
-                //if(!startBoss)currentEventScene = gameObject.AddComponent<EventScene09>();
-                //else currentEventScene = gameObject.AddComponent<EventScene10>();
+                if (!startBoss) currentEventScene = gameObject.AddComponent<EventScene09>();
+                else currentEventScene = gameObject.AddComponent<EventScene10>();
                 break;
             case (int)PlayerInfoManager.StageInfo.Stage06:
-                //if(!startBoss)currentEventScene = gameObject.AddComponent<EventScene11>();
-                //else currentEventScene = gameObject.AddComponent<EventScene12>();
+                if (!startBoss) currentEventScene = gameObject.AddComponent<EventScene11>();
+                else currentEventScene = gameObject.AddComponent<EventScene12>();
                 break;
             default:
                 Debug.LogError("Invalid stage number.");

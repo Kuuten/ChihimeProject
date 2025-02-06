@@ -20,10 +20,6 @@ public class BossDouji : BossBase
     //------------------------------------------------------------
     //  Phase2用
     //------------------------------------------------------------
-    private GameObject warningObject;
-
-    private bool bWarningFirst;
-
     //  WARNING時の予測ライン
     private GameObject[] dangerLineObject;
 
@@ -42,10 +38,6 @@ public class BossDouji : BossBase
     {
         base.Start();
 
-        //  警告オブジェクトを取得
-        warningObject =
-            EnemyManager.Instance.GetBulletPrefab((int)BULLET_TYPE.Douji_Warning);
-
         //  WARNING時の予測ラインオブジェクトを取得
         dangerLineObject = new GameObject[(int)DoujiPhase2Bullet.KooniDirection.MAX];
         dangerLineObject[(int)DoujiPhase2Bullet.KooniDirection.TOP] =
@@ -62,9 +54,6 @@ public class BossDouji : BossBase
         {
             kooniNum[i] = -1;
         }
-
-        //  Warningの初回フラグ
-        bWarningFirst = false;
 
         //  行動開始
         StartCoroutine(StartAction());
@@ -592,33 +581,6 @@ public class BossDouji : BossBase
         yield return new WaitForSeconds(1);
 
         if(line.gameObject)Destroy(line.gameObject);
-    }
-
-    //------------------------------------------------------------------
-    //  Phase2:警告を出す
-    //------------------------------------------------------------------
-    private IEnumerator Warning()
-    {
-        float duration = 3.0f;
-
-        if(bWarningFirst)yield break;
-
-        //  SEを再生
-        SoundManager.Instance.PlaySFX(
-            (int)AudioChannel.SFX_SYSTEM,
-            (int)SFXList.SFX_DOUJI_WARNING);
-
-        //  WARNINGを有効化
-        warningObject.SetActive(true);
-
-        //  初回ではなくなったのでTRUE
-        bWarningFirst = true;
-
-        //  演出が３秒なのでその分待つ
-        yield return new WaitForSeconds(duration);
-
-        //  WARNINGを無効化
-        warningObject.SetActive(false);
     }
 
     //------------------------------------------------------------------

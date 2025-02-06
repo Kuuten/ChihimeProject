@@ -175,6 +175,11 @@ public class SoundManager : MonoBehaviour
     }
 
     //--------------------------------------------------------
+    //  プロパティ
+    //--------------------------------------------------------
+    public AudioSource GetAudioSource(int index){ return _AudioSource[index]; }
+
+    //--------------------------------------------------------
     //  BGMの再生
     //--------------------------------------------------------
     public void PlayBGM(int clipId)

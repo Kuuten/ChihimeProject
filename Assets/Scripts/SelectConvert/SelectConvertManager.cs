@@ -1,6 +1,8 @@
 using DG.Tweening;
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -16,12 +18,8 @@ using UnityEngine.Video;
 public class SelectConvertManager : MonoBehaviour
 {
     //  魂バート弾ボタン
-    [SerializeField] private Button doujiButton;
-    [SerializeField] private Button tsukumoButton;
-    [SerializeField] private Button kuchinawaButton;
-    [SerializeField] private Button kuramaButton;
-    [SerializeField] private Button wadatsumiButton;
-    [SerializeField] private Button hakumenButton;
+    [SerializeField,EnumIndex(typeof(BossType))]
+    private Button[] BossButton;
 
     //  メニューボタンのインデックス
     private int menuIndex;
@@ -30,14 +28,17 @@ public class SelectConvertManager : MonoBehaviour
     [SerializeField] private GameObject explanationMovieBack;
 
     //  説明テキスト
-    [SerializeField] private GameObject[] explanationTextObj;
+    [SerializeField,EnumIndex(typeof(BossType))]
+    private GameObject[] explanationTextObj;
 
     [SerializeField] private FadeIO Fade;               //  FadeIO
     [SerializeField] private ScrollAnimation Scroll;    //  巻物
     [SerializeField] private GameObject soundManager;   //  SoundManager
 
     //  魂バート用の動画クリップ
-    [SerializeField] private VideoClip[] videoClip;
+    [SerializeField,EnumIndex(typeof(BossType))]
+
+    private VideoClip[] videoClip;
     //  魂バート用の動画プレイヤー
     [SerializeField] private VideoPlayer videoPlayer;
 
@@ -57,6 +58,12 @@ public class SelectConvertManager : MonoBehaviour
         {
             Debug.Log("SoundManagerがないので生成します");
             Instantiate(soundManager);
+        }
+
+        //  ボタンの数チェック
+        if(BossButton.Length > (int)BossType.Max)
+        {
+            Debug.LogError("BossButtonの数がBossType.Maxを上回っています");
         }
 
         _input = GetComponent<PlayerInput>();
@@ -82,9 +89,9 @@ public class SelectConvertManager : MonoBehaviour
         SoundManager.Instance.PlayBGM((int)MusicList.BGM_SELECTCONVERT);
 
         //  最初はドウジを選択状態にする
-        EventSystem.current.SetSelectedGameObject(doujiButton.gameObject);
-        preSelectedObject = doujiButton.gameObject;
-        UpdateButtonScale(doujiButton.gameObject);
+        EventSystem.current.SetSelectedGameObject(BossButton[(int)BossType.Douji].gameObject);
+        preSelectedObject = BossButton[(int)BossType.Douji].gameObject;
+        UpdateButtonScale(BossButton[(int)BossType.Douji].gameObject);
 
         //  動画と動画の枠を表示する
         explanationMovieBack.SetActive(true);
@@ -161,12 +168,10 @@ public class SelectConvertManager : MonoBehaviour
         if(!bCanDecision)return;
 
         //  ボタンを無効化
-        doujiButton.GetComponent<Button>().enabled = false;
-        tsukumoButton.GetComponent<Button>().enabled = false;
-        kuchinawaButton.GetComponent<Button>().enabled = false;
-        kuramaButton.GetComponent<Button>().enabled = false;
-        wadatsumiButton.GetComponent<Button>().enabled = false;
-        hakumenButton.GetComponent<Button>().enabled = false;
+        for(int i=0;i<(int)BossType.Max;i++)
+        {
+            BossButton[i].GetComponent<Button>().enabled = false;
+        }
 
         //  決定音再生
         SoundManager.Instance.PlaySFX(
@@ -189,12 +194,10 @@ public class SelectConvertManager : MonoBehaviour
         if(!bCanDecision)return;
 
         //  ボタンを無効化
-        doujiButton.GetComponent<Button>().enabled = false;
-        tsukumoButton.GetComponent<Button>().enabled = false;
-        kuchinawaButton.GetComponent<Button>().enabled = false;
-        kuramaButton.GetComponent<Button>().enabled = false;
-        wadatsumiButton.GetComponent<Button>().enabled = false;
-        hakumenButton.GetComponent<Button>().enabled = false;
+        for(int i=0;i<(int)BossType.Max;i++)
+        {
+            BossButton[i].GetComponent<Button>().enabled = false;
+        }
 
         //  決定音再生
         SoundManager.Instance.PlaySFX(
@@ -217,13 +220,11 @@ public class SelectConvertManager : MonoBehaviour
         //  決定可能フラグがfalseならリターン
         if(!bCanDecision)return;
 
-        ////  ボタンを無効化
-        //doujiButton.GetComponent<Button>().enabled = false;
-        //tsukumoButton.GetComponent<Button>().enabled = false;
-        //kuchinawaButton.GetComponent<Button>().enabled = false;
-        //kuramaButton.GetComponent<Button>().enabled = false;
-        //wadatsumiButton.GetComponent<Button>().enabled = false;
-        //hakumenButton.GetComponent<Button>().enabled = false;
+        //  ボタンを無効化
+        for(int i=0;i<(int)BossType.Max;i++)
+        {
+            BossButton[i].GetComponent<Button>().enabled = false;
+        }
 
         ////  決定音再生
         //SoundManager.Instance.PlaySFX(
@@ -247,13 +248,11 @@ public class SelectConvertManager : MonoBehaviour
         //  決定可能フラグがfalseならリターン
         if(!bCanDecision)return;
 
-        ////  ボタンを無効化
-        //doujiButton.GetComponent<Button>().enabled = false;
-        //tsukumoButton.GetComponent<Button>().enabled = false;
-        //kuchinawaButton.GetComponent<Button>().enabled = false;
-        //kuramaButton.GetComponent<Button>().enabled = false;
-        //wadatsumiButton.GetComponent<Button>().enabled = false;
-        //hakumenButton.GetComponent<Button>().enabled = false;
+        //  ボタンを無効化
+        for(int i=0;i<(int)BossType.Max;i++)
+        {
+            BossButton[i].GetComponent<Button>().enabled = false;
+        }
 
         ////  決定音再生
         //SoundManager.Instance.PlaySFX(
@@ -277,13 +276,11 @@ public class SelectConvertManager : MonoBehaviour
         //  決定可能フラグがfalseならリターン
         if(!bCanDecision)return;
 
-        ////  ボタンを無効化
-        //doujiButton.GetComponent<Button>().enabled = false;
-        //tsukumoButton.GetComponent<Button>().enabled = false;
-        //kuchinawaButton.GetComponent<Button>().enabled = false;
-        //kuramaButton.GetComponent<Button>().enabled = false;
-        //wadatsumiButton.GetComponent<Button>().enabled = false;
-        //hakumenButton.GetComponent<Button>().enabled = false;
+        //  ボタンを無効化
+        for(int i=0;i<(int)BossType.Max;i++)
+        {
+            BossButton[i].GetComponent<Button>().enabled = false;
+        }
 
         ////  決定音再生
         //SoundManager.Instance.PlaySFX(
@@ -305,13 +302,11 @@ public class SelectConvertManager : MonoBehaviour
         //  決定可能フラグがfalseならリターン
         if(!bCanDecision)return;
 
-        ////  ボタンを無効化
-        //doujiButton.GetComponent<Button>().enabled = false;
-        //tsukumoButton.GetComponent<Button>().enabled = false;
-        //kuchinawaButton.GetComponent<Button>().enabled = false;
-        //kuramaButton.GetComponent<Button>().enabled = false;
-        //wadatsumiButton.GetComponent<Button>().enabled = false;
-        //hakumenButton.GetComponent<Button>().enabled = false;
+        //  ボタンを無効化
+        for(int i=0;i<(int)BossType.Max;i++)
+        {
+            BossButton[i].GetComponent<Button>().enabled = false;
+        }
 
         ////  決定音再生
         //SoundManager.Instance.PlaySFX(
@@ -381,12 +376,10 @@ public class SelectConvertManager : MonoBehaviour
             SelectButtonByMenuIndex();
 
             //  ボタンのスケールを更新
-            UpdateButtonScale(doujiButton.gameObject);
-            UpdateButtonScale(tsukumoButton.gameObject);
-            UpdateButtonScale(kuchinawaButton.gameObject);
-            UpdateButtonScale(kuramaButton.gameObject);
-            UpdateButtonScale(wadatsumiButton.gameObject);
-            UpdateButtonScale(hakumenButton.gameObject);
+            for(int i=0;i<(int)BossType.Max;i++)
+            {
+                UpdateButtonScale(BossButton[i].gameObject);
+            }
         }
         else if (verticalInput < 0 && Rotate3DMenu.Instance.GetComplete())
         {
@@ -406,12 +399,10 @@ public class SelectConvertManager : MonoBehaviour
             SelectButtonByMenuIndex();
 
             //  ボタンのスケールを更新
-            UpdateButtonScale(doujiButton.gameObject);
-            UpdateButtonScale(tsukumoButton.gameObject);
-            UpdateButtonScale(kuchinawaButton.gameObject);
-            UpdateButtonScale(kuramaButton.gameObject);
-            UpdateButtonScale(wadatsumiButton.gameObject);
-            UpdateButtonScale(hakumenButton.gameObject);
+            for(int i=0;i<(int)BossType.Max;i++)
+            {
+                UpdateButtonScale(BossButton[i].gameObject);
+            }
         }
     }
 
@@ -455,35 +446,13 @@ public class SelectConvertManager : MonoBehaviour
         if(!Rotate3DMenu.Instance.GetComplete() || !bCanDecision)return;
 
         //  選択ボタンによって説明動画を再生する
-        if(doujiButton.gameObject == EventSystem.current.currentSelectedGameObject)
+        for(int i=0;i<(int)BossType.Max;i++)
         {
-            videoPlayer.clip = videoClip[(int)BossType.Douji];
-            videoPlayer.Play();
-        }
-        else if(tsukumoButton.gameObject == EventSystem.current.currentSelectedGameObject)
-        {
-            videoPlayer.clip = videoClip[(int)BossType.Tsukumo];
-            videoPlayer.Play();
-        }
-        else if(kuchinawaButton.gameObject == EventSystem.current.currentSelectedGameObject)
-        {
-            videoPlayer.clip = videoClip[(int)BossType.Kuchinawa];
-            videoPlayer.Play();
-        }
-        else if(kuramaButton.gameObject == EventSystem.current.currentSelectedGameObject)
-        {
-            videoPlayer.clip = videoClip[(int)BossType.Kurama];
-            videoPlayer.Play();
-        }
-        else if(wadatsumiButton.gameObject == EventSystem.current.currentSelectedGameObject)
-        {
-            videoPlayer.clip = videoClip[(int)BossType.Wadatsumi];
-            videoPlayer.Play();
-        }
-        else if(hakumenButton.gameObject == EventSystem.current.currentSelectedGameObject)
-        {
-            videoPlayer.clip = videoClip[(int)BossType.Hakumen];
-            videoPlayer.Play();
+            if(BossButton[i].gameObject == EventSystem.current.currentSelectedGameObject)
+            {
+                videoPlayer.clip = videoClip[i];
+                videoPlayer.Play();
+            } 
         }
     }
 
@@ -493,65 +462,14 @@ public class SelectConvertManager : MonoBehaviour
     private void SelectButtonByMenuIndex()
     {
         //  インデックスでボタンを選択状態にする
-        if(menuIndex == (int)BossType.Douji)
+        for(int index=0;index<(int)BossType.Max;index++)
         {
-            EventSystem.current.SetSelectedGameObject(doujiButton.gameObject);
-            explanationTextObj[(int)BossType.Douji].SetActive(true);
-            explanationTextObj[(int)BossType.Tsukumo].SetActive(false);
-            explanationTextObj[(int)BossType.Kuchinawa].SetActive(false);
-            explanationTextObj[(int)BossType.Kurama].SetActive(false);
-            explanationTextObj[(int)BossType.Wadatsumi].SetActive(false);
-            explanationTextObj[(int)BossType.Hakumen].SetActive(false);
-        }
-        else if(menuIndex == (int)BossType.Tsukumo)
-        {
-            EventSystem.current.SetSelectedGameObject(tsukumoButton.gameObject);
-            explanationTextObj[(int)BossType.Douji].SetActive(false);
-            explanationTextObj[(int)BossType.Tsukumo].SetActive(true);
-            explanationTextObj[(int)BossType.Kuchinawa].SetActive(false);
-            explanationTextObj[(int)BossType.Kurama].SetActive(false);
-            explanationTextObj[(int)BossType.Wadatsumi].SetActive(false);
-            explanationTextObj[(int)BossType.Hakumen].SetActive(false);
-        }
-        else if(menuIndex == (int)BossType.Kuchinawa)
-        {
-            EventSystem.current.SetSelectedGameObject(kuchinawaButton.gameObject);
-            explanationTextObj[(int)BossType.Douji].SetActive(false);
-            explanationTextObj[(int)BossType.Tsukumo].SetActive(false);
-            explanationTextObj[(int)BossType.Kuchinawa].SetActive(true);
-            explanationTextObj[(int)BossType.Kurama].SetActive(false);
-            explanationTextObj[(int)BossType.Wadatsumi].SetActive(false);
-            explanationTextObj[(int)BossType.Hakumen].SetActive(false);
-        }
-        else if(menuIndex == (int)BossType.Kurama)
-        {
-            EventSystem.current.SetSelectedGameObject(kuramaButton.gameObject);
-            explanationTextObj[(int)BossType.Douji].SetActive(false);
-            explanationTextObj[(int)BossType.Tsukumo].SetActive(false);
-            explanationTextObj[(int)BossType.Kuchinawa].SetActive(false);
-            explanationTextObj[(int)BossType.Kurama].SetActive(true);
-            explanationTextObj[(int)BossType.Wadatsumi].SetActive(false);
-            explanationTextObj[(int)BossType.Hakumen].SetActive(false);
-        }
-        else if(menuIndex == (int)BossType.Wadatsumi)
-        {
-            EventSystem.current.SetSelectedGameObject(wadatsumiButton.gameObject);
-            explanationTextObj[(int)BossType.Douji].SetActive(false);
-            explanationTextObj[(int)BossType.Tsukumo].SetActive(false);
-            explanationTextObj[(int)BossType.Kuchinawa].SetActive(false);
-            explanationTextObj[(int)BossType.Kurama].SetActive(false);
-            explanationTextObj[(int)BossType.Wadatsumi].SetActive(true);
-            explanationTextObj[(int)BossType.Hakumen].SetActive(false);
-        }
-        else if(menuIndex == (int)BossType.Hakumen)
-        {
-            EventSystem.current.SetSelectedGameObject(hakumenButton.gameObject);
-            explanationTextObj[(int)BossType.Douji].SetActive(false);
-            explanationTextObj[(int)BossType.Tsukumo].SetActive(false);
-            explanationTextObj[(int)BossType.Kuchinawa].SetActive(false);
-            explanationTextObj[(int)BossType.Kurama].SetActive(false);
-            explanationTextObj[(int)BossType.Wadatsumi].SetActive(false);
-            explanationTextObj[(int)BossType.Hakumen].SetActive(true);
+            if(index == menuIndex)
+            {
+                EventSystem.current.SetSelectedGameObject(BossButton[menuIndex].gameObject);
+                
+                explanationTextObj[menuIndex].SetActive(true);
+            }
         }
     }
 }

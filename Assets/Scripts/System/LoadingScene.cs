@@ -13,6 +13,9 @@ public class LoadingScene : MonoBehaviour
     [SerializeField] private GameObject _loadingUI;
     [SerializeField] private Slider _slider;
 
+    //  VFXCamera
+    [SerializeField] private GameObject VFXCamera;
+
     //  シングルトンなインスタンス
     public static LoadingScene Instance
     {
@@ -31,6 +34,9 @@ public class LoadingScene : MonoBehaviour
 
     public void LoadNextScene(string scene)
     {
+        //  VFXCameraを無効化
+        if(VFXCamera)VFXCamera.SetActive(false);
+
         _loadingUI.SetActive(true);
         StartCoroutine(LoadScene(scene));
     }

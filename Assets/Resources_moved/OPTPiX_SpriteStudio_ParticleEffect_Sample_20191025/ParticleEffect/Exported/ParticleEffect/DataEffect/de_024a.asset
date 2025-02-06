@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 854a5a324e3218743b933d869553c231, type: 3}
+  m_Name: de_024a
+  m_EditorClassIdentifier: 
+  Version: 65538
+  Name: 024a
+  DataProject: {fileID: 11400000, guid: 25d3d690e15732d468daa03497d5d994, type: 2}
+  FlagData: 0
+  SeedRandom: 0
+  VersionRenderer: 2
+  CountMaxParticle: 0
+  CountFramePerSecond: 30
+  ScaleLayout: {x: 1, y: 1}
+  TableParts:
+  - Name: Root
+    ID: 0
+    IDParent: -1
+    TableIDChild: 01000000
+    Feature: 0
+    IndexEmitter: -1
+  - Name: Emitter
+    ID: 1
+    IDParent: 0
+    TableIDChild: 
+    Feature: 1
+    IndexEmitter: 0
+  TableEmitter:
+  - FlagData: 5258241
+    OperationBlendTarget: 1
+    IndexCellMap: 0
+    IndexCell: 16
+    Angle:
+      Main: 0
+      Sub: 360
+    GravityDirectional: {x: 0, y: 0}
+    GravityPointPosition: {x: 0, y: 0}
+    GravityPointPower: 0
+    Position:
+      Main: {x: 0, y: 0}
+      Sub: {x: 0, y: 0}
+    Rotation:
+      Main: -0.3
+      Sub: 0.6
+    RotationFluctuation:
+      Main: -1.8
+      Sub: 31.799978
+    RotationFluctuationRate: 0.28
+    RotationFluctuationRateTime: 0.8162162
+    RateTangentialAcceleration:
+      Main: 0
+      Sub: 0
+    ScaleStart:
+      Main: {x: 1, y: 1}
+      Sub: {x: 0, y: 0}
+    ScaleRateStart:
+      Main: 0.5
+      Sub: 0
+    ScaleEnd:
+      Main: {x: 1, y: 1}
+      Sub: {x: 0, y: 0}
+    ScaleRateEnd:
+      Main: 2
+      Sub: 1.25
+    Delay: 0
+    ColorVertex:
+      Main: {r: 1, g: 0.5254902, b: 0.21568628, a: 1}
+      Sub: {r: 0, g: 0.0039215684, b: 0.03529413, a: 0}
+    ColorVertexFluctuation:
+      Main: {r: 1, g: 1, b: 1, a: 1}
+      Sub: {r: 1, g: 1, b: 1, a: 1}
+    AlphaFadeStart: 0.046875
+    AlphaFadeEnd: 0.6458334
+    Speed:
+      Main: 1
+      Sub: 3.8899999
+    SpeedFluctuation:
+      Main: 0
+      Sub: 0
+    TurnDirectionFluctuation: 0
+    SeedRandom: 7573
+    DurationEmitter: 9
+    Interval: 2
+    DurationParticle:
+      Main: 22
+      Sub: 29
+    CountParticleMax: 20
+    CountParticleEmit: 17
+    CountPartsMaximum: 0
+    TablePatternEmit: []
+    TablePatternOffset: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020000000200000002000000
+    TableSeedParticle: 
+  TableIndexEmitterOrderDraw: 00000000

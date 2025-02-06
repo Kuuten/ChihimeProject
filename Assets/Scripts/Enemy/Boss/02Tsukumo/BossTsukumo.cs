@@ -14,13 +14,6 @@ public class BossTsukumo : BossBase
     //------------------------------------------------------------
     //  Phase2用
     //------------------------------------------------------------
-    private GameObject warningObject;
-
-    private bool bWarningFirst;
-
-    //  WARNING時の予測ライン
-    private GameObject[] dangerLineObject;
-
     //  ギミック弾の使用済み番号格納用
     private int[] buelletNum = new int[(int)TsukumoPhase2Bullet.Direction.MAX];
 
@@ -46,9 +39,6 @@ public class BossTsukumo : BossBase
     {
         base.Start();
 
-        //  警告オブジェクトを取得
-        warningObject =
-            EnemyManager.Instance.GetBulletPrefab((int)BULLET_TYPE.Douji_Warning);
 
         //  ギミック弾の使用済み番号を初期化
         for(int i=0;i<(int)TsukumoPhase2Bullet.Direction.MAX;i++)
@@ -56,8 +46,6 @@ public class BossTsukumo : BossBase
             buelletNum[i] = -1;
         }
 
-        //  Warningの初回フラグ
-        bWarningFirst = false;
         //  Phase3の弾クラス初期化
         enemyPhase3Bullet = null;
 
@@ -441,30 +429,6 @@ public class BossTsukumo : BossBase
         yield return new WaitForSeconds(chainInterval);
 
         yield return new WaitForSeconds(Interval);
-    }
-
-    //------------------------------------------------------------------
-    //  Phase2:警告を出す
-    //------------------------------------------------------------------
-    private IEnumerator Warning()
-    {
-        float duration = 3.0f;
-
-        if(bWarningFirst)yield break;
-
-        //  SEを再生
-        SoundManager.Instance.PlaySFX(
-            (int)AudioChannel.SFX_SYSTEM,
-            (int)SFXList.SFX_DOUJI_WARNING);
-
-        //  WARNINGを有効化
-        warningObject.SetActive(true);
-
-        //  初回ではなくなったのでTRUE
-        bWarningFirst = true;
-
-        //  演出が３秒なのでその分待つ
-        yield return new WaitForSeconds(duration);
     }
 
     /// <summary>

@@ -339,26 +339,11 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("GameStarting");
 
-        //  このステージのIDを取得
-        //int stageID = StageIdManager.Instance.GetStageID();
-
-        //  ステージBGMを設定
-
-        //  キャラの配置・パラメータをリセット
-        //ResetAllCharacters();
-
-        //  ゲーム開始前メッセージ（ステージ名がアルファのアニメーション）
-        //float msg_alpha_speed = 1.0f; //  ステージ名のアルファが最大になるのにかかる時間
-        //float msg_wait  = 3.0f;       //  メッセージの表示時間
-        //yield return StartCoroutine(PreGameMessage
-        //                            (
-        //                                msg1speed, msg1wait
-        //                            ));
-
 
         //  EnemyManagerのロード完了まで待つ
         yield return new WaitUntil(()=> EnemyManager.Instance.GetIsCompleteLoading() == true);
         
+
         //  敵の出現開始
         StartCoroutine( EnemyManager.Instance.AppearEnemy() );
         
@@ -477,7 +462,7 @@ public class GameManager : MonoBehaviour
         //  一旦ステージ３までの予定で後でステージ６まで作る
         //****************************************************************
         int currentStageNum = (int)PlayerInfoManager.stageInfo;
-        if(currentStageNum >= (int)PlayerInfoManager.StageInfo.Stage02)
+        if(currentStageNum >= (int)PlayerInfoManager.StageInfo.Stage06)
         {
             //  全ステージ終わっていたらエンディングへ
             //ResetAndChangeScene("Ending");

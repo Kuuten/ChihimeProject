@@ -6,6 +6,7 @@ using System;
 using DG.Tweening;
 using Cysharp.Threading.Tasks;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 //--------------------------------------------------------------
 //
@@ -109,7 +110,7 @@ public class PlayerHealth : MonoBehaviour
     //  GameOver表示
     [SerializeField] private GameObject gameOver;
 
-     //  ドロップパワーアップアイテム一覧
+    //  ドロップパワーアップアイテム一覧
     [SerializeField] private GameObject DropItem;
 
 
@@ -130,12 +131,12 @@ public class PlayerHealth : MonoBehaviour
 
         //  PlayerInfoManagerから初期化
         currentMaxHealth = PlayerInfoManager.g_MAXHP;
-        if(currentMaxHealth > limitHealth)
+        if (currentMaxHealth > limitHealth)
             Debug.LogError("最大体力値が制限を超過しています！");
-        if(currentMaxHealth % 2 !=0)
+        if (currentMaxHealth % 2 != 0)
             Debug.LogError("currentMaxHealthは必ず偶数でなければいけません！");
         currentHealth = PlayerInfoManager.g_CURRENTHP;
-        if(currentHealth > currentMaxHealth)
+        if (currentHealth > currentMaxHealth)
             Debug.LogError("現在体力値が最大体力値を超過しています！");
 
         //  顔UIのImageコンポーネントを取得
@@ -175,17 +176,17 @@ public class PlayerHealth : MonoBehaviour
         isShielded = PlayerInfoManager.g_IS_SHIELD;
 
         //  親オブジェクトの子オブジェクトとしてハートフレームを生成
-        for( int i=0; i<currentMaxHealth/2;i++ )
+        for (int i = 0; i < currentMaxHealth / 2; i++)
         {
             GameObject obj = Instantiate(heartFrameObj);
-            obj.GetComponent<RectTransform>().SetParent( heartRootObj.transform);
+            obj.GetComponent<RectTransform>().SetParent(heartRootObj.transform);
             obj.GetComponent<RectTransform>().localScale = Vector3.one;
-            obj.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0,0,0);
+            obj.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, 0);
             obj.transform.GetChild((int)HeartType.Half).gameObject.SetActive(true);
             obj.transform.GetChild((int)HeartType.Full).gameObject.SetActive(true);
 
 
-            heartList.Add( obj );   //  リストに追加
+            heartList.Add(obj);   //  リストに追加
         }
     }
 
@@ -195,14 +196,14 @@ public class PlayerHealth : MonoBehaviour
         CalculateHealthUI(currentHealth);
 
         //  プレイヤーが死んでいたら処理しない
-        if(bDeath)return;
+        if (bDeath) return;
 
         //  顔UIの絆創膏を更新
         ChangeDamageBand();
 
         //  ゲーム段階別でAnimatorの切り替え
-       int gamestatus = GameManager.Instance.GetGameState();
-        switch(gamestatus)
+        int gamestatus = GameManager.Instance.GetGameState();
+        switch (gamestatus)
         {
             case (int)eGameState.Zako:
                 ChangePlayerSpriteToFront(true);     //  手前向き
@@ -222,22 +223,22 @@ public class PlayerHealth : MonoBehaviour
     private async void OnTriggerEnter2D(Collider2D collision)
     {
         //  死亡しているなら飛ばす
-        if(bDeath)return;
+        if (bDeath) return;
 
         //  シールド状態
-        if(isShielded)
+        if (isShielded)
         {
             //  無敵モードなら飛ばす
-            if(bSuperMode)return;
+            if (bSuperMode) return;
 
-            if( collision.CompareTag("Enemy") ||    //  ザコ敵本体にHIT！
+            if (collision.CompareTag("Enemy") ||    //  ザコ敵本体にHIT！
                 collision.CompareTag("Boss") ||     //  ボス本体にHIT！
                 collision.CompareTag("EnemyBullet") //  敵弾にHIT！
-            )    
+            )
             {
                 //  無敵モードON
                 bSuperMode = true;
-                
+
                 //  シールドを削除
                 isShielded = false;
 
@@ -247,17 +248,17 @@ public class PlayerHealth : MonoBehaviour
                     (int)SFXList.SFX_SHIELDBREAK);
 
                 //  無敵演出開始
-                var taskBlink = Blink();
+                var taskBlink = Blink(flashInterval, loopCount);
                 await taskBlink;
             }
         }
         //  通常状態
         else
         {
-            if(collision.CompareTag("Enemy") )    //  敵本体にHIT！
+            if (collision.CompareTag("Enemy"))    //  敵本体にHIT！
             {
                 //  無敵モードなら飛ばす
-                if(bSuperMode)return;
+                if (bSuperMode) return;
 
                 //  無敵モードON
                 bSuperMode = true;
@@ -267,25 +268,25 @@ public class PlayerHealth : MonoBehaviour
 
 
                 //  ダメージ関連処理
-                await AfterDamage( ed.Attack );
+                await AfterDamage(ed.Attack,flashInterval, loopCount);
 
             }
-            else if(collision.CompareTag("Boss") )    //  敵本体にHIT！
+            else if (collision.CompareTag("Boss"))    //  敵本体にHIT！
             {
                 //  ノックバック！
                 KnockBack(collision);
 
-                 //  無敵モードなら飛ばす
-                if(bSuperMode)return;
+                //  無敵モードなら飛ばす
+                if (bSuperMode) return;
 
                 //  無敵モードON
                 bSuperMode = true;
 
                 //  プレイヤーのダメージ処理
                 EnemyData ed = null;
-                
-                BossBase　boss = null;
-                switch(PlayerInfoManager.stageInfo)
+
+                BossBase boss = null;
+                switch (PlayerInfoManager.stageInfo)
                 {
                     case PlayerInfoManager.StageInfo.Stage01:
                         boss = collision.GetComponent<BossDouji>();
@@ -293,9 +294,9 @@ public class PlayerHealth : MonoBehaviour
                     case PlayerInfoManager.StageInfo.Stage02:
                         boss = collision.GetComponent<BossTsukumo>();
                         break;
-                    //case PlayerInfoManager.StageInfo.Stage03:
-                    //    boss = collision.GetComponent<BossKuchinawa>();
-                    //    break;
+                    case PlayerInfoManager.StageInfo.Stage03:
+                       boss = collision.GetComponent<BossKuchinawa>();
+                       break;
                     //case PlayerInfoManager.StageInfo.Stage04:
                     //    boss = collision.GetComponent<BossKurama>();
                     //    break;
@@ -309,47 +310,47 @@ public class PlayerHealth : MonoBehaviour
                         Debug.LogError("PlayerInfoManager.stageInfoに範囲外の値が入っています");
                         break;
                 }
-                if(!boss)Debug.LogError("BossBaseクラスの'boss'がnullになっています");
+                if (!boss) Debug.LogError("BossBaseクラスの'boss'がnullになっています");
 
 
                 //  ダメージ量の設定
                 ed = boss.GetEnemyData();
-                if(ed == null )Debug.LogError("EnemyDataの取得に失敗しました");
+                if (ed == null) Debug.LogError("EnemyDataの取得に失敗しました");
 
 
                 //  ダメージ関連処理
-                await AfterDamage( ed.Attack );
+                await AfterDamage(ed.Attack,flashInterval, loopCount);
 
             }
-            else if(collision.CompareTag("EnemyBullet"))    //  敵弾にHIT！
+            else if (collision.CompareTag("EnemyBullet"))    //  敵弾にHIT！
             {
                 //  無敵モードなら飛ばす
-                if(bSuperMode)return;
+                if (bSuperMode) return;
 
                 //  プレイヤーのダメージ処理
                 int power = 0;
 
-                if(collision.GetComponent<EnemyBullet>())
+                if (collision.GetComponent<EnemyBullet>())
                 {
                     power = collision.GetComponent<EnemyBullet>().GetPower();
                 }
-                else if(collision.GetComponent<TsukumoFireworks>())
+                else if (collision.GetComponent<TsukumoFireworks>())
                 {
                     power = collision.GetComponent<TsukumoFireworks>().GetPower();
                 }
-                else if(collision.GetComponent<DoujiPhase2Bullet>())
+                else if (collision.GetComponent<DoujiPhase2Bullet>())
                 {
                     power = collision.GetComponent<DoujiPhase2Bullet>().GetPower();
                 }
-                else if(collision.GetComponent<DoujiPhase3Bullet>())
+                else if (collision.GetComponent<DoujiPhase3Bullet>())
                 {
                     power = collision.GetComponent<DoujiPhase3Bullet>().GetPower();
                 }
-                else if(collision.GetComponent<TsukumoHomingBullet>())
+                else if (collision.GetComponent<TsukumoHomingBullet>())
                 {
                     power = collision.GetComponent<TsukumoHomingBullet>().GetPower();
                 }
-                else if(collision.GetComponent<TsukumoPhase2Bullet>())
+                else if (collision.GetComponent<TsukumoPhase2Bullet>())
                 {
                     power = collision.GetComponent<TsukumoPhase2Bullet>().GetPower();
                 }
@@ -357,31 +358,82 @@ public class PlayerHealth : MonoBehaviour
                 {
                     power = collision.GetComponent<TsukumoPhase3Bullet>().GetPower();
                 }
+                // else if (collision.GetComponent<KuchinawaPhase1Bullet>())
+                // {
+                //     power = collision.GetComponent<KuchinawaPhase1Bullet>().GetPower();
+                // }
+                // else if (collision.GetComponent<KuchinawaPhase2Bullet>())
+                // {
+                //     power = collision.GetComponent<KuchinawaPhase2Bullet>().GetPower();
+                // }
+                else if (collision.GetComponent<KuchinawaPhase3Bullet>())
+                {
+                    power = collision.GetComponent<KuchinawaPhase3Bullet>().GetPower();
+
+                    //  点滅時間用の変数
+                    float interval = 0.01f;
+                    int loop_count = 1;
+
+                    //  ダメージ関連処理
+                    await AfterDamage(power,interval, loop_count);
+
+                    return;
+                }
+
+
 
                 //  ダメージ関連処理
-                await AfterDamage( power );
+                await AfterDamage(power,flashInterval, loopCount);
 
             }
-            else if(collision.CompareTag("Obstacles"))    //  障害物にHIT！
+            else if (collision.CompareTag("Obstacles"))    //  障害物にHIT！
             {
 
             }
         }
     }
 
+    //----------------------------------------------------------------
+    //  レーザーなどの特殊な当たり判定
+    //----------------------------------------------------------------
+    private async void OnTriggerStay2D(Collider2D collision)
+    {
+        //  点滅時間用の変数
+        float interval = 0.01f;
+        int loop_count = 1;
+
+        if (collision.CompareTag("EnemyBullet"))    //  敵弾にHIT！
+        {
+            //  無敵モードなら飛ばす
+            if (bSuperMode) return;
+
+            //  プレイヤーのダメージ処理
+            int power = 0;
+
+            //  クチナワレーザーがHIT！
+            if (collision.GetComponent<KuchinawaPhase3Bullet>())
+            {
+                power = collision.GetComponent<KuchinawaPhase3Bullet>().GetPower();
+            }
+
+            //  ダメージ関連処理
+            await AfterDamage(power,interval, loop_count);
+        }
+    }
+
     //-------------------------------------------
     //  ダメージの一連の処理
     //-------------------------------------------
-    private async UniTask AfterDamage(int damage_value)
+    private async UniTask AfterDamage(int damage_value,float flashInterval, int loopCount)
     {
         //  無敵モードON
         bSuperMode = true;
 
         //  ダメージ処理
-        Damage( damage_value );
+        Damage(damage_value);
 
         //  死亡フラグON
-        if(currentHealth <= 0)
+        if (currentHealth <= 0)
         {
             bDamage = false;
             bDeath = true;
@@ -423,7 +475,7 @@ public class PlayerHealth : MonoBehaviour
         await task1;
 
         //  無敵演出開始
-        var taskBlink = Blink();
+        var taskBlink = Blink(flashInterval, loopCount);
         await taskBlink;
     }
 
@@ -436,7 +488,7 @@ public class PlayerHealth : MonoBehaviour
         var token = this.GetCancellationTokenOnDestroy();
 
         //  一瞬色が変わる
-        await UniTask.Delay (TimeSpan.FromSeconds(0.3f))
+        await UniTask.Delay(TimeSpan.FromSeconds(0.3f))
         .AttachExternalCancellation(token);
 
         //  ダメージフラグOFF
@@ -447,7 +499,7 @@ public class PlayerHealth : MonoBehaviour
     //-------------------------------------------
     //  ダメージ時の無敵点滅演出
     //-------------------------------------------
-    private async UniTask Blink()
+    private async UniTask Blink(float flashInterval,int loopCount)
     {
         //GameObjectが破棄された時にキャンセルを飛ばすトークンを作成
         var token = this.GetCancellationTokenOnDestroy();
@@ -456,14 +508,14 @@ public class PlayerHealth : MonoBehaviour
         for (int i = 0; i < loopCount; i++)
         {
             //flashInterval待ってから
-            await UniTask.Delay (TimeSpan.FromSeconds(flashInterval))
+            await UniTask.Delay(TimeSpan.FromSeconds(flashInterval))
                 .AttachExternalCancellation(token);
 
             //spriteRendererをオフ
             sp.enabled = false;
-            
+
             //flashInterval待ってから
-            await UniTask.Delay (TimeSpan.FromSeconds(flashInterval))
+            await UniTask.Delay(TimeSpan.FromSeconds(flashInterval))
                 .AttachExternalCancellation(token);
 
             //spriteRendererをオン
@@ -477,11 +529,11 @@ public class PlayerHealth : MonoBehaviour
     //-------------------------------------------
     //  プレイヤーのスプライトを差し替える
     //-------------------------------------------
-   private void ChangePlayerSpriteToFront(bool front)
+    private void ChangePlayerSpriteToFront(bool front)
     {
-        if(front)   //  ザコ戦中
+        if (front)   //  ザコ戦中
         {
-            if(bDamage) //  ダメージ中！
+            if (bDamage) //  ダメージ中！
             {
                 this.GetComponent<Animator>().runtimeAnimatorController =
                     animPlayerFrontDamage;
@@ -491,9 +543,9 @@ public class PlayerHealth : MonoBehaviour
                 //  水平方向の入力値チェック
                 int check = this.GetComponent<PlayerMovement>().GetHorizontalCheck();
 
-                if(check == 1)          //  入力が+方向なら
+                if (check == 1)          //  入力が+方向なら
                 {
-                    if(isShielded)  //  シールド状態時
+                    if (isShielded)  //  シールド状態時
                     {
                         this.GetComponent<Animator>().runtimeAnimatorController =
                             animPlayerShieldFrontRight;
@@ -505,9 +557,9 @@ public class PlayerHealth : MonoBehaviour
                     }
 
                 }
-                else if(check == -1)    //  入力が-方向なら
+                else if (check == -1)    //  入力が-方向なら
                 {
-                    if(isShielded)  //  シールド状態時
+                    if (isShielded)  //  シールド状態時
                     {
                         this.GetComponent<Animator>().runtimeAnimatorController =
                             animPlayerShieldFrontLeft;
@@ -520,7 +572,7 @@ public class PlayerHealth : MonoBehaviour
                 }
                 else   //   入力なしなら
                 {
-                    if(isShielded)  //  シールド状態時
+                    if (isShielded)  //  シールド状態時
                     {
                         this.GetComponent<Animator>().runtimeAnimatorController =
                             animPlayerShieldFront;
@@ -536,7 +588,7 @@ public class PlayerHealth : MonoBehaviour
         }
         else        //  ボス戦中
         {
-            if(bDamage) //  ダメージ中！
+            if (bDamage) //  ダメージ中！
             {
                 this.GetComponent<Animator>().runtimeAnimatorController =
                     animPlayerBackDamage;
@@ -546,9 +598,9 @@ public class PlayerHealth : MonoBehaviour
                 //  水平方向の入力値チェック
                 int check = this.GetComponent<PlayerMovement>().GetHorizontalCheck();
 
-                if(check == 1)          //  入力が+方向なら
+                if (check == 1)          //  入力が+方向なら
                 {
-                    if(isShielded)  //  シールド状態時
+                    if (isShielded)  //  シールド状態時
                     {
                         this.GetComponent<Animator>().runtimeAnimatorController =
                             animPlayerShieldBackRight;
@@ -559,9 +611,9 @@ public class PlayerHealth : MonoBehaviour
                             animPlayerBackRight;
                     }
                 }
-                else if(check == -1)    //  入力が-方向なら
+                else if (check == -1)    //  入力が-方向なら
                 {
-                    if(isShielded)  //  シールド状態時
+                    if (isShielded)  //  シールド状態時
                     {
                         this.GetComponent<Animator>().runtimeAnimatorController =
                             animPlayerShieldBackLeft;
@@ -574,7 +626,7 @@ public class PlayerHealth : MonoBehaviour
                 }
                 else   //   入力なしなら
                 {
-                    if(isShielded)  //  シールド状態時
+                    if (isShielded)  //  シールド状態時
                     {
                         this.GetComponent<Animator>().runtimeAnimatorController =
                             animPlayerShieldBack;
@@ -619,7 +671,7 @@ public class PlayerHealth : MonoBehaviour
         //  デバッグ表示
         Debug.Log($"プレイヤーの体力が{value}減少して\n" +
             $"{currentHealth}になりました！");
-        
+
     }
 
     //-------------------------------------------
@@ -657,7 +709,7 @@ public class PlayerHealth : MonoBehaviour
         if (target >= limitHealth)
         {
             //  11以上は処理しない
-            if(target > limitHealth)
+            if (target > limitHealth)
             {
                 return;
             }
@@ -669,12 +721,12 @@ public class PlayerHealth : MonoBehaviour
 
         //  親オブジェクトの子オブジェクトとしてハートフレームを生成
         GameObject obj = Instantiate(heartFrameObj);
-        obj.GetComponent<RectTransform>().SetParent( heartRootObj.transform);
+        obj.GetComponent<RectTransform>().SetParent(heartRootObj.transform);
         obj.GetComponent<RectTransform>().localScale = Vector3.one;
-        obj.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0,0,0);
+        obj.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, 0);
         //obj.transform.GetChild((int)HeartType.Half).gameObject.SetActive(true);
         //obj.transform.GetChild((int)HeartType.Full).gameObject.SetActive(true);
-        heartList.Add( obj );   //  リストに追加
+        heartList.Add(obj);   //  リストに追加
 
         //  ハート画像を更新
         CalculateHealthUI(currentHealth);
@@ -695,7 +747,7 @@ public class PlayerHealth : MonoBehaviour
         Assert.IsFalse((value < 0 || value > currentMaxHealth),
             "体力に範囲外の数が設定されています！");
 
-        if(currentMaxHealth != value)currentMaxHealth = value;
+        if (currentMaxHealth != value) currentMaxHealth = value;
     }
 
     public int GetCurrentHealth()
@@ -708,7 +760,7 @@ public class PlayerHealth : MonoBehaviour
         Assert.IsFalse((value < 0 || value > limitHealth),
             "最大体力に範囲外の数が設定されています！");
 
-        if(currentMaxHealth != value)currentMaxHealth = value;
+        if (currentMaxHealth != value) currentMaxHealth = value;
     }
 
     public int GetCurrentMaxHealth()
@@ -723,13 +775,13 @@ public class PlayerHealth : MonoBehaviour
 
     public bool GetDamageFlag()
     {
-        return  bDamage;
+        return bDamage;
     }
 
-    public void SetSuperMode( bool flag ){ bSuperMode = flag; }
-    public bool GetSuperMode(){ return bSuperMode; }
-    public void SetIsShielded( bool flag ){ isShielded = flag; }
-    public bool GetIsShielded(){ return isShielded; }
+    public void SetSuperMode(bool flag) { bSuperMode = flag; }
+    public bool GetSuperMode() { return bSuperMode; }
+    public void SetIsShielded(bool flag) { isShielded = flag; }
+    public bool GetIsShielded() { return isShielded; }
 
     //-------------------------------------------
     //  やられ演出
@@ -743,14 +795,14 @@ public class PlayerHealth : MonoBehaviour
 
         //  初期座標の設定
         gameOver.GetComponent<RectTransform>().anchoredPosition
-            = new Vector2 (-17, 563);
+            = new Vector2(-17, 563);
 
         //  GameOver表示を有効化
         gameOver.SetActive(true);
 
         //  移動開始
         gameOver.GetComponent<RectTransform>()
-            .DOAnchorPos(new Vector2(-17f,0f),duration)
+            .DOAnchorPos(new Vector2(-17f, 0f), duration)
             .SetEase(Ease.OutElastic);
 
         //  GameOverジングルを鳴らす
@@ -763,7 +815,7 @@ public class PlayerHealth : MonoBehaviour
 
         //  回転開始
         gameOver.GetComponent<RectTransform>()
-            .DOLocalRotate(new Vector3(0, 0, -35f),duration)
+            .DOLocalRotate(new Vector3(0, 0, -35f), duration)
             .SetEase(Ease.InCubic);
 
         //  １秒待つ
@@ -771,7 +823,7 @@ public class PlayerHealth : MonoBehaviour
 
         //  移動開始
         gameOver.GetComponent<RectTransform>()
-            .DOAnchorPos(new Vector2(-17f,-700f),duration)
+            .DOAnchorPos(new Vector2(-17f, -700f), duration)
             .SetEase(Ease.OutElastic);
 
         //  １秒待つ
@@ -841,7 +893,7 @@ public class PlayerHealth : MonoBehaviour
 
         //  プレイヤーのやられエフェクト
         GameObject obj = Instantiate(
-            playerDeathEffect, 
+            playerDeathEffect,
             this.transform.position,
             Quaternion.identity);
 
@@ -849,7 +901,7 @@ public class PlayerHealth : MonoBehaviour
         yield return new WaitForSeconds(0.583f);
 
         //  GameOverアニメーションの終了を待つ
-        yield return StartCoroutine( GameOverAnimation() );
+        yield return StartCoroutine(GameOverAnimation());
 
         //  GameOverへシーン遷移
         LoadingScene.Instance.LoadNextScene("GameOver");
@@ -862,7 +914,7 @@ public class PlayerHealth : MonoBehaviour
     //---------------------------------------------------
     public void CalculateHealthUI(int health)
     {
-        if(health < 0)
+        if (health < 0)
         {
             health = 0;
         }
@@ -870,7 +922,7 @@ public class PlayerHealth : MonoBehaviour
         //  体力0ならハートを全部非表示にする
         if (health == 0)
         {
-            for(int i=0;i<heartList.Count;i++)
+            for (int i = 0; i < heartList.Count; i++)
             {
                 heartList[i].transform.GetChild((int)HeartType.Half)
                     .gameObject.SetActive(false);
@@ -884,14 +936,14 @@ public class PlayerHealth : MonoBehaviour
                     .gameObject.SetActive(false);
             }
         }
-        else if(health == 1)
+        else if (health == 1)
         {
-            for(int i=0;i<heartList.Count;i++)
+            for (int i = 0; i < heartList.Count; i++)
             {
-                if(i==0)
+                if (i == 0)
                 {
                     //  シールド状態時の処理
-                    if(isShielded)
+                    if (isShielded)
                     {
                         heartList[i].transform.GetChild((int)HeartType.Half)
                             .gameObject.SetActive(true);
@@ -921,10 +973,10 @@ public class PlayerHealth : MonoBehaviour
                 }
 
                 //  残りを非表示にする
-                for(int j=1;j<heartList.Count;j++)
+                for (int j = 1; j < heartList.Count; j++)
                 {
                     //  シールド状態時の処理
-                    if(isShielded)
+                    if (isShielded)
                     {
                         heartList[j].transform.GetChild((int)HeartType.Half)
                             .gameObject.SetActive(false);
@@ -953,84 +1005,84 @@ public class PlayerHealth : MonoBehaviour
                     }
                 }
 
-            } 
+            }
         }
         else // 体力が２以上の時
         {
             //  一旦現在体力のとこまで全部フルで埋める
             int fullNum = health / 2;
-            for(int i=0;i<fullNum;i++)
+            for (int i = 0; i < fullNum; i++)
             {
-                    //  シールド状態時の処理
-                    if(isShielded)
-                    {
-                        heartList[i].transform.GetChild((int)HeartType.Half)
-                            .gameObject.SetActive(true);
-                        heartList[i].transform.GetChild((int)HeartType.Full)
-                            .gameObject.SetActive(true);
-                        heartList[i].transform.GetChild((int)HeartType.ShieldNone)
-                            .gameObject.SetActive(true);
-                        heartList[i].transform.GetChild((int)HeartType.ShieldHalf)
-                            .gameObject.SetActive(true);
-                        heartList[i].transform.GetChild((int)HeartType.ShieldFull)
-                            .gameObject.SetActive(true);
-                    }
-                    //  通常状態時の処理
-                    else
-                    {
-                        heartList[i].transform.GetChild((int)HeartType.Half)
-                            .gameObject.SetActive(true);
-                        heartList[i].transform.GetChild((int)HeartType.Full)
-                            .gameObject.SetActive(true);
-                        heartList[i].transform.GetChild((int)HeartType.ShieldNone)
-                            .gameObject.SetActive(false);
-                        heartList[i].transform.GetChild((int)HeartType.ShieldHalf)
-                            .gameObject.SetActive(false);
-                        heartList[i].transform.GetChild((int)HeartType.ShieldFull)
-                            .gameObject.SetActive(false);
-                    }
+                //  シールド状態時の処理
+                if (isShielded)
+                {
+                    heartList[i].transform.GetChild((int)HeartType.Half)
+                        .gameObject.SetActive(true);
+                    heartList[i].transform.GetChild((int)HeartType.Full)
+                        .gameObject.SetActive(true);
+                    heartList[i].transform.GetChild((int)HeartType.ShieldNone)
+                        .gameObject.SetActive(true);
+                    heartList[i].transform.GetChild((int)HeartType.ShieldHalf)
+                        .gameObject.SetActive(true);
+                    heartList[i].transform.GetChild((int)HeartType.ShieldFull)
+                        .gameObject.SetActive(true);
+                }
+                //  通常状態時の処理
+                else
+                {
+                    heartList[i].transform.GetChild((int)HeartType.Half)
+                        .gameObject.SetActive(true);
+                    heartList[i].transform.GetChild((int)HeartType.Full)
+                        .gameObject.SetActive(true);
+                    heartList[i].transform.GetChild((int)HeartType.ShieldNone)
+                        .gameObject.SetActive(false);
+                    heartList[i].transform.GetChild((int)HeartType.ShieldHalf)
+                        .gameObject.SetActive(false);
+                    heartList[i].transform.GetChild((int)HeartType.ShieldFull)
+                        .gameObject.SetActive(false);
+                }
             }
 
             //  奇数だった場合は最後の番号だけハーフにする
             int taegetNum = health - fullNum;
-            if(health % 2 != 0)
+            if (health % 2 != 0)
             {
                 //  シールド状態時の処理
-                if(isShielded)
+                if (isShielded)
                 {
-                    heartList[taegetNum-1].transform.GetChild((int)HeartType.Half)
+                    heartList[taegetNum - 1].transform.GetChild((int)HeartType.Half)
                         .gameObject.SetActive(true);
-                    heartList[taegetNum-1].transform.GetChild((int)HeartType.Full)
+                    heartList[taegetNum - 1].transform.GetChild((int)HeartType.Full)
                         .gameObject.SetActive(false);
-                    heartList[taegetNum-1].transform.GetChild((int)HeartType.ShieldNone)
+                    heartList[taegetNum - 1].transform.GetChild((int)HeartType.ShieldNone)
                         .gameObject.SetActive(true);
-                    heartList[taegetNum-1].transform.GetChild((int)HeartType.ShieldHalf)
+                    heartList[taegetNum - 1].transform.GetChild((int)HeartType.ShieldHalf)
                         .gameObject.SetActive(true);
-                    heartList[taegetNum-1].transform.GetChild((int)HeartType.ShieldFull)
+                    heartList[taegetNum - 1].transform.GetChild((int)HeartType.ShieldFull)
                         .gameObject.SetActive(false);
                 }
                 //  通常状態時の処理
                 else
                 {
-                    heartList[taegetNum-1].transform.GetChild((int)HeartType.Half)
+                    heartList[taegetNum - 1].transform.GetChild((int)HeartType.Half)
                         .gameObject.SetActive(true);
-                    heartList[taegetNum-1].transform.GetChild((int)HeartType.Full)
+                    heartList[taegetNum - 1].transform.GetChild((int)HeartType.Full)
                         .gameObject.SetActive(false);
-                    heartList[taegetNum-1].transform.GetChild((int)HeartType.ShieldNone)
+                    heartList[taegetNum - 1].transform.GetChild((int)HeartType.ShieldNone)
                         .gameObject.SetActive(false);
-                    heartList[taegetNum-1].transform.GetChild((int)HeartType.ShieldHalf)
+                    heartList[taegetNum - 1].transform.GetChild((int)HeartType.ShieldHalf)
                         .gameObject.SetActive(false);
-                    heartList[taegetNum-1].transform.GetChild((int)HeartType.ShieldFull)
+                    heartList[taegetNum - 1].transform.GetChild((int)HeartType.ShieldFull)
                         .gameObject.SetActive(false);
                 }
 
             }
 
             //  残りを非表示にする
-            for(int i=taegetNum;i<heartList.Count;i++)
+            for (int i = taegetNum; i < heartList.Count; i++)
             {
                 //  シールド状態時の処理
-                if(isShielded)
+                if (isShielded)
                 {
                     heartList[i].transform.GetChild((int)HeartType.Half)
                         .gameObject.SetActive(false);
@@ -1082,12 +1134,12 @@ public class PlayerHealth : MonoBehaviour
     private void ChangeDamageBand()
     {
         //  体力が最大体力の半分以下で絆創膏１が有効化
-        if(currentHealth <= currentMaxHealth/2)
+        if (currentHealth <= currentMaxHealth / 2)
             faceBand1.SetActive(true);
         else faceBand1.SetActive(false);
 
         //  残り体力が2で絆創膏２が有効化
-        if(currentHealth <= 2)
+        if (currentHealth <= 2)
             faceBand2.SetActive(true);
         else faceBand2.SetActive(false);
 

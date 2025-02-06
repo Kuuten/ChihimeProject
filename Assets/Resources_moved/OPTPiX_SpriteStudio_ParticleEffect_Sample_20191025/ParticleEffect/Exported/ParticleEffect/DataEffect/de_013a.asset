@@ -1,0 +1,844 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 854a5a324e3218743b933d869553c231, type: 3}
+  m_Name: de_013a
+  m_EditorClassIdentifier: 
+  Version: 65538
+  Name: 013a
+  DataProject: {fileID: 11400000, guid: 25d3d690e15732d468daa03497d5d994, type: 2}
+  FlagData: 1
+  SeedRandom: 17
+  VersionRenderer: 2
+  CountMaxParticle: 0
+  CountFramePerSecond: 30
+  ScaleLayout: {x: 1, y: 1}
+  TableParts:
+  - Name: Root
+    ID: 0
+    IDParent: -1
+    TableIDChild: 01000000
+    Feature: 0
+    IndexEmitter: -1
+  - Name: Emitter
+    ID: 1
+    IDParent: 0
+    TableIDChild: 02000000
+    Feature: 1
+    IndexEmitter: 0
+  - Name: Emitter
+    ID: 2
+    IDParent: 1
+    TableIDChild: 
+    Feature: 1
+    IndexEmitter: 1
+  TableEmitter:
+  - FlagData: 5510149
+    OperationBlendTarget: 1
+    IndexCellMap: 0
+    IndexCell: 88
+    Angle:
+      Main: 0
+      Sub: 41.837837
+    GravityDirectional: {x: 0, y: -0.21}
+    GravityPointPosition: {x: 0, y: 0}
+    GravityPointPower: 0
+    Position:
+      Main: {x: 0, y: 0}
+      Sub: {x: 0, y: 0}
+    Rotation:
+      Main: 0
+      Sub: 0.3
+    RotationFluctuation:
+      Main: 0
+      Sub: 97.49998
+    RotationFluctuationRate: 0
+    RotationFluctuationRateTime: 0
+    RateTangentialAcceleration:
+      Main: 0
+      Sub: 0
+    ScaleStart:
+      Main: {x: 1, y: 1}
+      Sub: {x: 0, y: 0}
+    ScaleRateStart:
+      Main: 0.3
+      Sub: 0.7
+    ScaleEnd:
+      Main: {x: 0, y: 0}
+      Sub: {x: 0, y: 0}
+    ScaleRateEnd:
+      Main: 0
+      Sub: 0
+    Delay: 0
+    ColorVertex:
+      Main: {r: 1, g: 0.5019608, b: 0.2509804, a: 1}
+      Sub: {r: 0, g: 0.4980392, b: 0.2509804, a: 0}
+    ColorVertexFluctuation:
+      Main: {r: 1, g: 1, b: 1, a: 1}
+      Sub: {r: 1, g: 1, b: 1, a: 1}
+    AlphaFadeStart: 0.25
+    AlphaFadeEnd: 0.75
+    Speed:
+      Main: 10
+      Sub: 17.604168
+    SpeedFluctuation:
+      Main: 0
+      Sub: 0
+    TurnDirectionFluctuation: 0
+    SeedRandom: 7573
+    DurationEmitter: 100
+    Interval: 100
+    DurationParticle:
+      Main: 100
+      Sub: 0
+    CountParticleMax: 20
+    CountParticleEmit: 30
+    CountPartsMaximum: 0
+    TablePatternEmit:
+    - IndexGenerate: 0
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 1
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 2
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 3
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 4
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 5
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 6
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 7
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 8
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 9
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 10
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 11
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 12
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 13
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 14
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 15
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 16
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 17
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 18
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 19
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 20
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 21
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 22
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 23
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 24
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 25
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 26
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 27
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 28
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 29
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 30
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 31
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 32
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 33
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 34
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 35
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 36
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 37
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 38
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 39
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 40
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 41
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 42
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 43
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 44
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 45
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 46
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 47
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 48
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 49
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 50
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 51
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 52
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 53
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 54
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 55
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 56
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 57
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 58
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 59
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 60
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 61
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 62
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 63
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 64
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 65
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 66
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 67
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 68
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 69
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 70
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 71
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 72
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 73
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 74
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 75
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 76
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 77
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 78
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 79
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 80
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 81
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 82
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 83
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 84
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 85
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 86
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 87
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 88
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 89
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 90
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 91
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 92
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 93
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 94
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 95
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 96
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 97
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 98
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 99
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 100
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 101
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 102
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 103
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 104
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 105
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 106
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 107
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 108
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 109
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 110
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 111
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 112
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 113
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 114
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 115
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 116
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 117
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 118
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 119
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 120
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 121
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 122
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 123
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 124
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 125
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 126
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 127
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 128
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 129
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 130
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 131
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 132
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 133
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 134
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 135
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 136
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 137
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 138
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 139
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 140
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 141
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 142
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 143
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 144
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 145
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 146
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 147
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 148
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 149
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 150
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 151
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 152
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 153
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 154
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 155
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 156
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 157
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 158
+      Duration: 100
+      Cycle: 100
+    - IndexGenerate: 159
+      Duration: 100
+      Cycle: 100
+    TablePatternOffset: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    TableSeedParticle: 3c7513f80000000066be87c90000000043e1ea8e0000000022e8d3a600000000c9453339000000000c4d0c77000000005ab2802700000000bf6a94c4000000005eaeec9e00000000cdebc1be00000000118ab08600000000e8e106e700000000757c01c50000000032a9163e00000000aa9c65a500000000d2d7197d000000002334f29d000000009839bac700000000dc79673c000000007290659b00000000c74408cb000000000f4517a100000000d4815c090000000067cdd5bf000000005bae54910000000014cc95e2000000009fe1d8eb000000006a7ade4a00000000a3f8c23900000000c8ab323300000000ed183daa000000007d3c1e570000000035548b7a00000000337c14ee00000000fa2cef7700000000c225918000000000d637c23f000000004acb9d1c00000000b0d92cc900000000bd70442a00000000948219650000000031a853c1000000001b52585d000000009619d0db00000000e735118200000000b1077567000000007044bb6500000000ea4240ac00000000e4506f0c00000000dd239d37000000002ecaf1f600000000f46d4ef9000000008cf7364f000000006fbf700e00000000a1d34db000000000bd7667f100000000655902730000000072e5974a000000006efe0e49000000000ff5442c00000000
+  - FlagData: 6303745
+    OperationBlendTarget: 1
+    IndexCellMap: 0
+    IndexCell: 2
+    Angle:
+      Main: 0
+      Sub: 0
+    GravityDirectional: {x: 0, y: 0}
+    GravityPointPosition: {x: 0, y: 0}
+    GravityPointPower: 0
+    Position:
+      Main: {x: 0, y: 0}
+      Sub: {x: 0, y: 0}
+    Rotation:
+      Main: 0
+      Sub: 0
+    RotationFluctuation:
+      Main: 0
+      Sub: 0
+    RotationFluctuationRate: 0
+    RotationFluctuationRateTime: 0
+    RateTangentialAcceleration:
+      Main: 0
+      Sub: 0
+    ScaleStart:
+      Main: {x: 1, y: 1}
+      Sub: {x: 0, y: 0}
+    ScaleRateStart:
+      Main: 0.9
+      Sub: 0
+    ScaleEnd:
+      Main: {x: 1, y: 1}
+      Sub: {x: 0, y: 0}
+    ScaleRateEnd:
+      Main: 0.1
+      Sub: 0
+    Delay: 0
+    ColorVertex:
+      Main: {r: 1, g: 1, b: 1, a: 1}
+      Sub: {r: 1, g: 1, b: 1, a: 1}
+    ColorVertexFluctuation:
+      Main: {r: 0.89411765, g: 0.41960785, b: 0, a: 1}
+      Sub: {r: 0.10588235, g: 0.47843137, b: 0, a: 0}
+    AlphaFadeStart: 0
+    AlphaFadeEnd: 0.75
+    Speed:
+      Main: 0
+      Sub: 0.1
+    SpeedFluctuation:
+      Main: 0
+      Sub: 0
+    TurnDirectionFluctuation: 0
+    SeedRandom: 7573
+    DurationEmitter: 100
+    Interval: 2
+    DurationParticle:
+      Main: 10
+      Sub: 0
+    CountParticleMax: 5
+    CountParticleEmit: 3
+    CountPartsMaximum: 0
+    TablePatternEmit:
+    - IndexGenerate: 0
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 1
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 2
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 3
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 4
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 5
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 6
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 7
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 8
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 9
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 10
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 11
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 12
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 13
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 14
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 15
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 16
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 17
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 18
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 19
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 20
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 21
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 22
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 23
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 24
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 25
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 26
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 27
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 28
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 29
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 30
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 31
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 32
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 33
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 34
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 35
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 36
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 37
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 38
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 39
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 40
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 41
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 42
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 43
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 44
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 45
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 46
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 47
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 48
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 49
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 50
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 51
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 52
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 53
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 54
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 55
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 56
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 57
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 58
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 59
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 60
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 61
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 62
+      Duration: 10
+      Cycle: 10
+    - IndexGenerate: 63
+      Duration: 10
+      Cycle: 10
+    TablePatternOffset: 0000000000000000000000000200000002000000
+    TableSeedParticle: 3c7513f80000000066be87c90000000043e1ea8e0000000022e8d3a600000000c9453339000000000c4d0c77000000005ab2802700000000bf6a94c4000000005eaeec9e00000000cdebc1be00000000118ab08600000000e8e106e700000000757c01c50000000032a9163e00000000aa9c65a500000000
+  TableIndexEmitterOrderDraw: 0000000001000000

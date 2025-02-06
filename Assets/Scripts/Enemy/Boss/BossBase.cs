@@ -15,7 +15,10 @@ public class BossBase : MonoBehaviour
 {
     //  EnemyDataクラスからの情報取得用
     protected EnemyData enemyData;
-    
+
+    private GameObject warningObject; // Warning格納用
+    private bool bWarningFirst;       // Warning初回判定用
+
     //  パラメータ
     protected string boss_id;         //  EnemyData検索ID
     protected float hp;
@@ -31,7 +34,7 @@ public class BossBase : MonoBehaviour
     protected int loopCount;
 
     //  やられエフェクト
-    [SerializeField,ShowAssetPreview]
+    [SerializeField, ShowAssetPreview]
     public GameObject explosion;
 
     //  HPスライダー
@@ -63,7 +66,7 @@ public class BossBase : MonoBehaviour
 
     protected const float phase1_end = 0.66f;   //  フェーズ１終了条件のHP割合の閾値
     protected const float phase2_end = 0.33f;   //  フェーズ２終了条件のHP割合の閾値
-    
+
     /// <summary>
     /// 初期化
     /// </summary>
@@ -93,6 +96,13 @@ public class BossBase : MonoBehaviour
         //※単純に代入すると参照渡し（変更が相互に作用する）になりコピーの意味がなくなるが、
         //　こうやってコンストラクタの引数でリストを渡せば値渡し（同じデータを持つ別物）になる
         copyBulletList = new List<GameObject>(bulletList);
+
+        //  警告オブジェクトを取得
+        warningObject =
+            EnemyManager.Instance.GetBulletPrefab((int)BULLET_TYPE.Douji_Warning);
+
+        //  Warningの初回フラグ
+        bWarningFirst = false;
     }
 
     protected virtual void Start()
@@ -106,26 +116,26 @@ public class BossBase : MonoBehaviour
     protected virtual void Update()
     {
         //  HPが閾値を切ったら抜ける
-        if (hp <= enemyData.Hp*phase1_end)
+        if (hp <= enemyData.Hp * phase1_end)
         {
-            if(!bStopPhase1)
+            if (!bStopPhase1)
             {
-                hp = enemyData.Hp*phase1_end;
+                hp = enemyData.Hp * phase1_end;
                 bStopPhase1 = true;
             }
         }
-        if(hp <= enemyData.Hp*phase2_end)
+        if (hp <= enemyData.Hp * phase2_end)
         {
-            if(!bStopPhase2)
+            if (!bStopPhase2)
             {
-                hp = enemyData.Hp*phase2_end;
+                hp = enemyData.Hp * phase2_end;
                 bStopPhase2 = true;
             }
         }
 
         //  弾リストを監視して空なら削除        {
         DeleteBulletFromList();
-        
+
         //  スライダーを更新
         hpSlider.value = hp / enemyData.Hp;
     }
@@ -133,7 +143,7 @@ public class BossBase : MonoBehaviour
     /// <summary>
     /// オブジェクトが破棄された時の処理
     /// </summary>
-    protected void OnDestroy()
+    protected virtual void OnDestroy()
     {
         Debug.Log("ボス撃破！ステージクリア！");
 
@@ -145,14 +155,14 @@ public class BossBase : MonoBehaviour
     }
 
     /// <summary>
-    ///  敵のデータを設定 
+    ///  敵のデータを設定
     /// </summary>
     /// <param name="es">敵設定ファイル</param>
     /// <param name="item">ドロップアイテム</param>
     public void SetBossData(EnemySetting es, ePowerupItems item)
     {
-        //  敵のデータを設定 
-        if(boss_id == "")Debug.LogError("boss_idが空になっています！");
+        //  敵のデータを設定
+        if (boss_id == "") Debug.LogError("boss_idが空になっています！");
         else Debug.Log($"boss_id:{boss_id}で設定が完了しました！");
 
 
@@ -161,45 +171,45 @@ public class BossBase : MonoBehaviour
 
         //  IDでデータをenemyDataに設定
         enemyData = es.DataList
-            .FirstOrDefault(enemy => enemy.Id == boss_id );
-        if(enemyData == null)Debug.LogError("enemyDataの取得に失敗しました" +
+            .FirstOrDefault(enemy => enemy.Id == boss_id);
+        if (enemyData == null) Debug.LogError("enemyDataの取得に失敗しました" +
             "！\nボス派生クラスのboss_idを確認してください");
         else Debug.Log("enemyDataの設定が完了しました！");
 
 
         //  体力を設定
-        if(enemyData.Hp <= 0)Debug.LogError("ボスHPが最初から0以下に設定されています！");
+        if (enemyData.Hp <= 0) Debug.LogError("ボスHPが最初から0以下に設定されています！");
         else Debug.Log("ボスのHPの設定が完了しました！");
         hp = enemyData.Hp;
 
-        Debug.Log( "タイプ: " + boss_id + "\nHP: " + hp );
+        Debug.Log("タイプ: " + boss_id + "\nHP: " + hp);
 
         //Debug.Log($"ID：{enemyData.Id}");
         //Debug.Log($"HP：{enemyData.Hp}");
         //Debug.Log($"攻撃力：{enemyData.Attack}");
         //Debug.Log($"落魂：{enemyData.Money}");
 
-        if(item == ePowerupItems.None)
+        if (item == ePowerupItems.None)
         {
             powerupItems = default;
         }
         else
         {
             //  ドロップアイテムを設定
-            powerupItems = item;    
+            powerupItems = item;
         }
     }
 
     //----------------------------------------------------------------------
     //  プロパティ
     //----------------------------------------------------------------------
-    public EnemyData GetEnemyData(){ return enemyData; }
-    public void SetEnemyData(EnemyData ed){ enemyData = ed; }
-    public void SetHp(float health){ hp = health; }
-    public float GetHp(){ return hp; }
-    public void SetSuperMode(bool flag){ bSuperMode = flag; }
-    public bool GetSuperMode(){ return bSuperMode; }
-    public void SetHpSlider(Slider s){ hpSlider = s; }
+    public EnemyData GetEnemyData() { return enemyData; }
+    public void SetEnemyData(EnemyData ed) { enemyData = ed; }
+    public void SetHp(float health) { hp = health; }
+    public float GetHp() { return hp; }
+    public void SetSuperMode(bool flag) { bSuperMode = flag; }
+    public bool GetSuperMode() { return bSuperMode; }
+    public void SetHpSlider(Slider s) { hpSlider = s; }
 
     //------------------------------------------------------
     //  ダメージSEを再生した後無敵モードをオフにする
@@ -228,7 +238,7 @@ public class BossBase : MonoBehaviour
     //  ・どちらかにRigidBodyがついている
     protected void OnTriggerEnter2D(Collider2D collision)
     {
-        if(bDeath)return;
+        if (bDeath) return;
 
 
         if (collision.CompareTag("NormalBullet"))
@@ -237,7 +247,7 @@ public class BossBase : MonoBehaviour
             Destroy(collision.gameObject);
 
             //  無敵モードなら弾だけ消して返す
-            if(bSuperMode || bSuperModeInterval)return;
+            if (bSuperMode || bSuperModeInterval) return;
 
             //  ダメージ処理
             float d = GameManager.Instance.GetPlayer()
@@ -245,13 +255,13 @@ public class BossBase : MonoBehaviour
             Damage(d);
 
             //  点滅演出
-            StartCoroutine(Blink(true,loopCount,flashInterval));
+            StartCoroutine(Blink(true, loopCount, flashInterval));
 
             //  ダメージSE再生
             StartCoroutine(PlayDamageSFXandSuperModeOff());
 
             //  死亡フラグON
-            if(hp <= 0)
+            if (hp <= 0)
             {
                 bDeath = true;
                 Death();                       //  やられ演出
@@ -260,7 +270,7 @@ public class BossBase : MonoBehaviour
         else if (collision.CompareTag("DoujiConvert"))
         {
             //  フェーズ切替時の無敵モードなら弾だけ消して返す
-            if(bSuperModeInterval)
+            if (bSuperModeInterval)
             {
                 //  弾の消去
                 Destroy(collision.gameObject);
@@ -276,24 +286,24 @@ public class BossBase : MonoBehaviour
                 .GetComponent<PlayerShotManager>().IsConvertFullPower();
 
             //  魂バーストゲージを増やす
-            if(isFullPower)
+            if (isFullPower)
             {
                 PlayerBombManager.Instance.PlusKonburstGauge(true);
             }
             //  魂バーストゲージを少し増やす
             else
             {
-                PlayerBombManager.Instance.PlusKonburstGauge(false);  
+                PlayerBombManager.Instance.PlusKonburstGauge(false);
             }
 
             //  点滅演出
-            StartCoroutine(Blink(true,loopCount,flashInterval));
+            StartCoroutine(Blink(true, loopCount, flashInterval));
 
             //  ダメージSE再生
             StartCoroutine(PlayDamageSFXandSuperModeOff());
 
             //  死亡フラグON
-            if(hp <= 0)
+            if (hp <= 0)
             {
                 bDeath = true;
                 Death2();                      //  やられ演出2
@@ -302,7 +312,7 @@ public class BossBase : MonoBehaviour
         else if (collision.CompareTag("DoujiKonburst"))
         {
             //  フェーズ切替時の無敵モードなら弾だけ消して返す
-            if(bSuperModeInterval)return;
+            if (bSuperModeInterval) return;
 
             //  ダメージ処理
             float d = GameManager.Instance.GetPlayer()
@@ -310,13 +320,13 @@ public class BossBase : MonoBehaviour
             Damage(d);
 
             //  点滅演出
-            StartCoroutine(Blink(true,loopCount,flashInterval));
+            StartCoroutine(Blink(true, loopCount, flashInterval));
 
             //  ダメージSE再生
             StartCoroutine(PlayDamageSFXandSuperModeOff());
 
             //  死亡フラグON
-            if(hp <= 0)
+            if (hp <= 0)
             {
                 bDeath = true;
                 Death2();                      //  やられ演出2
@@ -325,7 +335,7 @@ public class BossBase : MonoBehaviour
         else if (collision.CompareTag("TsukumoConvert"))
         {
             //  フェーズ切替時の無敵モードなら弾だけ消して返す
-            if(bSuperModeInterval)
+            if (bSuperModeInterval)
             {
                 //  弾の消去
                 Destroy(collision.gameObject);
@@ -345,24 +355,24 @@ public class BossBase : MonoBehaviour
                 .GetComponent<PlayerShotManager>().IsConvertFullPower();
 
             //  魂バーストゲージを増やす
-            if(isFullPower)
+            if (isFullPower)
             {
                 PlayerBombManager.Instance.PlusKonburstGauge(true);
             }
             //  魂バーストゲージを少し増やす
             else
             {
-                PlayerBombManager.Instance.PlusKonburstGauge(false);  
+                PlayerBombManager.Instance.PlusKonburstGauge(false);
             }
 
             //  点滅演出
-            StartCoroutine(Blink(true,loopCount,flashInterval));
+            StartCoroutine(Blink(true, loopCount, flashInterval));
 
             //  ダメージSE再生
             StartCoroutine(PlayDamageSFXandSuperModeOff());
 
             //  死亡フラグON
-            if(hp <= 0)
+            if (hp <= 0)
             {
                 bDeath = true;
                 Death2();                      //  やられ演出2
@@ -371,7 +381,7 @@ public class BossBase : MonoBehaviour
         else if (collision.CompareTag("TsukumoKonburst"))
         {
             //  フェーズ切替時の無敵モードなら弾だけ消して返す
-            if(bSuperModeInterval)
+            if (bSuperModeInterval)
             {
                 //  弾の消去
                 Destroy(collision.gameObject);
@@ -387,13 +397,13 @@ public class BossBase : MonoBehaviour
             Damage(d);
 
             //  点滅演出
-            StartCoroutine(Blink(true,loopCount,flashInterval));
+            StartCoroutine(Blink(true, loopCount, flashInterval));
 
             //  ダメージSE再生
             StartCoroutine(PlayDamageSFXandSuperModeOff());
 
             //  死亡フラグON
-            if(hp <= 0)
+            if (hp <= 0)
             {
                 bDeath = true;
                 Death2();                      //  やられ演出2
@@ -402,7 +412,7 @@ public class BossBase : MonoBehaviour
         else if (collision.CompareTag("Bomb"))
         {
             //  フェーズ切替時の無敵モードなら返す
-            if(bSuperModeInterval)return;
+            if (bSuperModeInterval) return;
 
             //  ダメージ処理
             float d = GameManager.Instance.GetPlayer()
@@ -410,13 +420,13 @@ public class BossBase : MonoBehaviour
             Damage(d);
 
             //  点滅演出
-            StartCoroutine(Blink(true,loopCount,flashInterval));
+            StartCoroutine(Blink(true, loopCount, flashInterval));
 
             //  ダメージSE再生
             StartCoroutine(PlayDamageSFXandSuperModeOff());
 
             //  死亡フラグON
-            if(hp <= 0)
+            if (hp <= 0)
             {
                 bDeath = true;
                 Death();                        //  やられ演出
@@ -427,12 +437,12 @@ public class BossBase : MonoBehaviour
         //Debug.Log("残りHP: " + hp);
     }
 
-   //-------------------------------------------
+    //-------------------------------------------
     //  ダメージ処理
     //-------------------------------------------
     public void Damage(float value)
     {
-        if(hp > 0.0f)
+        if (hp > 0.0f)
         {
             hp -= value;
         }
@@ -442,13 +452,13 @@ public class BossBase : MonoBehaviour
         }
     }
 
-   //-------------------------------------------
+    //-------------------------------------------
     //  ダメージ時の点滅演出
     //-------------------------------------------
     public IEnumerator Blink(bool super, int loop_count, float flash_interval)
     {
         //  無敵モードON
-        if(super)bSuperMode = true;
+        if (super) bSuperMode = true;
 
         //点滅ループ開始
         for (int i = 0; i < loop_count; i++)
@@ -457,16 +467,16 @@ public class BossBase : MonoBehaviour
             yield return new WaitForSeconds(flash_interval);
 
             //spriteRendererをオフ
-            if(sp)sp.enabled = false;
+            if (sp) sp.enabled = false;
 
             //flashInterval待ってから
             yield return new WaitForSeconds(flash_interval);
 
             //spriteRendererをオン
-            if(sp)sp.enabled = true;
+            if (sp) sp.enabled = true;
         }
         //  無敵モードOFF
-        if(super)bSuperMode = false;
+        if (super) bSuperMode = false;
     }
 
     //-------------------------------------------
@@ -538,13 +548,13 @@ public class BossBase : MonoBehaviour
     public void DeleteBulletFromList()
     {
         //  コピーでループを回す
-        foreach(GameObject bullet in copyBulletList)
+        foreach (GameObject bullet in copyBulletList)
         {
-            if(bullet == null)
+            if (bullet == null)
             {
                 //  本体のリストから削除
                 bulletList.Remove(bullet);
-            } 
+            }
         }
     }
 
@@ -553,9 +563,9 @@ public class BossBase : MonoBehaviour
     //------------------------------------------------
     public void DeleteAllBullet()
     {
-        foreach(GameObject obj in bulletList)
+        foreach (GameObject obj in bulletList)
         {
-            if(obj)Destroy(obj);
+            if (obj) Destroy(obj);
         }
     }
 
@@ -564,7 +574,7 @@ public class BossBase : MonoBehaviour
     //------------------------------------------------
     public void AddBulletFromList(GameObject obj)
     {
-        if(obj != null)
+        if (obj != null)
         {
             bulletList.Add(obj);
         }
@@ -591,10 +601,10 @@ public class BossBase : MonoBehaviour
         phase1_Coroutine = StartCoroutine(Phase1());
 
         //  フラグがTRUEになるまで待つ
-        yield return new WaitUntil(()=>bStopPhase1 == true);
+        yield return new WaitUntil(() => bStopPhase1 == true);
 
         //  フラグでコルーチン停止
-        if(phase1_Coroutine != null)StopCoroutine(phase1_Coroutine);
+        if (phase1_Coroutine != null) StopCoroutine(phase1_Coroutine);
 
         //  フェーズ変更
         yield return StartCoroutine(PhaseChange());
@@ -603,10 +613,10 @@ public class BossBase : MonoBehaviour
         phase2_Coroutine = StartCoroutine(Phase2());
 
         //  フラグがTRUEになるまで待つ
-        yield return new WaitUntil(()=>bStopPhase2 == true);
+        yield return new WaitUntil(() => bStopPhase2 == true);
 
         //  フラグでコルーチン停止
-        if(phase2_Coroutine != null)StopCoroutine(phase2_Coroutine);
+        if (phase2_Coroutine != null) StopCoroutine(phase2_Coroutine);
 
         //  フェーズ変更
         yield return StartCoroutine(PhaseChange());
@@ -662,7 +672,7 @@ public class BossBase : MonoBehaviour
     //------------------------------------------------------------------
     //  移動
     //------------------------------------------------------------------
-    protected virtual IEnumerator LoopMove(float duration,float interval)
+    protected virtual IEnumerator LoopMove(float duration, float interval)
     {
         int currentlNum = (int)Control.Center;      //  現在位置
         List<int> targetList = new List<int>();     //  目標位置候補リスト
@@ -672,40 +682,40 @@ public class BossBase : MonoBehaviour
         Vector3 p1 = EnemyManager.Instance.GetControlPointPos((int)Control.Left);
         Vector3 p2 = EnemyManager.Instance.GetControlPointPos((int)Control.Center);
         Vector3 p3 = EnemyManager.Instance.GetControlPointPos((int)Control.Right);
-        float d1 = Vector3.Distance(p1,this.transform.position);
-        float d2 = Vector3.Distance(p2,this.transform.position);
-        float d3 = Vector3.Distance(p3,this.transform.position);
+        float d1 = Vector3.Distance(p1, this.transform.position);
+        float d2 = Vector3.Distance(p2, this.transform.position);
+        float d3 = Vector3.Distance(p3, this.transform.position);
         List<float> dList = new List<float>();
         dList.Clear();
         dList.Add(d1);
         dList.Add(d2);
         dList.Add(d3);
-        
+
         //  並び替え
         dList.Sort();
 
-        if(dList[0] == d1)currentlNum = (int)Control.Left;
-        if(dList[0] == d2)currentlNum = (int)Control.Center;
-        if(dList[0] == d3)currentlNum = (int)Control.Right;
+        if (dList[0] == d1) currentlNum = (int)Control.Left;
+        if (dList[0] == d2) currentlNum = (int)Control.Center;
+        if (dList[0] == d3) currentlNum = (int)Control.Right;
 
         //  リストをクリア
         targetList.Clear();
 
         //  目標の番号を抽選
-        if(currentlNum ==(int)Control.Left)
+        if (currentlNum == (int)Control.Left)
         {
             targetList.Add((int)Control.Center);
             targetList.Add((int)Control.Right);
         }
-        else if(currentlNum ==(int)Control.Center)
+        else if (currentlNum == (int)Control.Center)
         {
             targetList.Add((int)Control.Left);
             targetList.Add((int)Control.Right);
         }
-        else if(currentlNum ==(int)Control.Right)
+        else if (currentlNum == (int)Control.Right)
         {
             targetList.Add((int)Control.Left);
-            targetList.Add((int)Control.Center); 
+            targetList.Add((int)Control.Center);
         }
 
         //  目標番号を抽選
@@ -719,20 +729,20 @@ public class BossBase : MonoBehaviour
             .SetEase(Ease.Linear);
 
         //  縦移動開始
-        transform.DOLocalMoveY(-2f, duration/2)
+        transform.DOLocalMoveY(-2f, duration / 2)
             .SetEase(Ease.Linear)
             .SetRelative(true);
 
         //  移動時間待つ
-        yield return new WaitForSeconds(duration/2);
+        yield return new WaitForSeconds(duration / 2);
 
         //  縦移動開始
-        transform.DOLocalMoveY(2f, duration/2)
+        transform.DOLocalMoveY(2f, duration / 2)
             .SetEase(Ease.Linear)
             .SetRelative(true);
 
         //  移動時間待つ
-        yield return new WaitForSeconds(duration/2);
+        yield return new WaitForSeconds(duration / 2);
 
         //  現在の番号を更新
         currentlNum = targetNum;
@@ -794,7 +804,7 @@ public class BossBase : MonoBehaviour
     //------------------------------------------------------------------
     protected virtual IEnumerator Shot()
     {
-        yield return null;        
+        yield return null;
     }
 
     //------------------------------------------------------------------
@@ -806,9 +816,9 @@ public class BossBase : MonoBehaviour
         GameObject bullet = EnemyManager.Instance
             .GetBulletPrefab((int)BULLET_TYPE.Wildly_Normal);
 
-        float totalDegree = 180;        //  撃つ範囲の総角  
+        float totalDegree = 180;        //  撃つ範囲の総角
         int wayNum = 5;                 //  弾のway数(必ず3way以上の奇数にすること)
-        float Degree = totalDegree / (wayNum-1);     //  弾一発毎にずらす角度         
+        float Degree = totalDegree / (wayNum - 1);     //  弾一発毎にずらす角度
         float speed = 3.0f;             //  弾速
         int chain = 5;                  //  連弾数
         float chainInterval = 0.8f;     //  連弾の間隔（秒）
@@ -819,15 +829,15 @@ public class BossBase : MonoBehaviour
         {
             for (int i = 0; i < wayNum; i++)
             {
-                Vector3 vector0 = Quaternion.Euler(0,0,Random.Range(-10,11)) * -transform.up;
+                Vector3 vector0 = Quaternion.Euler(0, 0, Random.Range(-10, 11)) * -transform.up;
 
                 vector[i] = Quaternion.Euler(
-                        0, 0, -Degree * ((wayNum-1)/2) + (i * Degree)
+                        0, 0, -Degree * ((wayNum - 1) / 2) + (i * Degree)
                     ) * vector0;
                 vector[i].z = 0f;
 
                 //弾インスタンスを取得し、初速と発射角度を与える
-                GameObject Bullet_obj = 
+                GameObject Bullet_obj =
                     (GameObject)Instantiate(bullet, transform.position, transform.rotation);
                 //  リストに追加
                 AddBulletFromList(Bullet_obj);
@@ -837,9 +847,9 @@ public class BossBase : MonoBehaviour
                 enemyBullet.SetVelocity(vector[i]);
                 enemyBullet.SetPower(enemyData.Attack);
 
-                
 
-                if(i == 0)
+
+                if (i == 0)
                 {
                     //  発射SE再生
                     SoundManager.Instance.PlaySFX(
@@ -877,6 +887,33 @@ public class BossBase : MonoBehaviour
         yield return null;
     }
 
+    //------------------------------------------------------------------
+    //  Phase2:警告を出す
+    //------------------------------------------------------------------
+    protected virtual IEnumerator Warning()
+    {
+        float duration = 3.0f;
+
+        if (bWarningFirst) yield break;
+
+        //  SEを再生
+        SoundManager.Instance.PlaySFX(
+            (int)AudioChannel.SFX_SYSTEM,
+            (int)SFXList.SFX_DOUJI_WARNING);
+
+        //  WARNINGを有効化
+        warningObject.SetActive(true);
+
+        //  初回ではなくなったのでTRUE
+        bWarningFirst = true;
+
+        //  演出が３秒なのでその分待つ
+        yield return new WaitForSeconds(duration);
+
+        //  WARNINGを無効化
+        warningObject.SetActive(false);
+    }
+
     //-------------------------------------------------------------------
     //  発狂弾生成処理
     //------------------------------------------------------------------
@@ -888,7 +925,7 @@ public class BossBase : MonoBehaviour
     //------------------------------------------------------------------
     //  発狂移動
     //------------------------------------------------------------------
-    protected virtual IEnumerator LoopMoveBerserk(float duration,float interval)
+    protected virtual IEnumerator LoopMoveBerserk(float duration, float interval)
     {
         yield return null;
     }

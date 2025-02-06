@@ -1,0 +1,172 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 854a5a324e3218743b933d869553c231, type: 3}
+  m_Name: de_034a
+  m_EditorClassIdentifier: 
+  Version: 65538
+  Name: 034a
+  DataProject: {fileID: 11400000, guid: 25d3d690e15732d468daa03497d5d994, type: 2}
+  FlagData: 0
+  SeedRandom: 0
+  VersionRenderer: 2
+  CountMaxParticle: 0
+  CountFramePerSecond: 30
+  ScaleLayout: {x: 1, y: 1}
+  TableParts:
+  - Name: Root
+    ID: 0
+    IDParent: -1
+    TableIDChild: 0100000002000000
+    Feature: 0
+    IndexEmitter: -1
+  - Name: Emitter_1
+    ID: 1
+    IDParent: 0
+    TableIDChild: 
+    Feature: 1
+    IndexEmitter: 0
+  - Name: Emitter_2
+    ID: 2
+    IDParent: 0
+    TableIDChild: 
+    Feature: 1
+    IndexEmitter: 1
+  TableEmitter:
+  - FlagData: 7353345
+    OperationBlendTarget: 1
+    IndexCellMap: 0
+    IndexCell: 33
+    Angle:
+      Main: 0
+      Sub: 45
+    GravityDirectional: {x: 0, y: 0}
+    GravityPointPosition: {x: 0, y: 0}
+    GravityPointPower: 0
+    Position:
+      Main: {x: 0, y: 0}
+      Sub: {x: 0, y: 0}
+    Rotation:
+      Main: -7.5000186
+      Sub: 3.75
+    RotationFluctuation:
+      Main: 0
+      Sub: 29.999979
+    RotationFluctuationRate: 0
+    RotationFluctuationRateTime: 0
+    RateTangentialAcceleration:
+      Main: 0
+      Sub: 0
+    ScaleStart:
+      Main: {x: 1, y: 1}
+      Sub: {x: 0, y: 0}
+    ScaleRateStart:
+      Main: 4.6666665
+      Sub: 1.0833335
+    ScaleEnd:
+      Main: {x: 1, y: 1}
+      Sub: {x: 0, y: 0}
+    ScaleRateEnd:
+      Main: 0.33333334
+      Sub: 1.25
+    Delay: 0
+    ColorVertex:
+      Main: {r: 0.72156864, g: 1, b: 1, a: 1}
+      Sub: {r: 0, g: 0, b: 0, a: 0}
+    ColorVertexFluctuation:
+      Main: {r: 0.07058824, g: 0.21176471, b: 0.25882354, a: 1}
+      Sub: {r: 0, g: 0.08235295, b: 0.12941176, a: 0}
+    AlphaFadeStart: 0.046875
+    AlphaFadeEnd: 0.09375
+    Speed:
+      Main: 0
+      Sub: 0
+    SpeedFluctuation:
+      Main: 0
+      Sub: 0
+    TurnDirectionFluctuation: 0
+    SeedRandom: 7573
+    DurationEmitter: 30
+    Interval: 1
+    DurationParticle:
+      Main: 30
+      Sub: 0
+    CountParticleMax: 20
+    CountParticleEmit: 1
+    CountPartsMaximum: 0
+    TablePatternEmit: []
+    TablePatternOffset: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000110000001200000013000000
+    TableSeedParticle: 
+  - FlagData: 4207617
+    OperationBlendTarget: 1
+    IndexCellMap: 0
+    IndexCell: 28
+    Angle:
+      Main: 0
+      Sub: 45
+    GravityDirectional: {x: 0, y: 0}
+    GravityPointPosition: {x: 0, y: 0}
+    GravityPointPower: 0
+    Position:
+      Main: {x: 0, y: 0}
+      Sub: {x: 0, y: 0}
+    Rotation:
+      Main: -67.500015
+      Sub: 202.49998
+    RotationFluctuation:
+      Main: 0
+      Sub: 149.99997
+    RotationFluctuationRate: 0
+    RotationFluctuationRateTime: 0
+    RateTangentialAcceleration:
+      Main: 0
+      Sub: 0
+    ScaleStart:
+      Main: {x: 1, y: 1}
+      Sub: {x: 0, y: 1.25}
+    ScaleRateStart:
+      Main: 1
+      Sub: 2.1666667
+    ScaleEnd:
+      Main: {x: 1, y: 1}
+      Sub: {x: 0, y: 0}
+    ScaleRateEnd:
+      Main: 0
+      Sub: 0
+    Delay: 0
+    ColorVertex:
+      Main: {r: 1, g: 1, b: 1, a: 1}
+      Sub: {r: 1, g: 1, b: 1, a: 1}
+    ColorVertexFluctuation:
+      Main: {r: 1, g: 1, b: 1, a: 1}
+      Sub: {r: 1, g: 1, b: 1, a: 1}
+    AlphaFadeStart: 0.052083332
+    AlphaFadeEnd: 0.057291668
+    Speed:
+      Main: 0
+      Sub: 0
+    SpeedFluctuation:
+      Main: 0
+      Sub: 0
+    TurnDirectionFluctuation: 0
+    SeedRandom: 7573
+    DurationEmitter: 21
+    Interval: 1
+    DurationParticle:
+      Main: 30
+      Sub: 36
+    CountParticleMax: 5
+    CountParticleEmit: 2
+    CountPartsMaximum: 0
+    TablePatternEmit: []
+    TablePatternOffset: 0000000000000000010000000100000002000000
+    TableSeedParticle: 
+  TableIndexEmitterOrderDraw: 0000000001000000

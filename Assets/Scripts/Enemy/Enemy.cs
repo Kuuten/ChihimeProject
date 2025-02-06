@@ -56,6 +56,26 @@ public class Enemy : MonoBehaviour
         Chouchin,                   //  提灯
         Nuigurumi,                  //  ぬいぐるみ
         Tsukumo,                    //  ツクモ
+
+        Littlemaid,                 //  小メイド
+        Omurice,                    //  オムライス
+        Maid,                       //  メイド
+        Kuchinawa,                  //  クチナワ
+
+        Kotengu,                    //  小天狗
+        Kamaitachi,                 //  カマイタチ
+        TOTengukun,                 //  TO天狗くん
+        Kurama,                     //  クラマ
+
+        Kozakana,                   //  小魚
+        Kurage,                     //  クラゲ
+        Kame,                       //  亀
+        Wadatsumi,                  //  ワダツミ
+
+        Kogitsune,                  //  子狐
+        Kitsunebi,                  //  狐火
+        WeakKuchinawa,              //  クチナワ（弱）
+        Hakumen,                    //  ハクメン
     }
     // ザコ敵の種類
     public ENEMY_TYPE enemyType = ENEMY_TYPE.None;
@@ -1699,29 +1719,26 @@ public class Enemy : MonoBehaviour
     private IEnumerator MidBoss_Phase1()
     {
         //  中ボスのタイプによって行動パターンを呼び分ける
-        if(enemyType == ENEMY_TYPE.Ibarakidouji)
+        switch(enemyType)
         {
-            yield return StartCoroutine(Ibaraki_Phase1());
-        }
-        else if(enemyType == ENEMY_TYPE.Nuigurumi)
-        {
-            yield return StartCoroutine(Nuigurumi_Phase1());
-        }
-        else if(enemyType == ENEMY_TYPE.Ibarakidouji)
-        {
-            yield return StartCoroutine(Ibaraki_Phase1());
-        }
-        else if(enemyType == ENEMY_TYPE.Ibarakidouji)
-        {
-            yield return StartCoroutine(Ibaraki_Phase1());
-        }
-        else if(enemyType == ENEMY_TYPE.Ibarakidouji)
-        {
-            yield return StartCoroutine(Ibaraki_Phase1());
-        }
-        else if(enemyType == ENEMY_TYPE.Ibarakidouji)
-        {
-            yield return StartCoroutine(Ibaraki_Phase1());
+            case ENEMY_TYPE.Ibarakidouji:
+                yield return StartCoroutine(Ibaraki_Phase1());
+                break;
+            case ENEMY_TYPE.Nuigurumi:
+                yield return StartCoroutine(Nuigurumi_Phase1());
+                break;
+            case ENEMY_TYPE.Maid:
+                yield return StartCoroutine(Maid_Phase1());
+                break;
+            case ENEMY_TYPE.TOTengukun:
+                yield return StartCoroutine(TOTengukun_Phase1());
+                break;
+            case ENEMY_TYPE.Kame:
+                yield return StartCoroutine(Kame_Phase1());
+                break;
+            case ENEMY_TYPE.WeakKuchinawa:
+                yield return StartCoroutine(WeakKuchinawa_Phase1());
+                break;
         }
     }
     //------------------------------------------------------------------
@@ -1789,34 +1806,151 @@ public class Enemy : MonoBehaviour
         }
     }
     //------------------------------------------------------------------
+    //  メイド・Phase1
+    //------------------------------------------------------------------
+    private IEnumerator Maid_Phase1()
+    {
+        float duration = 2.5f;  //  移動にかかる時間
+
+        while(true)
+        {
+            yield return StartCoroutine(MidBoss_WalkToPlayer(duration));
+
+            //  移動時間待つ
+            yield return new WaitForSeconds(duration);
+
+            //  HPが閾値を切ったら抜ける
+            if(bSwitchPhase)break;
+
+            //  爪痕状攻撃
+            yield return StartCoroutine(MidBoss_ClawShot());
+
+            //  HPが閾値を切ったら抜ける
+            if(bSwitchPhase)break;
+
+            //  360度攻撃
+            yield return StartCoroutine(MidBoss_WildlyShot360());
+
+            //  HPが閾値を切ったら抜ける
+            if(bSwitchPhase)break;
+        }
+    }
+    //------------------------------------------------------------------
+    //  TO天狗くん・Phase1
+    //------------------------------------------------------------------
+    private IEnumerator TOTengukun_Phase1()
+    {
+        float duration = 2.5f;  //  移動にかかる時間
+
+        while(true)
+        {
+            yield return StartCoroutine(MidBoss_WalkToPlayer(duration));
+
+            //  移動時間待つ
+            yield return new WaitForSeconds(duration);
+
+            //  HPが閾値を切ったら抜ける
+            if(bSwitchPhase)break;
+
+            //  爪痕状攻撃
+            yield return StartCoroutine(MidBoss_ClawShot());
+
+            //  HPが閾値を切ったら抜ける
+            if(bSwitchPhase)break;
+
+            //  360度攻撃
+            yield return StartCoroutine(MidBoss_WildlyShot360());
+
+            //  HPが閾値を切ったら抜ける
+            if(bSwitchPhase)break;
+        }
+    }
+    //------------------------------------------------------------------
+    //  カメ・Phase1
+    //------------------------------------------------------------------
+    private IEnumerator Kame_Phase1()
+    {
+        float duration = 2.5f;  //  移動にかかる時間
+
+        while(true)
+        {
+            yield return StartCoroutine(MidBoss_WalkToPlayer(duration));
+
+            //  移動時間待つ
+            yield return new WaitForSeconds(duration);
+
+            //  HPが閾値を切ったら抜ける
+            if(bSwitchPhase)break;
+
+            //  爪痕状攻撃
+            yield return StartCoroutine(MidBoss_ClawShot());
+
+            //  HPが閾値を切ったら抜ける
+            if(bSwitchPhase)break;
+
+            //  360度攻撃
+            yield return StartCoroutine(MidBoss_WildlyShot360());
+
+            //  HPが閾値を切ったら抜ける
+            if(bSwitchPhase)break;
+        }
+    }
+    //------------------------------------------------------------------
+    //  クチナワ（弱）・Phase1
+    //------------------------------------------------------------------
+    private IEnumerator WeakKuchinawa_Phase1()
+    {
+        float duration = 2.5f;  //  移動にかかる時間
+
+        while(true)
+        {
+            yield return StartCoroutine(MidBoss_WalkToPlayer(duration));
+
+            //  移動時間待つ
+            yield return new WaitForSeconds(duration);
+
+            //  HPが閾値を切ったら抜ける
+            if(bSwitchPhase)break;
+
+            //  爪痕状攻撃
+            yield return StartCoroutine(MidBoss_ClawShot());
+
+            //  HPが閾値を切ったら抜ける
+            if(bSwitchPhase)break;
+
+            //  360度攻撃
+            yield return StartCoroutine(MidBoss_WildlyShot360());
+
+            //  HPが閾値を切ったら抜ける
+            if(bSwitchPhase)break;
+        }
+    }
+    //------------------------------------------------------------------
     //  中ボス・Phase2
     //------------------------------------------------------------------
     private IEnumerator MidBoss_Phase2()
     {
         //  中ボスのタイプによって行動パターンを呼び分ける
-        if(enemyType == ENEMY_TYPE.Ibarakidouji)
+        switch(enemyType)
         {
-            yield return StartCoroutine(Ibaraki_Phase2());
-        }
-        else if(enemyType == ENEMY_TYPE.Nuigurumi)
-        {
-            yield return StartCoroutine(Nuigurumi_Phase2());
-        }
-        else if(enemyType == ENEMY_TYPE.Ibarakidouji)
-        {
-            yield return StartCoroutine(Ibaraki_Phase2());
-        }
-        else if(enemyType == ENEMY_TYPE.Ibarakidouji)
-        {
-            yield return StartCoroutine(Ibaraki_Phase2());
-        }
-        else if(enemyType == ENEMY_TYPE.Ibarakidouji)
-        {
-            yield return StartCoroutine(Ibaraki_Phase2());
-        }
-        else if(enemyType == ENEMY_TYPE.Ibarakidouji)
-        {
-            yield return StartCoroutine(Ibaraki_Phase2());
+            case ENEMY_TYPE.Ibarakidouji:
+                yield return StartCoroutine(Ibaraki_Phase2());
+                break;
+            case ENEMY_TYPE.Nuigurumi:
+                yield return StartCoroutine(Nuigurumi_Phase2());
+                break;
+            case ENEMY_TYPE.Maid:
+                yield return StartCoroutine(Maid_Phase2());
+                break;
+            case ENEMY_TYPE.TOTengukun:
+                yield return StartCoroutine(TOTengukun_Phase2());
+                break;
+            case ENEMY_TYPE.Kame:
+                yield return StartCoroutine(Kame_Phase2());
+                break;
+            case ENEMY_TYPE.WeakKuchinawa:
+                yield return StartCoroutine(WeakKuchinawa_Phase2());
+                break;
         }
     }
     //------------------------------------------------------------------
@@ -1874,6 +2008,134 @@ public class Enemy : MonoBehaviour
 
             //  人形包囲陣召喚
             yield return StartCoroutine(MidBoss_SummonDollGroup());
+
+            //  プレイヤーに接近
+            yield return StartCoroutine(MidBoss_WalkToPlayer(duration));
+
+            //  移動時間待つ
+            yield return new WaitForSeconds(duration);
+
+            //  爪痕攻撃
+            yield return StartCoroutine(MidBoss_ClawShot());
+        }
+    }
+    //------------------------------------------------------------------
+    //  メイド・Phase2
+    //------------------------------------------------------------------
+    private IEnumerator Maid_Phase2()
+    {
+        //  プレイヤーに接近する時間
+        float duration = 2f;
+
+        //  無敵モードOFF
+        bSuperMode = false;
+
+        //  中央に戻る
+        yield return StartCoroutine(MidBoss_ReturnToCenter());
+
+        while(true)
+        {
+            //////  人形ミサイル召喚
+            ////yield return StartCoroutine(MidBoss_SummonDollMissile());
+
+            //////  人形包囲陣召喚
+            ////yield return StartCoroutine(MidBoss_SummonDollGroup());
+
+            //  プレイヤーに接近
+            yield return StartCoroutine(MidBoss_WalkToPlayer(duration));
+
+            //  移動時間待つ
+            yield return new WaitForSeconds(duration);
+
+            //  爪痕攻撃
+            yield return StartCoroutine(MidBoss_ClawShot());
+        }
+    }
+    //------------------------------------------------------------------
+    //  TO天狗くん・Phase2
+    //------------------------------------------------------------------
+    private IEnumerator TOTengukun_Phase2()
+    {
+        //  プレイヤーに接近する時間
+        float duration = 2f;
+
+        //  無敵モードOFF
+        bSuperMode = false;
+
+        //  中央に戻る
+        yield return StartCoroutine(MidBoss_ReturnToCenter());
+
+        while(true)
+        {
+            ////  人形ミサイル召喚
+            //yield return StartCoroutine(MidBoss_SummonDollMissile());
+
+            ////  人形包囲陣召喚
+            //yield return StartCoroutine(MidBoss_SummonDollGroup());
+
+            //  プレイヤーに接近
+            yield return StartCoroutine(MidBoss_WalkToPlayer(duration));
+
+            //  移動時間待つ
+            yield return new WaitForSeconds(duration);
+
+            //  爪痕攻撃
+            yield return StartCoroutine(MidBoss_ClawShot());
+        }
+    }
+    //------------------------------------------------------------------
+    //  カメ・Phase2
+    //------------------------------------------------------------------
+    private IEnumerator Kame_Phase2()
+    {
+        //  プレイヤーに接近する時間
+        float duration = 2f;
+
+        //  無敵モードOFF
+        bSuperMode = false;
+
+        //  中央に戻る
+        yield return StartCoroutine(MidBoss_ReturnToCenter());
+
+        while(true)
+        {
+            //////  人形ミサイル召喚
+            ////yield return StartCoroutine(MidBoss_SummonDollMissile());
+
+            //////  人形包囲陣召喚
+            ////yield return StartCoroutine(MidBoss_SummonDollGroup());
+
+            //  プレイヤーに接近
+            yield return StartCoroutine(MidBoss_WalkToPlayer(duration));
+
+            //  移動時間待つ
+            yield return new WaitForSeconds(duration);
+
+            //  爪痕攻撃
+            yield return StartCoroutine(MidBoss_ClawShot());
+        }
+    }
+    //------------------------------------------------------------------
+    //  クチナワ（弱）・Phase2
+    //------------------------------------------------------------------
+    private IEnumerator WeakKuchinawa_Phase2()
+    {
+        //  プレイヤーに接近する時間
+        float duration = 2f;
+
+        //  無敵モードOFF
+        bSuperMode = false;
+
+        //  中央に戻る
+        yield return StartCoroutine(MidBoss_ReturnToCenter());
+
+        while(true)
+        {
+            ////  人形ミサイル召喚
+            //yield return StartCoroutine(MidBoss_SummonDollMissile());
+
+            ////  人形包囲陣召喚
+            //yield return StartCoroutine(MidBoss_SummonDollGroup());
 
             //  プレイヤーに接近
             yield return StartCoroutine(MidBoss_WalkToPlayer(duration));

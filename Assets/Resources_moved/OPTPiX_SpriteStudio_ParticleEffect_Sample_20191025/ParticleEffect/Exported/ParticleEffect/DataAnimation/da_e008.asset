@@ -1,0 +1,3348 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6379835e446767444b98eb288010fcce, type: 3}
+  m_Name: da_e008
+  m_EditorClassIdentifier: 
+  Version: 65792
+  Name: e008
+  DataProject: {fileID: 11400000, guid: 25d3d690e15732d468daa03497d5d994, type: 2}
+  TableParts:
+  - Name: root
+    ID: 0
+    IDParent: -1
+    TableIDChild: 0100000002000000030000000500000007000000090000000b000000
+    Feature: 0
+    CountMesh: 0
+    Mesh:
+      CountVertex: 0
+      TableVertex: []
+      TableRateUV: []
+      TableIndexVertex: 
+      CountVertexDeform: 0
+    LabelColor:
+      Form: 0
+      Color:
+        serializedVersion: 2
+        rgba: 0
+    OperationBlendTarget: 0
+    ShapeCollision: 0
+    SizeCollisionZ: 0
+    PrefabUnderControl: {fileID: 0}
+    NameAnimationUnderControl: 
+  - Name: 008a
+    ID: 1
+    IDParent: 0
+    TableIDChild: 
+    Feature: 4
+    CountMesh: 0
+    Mesh:
+      CountVertex: 0
+      TableVertex: []
+      TableRateUV: []
+      TableIndexVertex: 
+      CountVertexDeform: 0
+    LabelColor:
+      Form: 0
+      Color:
+        serializedVersion: 2
+        rgba: 0
+    OperationBlendTarget: 0
+    ShapeCollision: 0
+    SizeCollisionZ: 0
+    PrefabUnderControl: {fileID: 2278185987828634515, guid: ce5199060304fb548b1c30fdc25903e6, type: 3}
+    NameAnimationUnderControl: 
+  - Name: 008a_1
+    ID: 2
+    IDParent: 0
+    TableIDChild: 
+    Feature: 4
+    CountMesh: 0
+    Mesh:
+      CountVertex: 0
+      TableVertex: []
+      TableRateUV: []
+      TableIndexVertex: 
+      CountVertexDeform: 0
+    LabelColor:
+      Form: 0
+      Color:
+        serializedVersion: 2
+        rgba: 0
+    OperationBlendTarget: 0
+    ShapeCollision: 0
+    SizeCollisionZ: 0
+    PrefabUnderControl: {fileID: 2278185987828634515, guid: ce5199060304fb548b1c30fdc25903e6, type: 3}
+    NameAnimationUnderControl: 
+  - Name: part_1
+    ID: 3
+    IDParent: 0
+    TableIDChild: 04000000
+    Feature: 1
+    CountMesh: 0
+    Mesh:
+      CountVertex: 0
+      TableVertex: []
+      TableRateUV: []
+      TableIndexVertex: 
+      CountVertexDeform: 0
+    LabelColor:
+      Form: 0
+      Color:
+        serializedVersion: 2
+        rgba: 0
+    OperationBlendTarget: 0
+    ShapeCollision: 0
+    SizeCollisionZ: 0
+    PrefabUnderControl: {fileID: 0}
+    NameAnimationUnderControl: 
+  - Name: snowcristal
+    ID: 4
+    IDParent: 3
+    TableIDChild: 
+    Feature: 2
+    CountMesh: 4
+    Mesh:
+      CountVertex: 0
+      TableVertex: []
+      TableRateUV: []
+      TableIndexVertex: 
+      CountVertexDeform: 0
+    LabelColor:
+      Form: 0
+      Color:
+        serializedVersion: 2
+        rgba: 0
+    OperationBlendTarget: 1
+    ShapeCollision: 0
+    SizeCollisionZ: 0
+    PrefabUnderControl: {fileID: 0}
+    NameAnimationUnderControl: 
+  - Name: part_1_1
+    ID: 5
+    IDParent: 0
+    TableIDChild: 06000000
+    Feature: 1
+    CountMesh: 0
+    Mesh:
+      CountVertex: 0
+      TableVertex: []
+      TableRateUV: []
+      TableIndexVertex: 
+      CountVertexDeform: 0
+    LabelColor:
+      Form: 0
+      Color:
+        serializedVersion: 2
+        rgba: 0
+    OperationBlendTarget: 0
+    ShapeCollision: 0
+    SizeCollisionZ: 0
+    PrefabUnderControl: {fileID: 0}
+    NameAnimationUnderControl: 
+  - Name: snowcristal_1
+    ID: 6
+    IDParent: 5
+    TableIDChild: 
+    Feature: 2
+    CountMesh: 4
+    Mesh:
+      CountVertex: 0
+      TableVertex: []
+      TableRateUV: []
+      TableIndexVertex: 
+      CountVertexDeform: 0
+    LabelColor:
+      Form: 0
+      Color:
+        serializedVersion: 2
+        rgba: 0
+    OperationBlendTarget: 1
+    ShapeCollision: 0
+    SizeCollisionZ: 0
+    PrefabUnderControl: {fileID: 0}
+    NameAnimationUnderControl: 
+  - Name: part_1_1_1
+    ID: 7
+    IDParent: 0
+    TableIDChild: 08000000
+    Feature: 1
+    CountMesh: 0
+    Mesh:
+      CountVertex: 0
+      TableVertex: []
+      TableRateUV: []
+      TableIndexVertex: 
+      CountVertexDeform: 0
+    LabelColor:
+      Form: 0
+      Color:
+        serializedVersion: 2
+        rgba: 0
+    OperationBlendTarget: 0
+    ShapeCollision: 0
+    SizeCollisionZ: 0
+    PrefabUnderControl: {fileID: 0}
+    NameAnimationUnderControl: 
+  - Name: snowcristal_1_1
+    ID: 8
+    IDParent: 7
+    TableIDChild: 
+    Feature: 2
+    CountMesh: 4
+    Mesh:
+      CountVertex: 0
+      TableVertex: []
+      TableRateUV: []
+      TableIndexVertex: 
+      CountVertexDeform: 0
+    LabelColor:
+      Form: 0
+      Color:
+        serializedVersion: 2
+        rgba: 0
+    OperationBlendTarget: 1
+    ShapeCollision: 0
+    SizeCollisionZ: 0
+    PrefabUnderControl: {fileID: 0}
+    NameAnimationUnderControl: 
+  - Name: part_1_1_1_1
+    ID: 9
+    IDParent: 0
+    TableIDChild: 0a000000
+    Feature: 1
+    CountMesh: 0
+    Mesh:
+      CountVertex: 0
+      TableVertex: []
+      TableRateUV: []
+      TableIndexVertex: 
+      CountVertexDeform: 0
+    LabelColor:
+      Form: 0
+      Color:
+        serializedVersion: 2
+        rgba: 0
+    OperationBlendTarget: 0
+    ShapeCollision: 0
+    SizeCollisionZ: 0
+    PrefabUnderControl: {fileID: 0}
+    NameAnimationUnderControl: 
+  - Name: snowcristal_1_1_1
+    ID: 10
+    IDParent: 9
+    TableIDChild: 
+    Feature: 2
+    CountMesh: 4
+    Mesh:
+      CountVertex: 0
+      TableVertex: []
+      TableRateUV: []
+      TableIndexVertex: 
+      CountVertexDeform: 0
+    LabelColor:
+      Form: 0
+      Color:
+        serializedVersion: 2
+        rgba: 0
+    OperationBlendTarget: 1
+    ShapeCollision: 0
+    SizeCollisionZ: 0
+    PrefabUnderControl: {fileID: 0}
+    NameAnimationUnderControl: 
+  - Name: part_1_1_1_1_1
+    ID: 11
+    IDParent: 0
+    TableIDChild: 0c000000
+    Feature: 1
+    CountMesh: 0
+    Mesh:
+      CountVertex: 0
+      TableVertex: []
+      TableRateUV: []
+      TableIndexVertex: 
+      CountVertexDeform: 0
+    LabelColor:
+      Form: 0
+      Color:
+        serializedVersion: 2
+        rgba: 0
+    OperationBlendTarget: 0
+    ShapeCollision: 0
+    SizeCollisionZ: 0
+    PrefabUnderControl: {fileID: 0}
+    NameAnimationUnderControl: 
+  - Name: snowcristal_1_1_1_1
+    ID: 12
+    IDParent: 11
+    TableIDChild: 
+    Feature: 2
+    CountMesh: 4
+    Mesh:
+      CountVertex: 0
+      TableVertex: []
+      TableRateUV: []
+      TableIndexVertex: 
+      CountVertexDeform: 0
+    LabelColor:
+      Form: 0
+      Color:
+        serializedVersion: 2
+        rgba: 0
+    OperationBlendTarget: 1
+    ShapeCollision: 0
+    SizeCollisionZ: 0
+    PrefabUnderControl: {fileID: 0}
+    NameAnimationUnderControl: 
+  CatalogParts:
+    TableIDPartsNULL: 030000000500000007000000090000000b000000
+    TableIDPartsNormal: 0400000006000000080000000a0000000c000000
+    TableIDPartsInstance: 
+    TableIDPartsEffect: 0100000002000000
+    TableIDPartsMask: 
+    TableIDPartsJoint: 
+    TableIDPartsBone: 
+    TableIDPartsMoveNode: 
+    TableIDPartsConstraint: 
+    TableIDPartsBonePoint: 
+    TableIDPartsMesh: 
+  TableAnimation:
+  - Name: snowrotation
+    FramePerSecond: 30
+    CountFrame: 60
+    SizeCanvasX: 1024
+    SizeCanvasY: 1024
+    FrameValidStart: 0
+    FrameValidEnd: 59
+    CountFrameValid: 60
+    DepthIK: 3
+    ModeSort: 0
+    TableLabel: []
+    TableParts:
+    - StatusParts: 1090306048
+      Status:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1090514945
+      Cell:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Position:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Rotation:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Scaling:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingLocal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RateOpacity:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - 1
+      Priority:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: 
+      PartsColor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      VertexCorrection:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      OffsetPivot:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionAnchor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      SizeForce:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RotationTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RadiusCollision:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      UserData:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Instance:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Effect:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Deform:
+        TypePack: 3
+        TableCodeValue:
+        - TableCode: 
+        TableValue: []
+        CountVertexMesh: 0
+        TableIndexVertex: 
+      Shader:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Signal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+    - StatusParts: 1077723136
+      Status:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1090514946
+      Cell:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Position:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 0, y: 0, z: 0}
+      Rotation:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800320019003380190034001a0035801a0036001b0037801b0038001c0039801c003a001d003b801d00
+        TableValue:
+        - {x: 0, y: 0, z: 0}
+        - {x: 0, y: 0, z: -3.6440678}
+        - {x: 0, y: 0, z: -7.2881355}
+        - {x: 0, y: 0, z: -10.932203}
+        - {x: 0, y: 0, z: -14.576271}
+        - {x: 0, y: 0, z: -18.220339}
+        - {x: 0, y: 0, z: -21.864407}
+        - {x: 0, y: 0, z: -25.508474}
+        - {x: 0, y: 0, z: -29.152542}
+        - {x: 0, y: 0, z: -32.796608}
+        - {x: 0, y: 0, z: -36.440678}
+        - {x: 0, y: 0, z: -40.084747}
+        - {x: 0, y: 0, z: -43.728813}
+        - {x: 0, y: 0, z: -47.372883}
+        - {x: 0, y: 0, z: -51.01695}
+        - {x: 0, y: 0, z: -54.66102}
+        - {x: 0, y: 0, z: -58.305084}
+        - {x: 0, y: 0, z: -61.94915}
+        - {x: 0, y: 0, z: -65.593216}
+        - {x: 0, y: 0, z: -69.23729}
+        - {x: 0, y: 0, z: -72.881355}
+        - {x: 0, y: 0, z: -76.52542}
+        - {x: 0, y: 0, z: -80.169495}
+        - {x: 0, y: 0, z: -83.81356}
+        - {x: 0, y: 0, z: -87.45763}
+        - {x: 0, y: 0, z: -91.1017}
+        - {x: 0, y: 0, z: -94.745766}
+        - {x: 0, y: 0, z: -98.38983}
+        - {x: 0, y: 0, z: -102.0339}
+        - {x: 0, y: 0, z: -105.67796}
+        - {x: 0, y: 0, z: -109.32204}
+        - {x: 0, y: 0, z: -112.966095}
+        - {x: 0, y: 0, z: -116.61017}
+        - {x: 0, y: 0, z: -120.25424}
+        - {x: 0, y: 0, z: -123.8983}
+        - {x: 0, y: 0, z: -127.54237}
+        - {x: 0, y: 0, z: -131.18643}
+        - {x: 0, y: 0, z: -134.8305}
+        - {x: 0, y: 0, z: -138.47458}
+        - {x: 0, y: 0, z: -142.11864}
+        - {x: 0, y: 0, z: -145.76271}
+        - {x: 0, y: 0, z: -149.40677}
+        - {x: 0, y: 0, z: -153.05084}
+        - {x: 0, y: 0, z: -156.69492}
+        - {x: 0, y: 0, z: -160.33899}
+        - {x: 0, y: 0, z: -163.98305}
+        - {x: 0, y: 0, z: -167.62712}
+        - {x: 0, y: 0, z: -171.2712}
+        - {x: 0, y: 0, z: -174.91525}
+        - {x: 0, y: 0, z: -178.55933}
+        - {x: 0, y: 0, z: -182.2034}
+        - {x: 0, y: 0, z: -185.84746}
+        - {x: 0, y: 0, z: -189.49153}
+        - {x: 0, y: 0, z: -193.13559}
+        - {x: 0, y: 0, z: -196.77966}
+        - {x: 0, y: 0, z: -200.42374}
+        - {x: 0, y: 0, z: -204.0678}
+        - {x: 0, y: 0, z: -207.71187}
+        - {x: 0, y: 0, z: -211.35593}
+        - {x: 0, y: 0, z: -215}
+      Scaling:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingLocal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RateOpacity:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000298000002a0001002b8001002c0002002d8002002e0003002f800300300004003180040032000500338005003400060035800600360007003780070038000800398008003a0009003b800900
+        TableValue:
+        - 1
+        - 0.94736844
+        - 0.8947368
+        - 0.84210527
+        - 0.78947365
+        - 0.7368421
+        - 0.68421054
+        - 0.6315789
+        - 0.57894737
+        - 0.5263158
+        - 0.4736842
+        - 0.42105263
+        - 0.36842108
+        - 0.31578946
+        - 0.2631579
+        - 0.21052629
+        - 0.15789473
+        - 0.10526317
+        - 0.052631557
+        - 0
+      Priority:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: 
+      PartsColor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      VertexCorrection:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      OffsetPivot:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionAnchor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      SizeForce:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RotationTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RadiusCollision:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      UserData:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Instance:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Effect:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1073741824
+          FrameStart: 0
+          RateTime: 1
+      Deform:
+        TypePack: 3
+        TableCodeValue:
+        - TableCode: 
+        TableValue: []
+        CountVertexMesh: 0
+        TableIndexVertex: 
+      Shader:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Signal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+    - StatusParts: 1077723136
+      Status:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1090514948
+      Cell:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Position:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 0, y: 0, z: 0}
+      Rotation:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800320019003380190034001a0035801a0036001b0037801b0038001c0039801c003a001d003b801d00
+        TableValue:
+        - {x: 0, y: 0, z: 0}
+        - {x: 0, y: 0, z: 4.169492}
+        - {x: 0, y: 0, z: 8.338984}
+        - {x: 0, y: 0, z: 12.508474}
+        - {x: 0, y: 0, z: 16.677967}
+        - {x: 0, y: 0, z: 20.847458}
+        - {x: 0, y: 0, z: 25.016949}
+        - {x: 0, y: 0, z: 29.18644}
+        - {x: 0, y: 0, z: 33.355934}
+        - {x: 0, y: 0, z: 37.52542}
+        - {x: 0, y: 0, z: 41.694916}
+        - {x: 0, y: 0, z: 45.864407}
+        - {x: 0, y: 0, z: 50.033897}
+        - {x: 0, y: 0, z: 54.203392}
+        - {x: 0, y: 0, z: 58.37288}
+        - {x: 0, y: 0, z: 62.542374}
+        - {x: 0, y: 0, z: 66.71187}
+        - {x: 0, y: 0, z: 70.881355}
+        - {x: 0, y: 0, z: 75.05084}
+        - {x: 0, y: 0, z: 79.220345}
+        - {x: 0, y: 0, z: 83.38983}
+        - {x: 0, y: 0, z: 87.559326}
+        - {x: 0, y: 0, z: 91.72881}
+        - {x: 0, y: 0, z: 95.8983}
+        - {x: 0, y: 0, z: 100.067795}
+        - {x: 0, y: 0, z: 104.23729}
+        - {x: 0, y: 0, z: 108.406784}
+        - {x: 0, y: 0, z: 112.57627}
+        - {x: 0, y: 0, z: 116.74576}
+        - {x: 0, y: 0, z: 120.91525}
+        - {x: 0, y: 0, z: 125.08475}
+        - {x: 0, y: 0, z: 129.25423}
+        - {x: 0, y: 0, z: 133.42374}
+        - {x: 0, y: 0, z: 137.59323}
+        - {x: 0, y: 0, z: 141.76271}
+        - {x: 0, y: 0, z: 145.9322}
+        - {x: 0, y: 0, z: 150.10168}
+        - {x: 0, y: 0, z: 154.2712}
+        - {x: 0, y: 0, z: 158.44069}
+        - {x: 0, y: 0, z: 162.61017}
+        - {x: 0, y: 0, z: 166.77966}
+        - {x: 0, y: 0, z: 170.94914}
+        - {x: 0, y: 0, z: 175.11865}
+        - {x: 0, y: 0, z: 179.28815}
+        - {x: 0, y: 0, z: 183.45763}
+        - {x: 0, y: 0, z: 187.62712}
+        - {x: 0, y: 0, z: 191.7966}
+        - {x: 0, y: 0, z: 195.96611}
+        - {x: 0, y: 0, z: 200.13559}
+        - {x: 0, y: 0, z: 204.30508}
+        - {x: 0, y: 0, z: 208.47458}
+        - {x: 0, y: 0, z: 212.64406}
+        - {x: 0, y: 0, z: 216.81357}
+        - {x: 0, y: 0, z: 220.98305}
+        - {x: 0, y: 0, z: 225.15254}
+        - {x: 0, y: 0, z: 229.32204}
+        - {x: 0, y: 0, z: 233.49152}
+        - {x: 0, y: 0, z: 237.66103}
+        - {x: 0, y: 0, z: 241.8305}
+        - {x: 0, y: 0, z: 246}
+      Scaling:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingLocal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RateOpacity:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000298000002a0001002b8001002c0002002d8002002e0003002f800300300004003180040032000500338005003400060035800600360007003780070038000800398008003a0009003b800900
+        TableValue:
+        - 1
+        - 0.94736844
+        - 0.8947368
+        - 0.84210527
+        - 0.78947365
+        - 0.7368421
+        - 0.68421054
+        - 0.6315789
+        - 0.57894737
+        - 0.5263158
+        - 0.4736842
+        - 0.42105263
+        - 0.36842108
+        - 0.31578946
+        - 0.2631579
+        - 0.21052629
+        - 0.15789473
+        - 0.10526317
+        - 0.052631557
+        - 0
+      Priority:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: 
+      PartsColor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      VertexCorrection:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      OffsetPivot:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionAnchor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      SizeForce:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RotationTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RadiusCollision:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      UserData:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Instance:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Effect:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1073741824
+          FrameStart: 0
+          RateTime: 1
+      Deform:
+        TypePack: 3
+        TableCodeValue:
+        - TableCode: 
+        TableValue: []
+        CountVertexMesh: 0
+        TableIndexVertex: 
+      Shader:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Signal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+    - StatusParts: 1077723136
+      Status:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1090519039
+      Cell:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Position:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 0, y: 0, z: 0}
+      Rotation:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800320019003380190034001a0035801a0036001b0037801b0038001c0039801c003a001d003b801d00
+        TableValue:
+        - {x: 0, y: 0, z: 136}
+        - {x: 0, y: 0, z: 141.95}
+        - {x: 0, y: 0, z: 147.9}
+        - {x: 0, y: 0, z: 153.85}
+        - {x: 0, y: 0, z: 159.8}
+        - {x: 0, y: 0, z: 165.75}
+        - {x: 0, y: 0, z: 171.7}
+        - {x: 0, y: 0, z: 177.65}
+        - {x: 0, y: 0, z: 183.6}
+        - {x: 0, y: 0, z: 189.55}
+        - {x: 0, y: 0, z: 195.5}
+        - {x: 0, y: 0, z: 201.45}
+        - {x: 0, y: 0, z: 207.40001}
+        - {x: 0, y: 0, z: 213.34999}
+        - {x: 0, y: 0, z: 219.3}
+        - {x: 0, y: 0, z: 225.25}
+        - {x: 0, y: 0, z: 231.2}
+        - {x: 0, y: 0, z: 237.15001}
+        - {x: 0, y: 0, z: 243.09999}
+        - {x: 0, y: 0, z: 249.05}
+        - {x: 0, y: 0, z: 255}
+        - {x: 0, y: 0, z: 239.0625}
+        - {x: 0, y: 0, z: 223.125}
+        - {x: 0, y: 0, z: 207.1875}
+        - {x: 0, y: 0, z: 191.25}
+        - {x: 0, y: 0, z: 175.3125}
+        - {x: 0, y: 0, z: 159.375}
+        - {x: 0, y: 0, z: 143.4375}
+        - {x: 0, y: 0, z: 127.5}
+        - {x: 0, y: 0, z: 111.5625}
+        - {x: 0, y: 0, z: 95.625}
+        - {x: 0, y: 0, z: 79.6875}
+        - {x: 0, y: 0, z: 63.75}
+        - {x: 0, y: 0, z: 47.8125}
+        - {x: 0, y: 0, z: 31.875}
+        - {x: 0, y: 0, z: 15.9375}
+        - {x: 0, y: 0, z: 0}
+        - {x: 0, y: 0, z: 5.6666665}
+        - {x: 0, y: 0, z: 11.333333}
+        - {x: 0, y: 0, z: 17}
+        - {x: 0, y: 0, z: 22.666666}
+        - {x: 0, y: 0, z: 28.333332}
+        - {x: 0, y: 0, z: 34}
+        - {x: 0, y: 0, z: 39.666664}
+        - {x: 0, y: 0, z: 45.333332}
+        - {x: 0, y: 0, z: 50.999996}
+        - {x: 0, y: 0, z: 56.666664}
+        - {x: 0, y: 0, z: 62.333332}
+        - {x: 0, y: 0, z: 68}
+        - {x: 0, y: 0, z: 73.666664}
+        - {x: 0, y: 0, z: 79.33333}
+        - {x: 0, y: 0, z: 85}
+        - {x: 0, y: 0, z: 90.666664}
+        - {x: 0, y: 0, z: 96.33333}
+        - {x: 0, y: 0, z: 101.99999}
+        - {x: 0, y: 0, z: 107.66666}
+        - {x: 0, y: 0, z: 113.33333}
+        - {x: 0, y: 0, z: 119}
+        - {x: 0, y: 0, z: 124.666664}
+        - {x: 0, y: 0, z: 130.33333}
+      Scaling:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingLocal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RateOpacity:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - 1
+      Priority:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: 
+      PartsColor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      VertexCorrection:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      OffsetPivot:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionAnchor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      SizeForce:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RotationTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RadiusCollision:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      UserData:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Instance:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Effect:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Deform:
+        TypePack: 3
+        TableCodeValue:
+        - TableCode: 
+        TableValue: []
+        CountVertexMesh: 0
+        TableIndexVertex: 
+      Shader:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Signal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+    - StatusParts: 1075363840
+      Status:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1090514950
+      Cell:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - IndexCellMap: 0
+          IndexCell: 82
+      Position:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800320019003380190034001a0035801a0036001b0037801b0038001c0039801c003a001d003b801d00
+        TableValue:
+        - {x: 102.40001, y: 136.53334, z: 0}
+        - {x: 106.88001, y: 142.50667, z: 0}
+        - {x: 111.36001, y: 148.48001, z: 0}
+        - {x: 115.84001, y: 154.45334, z: 0}
+        - {x: 120.32001, y: 160.42667, z: 0}
+        - {x: 124.8, y: 166.40001, z: 0}
+        - {x: 129.28001, y: 172.37334, z: 0}
+        - {x: 133.76001, y: 178.34666, z: 0}
+        - {x: 138.24, y: 184.32, z: 0}
+        - {x: 142.72, y: 190.29333, z: 0}
+        - {x: 147.20001, y: 196.26666, z: 0}
+        - {x: 151.68001, y: 202.24, z: 0}
+        - {x: 156.16, y: 208.21333, z: 0}
+        - {x: 160.64, y: 214.18666, z: 0}
+        - {x: 165.12, y: 220.16, z: 0}
+        - {x: 169.6, y: 226.13333, z: 0}
+        - {x: 174.08, y: 232.10667, z: 0}
+        - {x: 178.56, y: 238.08, z: 0}
+        - {x: 183.04, y: 244.05333, z: 0}
+        - {x: 187.52, y: 250.02667, z: 0}
+        - {x: 192, y: 256, z: 0}
+        - {x: 180, y: 240, z: 0}
+        - {x: 168, y: 224, z: 0}
+        - {x: 156, y: 208, z: 0}
+        - {x: 144, y: 192, z: 0}
+        - {x: 132, y: 176, z: 0}
+        - {x: 120, y: 160, z: 0}
+        - {x: 108, y: 144, z: 0}
+        - {x: 96, y: 128, z: 0}
+        - {x: 84, y: 112, z: 0}
+        - {x: 72, y: 96, z: 0}
+        - {x: 60, y: 80, z: 0}
+        - {x: 48, y: 64, z: 0}
+        - {x: 36, y: 48, z: 0}
+        - {x: 24, y: 32, z: 0}
+        - {x: 12, y: 16, z: 0}
+        - {x: 0, y: 0, z: 0}
+        - {x: 4.266667, y: 5.6888895, z: 0}
+        - {x: 8.533334, y: 11.377779, z: 0}
+        - {x: 12.8, y: 17.066668, z: 0}
+        - {x: 17.066668, y: 22.755558, z: 0}
+        - {x: 21.333334, y: 28.444445, z: 0}
+        - {x: 25.6, y: 34.133335, z: 0}
+        - {x: 29.866667, y: 39.822224, z: 0}
+        - {x: 34.133335, y: 45.511116, z: 0}
+        - {x: 38.4, y: 51.2, z: 0}
+        - {x: 42.666668, y: 56.88889, z: 0}
+        - {x: 46.93334, y: 62.57778, z: 0}
+        - {x: 51.2, y: 68.26667, z: 0}
+        - {x: 55.466667, y: 73.95556, z: 0}
+        - {x: 59.733334, y: 79.64445, z: 0}
+        - {x: 64.00001, y: 85.33334, z: 0}
+        - {x: 68.26667, y: 91.02223, z: 0}
+        - {x: 72.53334, y: 96.71112, z: 0}
+        - {x: 76.8, y: 102.4, z: 0}
+        - {x: 81.06667, y: 108.08889, z: 0}
+        - {x: 85.333336, y: 113.77778, z: 0}
+        - {x: 89.600006, y: 119.466675, z: 0}
+        - {x: 93.86668, y: 125.15556, z: 0}
+        - {x: 98.13334, y: 130.84445, z: 0}
+      Rotation:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800320019003380190034001a0035801a0036001b0037801b0038001c0039801c003a001d003b801d00
+        TableValue:
+        - {x: 0, y: 0, z: 237.66516}
+        - {x: 0, y: 0, z: 243.62288}
+        - {x: 0, y: 0, z: 249.5806}
+        - {x: 0, y: 0, z: 255.5383}
+        - {x: 0, y: 0, z: 261.49603}
+        - {x: 0, y: 0, z: 267.45374}
+        - {x: 0, y: 0, z: 273.41144}
+        - {x: 0, y: 0, z: 279.36917}
+        - {x: 0, y: 0, z: 285.32687}
+        - {x: 0, y: 0, z: 291.2846}
+        - {x: 0, y: 0, z: 297.2423}
+        - {x: 0, y: 0, z: 303.2}
+        - {x: 0, y: 0, z: 309.15775}
+        - {x: 0, y: 0, z: 315.11545}
+        - {x: 0, y: 0, z: 321.07318}
+        - {x: 0, y: 0, z: 327.03088}
+        - {x: 0, y: 0, z: 332.9886}
+        - {x: 0, y: 0, z: 338.94632}
+        - {x: 0, y: 0, z: 344.90402}
+        - {x: 0, y: 0, z: 350.86176}
+        - {x: 0, y: 0, z: 356.81946}
+        - {x: 0, y: 0, z: 340.8613}
+        - {x: 0, y: 0, z: 324.90314}
+        - {x: 0, y: 0, z: 308.94495}
+        - {x: 0, y: 0, z: 292.9868}
+        - {x: 0, y: 0, z: 277.02863}
+        - {x: 0, y: 0, z: 261.07047}
+        - {x: 0, y: 0, z: 245.1123}
+        - {x: 0, y: 0, z: 229.15413}
+        - {x: 0, y: 0, z: 213.19597}
+        - {x: 0, y: 0, z: 197.23781}
+        - {x: 0, y: 0, z: 181.27963}
+        - {x: 0, y: 0, z: 165.32147}
+        - {x: 0, y: 0, z: 149.36331}
+        - {x: 0, y: 0, z: 133.40514}
+        - {x: 0, y: 0, z: 117.446976}
+        - {x: 0, y: 0, z: 101.48881}
+        - {x: 0, y: 0, z: 107.16282}
+        - {x: 0, y: 0, z: 112.83684}
+        - {x: 0, y: 0, z: 118.51085}
+        - {x: 0, y: 0, z: 124.18487}
+        - {x: 0, y: 0, z: 129.85889}
+        - {x: 0, y: 0, z: 135.5329}
+        - {x: 0, y: 0, z: 141.20691}
+        - {x: 0, y: 0, z: 146.88092}
+        - {x: 0, y: 0, z: 152.55495}
+        - {x: 0, y: 0, z: 158.22896}
+        - {x: 0, y: 0, z: 163.90297}
+        - {x: 0, y: 0, z: 169.57698}
+        - {x: 0, y: 0, z: 175.25099}
+        - {x: 0, y: 0, z: 180.92502}
+        - {x: 0, y: 0, z: 186.59903}
+        - {x: 0, y: 0, z: 192.27304}
+        - {x: 0, y: 0, z: 197.94707}
+        - {x: 0, y: 0, z: 203.62108}
+        - {x: 0, y: 0, z: 209.29509}
+        - {x: 0, y: 0, z: 214.9691}
+        - {x: 0, y: 0, z: 220.64313}
+        - {x: 0, y: 0, z: 226.31714}
+        - {x: 0, y: 0, z: 231.99115}
+      Scaling:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800320019003380190034001a0035801a0036001b0037801b0038001c0039801c003a001d003b801d00
+        TableValue:
+        - {x: 2.3666668, y: 2.3666668}
+        - {x: 2.4483335, y: 2.4483335}
+        - {x: 2.5300002, y: 2.5300002}
+        - {x: 2.6116667, y: 2.6116667}
+        - {x: 2.6933334, y: 2.6933334}
+        - {x: 2.775, y: 2.775}
+        - {x: 2.8566668, y: 2.8566668}
+        - {x: 2.9383335, y: 2.9383335}
+        - {x: 3.02, y: 3.02}
+        - {x: 3.1016667, y: 3.1016667}
+        - {x: 3.1833334, y: 3.1833334}
+        - {x: 3.265, y: 3.265}
+        - {x: 3.3466668, y: 3.3466668}
+        - {x: 3.4283333, y: 3.4283333}
+        - {x: 3.51, y: 3.51}
+        - {x: 3.5916667, y: 3.5916667}
+        - {x: 3.6733334, y: 3.6733334}
+        - {x: 3.755, y: 3.755}
+        - {x: 3.8366666, y: 3.8366666}
+        - {x: 3.9183333, y: 3.9183333}
+        - {x: 4, y: 4}
+        - {x: 3.78125, y: 3.78125}
+        - {x: 3.5625, y: 3.5625}
+        - {x: 3.34375, y: 3.34375}
+        - {x: 3.125, y: 3.125}
+        - {x: 2.90625, y: 2.90625}
+        - {x: 2.6875, y: 2.6875}
+        - {x: 2.46875, y: 2.46875}
+        - {x: 2.25, y: 2.25}
+        - {x: 2.03125, y: 2.03125}
+        - {x: 1.8125, y: 1.8125}
+        - {x: 1.59375, y: 1.59375}
+        - {x: 1.375, y: 1.375}
+        - {x: 1.15625, y: 1.15625}
+        - {x: 0.9375, y: 0.9375}
+        - {x: 0.71875, y: 0.71875}
+        - {x: 0.5, y: 0.5}
+        - {x: 0.5777778, y: 0.5777778}
+        - {x: 0.65555555, y: 0.65555555}
+        - {x: 0.73333335, y: 0.73333335}
+        - {x: 0.81111115, y: 0.81111115}
+        - {x: 0.8888889, y: 0.8888889}
+        - {x: 0.9666667, y: 0.9666667}
+        - {x: 1.0444444, y: 1.0444444}
+        - {x: 1.1222223, y: 1.1222223}
+        - {x: 1.2, y: 1.2}
+        - {x: 1.2777778, y: 1.2777778}
+        - {x: 1.3555555, y: 1.3555555}
+        - {x: 1.4333334, y: 1.4333334}
+        - {x: 1.5111111, y: 1.5111111}
+        - {x: 1.5888889, y: 1.5888889}
+        - {x: 1.6666667, y: 1.6666667}
+        - {x: 1.7444445, y: 1.7444445}
+        - {x: 1.8222222, y: 1.8222222}
+        - {x: 1.9, y: 1.9}
+        - {x: 1.9777778, y: 1.9777778}
+        - {x: 2.0555556, y: 2.0555556}
+        - {x: 2.1333334, y: 2.1333334}
+        - {x: 2.211111, y: 2.211111}
+        - {x: 2.288889, y: 2.288889}
+      ScalingLocal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RateOpacity:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000a8000000b0001000c8001000d0002000e8002000f000300108003001100040012800400130005001480050025000600268006002700070028800700290008002a000000
+        TableValue:
+        - 0.5
+        - 0.45454544
+        - 0.4090909
+        - 0.36363637
+        - 0.3181818
+        - 0.27272725
+        - 0.22727272
+        - 0.18181819
+        - 0.13636363
+        - 0.09090909
+        - 0.045454532
+        - 0
+        - 0.083333336
+        - 0.16666667
+        - 0.25
+        - 0.33333334
+        - 0.41666666
+      Priority:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: 
+      PartsColor:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0.7529412, b: 1, a: 0.5882353}
+          - {r: 0, g: 0.7529412, b: 1, a: 0.5882353}
+          - {r: 0, g: 0.7529412, b: 1, a: 0.5882353}
+          - {r: 0, g: 0.7529412, b: 1, a: 0.5882353}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+      VertexCorrection:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      OffsetPivot:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionAnchor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      SizeForce:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RotationTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RadiusCollision:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      UserData:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Instance:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Effect:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Deform:
+        TypePack: 3
+        TableCodeValue:
+        - TableCode: 
+        TableValue: []
+        CountVertexMesh: 0
+        TableIndexVertex: 
+      Shader:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Signal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+    - StatusParts: 1075625984
+      Status:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1090519039
+      Cell:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Position:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 0, y: 0, z: 0}
+      Rotation:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800320019003380190034001a0035801a0036001b0037801b0038001c0039801c003a001d003b801d00
+        TableValue:
+        - {x: 0, y: 0, z: -77.86667}
+        - {x: 0, y: 0, z: -84.06061}
+        - {x: 0, y: 0, z: -90.25455}
+        - {x: 0, y: 0, z: -96.44849}
+        - {x: 0, y: 0, z: -102.642426}
+        - {x: 0, y: 0, z: -108.836365}
+        - {x: 0, y: 0, z: -115.030304}
+        - {x: 0, y: 0, z: -121.22424}
+        - {x: 0, y: 0, z: -127.41818}
+        - {x: 0, y: 0, z: -133.61212}
+        - {x: 0, y: 0, z: -139.80606}
+        - {x: 0, y: 0, z: -146}
+        - {x: 0, y: 0, z: -142.1579}
+        - {x: 0, y: 0, z: -138.3158}
+        - {x: 0, y: 0, z: -134.47368}
+        - {x: 0, y: 0, z: -130.63158}
+        - {x: 0, y: 0, z: -126.789474}
+        - {x: 0, y: 0, z: -122.94737}
+        - {x: 0, y: 0, z: -119.10526}
+        - {x: 0, y: 0, z: -115.26316}
+        - {x: 0, y: 0, z: -111.42105}
+        - {x: 0, y: 0, z: -107.57895}
+        - {x: 0, y: 0, z: -103.73684}
+        - {x: 0, y: 0, z: -99.89474}
+        - {x: 0, y: 0, z: -96.05263}
+        - {x: 0, y: 0, z: -92.210526}
+        - {x: 0, y: 0, z: -88.368416}
+        - {x: 0, y: 0, z: -84.52631}
+        - {x: 0, y: 0, z: -80.68421}
+        - {x: 0, y: 0, z: -76.8421}
+        - {x: 0, y: 0, z: -73}
+        - {x: 0, y: 0, z: -69.15789}
+        - {x: 0, y: 0, z: -65.315796}
+        - {x: 0, y: 0, z: -61.473686}
+        - {x: 0, y: 0, z: -57.631577}
+        - {x: 0, y: 0, z: -53.78948}
+        - {x: 0, y: 0, z: -49.94737}
+        - {x: 0, y: 0, z: -46.105263}
+        - {x: 0, y: 0, z: -42.26316}
+        - {x: 0, y: 0, z: -38.421055}
+        - {x: 0, y: 0, z: -34.578945}
+        - {x: 0, y: 0, z: -30.736837}
+        - {x: 0, y: 0, z: -26.89474}
+        - {x: 0, y: 0, z: -23.052631}
+        - {x: 0, y: 0, z: -19.210522}
+        - {x: 0, y: 0, z: -15.368423}
+        - {x: 0, y: 0, z: -11.526316}
+        - {x: 0, y: 0, z: -7.6842074}
+        - {x: 0, y: 0, z: -3.842108}
+        - {x: 0, y: 0, z: 0}
+        - {x: 0, y: 0, z: -7.4622226}
+        - {x: 0, y: 0, z: -14.924445}
+        - {x: 0, y: 0, z: -22.386667}
+        - {x: 0, y: 0, z: -29.84889}
+        - {x: 0, y: 0, z: -37.31111}
+        - {x: 0, y: 0, z: -44.773335}
+        - {x: 0, y: 0, z: -52.235554}
+        - {x: 0, y: 0, z: -59.69778}
+        - {x: 0, y: 0, z: -67.159996}
+        - {x: 0, y: 0, z: -74.62222}
+      Scaling:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 1, y: 1}
+      ScalingLocal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RateOpacity:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - 1
+      Priority:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: 
+      PartsColor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      VertexCorrection:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      OffsetPivot:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionAnchor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      SizeForce:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RotationTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RadiusCollision:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      UserData:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Instance:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Effect:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Deform:
+        TypePack: 3
+        TableCodeValue:
+        - TableCode: 
+        TableValue: []
+        CountVertexMesh: 0
+        TableIndexVertex: 
+      Shader:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Signal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+    - StatusParts: 1075363840
+      Status:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1090514952
+      Cell:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - IndexCellMap: 0
+          IndexCell: 82
+      Position:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800320019003380190034001a0035801a0036001b0037801b0038001c0039801c003a001d003b801d00
+        TableValue:
+        - {x: 102.40001, y: 136.53334, z: 0}
+        - {x: 110.54546, y: 147.39395, z: 0}
+        - {x: 118.69092, y: 158.25455, z: 0}
+        - {x: 126.83637, y: 169.11516, z: 0}
+        - {x: 134.98183, y: 179.97577, z: 0}
+        - {x: 143.12727, y: 190.83636, z: 0}
+        - {x: 151.27274, y: 201.69698, z: 0}
+        - {x: 159.41818, y: 212.55757, z: 0}
+        - {x: 167.56364, y: 223.41818, z: 0}
+        - {x: 175.70909, y: 234.2788, z: 0}
+        - {x: 183.85455, y: 245.1394, z: 0}
+        - {x: 192, y: 256, z: 0}
+        - {x: 186.94737, y: 249.26315, z: 0}
+        - {x: 181.89473, y: 242.52632, z: 0}
+        - {x: 176.8421, y: 235.78947, z: 0}
+        - {x: 171.78947, y: 229.05263, z: 0}
+        - {x: 166.73685, y: 222.3158, z: 0}
+        - {x: 161.6842, y: 215.57895, z: 0}
+        - {x: 156.63158, y: 208.8421, z: 0}
+        - {x: 151.57895, y: 202.10526, z: 0}
+        - {x: 146.52632, y: 195.36842, z: 0}
+        - {x: 141.47368, y: 188.63158, z: 0}
+        - {x: 136.42105, y: 181.89474, z: 0}
+        - {x: 131.36842, y: 175.1579, z: 0}
+        - {x: 126.31579, y: 168.42105, z: 0}
+        - {x: 121.26316, y: 161.6842, z: 0}
+        - {x: 116.210526, y: 154.94736, z: 0}
+        - {x: 111.1579, y: 148.21053, z: 0}
+        - {x: 106.10526, y: 141.4737, z: 0}
+        - {x: 101.05263, y: 134.73685, z: 0}
+        - {x: 96, y: 128, z: 0}
+        - {x: 90.947365, y: 121.26315, z: 0}
+        - {x: 85.894745, y: 114.52632, z: 0}
+        - {x: 80.8421, y: 107.789474, z: 0}
+        - {x: 75.789474, y: 101.05263, z: 0}
+        - {x: 70.73685, y: 94.315796, z: 0}
+        - {x: 65.68421, y: 87.57895, z: 0}
+        - {x: 60.631577, y: 80.8421, z: 0}
+        - {x: 55.578953, y: 74.10527, z: 0}
+        - {x: 50.526318, y: 67.36842, z: 0}
+        - {x: 45.473682, y: 60.631577, z: 0}
+        - {x: 40.421047, y: 53.89473, z: 0}
+        - {x: 35.368423, y: 47.157898, z: 0}
+        - {x: 30.315788, y: 40.42105, z: 0}
+        - {x: 25.263153, y: 33.684204, z: 0}
+        - {x: 20.21053, y: 26.947372, z: 0}
+        - {x: 15.157894, y: 20.210526, z: 0}
+        - {x: 10.105259, y: 13.473679, z: 0}
+        - {x: 5.052635, y: 6.736847, z: 0}
+        - {x: 0, y: 0, z: 0}
+        - {x: 9.813334, y: 13.084445, z: 0}
+        - {x: 19.626669, y: 26.16889, z: 0}
+        - {x: 29.440002, y: 39.253338, z: 0}
+        - {x: 39.253338, y: 52.33778, z: 0}
+        - {x: 49.06667, y: 65.422226, z: 0}
+        - {x: 58.880005, y: 78.506676, z: 0}
+        - {x: 68.69334, y: 91.59112, z: 0}
+        - {x: 78.506676, y: 104.67556, z: 0}
+        - {x: 88.32, y: 117.76, z: 0}
+        - {x: 98.13334, y: 130.84445, z: 0}
+      Rotation:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800320019003380190034001a0035801a0036001b0037801b0038001c0039801c003a001d003b801d00
+        TableValue:
+        - {x: 0, y: 0, z: -6.0681844}
+        - {x: 0, y: 0, z: -14.623854}
+        - {x: 0, y: 0, z: -23.179523}
+        - {x: 0, y: 0, z: -31.735191}
+        - {x: 0, y: 0, z: -40.29086}
+        - {x: 0, y: 0, z: -48.84653}
+        - {x: 0, y: 0, z: -57.4022}
+        - {x: 0, y: 0, z: -65.95786}
+        - {x: 0, y: 0, z: -74.513535}
+        - {x: 0, y: 0, z: -83.06921}
+        - {x: 0, y: 0, z: -91.62488}
+        - {x: 0, y: 0, z: -100.18054}
+        - {x: 0, y: 0, z: -94.87345}
+        - {x: 0, y: 0, z: -89.56637}
+        - {x: 0, y: 0, z: -84.25928}
+        - {x: 0, y: 0, z: -78.95219}
+        - {x: 0, y: 0, z: -73.6451}
+        - {x: 0, y: 0, z: -68.33801}
+        - {x: 0, y: 0, z: -63.030926}
+        - {x: 0, y: 0, z: -57.723835}
+        - {x: 0, y: 0, z: -52.416748}
+        - {x: 0, y: 0, z: -47.109657}
+        - {x: 0, y: 0, z: -41.802574}
+        - {x: 0, y: 0, z: -36.495487}
+        - {x: 0, y: 0, z: -31.188395}
+        - {x: 0, y: 0, z: -25.88131}
+        - {x: 0, y: 0, z: -20.574217}
+        - {x: 0, y: 0, z: -15.267131}
+        - {x: 0, y: 0, z: -9.960045}
+        - {x: 0, y: 0, z: -4.652953}
+        - {x: 0, y: 0, z: 0.65413284}
+        - {x: 0, y: 0, z: 5.9612246}
+        - {x: 0, y: 0, z: 11.268305}
+        - {x: 0, y: 0, z: 16.575397}
+        - {x: 0, y: 0, z: 21.882488}
+        - {x: 0, y: 0, z: 27.18957}
+        - {x: 0, y: 0, z: 32.496662}
+        - {x: 0, y: 0, z: 37.803753}
+        - {x: 0, y: 0, z: 43.110832}
+        - {x: 0, y: 0, z: 48.417923}
+        - {x: 0, y: 0, z: 53.725018}
+        - {x: 0, y: 0, z: 59.03211}
+        - {x: 0, y: 0, z: 64.33919}
+        - {x: 0, y: 0, z: 69.64628}
+        - {x: 0, y: 0, z: 74.95337}
+        - {x: 0, y: 0, z: 80.26045}
+        - {x: 0, y: 0, z: 85.56754}
+        - {x: 0, y: 0, z: 90.87463}
+        - {x: 0, y: 0, z: 96.18172}
+        - {x: 0, y: 0, z: 101.48881}
+        - {x: 0, y: 0, z: 91.18126}
+        - {x: 0, y: 0, z: 80.87372}
+        - {x: 0, y: 0, z: 70.56617}
+        - {x: 0, y: 0, z: 60.258625}
+        - {x: 0, y: 0, z: 49.95108}
+        - {x: 0, y: 0, z: 39.643536}
+        - {x: 0, y: 0, z: 29.335993}
+        - {x: 0, y: 0, z: 19.028446}
+        - {x: 0, y: 0, z: 8.720904}
+        - {x: 0, y: 0, z: -1.5866436}
+      Scaling:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800320019003380190034001a0035801a0036001b0037801b0038001c0039801c003a001d003b801d00
+        TableValue:
+        - {x: 1.5666667, y: 1.5666667}
+        - {x: 1.6515152, y: 1.6515152}
+        - {x: 1.7363636, y: 1.7363636}
+        - {x: 1.8212122, y: 1.8212122}
+        - {x: 1.9060607, y: 1.9060607}
+        - {x: 1.9909091, y: 1.9909091}
+        - {x: 2.0757575, y: 2.0757575}
+        - {x: 2.1606061, y: 2.1606061}
+        - {x: 2.2454545, y: 2.2454545}
+        - {x: 2.330303, y: 2.330303}
+        - {x: 2.4151516, y: 2.4151516}
+        - {x: 2.5, y: 2.5}
+        - {x: 2.4473684, y: 2.4473684}
+        - {x: 2.3947368, y: 2.3947368}
+        - {x: 2.3421054, y: 2.3421054}
+        - {x: 2.2894738, y: 2.2894738}
+        - {x: 2.2368422, y: 2.2368422}
+        - {x: 2.1842105, y: 2.1842105}
+        - {x: 2.131579, y: 2.131579}
+        - {x: 2.0789473, y: 2.0789473}
+        - {x: 2.0263157, y: 2.0263157}
+        - {x: 1.9736842, y: 1.9736842}
+        - {x: 1.9210527, y: 1.9210527}
+        - {x: 1.8684211, y: 1.8684211}
+        - {x: 1.8157895, y: 1.8157895}
+        - {x: 1.7631578, y: 1.7631578}
+        - {x: 1.7105262, y: 1.7105262}
+        - {x: 1.6578947, y: 1.6578947}
+        - {x: 1.6052632, y: 1.6052632}
+        - {x: 1.5526316, y: 1.5526316}
+        - {x: 1.5, y: 1.5}
+        - {x: 1.4473684, y: 1.4473684}
+        - {x: 1.3947369, y: 1.3947369}
+        - {x: 1.3421053, y: 1.3421053}
+        - {x: 1.2894737, y: 1.2894737}
+        - {x: 1.2368422, y: 1.2368422}
+        - {x: 1.1842105, y: 1.1842105}
+        - {x: 1.1315789, y: 1.1315789}
+        - {x: 1.0789474, y: 1.0789474}
+        - {x: 1.0263158, y: 1.0263158}
+        - {x: 0.9736842, y: 0.9736842}
+        - {x: 0.9210526, y: 0.9210526}
+        - {x: 0.8684211, y: 0.8684211}
+        - {x: 0.81578946, y: 0.81578946}
+        - {x: 0.76315784, y: 0.76315784}
+        - {x: 0.71052635, y: 0.71052635}
+        - {x: 0.65789473, y: 0.65789473}
+        - {x: 0.6052631, y: 0.6052631}
+        - {x: 0.5526316, y: 0.5526316}
+        - {x: 0.5, y: 0.5}
+        - {x: 0.6022222, y: 0.6022222}
+        - {x: 0.70444447, y: 0.70444447}
+        - {x: 0.8066667, y: 0.8066667}
+        - {x: 0.90888894, y: 0.90888894}
+        - {x: 1.0111111, y: 1.0111111}
+        - {x: 1.1133333, y: 1.1133333}
+        - {x: 1.2155555, y: 1.2155555}
+        - {x: 1.3177779, y: 1.3177779}
+        - {x: 1.4200001, y: 1.4200001}
+        - {x: 1.5222223, y: 1.5222223}
+      ScalingLocal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RateOpacity:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 0000000005800000060001000780010008000200098002000a0003000b800300320004003380040034000500358005003600060037000000
+        TableValue:
+        - 0.5
+        - 0.42857143
+        - 0.35714287
+        - 0.28571427
+        - 0.2142857
+        - 0.14285713
+        - 0.07142857
+        - 0
+        - 0.083333336
+        - 0.16666667
+        - 0.25
+        - 0.33333334
+        - 0.41666666
+      Priority:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: 
+      PartsColor:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0.7529412, b: 1, a: 0.5882353}
+          - {r: 0, g: 0.7529412, b: 1, a: 0.5882353}
+          - {r: 0, g: 0.7529412, b: 1, a: 0.5882353}
+          - {r: 0, g: 0.7529412, b: 1, a: 0.5882353}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+      VertexCorrection:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      OffsetPivot:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionAnchor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      SizeForce:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RotationTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RadiusCollision:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      UserData:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Instance:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Effect:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Deform:
+        TypePack: 3
+        TableCodeValue:
+        - TableCode: 
+        TableValue: []
+        CountVertexMesh: 0
+        TableIndexVertex: 
+      Shader:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Signal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+    - StatusParts: 1075625984
+      Status:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1090519039
+      Cell:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Position:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 0, y: 0, z: 0}
+      Rotation:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800320019003380190034001a0035801a0036001b0037801b0038001c0039801c003a001d003b801d00
+        TableValue:
+        - {x: 0, y: 0, z: 65.06667}
+        - {x: 0, y: 0, z: 67.91334}
+        - {x: 0, y: 0, z: 70.76001}
+        - {x: 0, y: 0, z: 73.606674}
+        - {x: 0, y: 0, z: 76.45334}
+        - {x: 0, y: 0, z: 79.3}
+        - {x: 0, y: 0, z: 82.146675}
+        - {x: 0, y: 0, z: 84.99334}
+        - {x: 0, y: 0, z: 87.840004}
+        - {x: 0, y: 0, z: 90.68667}
+        - {x: 0, y: 0, z: 93.53334}
+        - {x: 0, y: 0, z: 96.380005}
+        - {x: 0, y: 0, z: 99.22667}
+        - {x: 0, y: 0, z: 102.07333}
+        - {x: 0, y: 0, z: 104.92}
+        - {x: 0, y: 0, z: 107.76667}
+        - {x: 0, y: 0, z: 110.613335}
+        - {x: 0, y: 0, z: 113.46}
+        - {x: 0, y: 0, z: 116.30666}
+        - {x: 0, y: 0, z: 119.153336}
+        - {x: 0, y: 0, z: 122}
+        - {x: 0, y: 0, z: 114.375}
+        - {x: 0, y: 0, z: 106.75}
+        - {x: 0, y: 0, z: 99.125}
+        - {x: 0, y: 0, z: 91.5}
+        - {x: 0, y: 0, z: 83.875}
+        - {x: 0, y: 0, z: 76.25}
+        - {x: 0, y: 0, z: 68.625}
+        - {x: 0, y: 0, z: 61}
+        - {x: 0, y: 0, z: 53.375}
+        - {x: 0, y: 0, z: 45.75}
+        - {x: 0, y: 0, z: 38.125}
+        - {x: 0, y: 0, z: 30.5}
+        - {x: 0, y: 0, z: 22.875}
+        - {x: 0, y: 0, z: 15.25}
+        - {x: 0, y: 0, z: 7.625}
+        - {x: 0, y: 0, z: 0}
+        - {x: 0, y: 0, z: 2.7111113}
+        - {x: 0, y: 0, z: 5.4222226}
+        - {x: 0, y: 0, z: 8.133334}
+        - {x: 0, y: 0, z: 10.844445}
+        - {x: 0, y: 0, z: 13.555556}
+        - {x: 0, y: 0, z: 16.266668}
+        - {x: 0, y: 0, z: 18.977777}
+        - {x: 0, y: 0, z: 21.68889}
+        - {x: 0, y: 0, z: 24.400002}
+        - {x: 0, y: 0, z: 27.111113}
+        - {x: 0, y: 0, z: 29.822226}
+        - {x: 0, y: 0, z: 32.533337}
+        - {x: 0, y: 0, z: 35.244446}
+        - {x: 0, y: 0, z: 37.955555}
+        - {x: 0, y: 0, z: 40.66667}
+        - {x: 0, y: 0, z: 43.37778}
+        - {x: 0, y: 0, z: 46.088894}
+        - {x: 0, y: 0, z: 48.800003}
+        - {x: 0, y: 0, z: 51.511112}
+        - {x: 0, y: 0, z: 54.222225}
+        - {x: 0, y: 0, z: 56.93334}
+        - {x: 0, y: 0, z: 59.64445}
+        - {x: 0, y: 0, z: 62.35556}
+      Scaling:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 1, y: 1}
+      ScalingLocal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RateOpacity:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - 1
+      Priority:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: 
+      PartsColor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      VertexCorrection:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      OffsetPivot:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionAnchor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      SizeForce:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RotationTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RadiusCollision:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      UserData:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Instance:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Effect:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Deform:
+        TypePack: 3
+        TableCodeValue:
+        - TableCode: 
+        TableValue: []
+        CountVertexMesh: 0
+        TableIndexVertex: 
+      Shader:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Signal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+    - StatusParts: 1075363840
+      Status:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1090514954
+      Cell:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - IndexCellMap: 0
+          IndexCell: 82
+      Position:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800320019003380190034001a0035801a0036001b0037801b0038001c0039801c003a001d003b801d00
+        TableValue:
+        - {x: 102.40001, y: 136.53334, z: 0}
+        - {x: 106.88001, y: 142.50667, z: 0}
+        - {x: 111.36001, y: 148.48001, z: 0}
+        - {x: 115.84001, y: 154.45334, z: 0}
+        - {x: 120.32001, y: 160.42667, z: 0}
+        - {x: 124.8, y: 166.40001, z: 0}
+        - {x: 129.28001, y: 172.37334, z: 0}
+        - {x: 133.76001, y: 178.34666, z: 0}
+        - {x: 138.24, y: 184.32, z: 0}
+        - {x: 142.72, y: 190.29333, z: 0}
+        - {x: 147.20001, y: 196.26666, z: 0}
+        - {x: 151.68001, y: 202.24, z: 0}
+        - {x: 156.16, y: 208.21333, z: 0}
+        - {x: 160.64, y: 214.18666, z: 0}
+        - {x: 165.12, y: 220.16, z: 0}
+        - {x: 169.6, y: 226.13333, z: 0}
+        - {x: 174.08, y: 232.10667, z: 0}
+        - {x: 178.56, y: 238.08, z: 0}
+        - {x: 183.04, y: 244.05333, z: 0}
+        - {x: 187.52, y: 250.02667, z: 0}
+        - {x: 192, y: 256, z: 0}
+        - {x: 180, y: 240, z: 0}
+        - {x: 168, y: 224, z: 0}
+        - {x: 156, y: 208, z: 0}
+        - {x: 144, y: 192, z: 0}
+        - {x: 132, y: 176, z: 0}
+        - {x: 120, y: 160, z: 0}
+        - {x: 108, y: 144, z: 0}
+        - {x: 96, y: 128, z: 0}
+        - {x: 84, y: 112, z: 0}
+        - {x: 72, y: 96, z: 0}
+        - {x: 60, y: 80, z: 0}
+        - {x: 48, y: 64, z: 0}
+        - {x: 36, y: 48, z: 0}
+        - {x: 24, y: 32, z: 0}
+        - {x: 12, y: 16, z: 0}
+        - {x: 0, y: 0, z: 0}
+        - {x: 4.266667, y: 5.6888895, z: 0}
+        - {x: 8.533334, y: 11.377779, z: 0}
+        - {x: 12.8, y: 17.066668, z: 0}
+        - {x: 17.066668, y: 22.755558, z: 0}
+        - {x: 21.333334, y: 28.444445, z: 0}
+        - {x: 25.6, y: 34.133335, z: 0}
+        - {x: 29.866667, y: 39.822224, z: 0}
+        - {x: 34.133335, y: 45.511116, z: 0}
+        - {x: 38.4, y: 51.2, z: 0}
+        - {x: 42.666668, y: 56.88889, z: 0}
+        - {x: 46.93334, y: 62.57778, z: 0}
+        - {x: 51.2, y: 68.26667, z: 0}
+        - {x: 55.466667, y: 73.95556, z: 0}
+        - {x: 59.733334, y: 79.64445, z: 0}
+        - {x: 64.00001, y: 85.33334, z: 0}
+        - {x: 68.26667, y: 91.02223, z: 0}
+        - {x: 72.53334, y: 96.71112, z: 0}
+        - {x: 76.8, y: 102.4, z: 0}
+        - {x: 81.06667, y: 108.08889, z: 0}
+        - {x: 85.333336, y: 113.77778, z: 0}
+        - {x: 89.600006, y: 119.466675, z: 0}
+        - {x: 93.86668, y: 125.15556, z: 0}
+        - {x: 98.13334, y: 130.84445, z: 0}
+      Rotation:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800320019003380190034001a0035801a0036001b0037801b0038001c0039801c003a001d003b801d00
+        TableValue:
+        - {x: 0, y: 0, z: 237.66516}
+        - {x: 0, y: 0, z: 243.62288}
+        - {x: 0, y: 0, z: 249.5806}
+        - {x: 0, y: 0, z: 255.5383}
+        - {x: 0, y: 0, z: 261.49603}
+        - {x: 0, y: 0, z: 267.45374}
+        - {x: 0, y: 0, z: 273.41144}
+        - {x: 0, y: 0, z: 279.36917}
+        - {x: 0, y: 0, z: 285.32687}
+        - {x: 0, y: 0, z: 291.2846}
+        - {x: 0, y: 0, z: 297.2423}
+        - {x: 0, y: 0, z: 303.2}
+        - {x: 0, y: 0, z: 309.15775}
+        - {x: 0, y: 0, z: 315.11545}
+        - {x: 0, y: 0, z: 321.07318}
+        - {x: 0, y: 0, z: 327.03088}
+        - {x: 0, y: 0, z: 332.9886}
+        - {x: 0, y: 0, z: 338.94632}
+        - {x: 0, y: 0, z: 344.90402}
+        - {x: 0, y: 0, z: 350.86176}
+        - {x: 0, y: 0, z: 356.81946}
+        - {x: 0, y: 0, z: 340.8613}
+        - {x: 0, y: 0, z: 324.90314}
+        - {x: 0, y: 0, z: 308.94495}
+        - {x: 0, y: 0, z: 292.9868}
+        - {x: 0, y: 0, z: 277.02863}
+        - {x: 0, y: 0, z: 261.07047}
+        - {x: 0, y: 0, z: 245.1123}
+        - {x: 0, y: 0, z: 229.15413}
+        - {x: 0, y: 0, z: 213.19597}
+        - {x: 0, y: 0, z: 197.23781}
+        - {x: 0, y: 0, z: 181.27963}
+        - {x: 0, y: 0, z: 165.32147}
+        - {x: 0, y: 0, z: 149.36331}
+        - {x: 0, y: 0, z: 133.40514}
+        - {x: 0, y: 0, z: 117.446976}
+        - {x: 0, y: 0, z: 101.48881}
+        - {x: 0, y: 0, z: 107.16282}
+        - {x: 0, y: 0, z: 112.83684}
+        - {x: 0, y: 0, z: 118.51085}
+        - {x: 0, y: 0, z: 124.18487}
+        - {x: 0, y: 0, z: 129.85889}
+        - {x: 0, y: 0, z: 135.5329}
+        - {x: 0, y: 0, z: 141.20691}
+        - {x: 0, y: 0, z: 146.88092}
+        - {x: 0, y: 0, z: 152.55495}
+        - {x: 0, y: 0, z: 158.22896}
+        - {x: 0, y: 0, z: 163.90297}
+        - {x: 0, y: 0, z: 169.57698}
+        - {x: 0, y: 0, z: 175.25099}
+        - {x: 0, y: 0, z: 180.92502}
+        - {x: 0, y: 0, z: 186.59903}
+        - {x: 0, y: 0, z: 192.27304}
+        - {x: 0, y: 0, z: 197.94707}
+        - {x: 0, y: 0, z: 203.62108}
+        - {x: 0, y: 0, z: 209.29509}
+        - {x: 0, y: 0, z: 214.9691}
+        - {x: 0, y: 0, z: 220.64313}
+        - {x: 0, y: 0, z: 226.31714}
+        - {x: 0, y: 0, z: 231.99115}
+      Scaling:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800320019003380190034001a0035801a0036001b0037801b0038001c0039801c003a001d003b801d00
+        TableValue:
+        - {x: 2.3666668, y: 2.3666668}
+        - {x: 2.4483335, y: 2.4483335}
+        - {x: 2.5300002, y: 2.5300002}
+        - {x: 2.6116667, y: 2.6116667}
+        - {x: 2.6933334, y: 2.6933334}
+        - {x: 2.775, y: 2.775}
+        - {x: 2.8566668, y: 2.8566668}
+        - {x: 2.9383335, y: 2.9383335}
+        - {x: 3.02, y: 3.02}
+        - {x: 3.1016667, y: 3.1016667}
+        - {x: 3.1833334, y: 3.1833334}
+        - {x: 3.265, y: 3.265}
+        - {x: 3.3466668, y: 3.3466668}
+        - {x: 3.4283333, y: 3.4283333}
+        - {x: 3.51, y: 3.51}
+        - {x: 3.5916667, y: 3.5916667}
+        - {x: 3.6733334, y: 3.6733334}
+        - {x: 3.755, y: 3.755}
+        - {x: 3.8366666, y: 3.8366666}
+        - {x: 3.9183333, y: 3.9183333}
+        - {x: 4, y: 4}
+        - {x: 3.78125, y: 3.78125}
+        - {x: 3.5625, y: 3.5625}
+        - {x: 3.34375, y: 3.34375}
+        - {x: 3.125, y: 3.125}
+        - {x: 2.90625, y: 2.90625}
+        - {x: 2.6875, y: 2.6875}
+        - {x: 2.46875, y: 2.46875}
+        - {x: 2.25, y: 2.25}
+        - {x: 2.03125, y: 2.03125}
+        - {x: 1.8125, y: 1.8125}
+        - {x: 1.59375, y: 1.59375}
+        - {x: 1.375, y: 1.375}
+        - {x: 1.15625, y: 1.15625}
+        - {x: 0.9375, y: 0.9375}
+        - {x: 0.71875, y: 0.71875}
+        - {x: 0.5, y: 0.5}
+        - {x: 0.5777778, y: 0.5777778}
+        - {x: 0.65555555, y: 0.65555555}
+        - {x: 0.73333335, y: 0.73333335}
+        - {x: 0.81111115, y: 0.81111115}
+        - {x: 0.8888889, y: 0.8888889}
+        - {x: 0.9666667, y: 0.9666667}
+        - {x: 1.0444444, y: 1.0444444}
+        - {x: 1.1222223, y: 1.1222223}
+        - {x: 1.2, y: 1.2}
+        - {x: 1.2777778, y: 1.2777778}
+        - {x: 1.3555555, y: 1.3555555}
+        - {x: 1.4333334, y: 1.4333334}
+        - {x: 1.5111111, y: 1.5111111}
+        - {x: 1.5888889, y: 1.5888889}
+        - {x: 1.6666667, y: 1.6666667}
+        - {x: 1.7444445, y: 1.7444445}
+        - {x: 1.8222222, y: 1.8222222}
+        - {x: 1.9, y: 1.9}
+        - {x: 1.9777778, y: 1.9777778}
+        - {x: 2.0555556, y: 2.0555556}
+        - {x: 2.1333334, y: 2.1333334}
+        - {x: 2.211111, y: 2.211111}
+        - {x: 2.288889, y: 2.288889}
+      ScalingLocal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RateOpacity:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000a8000000b0001000c8001000d0002000e8002000f000300108003001100040012800400130005001480050025000600268006002700070028800700290008002a000000
+        TableValue:
+        - 0.5
+        - 0.45454544
+        - 0.4090909
+        - 0.36363637
+        - 0.3181818
+        - 0.27272725
+        - 0.22727272
+        - 0.18181819
+        - 0.13636363
+        - 0.09090909
+        - 0.045454532
+        - 0
+        - 0.083333336
+        - 0.16666667
+        - 0.25
+        - 0.33333334
+        - 0.41666666
+      Priority:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: 
+      PartsColor:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0.7529412, b: 1, a: 0.5882353}
+          - {r: 0, g: 0.7529412, b: 1, a: 0.5882353}
+          - {r: 0, g: 0.7529412, b: 1, a: 0.5882353}
+          - {r: 0, g: 0.7529412, b: 1, a: 0.5882353}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+      VertexCorrection:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      OffsetPivot:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionAnchor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      SizeForce:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RotationTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RadiusCollision:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      UserData:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Instance:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Effect:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Deform:
+        TypePack: 3
+        TableCodeValue:
+        - TableCode: 
+        TableValue: []
+        CountVertexMesh: 0
+        TableIndexVertex: 
+      Shader:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Signal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+    - StatusParts: 1075625984
+      Status:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1090519039
+      Cell:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Position:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 0, y: 0, z: 0}
+      Rotation:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800320019003380190034001a0035801a0036001b0037801b0038001c0039801c003a001d003b801d00
+        TableValue:
+        - {x: 0, y: 0, z: 81.600006}
+        - {x: 0, y: 0, z: 85.170006}
+        - {x: 0, y: 0, z: 88.740005}
+        - {x: 0, y: 0, z: 92.310005}
+        - {x: 0, y: 0, z: 95.880005}
+        - {x: 0, y: 0, z: 99.450005}
+        - {x: 0, y: 0, z: 103.020004}
+        - {x: 0, y: 0, z: 106.590004}
+        - {x: 0, y: 0, z: 110.16}
+        - {x: 0, y: 0, z: 113.73}
+        - {x: 0, y: 0, z: 117.3}
+        - {x: 0, y: 0, z: 120.87}
+        - {x: 0, y: 0, z: 124.44}
+        - {x: 0, y: 0, z: 128.01}
+        - {x: 0, y: 0, z: 131.58}
+        - {x: 0, y: 0, z: 135.15}
+        - {x: 0, y: 0, z: 138.72}
+        - {x: 0, y: 0, z: 142.29001}
+        - {x: 0, y: 0, z: 145.86}
+        - {x: 0, y: 0, z: 149.43}
+        - {x: 0, y: 0, z: 153}
+        - {x: 0, y: 0, z: 143.4375}
+        - {x: 0, y: 0, z: 133.875}
+        - {x: 0, y: 0, z: 124.3125}
+        - {x: 0, y: 0, z: 114.75}
+        - {x: 0, y: 0, z: 105.1875}
+        - {x: 0, y: 0, z: 95.625}
+        - {x: 0, y: 0, z: 86.0625}
+        - {x: 0, y: 0, z: 76.5}
+        - {x: 0, y: 0, z: 66.9375}
+        - {x: 0, y: 0, z: 57.375}
+        - {x: 0, y: 0, z: 47.8125}
+        - {x: 0, y: 0, z: 38.25}
+        - {x: 0, y: 0, z: 28.6875}
+        - {x: 0, y: 0, z: 19.125}
+        - {x: 0, y: 0, z: 9.5625}
+        - {x: 0, y: 0, z: 0}
+        - {x: 0, y: 0, z: 3.4000003}
+        - {x: 0, y: 0, z: 6.8000007}
+        - {x: 0, y: 0, z: 10.200001}
+        - {x: 0, y: 0, z: 13.600001}
+        - {x: 0, y: 0, z: 17}
+        - {x: 0, y: 0, z: 20.400002}
+        - {x: 0, y: 0, z: 23.800001}
+        - {x: 0, y: 0, z: 27.200003}
+        - {x: 0, y: 0, z: 30.600002}
+        - {x: 0, y: 0, z: 34}
+        - {x: 0, y: 0, z: 37.4}
+        - {x: 0, y: 0, z: 40.800003}
+        - {x: 0, y: 0, z: 44.2}
+        - {x: 0, y: 0, z: 47.600002}
+        - {x: 0, y: 0, z: 51.000004}
+        - {x: 0, y: 0, z: 54.400005}
+        - {x: 0, y: 0, z: 57.800003}
+        - {x: 0, y: 0, z: 61.200005}
+        - {x: 0, y: 0, z: 64.600006}
+        - {x: 0, y: 0, z: 68}
+        - {x: 0, y: 0, z: 71.40001}
+        - {x: 0, y: 0, z: 74.8}
+        - {x: 0, y: 0, z: 78.200005}
+      Scaling:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 1, y: 1}
+      ScalingLocal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RateOpacity:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - 1
+      Priority:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: 
+      PartsColor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      VertexCorrection:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      OffsetPivot:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionAnchor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      SizeForce:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RotationTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RadiusCollision:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      UserData:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Instance:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Effect:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Deform:
+        TypePack: 3
+        TableCodeValue:
+        - TableCode: 
+        TableValue: []
+        CountVertexMesh: 0
+        TableIndexVertex: 
+      Shader:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Signal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+    - StatusParts: 1075363840
+      Status:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1090514956
+      Cell:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - IndexCellMap: 0
+          IndexCell: 82
+      Position:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800320019003380190034001a0035801a0036001b0037801b0038001c0039801c003a001d003b801d00
+        TableValue:
+        - {x: 102.40001, y: 136.53334, z: 0}
+        - {x: 106.88001, y: 142.50667, z: 0}
+        - {x: 111.36001, y: 148.48001, z: 0}
+        - {x: 115.84001, y: 154.45334, z: 0}
+        - {x: 120.32001, y: 160.42667, z: 0}
+        - {x: 124.8, y: 166.40001, z: 0}
+        - {x: 129.28001, y: 172.37334, z: 0}
+        - {x: 133.76001, y: 178.34666, z: 0}
+        - {x: 138.24, y: 184.32, z: 0}
+        - {x: 142.72, y: 190.29333, z: 0}
+        - {x: 147.20001, y: 196.26666, z: 0}
+        - {x: 151.68001, y: 202.24, z: 0}
+        - {x: 156.16, y: 208.21333, z: 0}
+        - {x: 160.64, y: 214.18666, z: 0}
+        - {x: 165.12, y: 220.16, z: 0}
+        - {x: 169.6, y: 226.13333, z: 0}
+        - {x: 174.08, y: 232.10667, z: 0}
+        - {x: 178.56, y: 238.08, z: 0}
+        - {x: 183.04, y: 244.05333, z: 0}
+        - {x: 187.52, y: 250.02667, z: 0}
+        - {x: 192, y: 256, z: 0}
+        - {x: 180, y: 240, z: 0}
+        - {x: 168, y: 224, z: 0}
+        - {x: 156, y: 208, z: 0}
+        - {x: 144, y: 192, z: 0}
+        - {x: 132, y: 176, z: 0}
+        - {x: 120, y: 160, z: 0}
+        - {x: 108, y: 144, z: 0}
+        - {x: 96, y: 128, z: 0}
+        - {x: 84, y: 112, z: 0}
+        - {x: 72, y: 96, z: 0}
+        - {x: 60, y: 80, z: 0}
+        - {x: 48, y: 64, z: 0}
+        - {x: 36, y: 48, z: 0}
+        - {x: 24, y: 32, z: 0}
+        - {x: 12, y: 16, z: 0}
+        - {x: 0, y: 0, z: 0}
+        - {x: 4.266667, y: 5.6888895, z: 0}
+        - {x: 8.533334, y: 11.377779, z: 0}
+        - {x: 12.8, y: 17.066668, z: 0}
+        - {x: 17.066668, y: 22.755558, z: 0}
+        - {x: 21.333334, y: 28.444445, z: 0}
+        - {x: 25.6, y: 34.133335, z: 0}
+        - {x: 29.866667, y: 39.822224, z: 0}
+        - {x: 34.133335, y: 45.511116, z: 0}
+        - {x: 38.4, y: 51.2, z: 0}
+        - {x: 42.666668, y: 56.88889, z: 0}
+        - {x: 46.93334, y: 62.57778, z: 0}
+        - {x: 51.2, y: 68.26667, z: 0}
+        - {x: 55.466667, y: 73.95556, z: 0}
+        - {x: 59.733334, y: 79.64445, z: 0}
+        - {x: 64.00001, y: 85.33334, z: 0}
+        - {x: 68.26667, y: 91.02223, z: 0}
+        - {x: 72.53334, y: 96.71112, z: 0}
+        - {x: 76.8, y: 102.4, z: 0}
+        - {x: 81.06667, y: 108.08889, z: 0}
+        - {x: 85.333336, y: 113.77778, z: 0}
+        - {x: 89.600006, y: 119.466675, z: 0}
+        - {x: 93.86668, y: 125.15556, z: 0}
+        - {x: 98.13334, y: 130.84445, z: 0}
+      Rotation:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800320019003380190034001a0035801a0036001b0037801b0038001c0039801c003a001d003b801d00
+        TableValue:
+        - {x: 0, y: 0, z: 237.66516}
+        - {x: 0, y: 0, z: 243.62288}
+        - {x: 0, y: 0, z: 249.5806}
+        - {x: 0, y: 0, z: 255.5383}
+        - {x: 0, y: 0, z: 261.49603}
+        - {x: 0, y: 0, z: 267.45374}
+        - {x: 0, y: 0, z: 273.41144}
+        - {x: 0, y: 0, z: 279.36917}
+        - {x: 0, y: 0, z: 285.32687}
+        - {x: 0, y: 0, z: 291.2846}
+        - {x: 0, y: 0, z: 297.2423}
+        - {x: 0, y: 0, z: 303.2}
+        - {x: 0, y: 0, z: 309.15775}
+        - {x: 0, y: 0, z: 315.11545}
+        - {x: 0, y: 0, z: 321.07318}
+        - {x: 0, y: 0, z: 327.03088}
+        - {x: 0, y: 0, z: 332.9886}
+        - {x: 0, y: 0, z: 338.94632}
+        - {x: 0, y: 0, z: 344.90402}
+        - {x: 0, y: 0, z: 350.86176}
+        - {x: 0, y: 0, z: 356.81946}
+        - {x: 0, y: 0, z: 340.8613}
+        - {x: 0, y: 0, z: 324.90314}
+        - {x: 0, y: 0, z: 308.94495}
+        - {x: 0, y: 0, z: 292.9868}
+        - {x: 0, y: 0, z: 277.02863}
+        - {x: 0, y: 0, z: 261.07047}
+        - {x: 0, y: 0, z: 245.1123}
+        - {x: 0, y: 0, z: 229.15413}
+        - {x: 0, y: 0, z: 213.19597}
+        - {x: 0, y: 0, z: 197.23781}
+        - {x: 0, y: 0, z: 181.27963}
+        - {x: 0, y: 0, z: 165.32147}
+        - {x: 0, y: 0, z: 149.36331}
+        - {x: 0, y: 0, z: 133.40514}
+        - {x: 0, y: 0, z: 117.446976}
+        - {x: 0, y: 0, z: 101.48881}
+        - {x: 0, y: 0, z: 107.16282}
+        - {x: 0, y: 0, z: 112.83684}
+        - {x: 0, y: 0, z: 118.51085}
+        - {x: 0, y: 0, z: 124.18487}
+        - {x: 0, y: 0, z: 129.85889}
+        - {x: 0, y: 0, z: 135.5329}
+        - {x: 0, y: 0, z: 141.20691}
+        - {x: 0, y: 0, z: 146.88092}
+        - {x: 0, y: 0, z: 152.55495}
+        - {x: 0, y: 0, z: 158.22896}
+        - {x: 0, y: 0, z: 163.90297}
+        - {x: 0, y: 0, z: 169.57698}
+        - {x: 0, y: 0, z: 175.25099}
+        - {x: 0, y: 0, z: 180.92502}
+        - {x: 0, y: 0, z: 186.59903}
+        - {x: 0, y: 0, z: 192.27304}
+        - {x: 0, y: 0, z: 197.94707}
+        - {x: 0, y: 0, z: 203.62108}
+        - {x: 0, y: 0, z: 209.29509}
+        - {x: 0, y: 0, z: 214.9691}
+        - {x: 0, y: 0, z: 220.64313}
+        - {x: 0, y: 0, z: 226.31714}
+        - {x: 0, y: 0, z: 231.99115}
+      Scaling:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800320019003380190034001a0035801a0036001b0037801b0038001c0039801c003a001d003b801d00
+        TableValue:
+        - {x: 1.8333334, y: 1.8333334}
+        - {x: 1.8916667, y: 1.8916667}
+        - {x: 1.95, y: 1.95}
+        - {x: 2.0083334, y: 2.0083334}
+        - {x: 2.0666666, y: 2.0666666}
+        - {x: 2.125, y: 2.125}
+        - {x: 2.1833334, y: 2.1833334}
+        - {x: 2.2416668, y: 2.2416668}
+        - {x: 2.3, y: 2.3}
+        - {x: 2.3583333, y: 2.3583333}
+        - {x: 2.4166667, y: 2.4166667}
+        - {x: 2.4750001, y: 2.4750001}
+        - {x: 2.5333333, y: 2.5333333}
+        - {x: 2.5916667, y: 2.5916667}
+        - {x: 2.65, y: 2.65}
+        - {x: 2.7083333, y: 2.7083333}
+        - {x: 2.7666667, y: 2.7666667}
+        - {x: 2.825, y: 2.825}
+        - {x: 2.8833332, y: 2.8833332}
+        - {x: 2.9416666, y: 2.9416666}
+        - {x: 3, y: 3}
+        - {x: 2.84375, y: 2.84375}
+        - {x: 2.6875, y: 2.6875}
+        - {x: 2.53125, y: 2.53125}
+        - {x: 2.375, y: 2.375}
+        - {x: 2.21875, y: 2.21875}
+        - {x: 2.0625, y: 2.0625}
+        - {x: 1.90625, y: 1.90625}
+        - {x: 1.75, y: 1.75}
+        - {x: 1.59375, y: 1.59375}
+        - {x: 1.4375, y: 1.4375}
+        - {x: 1.28125, y: 1.28125}
+        - {x: 1.125, y: 1.125}
+        - {x: 0.96875, y: 0.96875}
+        - {x: 0.8125, y: 0.8125}
+        - {x: 0.65625, y: 0.65625}
+        - {x: 0.5, y: 0.5}
+        - {x: 0.5555556, y: 0.5555556}
+        - {x: 0.6111111, y: 0.6111111}
+        - {x: 0.6666667, y: 0.6666667}
+        - {x: 0.7222222, y: 0.7222222}
+        - {x: 0.7777778, y: 0.7777778}
+        - {x: 0.8333333, y: 0.8333333}
+        - {x: 0.8888889, y: 0.8888889}
+        - {x: 0.9444445, y: 0.9444445}
+        - {x: 1, y: 1}
+        - {x: 1.0555556, y: 1.0555556}
+        - {x: 1.1111112, y: 1.1111112}
+        - {x: 1.1666666, y: 1.1666666}
+        - {x: 1.2222222, y: 1.2222222}
+        - {x: 1.2777778, y: 1.2777778}
+        - {x: 1.3333334, y: 1.3333334}
+        - {x: 1.388889, y: 1.388889}
+        - {x: 1.4444444, y: 1.4444444}
+        - {x: 1.5, y: 1.5}
+        - {x: 1.5555556, y: 1.5555556}
+        - {x: 1.611111, y: 1.611111}
+        - {x: 1.6666667, y: 1.6666667}
+        - {x: 1.7222222, y: 1.7222222}
+        - {x: 1.7777778, y: 1.7777778}
+      ScalingLocal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RateOpacity:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000a8000000b0001000c8001000d0002000e8002000f000300108003001100040012800400130005001480050025000600268006002700070028800700290008002a000000
+        TableValue:
+        - 0.5
+        - 0.45454544
+        - 0.4090909
+        - 0.36363637
+        - 0.3181818
+        - 0.27272725
+        - 0.22727272
+        - 0.18181819
+        - 0.13636363
+        - 0.09090909
+        - 0.045454532
+        - 0
+        - 0.083333336
+        - 0.16666667
+        - 0.25
+        - 0.33333334
+        - 0.41666666
+      Priority:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: 
+      PartsColor:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0.7529412, b: 1, a: 0.5882353}
+          - {r: 0, g: 0.7529412, b: 1, a: 0.5882353}
+          - {r: 0, g: 0.7529412, b: 1, a: 0.5882353}
+          - {r: 0, g: 0.7529412, b: 1, a: 0.5882353}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+      VertexCorrection:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      OffsetPivot:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionAnchor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      SizeForce:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RotationTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RadiusCollision:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      UserData:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Instance:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Effect:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Deform:
+        TypePack: 3
+        TableCodeValue:
+        - TableCode: 
+        TableValue: []
+        CountVertexMesh: 0
+        TableIndexVertex: 
+      Shader:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Signal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+    - StatusParts: 1075625984
+      Status:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1090519039
+      Cell:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Position:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 0, y: 0, z: 0}
+      Rotation:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800320019003380190034001a0035801a0036001b0037801b0038001c0039801c003a001d003b801d00
+        TableValue:
+        - {x: 0, y: 0, z: 81.600006}
+        - {x: 0, y: 0, z: 85.170006}
+        - {x: 0, y: 0, z: 88.740005}
+        - {x: 0, y: 0, z: 92.310005}
+        - {x: 0, y: 0, z: 95.880005}
+        - {x: 0, y: 0, z: 99.450005}
+        - {x: 0, y: 0, z: 103.020004}
+        - {x: 0, y: 0, z: 106.590004}
+        - {x: 0, y: 0, z: 110.16}
+        - {x: 0, y: 0, z: 113.73}
+        - {x: 0, y: 0, z: 117.3}
+        - {x: 0, y: 0, z: 120.87}
+        - {x: 0, y: 0, z: 124.44}
+        - {x: 0, y: 0, z: 128.01}
+        - {x: 0, y: 0, z: 131.58}
+        - {x: 0, y: 0, z: 135.15}
+        - {x: 0, y: 0, z: 138.72}
+        - {x: 0, y: 0, z: 142.29001}
+        - {x: 0, y: 0, z: 145.86}
+        - {x: 0, y: 0, z: 149.43}
+        - {x: 0, y: 0, z: 153}
+        - {x: 0, y: 0, z: 146.04546}
+        - {x: 0, y: 0, z: 139.09091}
+        - {x: 0, y: 0, z: 132.13637}
+        - {x: 0, y: 0, z: 125.181816}
+        - {x: 0, y: 0, z: 118.22727}
+        - {x: 0, y: 0, z: 111.27273}
+        - {x: 0, y: 0, z: 104.318184}
+        - {x: 0, y: 0, z: 97.36363}
+        - {x: 0, y: 0, z: 90.40909}
+        - {x: 0, y: 0, z: 83.454544}
+        - {x: 0, y: 0, z: 76.5}
+        - {x: 0, y: 0, z: 69.54545}
+        - {x: 0, y: 0, z: 62.59091}
+        - {x: 0, y: 0, z: 55.636364}
+        - {x: 0, y: 0, z: 48.681816}
+        - {x: 0, y: 0, z: 41.72727}
+        - {x: 0, y: 0, z: 34.77273}
+        - {x: 0, y: 0, z: 27.818182}
+        - {x: 0, y: 0, z: 20.863634}
+        - {x: 0, y: 0, z: 13.909087}
+        - {x: 0, y: 0, z: 6.954548}
+        - {x: 0, y: 0, z: 0}
+        - {x: 0, y: 0, z: 4.6000004}
+        - {x: 0, y: 0, z: 9.200001}
+        - {x: 0, y: 0, z: 13.800001}
+        - {x: 0, y: 0, z: 18.400002}
+        - {x: 0, y: 0, z: 23.000002}
+        - {x: 0, y: 0, z: 27.600002}
+        - {x: 0, y: 0, z: 32.2}
+        - {x: 0, y: 0, z: 36.800003}
+        - {x: 0, y: 0, z: 41.400005}
+        - {x: 0, y: 0, z: 46.000004}
+        - {x: 0, y: 0, z: 50.600006}
+        - {x: 0, y: 0, z: 55.200005}
+        - {x: 0, y: 0, z: 59.800003}
+        - {x: 0, y: 0, z: 64.4}
+        - {x: 0, y: 0, z: 69.00001}
+        - {x: 0, y: 0, z: 73.600006}
+        - {x: 0, y: 0, z: 78.200005}
+      Scaling:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 1, y: 1}
+      ScalingLocal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RateOpacity:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - 1
+      Priority:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: 
+      PartsColor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      VertexCorrection:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      OffsetPivot:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionAnchor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      SizeForce:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RotationTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RadiusCollision:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      UserData:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Instance:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Effect:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Deform:
+        TypePack: 3
+        TableCodeValue:
+        - TableCode: 
+        TableValue: []
+        CountVertexMesh: 0
+        TableIndexVertex: 
+      Shader:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Signal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+    - StatusParts: 1075363840
+      Status:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1090519039
+      Cell:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - IndexCellMap: 0
+          IndexCell: 82
+      Position:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800320019003380190034001a0035801a0036001b0037801b0038001c0039801c003a001d003b801d00
+        TableValue:
+        - {x: 102.40001, y: 136.53334, z: 0}
+        - {x: 106.88001, y: 142.50667, z: 0}
+        - {x: 111.36001, y: 148.48001, z: 0}
+        - {x: 115.84001, y: 154.45334, z: 0}
+        - {x: 120.32001, y: 160.42667, z: 0}
+        - {x: 124.8, y: 166.40001, z: 0}
+        - {x: 129.28001, y: 172.37334, z: 0}
+        - {x: 133.76001, y: 178.34666, z: 0}
+        - {x: 138.24, y: 184.32, z: 0}
+        - {x: 142.72, y: 190.29333, z: 0}
+        - {x: 147.20001, y: 196.26666, z: 0}
+        - {x: 151.68001, y: 202.24, z: 0}
+        - {x: 156.16, y: 208.21333, z: 0}
+        - {x: 160.64, y: 214.18666, z: 0}
+        - {x: 165.12, y: 220.16, z: 0}
+        - {x: 169.6, y: 226.13333, z: 0}
+        - {x: 174.08, y: 232.10667, z: 0}
+        - {x: 178.56, y: 238.08, z: 0}
+        - {x: 183.04, y: 244.05333, z: 0}
+        - {x: 187.52, y: 250.02667, z: 0}
+        - {x: 192, y: 256, z: 0}
+        - {x: 183.27272, y: 244.36363, z: 0}
+        - {x: 174.54546, y: 232.72726, z: 0}
+        - {x: 165.81818, y: 221.09091, z: 0}
+        - {x: 157.09091, y: 209.45454, z: 0}
+        - {x: 148.36363, y: 197.81818, z: 0}
+        - {x: 139.63637, y: 186.18182, z: 0}
+        - {x: 130.90909, y: 174.54546, z: 0}
+        - {x: 122.181816, y: 162.90909, z: 0}
+        - {x: 113.454544, y: 151.27274, z: 0}
+        - {x: 104.72727, y: 139.63635, z: 0}
+        - {x: 96, y: 128, z: 0}
+        - {x: 87.27272, y: 116.36363, z: 0}
+        - {x: 78.545456, y: 104.72728, z: 0}
+        - {x: 69.818184, y: 93.09091, z: 0}
+        - {x: 61.090908, y: 81.454544, z: 0}
+        - {x: 52.363632, y: 69.81818, z: 0}
+        - {x: 43.636368, y: 58.181824, z: 0}
+        - {x: 34.909092, y: 46.545456, z: 0}
+        - {x: 26.181816, y: 34.90909, z: 0}
+        - {x: 17.45454, y: 23.27272, z: 0}
+        - {x: 8.727276, y: 11.636368, z: 0}
+        - {x: 0, y: 0, z: 0}
+        - {x: 5.772549, y: 7.6967325, z: 0}
+        - {x: 11.545098, y: 15.393465, z: 0}
+        - {x: 17.317648, y: 23.090199, z: 0}
+        - {x: 23.090197, y: 30.78693, z: 0}
+        - {x: 28.862747, y: 38.483665, z: 0}
+        - {x: 34.635296, y: 46.180397, z: 0}
+        - {x: 40.407845, y: 53.87713, z: 0}
+        - {x: 46.180393, y: 61.57386, z: 0}
+        - {x: 51.952946, y: 69.2706, z: 0}
+        - {x: 57.725494, y: 76.96733, z: 0}
+        - {x: 63.498043, y: 84.66406, z: 0}
+        - {x: 69.27059, y: 92.360794, z: 0}
+        - {x: 75.043144, y: 100.057526, z: 0}
+        - {x: 80.81569, y: 107.75426, z: 0}
+        - {x: 86.58824, y: 115.45099, z: 0}
+        - {x: 92.36079, y: 123.14772, z: 0}
+        - {x: 98.13334, y: 130.84445, z: 0}
+      Rotation:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800320019003380190034001a0035801a0036001b0037801b0038001c0039801c003a001d003b801d00
+        TableValue:
+        - {x: 0, y: 0, z: 237.66516}
+        - {x: 0, y: 0, z: 243.62288}
+        - {x: 0, y: 0, z: 249.5806}
+        - {x: 0, y: 0, z: 255.5383}
+        - {x: 0, y: 0, z: 261.49603}
+        - {x: 0, y: 0, z: 267.45374}
+        - {x: 0, y: 0, z: 273.41144}
+        - {x: 0, y: 0, z: 279.36917}
+        - {x: 0, y: 0, z: 285.32687}
+        - {x: 0, y: 0, z: 291.2846}
+        - {x: 0, y: 0, z: 297.2423}
+        - {x: 0, y: 0, z: 303.2}
+        - {x: 0, y: 0, z: 309.15775}
+        - {x: 0, y: 0, z: 315.11545}
+        - {x: 0, y: 0, z: 321.07318}
+        - {x: 0, y: 0, z: 327.03088}
+        - {x: 0, y: 0, z: 332.9886}
+        - {x: 0, y: 0, z: 338.94632}
+        - {x: 0, y: 0, z: 344.90402}
+        - {x: 0, y: 0, z: 350.86176}
+        - {x: 0, y: 0, z: 356.81946}
+        - {x: 0, y: 0, z: 345.21353}
+        - {x: 0, y: 0, z: 333.60757}
+        - {x: 0, y: 0, z: 322.00165}
+        - {x: 0, y: 0, z: 310.3957}
+        - {x: 0, y: 0, z: 298.78976}
+        - {x: 0, y: 0, z: 287.18384}
+        - {x: 0, y: 0, z: 275.57788}
+        - {x: 0, y: 0, z: 263.97195}
+        - {x: 0, y: 0, z: 252.36601}
+        - {x: 0, y: 0, z: 240.76007}
+        - {x: 0, y: 0, z: 229.15413}
+        - {x: 0, y: 0, z: 217.54819}
+        - {x: 0, y: 0, z: 205.94226}
+        - {x: 0, y: 0, z: 194.33632}
+        - {x: 0, y: 0, z: 182.73038}
+        - {x: 0, y: 0, z: 171.12444}
+        - {x: 0, y: 0, z: 159.51851}
+        - {x: 0, y: 0, z: 147.91257}
+        - {x: 0, y: 0, z: 136.30663}
+        - {x: 0, y: 0, z: 124.700676}
+        - {x: 0, y: 0, z: 113.09475}
+        - {x: 0, y: 0, z: 101.48881}
+        - {x: 0, y: 0, z: 109.16541}
+        - {x: 0, y: 0, z: 116.842026}
+        - {x: 0, y: 0, z: 124.51863}
+        - {x: 0, y: 0, z: 132.19524}
+        - {x: 0, y: 0, z: 139.87186}
+        - {x: 0, y: 0, z: 147.54846}
+        - {x: 0, y: 0, z: 155.22507}
+        - {x: 0, y: 0, z: 162.90167}
+        - {x: 0, y: 0, z: 170.5783}
+        - {x: 0, y: 0, z: 178.2549}
+        - {x: 0, y: 0, z: 185.9315}
+        - {x: 0, y: 0, z: 193.60811}
+        - {x: 0, y: 0, z: 201.28471}
+        - {x: 0, y: 0, z: 208.96132}
+        - {x: 0, y: 0, z: 216.63794}
+        - {x: 0, y: 0, z: 224.31454}
+        - {x: 0, y: 0, z: 231.99115}
+      Scaling:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800320019003380190034001a0035801a0036001b0037801b0038001c0039801c003a001d003b801d00
+        TableValue:
+        - {x: 1.8333334, y: 1.8333334}
+        - {x: 1.8916667, y: 1.8916667}
+        - {x: 1.95, y: 1.95}
+        - {x: 2.0083334, y: 2.0083334}
+        - {x: 2.0666666, y: 2.0666666}
+        - {x: 2.125, y: 2.125}
+        - {x: 2.1833334, y: 2.1833334}
+        - {x: 2.2416668, y: 2.2416668}
+        - {x: 2.3, y: 2.3}
+        - {x: 2.3583333, y: 2.3583333}
+        - {x: 2.4166667, y: 2.4166667}
+        - {x: 2.4750001, y: 2.4750001}
+        - {x: 2.5333333, y: 2.5333333}
+        - {x: 2.5916667, y: 2.5916667}
+        - {x: 2.65, y: 2.65}
+        - {x: 2.7083333, y: 2.7083333}
+        - {x: 2.7666667, y: 2.7666667}
+        - {x: 2.825, y: 2.825}
+        - {x: 2.8833332, y: 2.8833332}
+        - {x: 2.9416666, y: 2.9416666}
+        - {x: 3, y: 3}
+        - {x: 2.8863637, y: 2.8863637}
+        - {x: 2.7727273, y: 2.7727273}
+        - {x: 2.659091, y: 2.659091}
+        - {x: 2.5454545, y: 2.5454545}
+        - {x: 2.4318182, y: 2.4318182}
+        - {x: 2.3181818, y: 2.3181818}
+        - {x: 2.2045455, y: 2.2045455}
+        - {x: 2.090909, y: 2.090909}
+        - {x: 1.9772727, y: 1.9772727}
+        - {x: 1.8636364, y: 1.8636364}
+        - {x: 1.75, y: 1.75}
+        - {x: 1.6363636, y: 1.6363636}
+        - {x: 1.5227274, y: 1.5227274}
+        - {x: 1.409091, y: 1.409091}
+        - {x: 1.2954545, y: 1.2954545}
+        - {x: 1.1818181, y: 1.1818181}
+        - {x: 1.0681819, y: 1.0681819}
+        - {x: 0.9545455, y: 0.9545455}
+        - {x: 0.84090906, y: 0.84090906}
+        - {x: 0.7272726, y: 0.7272726}
+        - {x: 0.6136364, y: 0.6136364}
+        - {x: 0.5, y: 0.5}
+        - {x: 0.5751634, y: 0.5751634}
+        - {x: 0.6503268, y: 0.6503268}
+        - {x: 0.7254902, y: 0.7254902}
+        - {x: 0.8006536, y: 0.8006536}
+        - {x: 0.875817, y: 0.875817}
+        - {x: 0.9509804, y: 0.9509804}
+        - {x: 1.0261438, y: 1.0261438}
+        - {x: 1.1013072, y: 1.1013072}
+        - {x: 1.1764706, y: 1.1764706}
+        - {x: 1.251634, y: 1.251634}
+        - {x: 1.3267974, y: 1.3267974}
+        - {x: 1.4019608, y: 1.4019608}
+        - {x: 1.4771242, y: 1.4771242}
+        - {x: 1.5522876, y: 1.5522876}
+        - {x: 1.627451, y: 1.627451}
+        - {x: 1.7026144, y: 1.7026144}
+        - {x: 1.7777778, y: 1.7777778}
+      ScalingLocal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RateOpacity:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 0000000008800000090001000a8001000b0002000c8002000d0003000e8003000f00040010800400110005001280050013000600148006002b0007002c8007002d0008002e8008002f0009003080090031000000
+        TableValue:
+        - 0.5
+        - 0.46153846
+        - 0.42307693
+        - 0.3846154
+        - 0.34615386
+        - 0.3076923
+        - 0.26923078
+        - 0.23076922
+        - 0.19230768
+        - 0.15384614
+        - 0.11538461
+        - 0.07692307
+        - 0.038461536
+        - 0
+        - 0.071428575
+        - 0.14285715
+        - 0.21428572
+        - 0.2857143
+        - 0.35714287
+        - 0.42857143
+      Priority:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: 
+      PartsColor:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0.7529412, b: 1, a: 0.5882353}
+          - {r: 0, g: 0.7529412, b: 1, a: 0.5882353}
+          - {r: 0, g: 0.7529412, b: 1, a: 0.5882353}
+          - {r: 0, g: 0.7529412, b: 1, a: 0.5882353}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+      VertexCorrection:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      OffsetPivot:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionAnchor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      SizeForce:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RotationTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RadiusCollision:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      UserData:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Instance:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Effect:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Deform:
+        TypePack: 3
+        TableCodeValue:
+        - TableCode: 
+        TableValue: []
+        CountVertexMesh: 0
+        TableIndexVertex: 
+      Shader:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Signal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+  TableAnimationPartsSetup:
+  - UserData:
+      Flags: 0
+      NumberInt: 0
+      Rectangle:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      Coordinate: {x: 0, y: 0}
+      Text: 
+  - UserData:
+      Flags: 0
+      NumberInt: 0
+      Rectangle:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      Coordinate: {x: 0, y: 0}
+      Text: 
+  - UserData:
+      Flags: 0
+      NumberInt: 0
+      Rectangle:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      Coordinate: {x: 0, y: 0}
+      Text: 
+  - UserData:
+      Flags: 0
+      NumberInt: 0
+      Rectangle:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      Coordinate: {x: 0, y: 0}
+      Text: 
+  - UserData:
+      Flags: 0
+      NumberInt: 0
+      Rectangle:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      Coordinate: {x: 0, y: 0}
+      Text: 
+  - UserData:
+      Flags: 0
+      NumberInt: 0
+      Rectangle:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      Coordinate: {x: 0, y: 0}
+      Text: 
+  - UserData:
+      Flags: 0
+      NumberInt: 0
+      Rectangle:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      Coordinate: {x: 0, y: 0}
+      Text: 
+  - UserData:
+      Flags: 0
+      NumberInt: 0
+      Rectangle:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      Coordinate: {x: 0, y: 0}
+      Text: 
+  - UserData:
+      Flags: 0
+      NumberInt: 0
+      Rectangle:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      Coordinate: {x: 0, y: 0}
+      Text: 
+  - UserData:
+      Flags: 0
+      NumberInt: 0
+      Rectangle:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      Coordinate: {x: 0, y: 0}
+      Text: 
+  - UserData:
+      Flags: 0
+      NumberInt: 0
+      Rectangle:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      Coordinate: {x: 0, y: 0}
+      Text: 
+  - UserData:
+      Flags: 0
+      NumberInt: 0
+      Rectangle:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      Coordinate: {x: 0, y: 0}
+      Text: 
+  - UserData:
+      Flags: 0
+      NumberInt: 0
+      Rectangle:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      Coordinate: {x: 0, y: 0}
+      Text: 
+  Dictionary_CPE_Flyweight:
+    TableValueInt: 
+    TableValueFloat: []
+    TableValueFloatVector: []
+    TableValueFloatCoordinate: []
+    TableValueColor: []

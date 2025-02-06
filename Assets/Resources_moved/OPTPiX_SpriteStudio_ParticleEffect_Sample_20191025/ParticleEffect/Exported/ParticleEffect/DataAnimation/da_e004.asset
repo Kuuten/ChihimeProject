@@ -1,0 +1,2648 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6379835e446767444b98eb288010fcce, type: 3}
+  m_Name: da_e004
+  m_EditorClassIdentifier: 
+  Version: 65792
+  Name: e004
+  DataProject: {fileID: 11400000, guid: 25d3d690e15732d468daa03497d5d994, type: 2}
+  TableParts:
+  - Name: root
+    ID: 0
+    IDParent: -1
+    TableIDChild: 01000000020000000300000004000000050000000600000007000000
+    Feature: 0
+    CountMesh: 0
+    Mesh:
+      CountVertex: 0
+      TableVertex: []
+      TableRateUV: []
+      TableIndexVertex: 
+      CountVertexDeform: 0
+    LabelColor:
+      Form: 0
+      Color:
+        serializedVersion: 2
+        rgba: 0
+    OperationBlendTarget: 0
+    ShapeCollision: 0
+    SizeCollisionZ: 0
+    PrefabUnderControl: {fileID: 0}
+    NameAnimationUnderControl: 
+  - Name: jewel_c
+    ID: 1
+    IDParent: 0
+    TableIDChild: 
+    Feature: 2
+    CountMesh: 4
+    Mesh:
+      CountVertex: 0
+      TableVertex: []
+      TableRateUV: []
+      TableIndexVertex: 
+      CountVertexDeform: 0
+    LabelColor:
+      Form: 0
+      Color:
+        serializedVersion: 2
+        rgba: 0
+    OperationBlendTarget: 1
+    ShapeCollision: 0
+    SizeCollisionZ: 0
+    PrefabUnderControl: {fileID: 0}
+    NameAnimationUnderControl: 
+  - Name: jewel_c_1
+    ID: 2
+    IDParent: 0
+    TableIDChild: 
+    Feature: 2
+    CountMesh: 4
+    Mesh:
+      CountVertex: 0
+      TableVertex: []
+      TableRateUV: []
+      TableIndexVertex: 
+      CountVertexDeform: 0
+    LabelColor:
+      Form: 0
+      Color:
+        serializedVersion: 2
+        rgba: 0
+    OperationBlendTarget: 2
+    ShapeCollision: 0
+    SizeCollisionZ: 0
+    PrefabUnderControl: {fileID: 0}
+    NameAnimationUnderControl: 
+  - Name: 004
+    ID: 3
+    IDParent: 0
+    TableIDChild: 
+    Feature: 4
+    CountMesh: 0
+    Mesh:
+      CountVertex: 0
+      TableVertex: []
+      TableRateUV: []
+      TableIndexVertex: 
+      CountVertexDeform: 0
+    LabelColor:
+      Form: 0
+      Color:
+        serializedVersion: 2
+        rgba: 0
+    OperationBlendTarget: 0
+    ShapeCollision: 0
+    SizeCollisionZ: 0
+    PrefabUnderControl: {fileID: 4784109085124598260, guid: 91a89596c92a9b94588bc619471864bc, type: 3}
+    NameAnimationUnderControl: 
+  - Name: emitter_1
+    ID: 4
+    IDParent: 0
+    TableIDChild: 
+    Feature: 4
+    CountMesh: 0
+    Mesh:
+      CountVertex: 0
+      TableVertex: []
+      TableRateUV: []
+      TableIndexVertex: 
+      CountVertexDeform: 0
+    LabelColor:
+      Form: 0
+      Color:
+        serializedVersion: 2
+        rgba: 0
+    OperationBlendTarget: 0
+    ShapeCollision: 0
+    SizeCollisionZ: 0
+    PrefabUnderControl: {fileID: 1397180013261120522, guid: e004c9353ce308444a444a3639f0304a, type: 3}
+    NameAnimationUnderControl: 
+  - Name: emitter_2
+    ID: 5
+    IDParent: 0
+    TableIDChild: 
+    Feature: 4
+    CountMesh: 0
+    Mesh:
+      CountVertex: 0
+      TableVertex: []
+      TableRateUV: []
+      TableIndexVertex: 
+      CountVertexDeform: 0
+    LabelColor:
+      Form: 0
+      Color:
+        serializedVersion: 2
+        rgba: 0
+    OperationBlendTarget: 0
+    ShapeCollision: 0
+    SizeCollisionZ: 0
+    PrefabUnderControl: {fileID: 4784109085124598260, guid: 91a89596c92a9b94588bc619471864bc, type: 3}
+    NameAnimationUnderControl: 
+  - Name: emitter_2_1
+    ID: 6
+    IDParent: 0
+    TableIDChild: 
+    Feature: 4
+    CountMesh: 0
+    Mesh:
+      CountVertex: 0
+      TableVertex: []
+      TableRateUV: []
+      TableIndexVertex: 
+      CountVertexDeform: 0
+    LabelColor:
+      Form: 0
+      Color:
+        serializedVersion: 2
+        rgba: 0
+    OperationBlendTarget: 0
+    ShapeCollision: 0
+    SizeCollisionZ: 0
+    PrefabUnderControl: {fileID: 4784109085124598260, guid: 91a89596c92a9b94588bc619471864bc, type: 3}
+    NameAnimationUnderControl: 
+  - Name: light2_c
+    ID: 7
+    IDParent: 0
+    TableIDChild: 
+    Feature: 2
+    CountMesh: 4
+    Mesh:
+      CountVertex: 0
+      TableVertex: []
+      TableRateUV: []
+      TableIndexVertex: 
+      CountVertexDeform: 0
+    LabelColor:
+      Form: 0
+      Color:
+        serializedVersion: 2
+        rgba: 0
+    OperationBlendTarget: 1
+    ShapeCollision: 0
+    SizeCollisionZ: 0
+    PrefabUnderControl: {fileID: 0}
+    NameAnimationUnderControl: 
+  CatalogParts:
+    TableIDPartsNULL: 
+    TableIDPartsNormal: 010000000200000007000000
+    TableIDPartsInstance: 
+    TableIDPartsEffect: 03000000040000000500000006000000
+    TableIDPartsMask: 
+    TableIDPartsJoint: 
+    TableIDPartsBone: 
+    TableIDPartsMoveNode: 
+    TableIDPartsConstraint: 
+    TableIDPartsBonePoint: 
+    TableIDPartsMesh: 
+  TableAnimation:
+  - Name: evilcristal
+    FramePerSecond: 30
+    CountFrame: 50
+    SizeCanvasX: 640
+    SizeCanvasY: 640
+    FrameValidStart: 0
+    FrameValidEnd: 49
+    CountFrameValid: 50
+    DepthIK: 3
+    ModeSort: 0
+    TableLabel: []
+    TableParts:
+    - StatusParts: 1088208896
+      Status:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1090514947
+      Cell:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Position:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Rotation:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Scaling:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 1, y: 1}
+      ScalingLocal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RateOpacity:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - 1
+      Priority:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: 
+      PartsColor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      VertexCorrection:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      OffsetPivot:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionAnchor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      SizeForce:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RotationTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RadiusCollision:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      UserData:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Instance:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Effect:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Deform:
+        TypePack: 3
+        TableCodeValue:
+        - TableCode: 
+        TableValue: []
+        CountVertexMesh: 0
+        TableIndexVertex: 
+      Shader:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Signal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+    - StatusParts: 1077460992
+      Status:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1090514946
+      Cell:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - IndexCellMap: 1
+          IndexCell: 52
+      Position:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 0, y: 0, z: 0}
+      Rotation:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 0, y: 0, z: 0}
+      Scaling:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingLocal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RateOpacity:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - 1
+      Priority:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: 
+      PartsColor:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031000000
+        TableValue:
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.83137256, g: 0, b: 0, a: 0.54509807}
+          - {r: 0.83137256, g: 0, b: 0, a: 0.54509807}
+          - {r: 0.83137256, g: 0, b: 0, a: 0.54509807}
+          - {r: 0.83137256, g: 0, b: 0, a: 0.54509807}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.81254905, g: 0.0007843137, b: 0.0007843137, a: 0.55607843}
+          - {r: 0.81254905, g: 0.0007843137, b: 0.0007843137, a: 0.55607843}
+          - {r: 0.81254905, g: 0.0007843137, b: 0.0007843137, a: 0.55607843}
+          - {r: 0.81254905, g: 0.0007843137, b: 0.0007843137, a: 0.55607843}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.7937255, g: 0.0015686274, b: 0.0015686274, a: 0.56705886}
+          - {r: 0.7937255, g: 0.0015686274, b: 0.0015686274, a: 0.56705886}
+          - {r: 0.7937255, g: 0.0015686274, b: 0.0015686274, a: 0.56705886}
+          - {r: 0.7937255, g: 0.0015686274, b: 0.0015686274, a: 0.56705886}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.774902, g: 0.0023529413, b: 0.0023529413, a: 0.5780392}
+          - {r: 0.774902, g: 0.0023529413, b: 0.0023529413, a: 0.5780392}
+          - {r: 0.774902, g: 0.0023529413, b: 0.0023529413, a: 0.5780392}
+          - {r: 0.774902, g: 0.0023529413, b: 0.0023529413, a: 0.5780392}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.7560784, g: 0.0031372549, b: 0.0031372549, a: 0.58901966}
+          - {r: 0.7560784, g: 0.0031372549, b: 0.0031372549, a: 0.58901966}
+          - {r: 0.7560784, g: 0.0031372549, b: 0.0031372549, a: 0.58901966}
+          - {r: 0.7560784, g: 0.0031372549, b: 0.0031372549, a: 0.58901966}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.7372549, g: 0.003921569, b: 0.003921569, a: 0.6}
+          - {r: 0.7372549, g: 0.003921569, b: 0.003921569, a: 0.6}
+          - {r: 0.7372549, g: 0.003921569, b: 0.003921569, a: 0.6}
+          - {r: 0.7372549, g: 0.003921569, b: 0.003921569, a: 0.6}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.7184314, g: 0.0047058826, b: 0.0047058826, a: 0.6109804}
+          - {r: 0.7184314, g: 0.0047058826, b: 0.0047058826, a: 0.6109804}
+          - {r: 0.7184314, g: 0.0047058826, b: 0.0047058826, a: 0.6109804}
+          - {r: 0.7184314, g: 0.0047058826, b: 0.0047058826, a: 0.6109804}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.69960785, g: 0.0054901964, b: 0.0054901964, a: 0.6219608}
+          - {r: 0.69960785, g: 0.0054901964, b: 0.0054901964, a: 0.6219608}
+          - {r: 0.69960785, g: 0.0054901964, b: 0.0054901964, a: 0.6219608}
+          - {r: 0.69960785, g: 0.0054901964, b: 0.0054901964, a: 0.6219608}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.68078434, g: 0.0062745097, b: 0.0062745097, a: 0.6329412}
+          - {r: 0.68078434, g: 0.0062745097, b: 0.0062745097, a: 0.6329412}
+          - {r: 0.68078434, g: 0.0062745097, b: 0.0062745097, a: 0.6329412}
+          - {r: 0.68078434, g: 0.0062745097, b: 0.0062745097, a: 0.6329412}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.6619608, g: 0.007058824, b: 0.007058824, a: 0.6439216}
+          - {r: 0.6619608, g: 0.007058824, b: 0.007058824, a: 0.6439216}
+          - {r: 0.6619608, g: 0.007058824, b: 0.007058824, a: 0.6439216}
+          - {r: 0.6619608, g: 0.007058824, b: 0.007058824, a: 0.6439216}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.6431373, g: 0.007843138, b: 0.007843138, a: 0.654902}
+          - {r: 0.6431373, g: 0.007843138, b: 0.007843138, a: 0.654902}
+          - {r: 0.6431373, g: 0.007843138, b: 0.007843138, a: 0.654902}
+          - {r: 0.6431373, g: 0.007843138, b: 0.007843138, a: 0.654902}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.6243137, g: 0.008627451, b: 0.008627451, a: 0.66588235}
+          - {r: 0.6243137, g: 0.008627451, b: 0.008627451, a: 0.66588235}
+          - {r: 0.6243137, g: 0.008627451, b: 0.008627451, a: 0.66588235}
+          - {r: 0.6243137, g: 0.008627451, b: 0.008627451, a: 0.66588235}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.6054902, g: 0.009411765, b: 0.009411765, a: 0.6768628}
+          - {r: 0.6054902, g: 0.009411765, b: 0.009411765, a: 0.6768628}
+          - {r: 0.6054902, g: 0.009411765, b: 0.009411765, a: 0.6768628}
+          - {r: 0.6054902, g: 0.009411765, b: 0.009411765, a: 0.6768628}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.5866667, g: 0.010196079, b: 0.010196079, a: 0.68784314}
+          - {r: 0.5866667, g: 0.010196079, b: 0.010196079, a: 0.68784314}
+          - {r: 0.5866667, g: 0.010196079, b: 0.010196079, a: 0.68784314}
+          - {r: 0.5866667, g: 0.010196079, b: 0.010196079, a: 0.68784314}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.56784314, g: 0.010980393, b: 0.010980393, a: 0.6988236}
+          - {r: 0.56784314, g: 0.010980393, b: 0.010980393, a: 0.6988236}
+          - {r: 0.56784314, g: 0.010980393, b: 0.010980393, a: 0.6988236}
+          - {r: 0.56784314, g: 0.010980393, b: 0.010980393, a: 0.6988236}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.54901963, g: 0.011764707, b: 0.011764707, a: 0.70980394}
+          - {r: 0.54901963, g: 0.011764707, b: 0.011764707, a: 0.70980394}
+          - {r: 0.54901963, g: 0.011764707, b: 0.011764707, a: 0.70980394}
+          - {r: 0.54901963, g: 0.011764707, b: 0.011764707, a: 0.70980394}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.5301961, g: 0.012549019, b: 0.012549019, a: 0.7207843}
+          - {r: 0.5301961, g: 0.012549019, b: 0.012549019, a: 0.7207843}
+          - {r: 0.5301961, g: 0.012549019, b: 0.012549019, a: 0.7207843}
+          - {r: 0.5301961, g: 0.012549019, b: 0.012549019, a: 0.7207843}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.51137257, g: 0.013333334, b: 0.013333334, a: 0.73176473}
+          - {r: 0.51137257, g: 0.013333334, b: 0.013333334, a: 0.73176473}
+          - {r: 0.51137257, g: 0.013333334, b: 0.013333334, a: 0.73176473}
+          - {r: 0.51137257, g: 0.013333334, b: 0.013333334, a: 0.73176473}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.492549, g: 0.014117648, b: 0.014117648, a: 0.7427451}
+          - {r: 0.492549, g: 0.014117648, b: 0.014117648, a: 0.7427451}
+          - {r: 0.492549, g: 0.014117648, b: 0.014117648, a: 0.7427451}
+          - {r: 0.492549, g: 0.014117648, b: 0.014117648, a: 0.7427451}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.4737255, g: 0.014901961, b: 0.014901961, a: 0.7537255}
+          - {r: 0.4737255, g: 0.014901961, b: 0.014901961, a: 0.7537255}
+          - {r: 0.4737255, g: 0.014901961, b: 0.014901961, a: 0.7537255}
+          - {r: 0.4737255, g: 0.014901961, b: 0.014901961, a: 0.7537255}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.45490196, g: 0.015686275, b: 0.015686275, a: 0.7647059}
+          - {r: 0.45490196, g: 0.015686275, b: 0.015686275, a: 0.7647059}
+          - {r: 0.45490196, g: 0.015686275, b: 0.015686275, a: 0.7647059}
+          - {r: 0.45490196, g: 0.015686275, b: 0.015686275, a: 0.7647059}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.43607846, g: 0.016470589, b: 0.016470589, a: 0.77568626}
+          - {r: 0.43607846, g: 0.016470589, b: 0.016470589, a: 0.77568626}
+          - {r: 0.43607846, g: 0.016470589, b: 0.016470589, a: 0.77568626}
+          - {r: 0.43607846, g: 0.016470589, b: 0.016470589, a: 0.77568626}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.41725492, g: 0.017254902, b: 0.017254902, a: 0.7866667}
+          - {r: 0.41725492, g: 0.017254902, b: 0.017254902, a: 0.7866667}
+          - {r: 0.41725492, g: 0.017254902, b: 0.017254902, a: 0.7866667}
+          - {r: 0.41725492, g: 0.017254902, b: 0.017254902, a: 0.7866667}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.39843136, g: 0.018039217, b: 0.018039217, a: 0.79764706}
+          - {r: 0.39843136, g: 0.018039217, b: 0.018039217, a: 0.79764706}
+          - {r: 0.39843136, g: 0.018039217, b: 0.018039217, a: 0.79764706}
+          - {r: 0.39843136, g: 0.018039217, b: 0.018039217, a: 0.79764706}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.37960786, g: 0.01882353, b: 0.01882353, a: 0.8086275}
+          - {r: 0.37960786, g: 0.01882353, b: 0.01882353, a: 0.8086275}
+          - {r: 0.37960786, g: 0.01882353, b: 0.01882353, a: 0.8086275}
+          - {r: 0.37960786, g: 0.01882353, b: 0.01882353, a: 0.8086275}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.36078432, g: 0.019607844, b: 0.019607844, a: 0.81960785}
+          - {r: 0.36078432, g: 0.019607844, b: 0.019607844, a: 0.81960785}
+          - {r: 0.36078432, g: 0.019607844, b: 0.019607844, a: 0.81960785}
+          - {r: 0.36078432, g: 0.019607844, b: 0.019607844, a: 0.81960785}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.38039216, g: 0.01879085, b: 0.01879085, a: 0.80816996}
+          - {r: 0.38039216, g: 0.01879085, b: 0.01879085, a: 0.80816996}
+          - {r: 0.38039216, g: 0.01879085, b: 0.01879085, a: 0.80816996}
+          - {r: 0.38039216, g: 0.01879085, b: 0.01879085, a: 0.80816996}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.4, g: 0.017973857, b: 0.017973857, a: 0.796732}
+          - {r: 0.4, g: 0.017973857, b: 0.017973857, a: 0.796732}
+          - {r: 0.4, g: 0.017973857, b: 0.017973857, a: 0.796732}
+          - {r: 0.4, g: 0.017973857, b: 0.017973857, a: 0.796732}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.41960785, g: 0.017156864, b: 0.017156864, a: 0.7852941}
+          - {r: 0.41960785, g: 0.017156864, b: 0.017156864, a: 0.7852941}
+          - {r: 0.41960785, g: 0.017156864, b: 0.017156864, a: 0.7852941}
+          - {r: 0.41960785, g: 0.017156864, b: 0.017156864, a: 0.7852941}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.4392157, g: 0.01633987, b: 0.01633987, a: 0.7738562}
+          - {r: 0.4392157, g: 0.01633987, b: 0.01633987, a: 0.7738562}
+          - {r: 0.4392157, g: 0.01633987, b: 0.01633987, a: 0.7738562}
+          - {r: 0.4392157, g: 0.01633987, b: 0.01633987, a: 0.7738562}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.45882353, g: 0.015522877, b: 0.015522877, a: 0.7624183}
+          - {r: 0.45882353, g: 0.015522877, b: 0.015522877, a: 0.7624183}
+          - {r: 0.45882353, g: 0.015522877, b: 0.015522877, a: 0.7624183}
+          - {r: 0.45882353, g: 0.015522877, b: 0.015522877, a: 0.7624183}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.47843137, g: 0.014705883, b: 0.014705883, a: 0.7509804}
+          - {r: 0.47843137, g: 0.014705883, b: 0.014705883, a: 0.7509804}
+          - {r: 0.47843137, g: 0.014705883, b: 0.014705883, a: 0.7509804}
+          - {r: 0.47843137, g: 0.014705883, b: 0.014705883, a: 0.7509804}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.49803922, g: 0.01388889, b: 0.01388889, a: 0.7395425}
+          - {r: 0.49803922, g: 0.01388889, b: 0.01388889, a: 0.7395425}
+          - {r: 0.49803922, g: 0.01388889, b: 0.01388889, a: 0.7395425}
+          - {r: 0.49803922, g: 0.01388889, b: 0.01388889, a: 0.7395425}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.5176471, g: 0.013071896, b: 0.013071896, a: 0.7281046}
+          - {r: 0.5176471, g: 0.013071896, b: 0.013071896, a: 0.7281046}
+          - {r: 0.5176471, g: 0.013071896, b: 0.013071896, a: 0.7281046}
+          - {r: 0.5176471, g: 0.013071896, b: 0.013071896, a: 0.7281046}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.5372549, g: 0.012254902, b: 0.012254902, a: 0.7166667}
+          - {r: 0.5372549, g: 0.012254902, b: 0.012254902, a: 0.7166667}
+          - {r: 0.5372549, g: 0.012254902, b: 0.012254902, a: 0.7166667}
+          - {r: 0.5372549, g: 0.012254902, b: 0.012254902, a: 0.7166667}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.5568628, g: 0.011437909, b: 0.011437909, a: 0.7052288}
+          - {r: 0.5568628, g: 0.011437909, b: 0.011437909, a: 0.7052288}
+          - {r: 0.5568628, g: 0.011437909, b: 0.011437909, a: 0.7052288}
+          - {r: 0.5568628, g: 0.011437909, b: 0.011437909, a: 0.7052288}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.5764706, g: 0.010620915, b: 0.010620915, a: 0.69379085}
+          - {r: 0.5764706, g: 0.010620915, b: 0.010620915, a: 0.69379085}
+          - {r: 0.5764706, g: 0.010620915, b: 0.010620915, a: 0.69379085}
+          - {r: 0.5764706, g: 0.010620915, b: 0.010620915, a: 0.69379085}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.59607846, g: 0.009803922, b: 0.009803922, a: 0.68235296}
+          - {r: 0.59607846, g: 0.009803922, b: 0.009803922, a: 0.68235296}
+          - {r: 0.59607846, g: 0.009803922, b: 0.009803922, a: 0.68235296}
+          - {r: 0.59607846, g: 0.009803922, b: 0.009803922, a: 0.68235296}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.6156863, g: 0.008986928, b: 0.008986928, a: 0.67091507}
+          - {r: 0.6156863, g: 0.008986928, b: 0.008986928, a: 0.67091507}
+          - {r: 0.6156863, g: 0.008986928, b: 0.008986928, a: 0.67091507}
+          - {r: 0.6156863, g: 0.008986928, b: 0.008986928, a: 0.67091507}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.63529414, g: 0.008169935, b: 0.008169935, a: 0.6594772}
+          - {r: 0.63529414, g: 0.008169935, b: 0.008169935, a: 0.6594772}
+          - {r: 0.63529414, g: 0.008169935, b: 0.008169935, a: 0.6594772}
+          - {r: 0.63529414, g: 0.008169935, b: 0.008169935, a: 0.6594772}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.654902, g: 0.0073529417, b: 0.0073529417, a: 0.6480392}
+          - {r: 0.654902, g: 0.0073529417, b: 0.0073529417, a: 0.6480392}
+          - {r: 0.654902, g: 0.0073529417, b: 0.0073529417, a: 0.6480392}
+          - {r: 0.654902, g: 0.0073529417, b: 0.0073529417, a: 0.6480392}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.6745098, g: 0.0065359473, b: 0.0065359473, a: 0.6366013}
+          - {r: 0.6745098, g: 0.0065359473, b: 0.0065359473, a: 0.6366013}
+          - {r: 0.6745098, g: 0.0065359473, b: 0.0065359473, a: 0.6366013}
+          - {r: 0.6745098, g: 0.0065359473, b: 0.0065359473, a: 0.6366013}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.69411767, g: 0.005718955, b: 0.005718955, a: 0.62516344}
+          - {r: 0.69411767, g: 0.005718955, b: 0.005718955, a: 0.62516344}
+          - {r: 0.69411767, g: 0.005718955, b: 0.005718955, a: 0.62516344}
+          - {r: 0.69411767, g: 0.005718955, b: 0.005718955, a: 0.62516344}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.7137255, g: 0.004901961, b: 0.004901961, a: 0.61372554}
+          - {r: 0.7137255, g: 0.004901961, b: 0.004901961, a: 0.61372554}
+          - {r: 0.7137255, g: 0.004901961, b: 0.004901961, a: 0.61372554}
+          - {r: 0.7137255, g: 0.004901961, b: 0.004901961, a: 0.61372554}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.73333335, g: 0.004084967, b: 0.004084967, a: 0.6022876}
+          - {r: 0.73333335, g: 0.004084967, b: 0.004084967, a: 0.6022876}
+          - {r: 0.73333335, g: 0.004084967, b: 0.004084967, a: 0.6022876}
+          - {r: 0.73333335, g: 0.004084967, b: 0.004084967, a: 0.6022876}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.7529412, g: 0.0032679744, b: 0.0032679744, a: 0.5908497}
+          - {r: 0.7529412, g: 0.0032679744, b: 0.0032679744, a: 0.5908497}
+          - {r: 0.7529412, g: 0.0032679744, b: 0.0032679744, a: 0.5908497}
+          - {r: 0.7529412, g: 0.0032679744, b: 0.0032679744, a: 0.5908497}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.77254903, g: 0.0024509805, b: 0.0024509805, a: 0.5794118}
+          - {r: 0.77254903, g: 0.0024509805, b: 0.0024509805, a: 0.5794118}
+          - {r: 0.77254903, g: 0.0024509805, b: 0.0024509805, a: 0.5794118}
+          - {r: 0.77254903, g: 0.0024509805, b: 0.0024509805, a: 0.5794118}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.7921569, g: 0.0016339866, b: 0.0016339866, a: 0.56797385}
+          - {r: 0.7921569, g: 0.0016339866, b: 0.0016339866, a: 0.56797385}
+          - {r: 0.7921569, g: 0.0016339866, b: 0.0016339866, a: 0.56797385}
+          - {r: 0.7921569, g: 0.0016339866, b: 0.0016339866, a: 0.56797385}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0.8117647, g: 0.0008169939, b: 0.0008169939, a: 0.55653596}
+          - {r: 0.8117647, g: 0.0008169939, b: 0.0008169939, a: 0.55653596}
+          - {r: 0.8117647, g: 0.0008169939, b: 0.0008169939, a: 0.55653596}
+          - {r: 0.8117647, g: 0.0008169939, b: 0.0008169939, a: 0.55653596}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+      VertexCorrection:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      OffsetPivot:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionAnchor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      SizeForce:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RotationTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RadiusCollision:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      UserData:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Instance:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Effect:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Deform:
+        TypePack: 3
+        TableCodeValue:
+        - TableCode: 
+        TableValue: []
+        CountVertexMesh: 0
+        TableIndexVertex: 
+      Shader:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Signal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+    - StatusParts: 1075363840
+      Status:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1090514948
+      Cell:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - IndexCellMap: 1
+          IndexCell: 52
+      Position:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 0, y: 0, z: 0}
+      Rotation:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 0, y: 0, z: 0}
+      Scaling:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800
+        TableValue:
+        - {x: 0.8, y: 0.8}
+        - {x: 0.8081633, y: 0.8081633}
+        - {x: 0.81632656, y: 0.81632656}
+        - {x: 0.82448983, y: 0.82448983}
+        - {x: 0.83265305, y: 0.83265305}
+        - {x: 0.8408163, y: 0.8408163}
+        - {x: 0.8489796, y: 0.8489796}
+        - {x: 0.85714287, y: 0.85714287}
+        - {x: 0.86530614, y: 0.86530614}
+        - {x: 0.8734694, y: 0.8734694}
+        - {x: 0.8816327, y: 0.8816327}
+        - {x: 0.88979596, y: 0.88979596}
+        - {x: 0.89795923, y: 0.89795923}
+        - {x: 0.90612245, y: 0.90612245}
+        - {x: 0.9142857, y: 0.9142857}
+        - {x: 0.922449, y: 0.922449}
+        - {x: 0.93061227, y: 0.93061227}
+        - {x: 0.93877554, y: 0.93877554}
+        - {x: 0.9469388, y: 0.9469388}
+        - {x: 0.9551021, y: 0.9551021}
+        - {x: 0.96326536, y: 0.96326536}
+        - {x: 0.9714286, y: 0.9714286}
+        - {x: 0.97959185, y: 0.97959185}
+        - {x: 0.9877551, y: 0.9877551}
+        - {x: 0.9959184, y: 0.9959184}
+        - {x: 1.0040816, y: 1.0040816}
+        - {x: 1.0122449, y: 1.0122449}
+        - {x: 1.0204082, y: 1.0204082}
+        - {x: 1.0285715, y: 1.0285715}
+        - {x: 1.0367347, y: 1.0367347}
+        - {x: 1.044898, y: 1.044898}
+        - {x: 1.0530612, y: 1.0530612}
+        - {x: 1.0612245, y: 1.0612245}
+        - {x: 1.0693878, y: 1.0693878}
+        - {x: 1.0775511, y: 1.0775511}
+        - {x: 1.0857143, y: 1.0857143}
+        - {x: 1.0938776, y: 1.0938776}
+        - {x: 1.1020409, y: 1.1020409}
+        - {x: 1.1102041, y: 1.1102041}
+        - {x: 1.1183674, y: 1.1183674}
+        - {x: 1.1265306, y: 1.1265306}
+        - {x: 1.134694, y: 1.134694}
+        - {x: 1.1428572, y: 1.1428572}
+        - {x: 1.1510204, y: 1.1510204}
+        - {x: 1.1591837, y: 1.1591837}
+        - {x: 1.167347, y: 1.167347}
+        - {x: 1.1755103, y: 1.1755103}
+        - {x: 1.1836735, y: 1.1836735}
+        - {x: 1.1918368, y: 1.1918368}
+        - {x: 1.2, y: 1.2}
+      ScalingLocal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RateOpacity:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031000000
+        TableValue:
+        - 0
+        - 0.13250001
+        - 0.26500002
+        - 0.3975
+        - 0.53000003
+        - 0.6625
+        - 0.795
+        - 0.9275
+        - 0.93052083
+        - 0.93354166
+        - 0.93656254
+        - 0.93958336
+        - 0.9426042
+        - 0.945625
+        - 0.94864583
+        - 0.95166665
+        - 0.9546875
+        - 0.95770836
+        - 0.9607292
+        - 0.96375
+        - 0.9667708
+        - 0.96979165
+        - 0.97281253
+        - 0.97583336
+        - 0.9788542
+        - 0.981875
+        - 0.9848958
+        - 0.98791665
+        - 0.9909375
+        - 0.99395835
+        - 0.9969792
+        - 1
+        - 0.9444444
+        - 0.8888889
+        - 0.8333333
+        - 0.7777778
+        - 0.7222222
+        - 0.6666666
+        - 0.6111111
+        - 0.5555556
+        - 0.5
+        - 0.44444442
+        - 0.3888889
+        - 0.3333333
+        - 0.2777778
+        - 0.22222221
+        - 0.16666669
+        - 0.111111104
+        - 0.055555582
+      Priority:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: 
+      PartsColor:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031000000
+        TableValue:
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.4862745}
+          - {r: 0, g: 0, b: 0, a: 0.4862745}
+          - {r: 0, g: 0, b: 0, a: 0.4862745}
+          - {r: 0, g: 0, b: 0, a: 0.4862745}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.5028463}
+          - {r: 0, g: 0, b: 0, a: 0.5028463}
+          - {r: 0, g: 0, b: 0, a: 0.5028463}
+          - {r: 0, g: 0, b: 0, a: 0.5028463}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.51941806}
+          - {r: 0, g: 0, b: 0, a: 0.51941806}
+          - {r: 0, g: 0, b: 0, a: 0.51941806}
+          - {r: 0, g: 0, b: 0, a: 0.51941806}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.5359899}
+          - {r: 0, g: 0, b: 0, a: 0.5359899}
+          - {r: 0, g: 0, b: 0, a: 0.5359899}
+          - {r: 0, g: 0, b: 0, a: 0.5359899}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.55256164}
+          - {r: 0, g: 0, b: 0, a: 0.55256164}
+          - {r: 0, g: 0, b: 0, a: 0.55256164}
+          - {r: 0, g: 0, b: 0, a: 0.55256164}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.56913346}
+          - {r: 0, g: 0, b: 0, a: 0.56913346}
+          - {r: 0, g: 0, b: 0, a: 0.56913346}
+          - {r: 0, g: 0, b: 0, a: 0.56913346}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.5857052}
+          - {r: 0, g: 0, b: 0, a: 0.5857052}
+          - {r: 0, g: 0, b: 0, a: 0.5857052}
+          - {r: 0, g: 0, b: 0, a: 0.5857052}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.60227704}
+          - {r: 0, g: 0, b: 0, a: 0.60227704}
+          - {r: 0, g: 0, b: 0, a: 0.60227704}
+          - {r: 0, g: 0, b: 0, a: 0.60227704}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.6188488}
+          - {r: 0, g: 0, b: 0, a: 0.6188488}
+          - {r: 0, g: 0, b: 0, a: 0.6188488}
+          - {r: 0, g: 0, b: 0, a: 0.6188488}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.6354206}
+          - {r: 0, g: 0, b: 0, a: 0.6354206}
+          - {r: 0, g: 0, b: 0, a: 0.6354206}
+          - {r: 0, g: 0, b: 0, a: 0.6354206}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.6519924}
+          - {r: 0, g: 0, b: 0, a: 0.6519924}
+          - {r: 0, g: 0, b: 0, a: 0.6519924}
+          - {r: 0, g: 0, b: 0, a: 0.6519924}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.6685642}
+          - {r: 0, g: 0, b: 0, a: 0.6685642}
+          - {r: 0, g: 0, b: 0, a: 0.6685642}
+          - {r: 0, g: 0, b: 0, a: 0.6685642}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.68513596}
+          - {r: 0, g: 0, b: 0, a: 0.68513596}
+          - {r: 0, g: 0, b: 0, a: 0.68513596}
+          - {r: 0, g: 0, b: 0, a: 0.68513596}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.7017078}
+          - {r: 0, g: 0, b: 0, a: 0.7017078}
+          - {r: 0, g: 0, b: 0, a: 0.7017078}
+          - {r: 0, g: 0, b: 0, a: 0.7017078}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.71827954}
+          - {r: 0, g: 0, b: 0, a: 0.71827954}
+          - {r: 0, g: 0, b: 0, a: 0.71827954}
+          - {r: 0, g: 0, b: 0, a: 0.71827954}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.73485136}
+          - {r: 0, g: 0, b: 0, a: 0.73485136}
+          - {r: 0, g: 0, b: 0, a: 0.73485136}
+          - {r: 0, g: 0, b: 0, a: 0.73485136}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.7514231}
+          - {r: 0, g: 0, b: 0, a: 0.7514231}
+          - {r: 0, g: 0, b: 0, a: 0.7514231}
+          - {r: 0, g: 0, b: 0, a: 0.7514231}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.76799494}
+          - {r: 0, g: 0, b: 0, a: 0.76799494}
+          - {r: 0, g: 0, b: 0, a: 0.76799494}
+          - {r: 0, g: 0, b: 0, a: 0.76799494}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.7845667}
+          - {r: 0, g: 0, b: 0, a: 0.7845667}
+          - {r: 0, g: 0, b: 0, a: 0.7845667}
+          - {r: 0, g: 0, b: 0, a: 0.7845667}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.8011385}
+          - {r: 0, g: 0, b: 0, a: 0.8011385}
+          - {r: 0, g: 0, b: 0, a: 0.8011385}
+          - {r: 0, g: 0, b: 0, a: 0.8011385}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.8177103}
+          - {r: 0, g: 0, b: 0, a: 0.8177103}
+          - {r: 0, g: 0, b: 0, a: 0.8177103}
+          - {r: 0, g: 0, b: 0, a: 0.8177103}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.8342821}
+          - {r: 0, g: 0, b: 0, a: 0.8342821}
+          - {r: 0, g: 0, b: 0, a: 0.8342821}
+          - {r: 0, g: 0, b: 0, a: 0.8342821}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.85085386}
+          - {r: 0, g: 0, b: 0, a: 0.85085386}
+          - {r: 0, g: 0, b: 0, a: 0.85085386}
+          - {r: 0, g: 0, b: 0, a: 0.85085386}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.8674257}
+          - {r: 0, g: 0, b: 0, a: 0.8674257}
+          - {r: 0, g: 0, b: 0, a: 0.8674257}
+          - {r: 0, g: 0, b: 0, a: 0.8674257}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.88399744}
+          - {r: 0, g: 0, b: 0, a: 0.88399744}
+          - {r: 0, g: 0, b: 0, a: 0.88399744}
+          - {r: 0, g: 0, b: 0, a: 0.88399744}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.90056926}
+          - {r: 0, g: 0, b: 0, a: 0.90056926}
+          - {r: 0, g: 0, b: 0, a: 0.90056926}
+          - {r: 0, g: 0, b: 0, a: 0.90056926}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.917141}
+          - {r: 0, g: 0, b: 0, a: 0.917141}
+          - {r: 0, g: 0, b: 0, a: 0.917141}
+          - {r: 0, g: 0, b: 0, a: 0.917141}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.93371284}
+          - {r: 0, g: 0, b: 0, a: 0.93371284}
+          - {r: 0, g: 0, b: 0, a: 0.93371284}
+          - {r: 0, g: 0, b: 0, a: 0.93371284}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.9502846}
+          - {r: 0, g: 0, b: 0, a: 0.9502846}
+          - {r: 0, g: 0, b: 0, a: 0.9502846}
+          - {r: 0, g: 0, b: 0, a: 0.9502846}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.9668564}
+          - {r: 0, g: 0, b: 0, a: 0.9668564}
+          - {r: 0, g: 0, b: 0, a: 0.9668564}
+          - {r: 0, g: 0, b: 0, a: 0.9668564}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.9834282}
+          - {r: 0, g: 0, b: 0, a: 0.9834282}
+          - {r: 0, g: 0, b: 0, a: 0.9834282}
+          - {r: 0, g: 0, b: 0, a: 0.9834282}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 1}
+          - {r: 0, g: 0, b: 0, a: 1}
+          - {r: 0, g: 0, b: 0, a: 1}
+          - {r: 0, g: 0, b: 0, a: 1}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.9714597}
+          - {r: 0, g: 0, b: 0, a: 0.9714597}
+          - {r: 0, g: 0, b: 0, a: 0.9714597}
+          - {r: 0, g: 0, b: 0, a: 0.9714597}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.9429194}
+          - {r: 0, g: 0, b: 0, a: 0.9429194}
+          - {r: 0, g: 0, b: 0, a: 0.9429194}
+          - {r: 0, g: 0, b: 0, a: 0.9429194}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.91437906}
+          - {r: 0, g: 0, b: 0, a: 0.91437906}
+          - {r: 0, g: 0, b: 0, a: 0.91437906}
+          - {r: 0, g: 0, b: 0, a: 0.91437906}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.8858388}
+          - {r: 0, g: 0, b: 0, a: 0.8858388}
+          - {r: 0, g: 0, b: 0, a: 0.8858388}
+          - {r: 0, g: 0, b: 0, a: 0.8858388}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.8572985}
+          - {r: 0, g: 0, b: 0, a: 0.8572985}
+          - {r: 0, g: 0, b: 0, a: 0.8572985}
+          - {r: 0, g: 0, b: 0, a: 0.8572985}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.8287582}
+          - {r: 0, g: 0, b: 0, a: 0.8287582}
+          - {r: 0, g: 0, b: 0, a: 0.8287582}
+          - {r: 0, g: 0, b: 0, a: 0.8287582}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.80021787}
+          - {r: 0, g: 0, b: 0, a: 0.80021787}
+          - {r: 0, g: 0, b: 0, a: 0.80021787}
+          - {r: 0, g: 0, b: 0, a: 0.80021787}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.77167755}
+          - {r: 0, g: 0, b: 0, a: 0.77167755}
+          - {r: 0, g: 0, b: 0, a: 0.77167755}
+          - {r: 0, g: 0, b: 0, a: 0.77167755}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.74313724}
+          - {r: 0, g: 0, b: 0, a: 0.74313724}
+          - {r: 0, g: 0, b: 0, a: 0.74313724}
+          - {r: 0, g: 0, b: 0, a: 0.74313724}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.7145969}
+          - {r: 0, g: 0, b: 0, a: 0.7145969}
+          - {r: 0, g: 0, b: 0, a: 0.7145969}
+          - {r: 0, g: 0, b: 0, a: 0.7145969}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.6860567}
+          - {r: 0, g: 0, b: 0, a: 0.6860567}
+          - {r: 0, g: 0, b: 0, a: 0.6860567}
+          - {r: 0, g: 0, b: 0, a: 0.6860567}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.6575163}
+          - {r: 0, g: 0, b: 0, a: 0.6575163}
+          - {r: 0, g: 0, b: 0, a: 0.6575163}
+          - {r: 0, g: 0, b: 0, a: 0.6575163}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.62897605}
+          - {r: 0, g: 0, b: 0, a: 0.62897605}
+          - {r: 0, g: 0, b: 0, a: 0.62897605}
+          - {r: 0, g: 0, b: 0, a: 0.62897605}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.60043573}
+          - {r: 0, g: 0, b: 0, a: 0.60043573}
+          - {r: 0, g: 0, b: 0, a: 0.60043573}
+          - {r: 0, g: 0, b: 0, a: 0.60043573}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.5718954}
+          - {r: 0, g: 0, b: 0, a: 0.5718954}
+          - {r: 0, g: 0, b: 0, a: 0.5718954}
+          - {r: 0, g: 0, b: 0, a: 0.5718954}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.5433551}
+          - {r: 0, g: 0, b: 0, a: 0.5433551}
+          - {r: 0, g: 0, b: 0, a: 0.5433551}
+          - {r: 0, g: 0, b: 0, a: 0.5433551}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+        - Bound: 1
+          Operation: 0
+          VertexColor:
+          - {r: 0, g: 0, b: 0, a: 0.51481485}
+          - {r: 0, g: 0, b: 0, a: 0.51481485}
+          - {r: 0, g: 0, b: 0, a: 0.51481485}
+          - {r: 0, g: 0, b: 0, a: 0.51481485}
+          RateAlpha:
+          - 1
+          - 1
+          - 1
+          - 1
+      VertexCorrection:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      OffsetPivot:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionAnchor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      SizeForce:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RotationTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RadiusCollision:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      UserData:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Instance:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Effect:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Deform:
+        TypePack: 3
+        TableCodeValue:
+        - TableCode: 
+        TableValue: []
+        CountVertexMesh: 0
+        TableIndexVertex: 
+      Shader:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Signal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+    - StatusParts: 1077723136
+      Status:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1090514949
+      Cell:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Position:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 0, y: 0, z: 0}
+      Rotation:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 0, y: 0, z: 0}
+      Scaling:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingLocal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RateOpacity:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800
+        TableValue:
+        - 0.26000002
+        - 0.2644
+        - 0.26880002
+        - 0.2732
+        - 0.27760002
+        - 0.282
+        - 0.28640002
+        - 0.2908
+        - 0.29520002
+        - 0.2996
+        - 0.30400002
+        - 0.3084
+        - 0.31280002
+        - 0.3172
+        - 0.32160002
+        - 0.326
+        - 0.33040002
+        - 0.3348
+        - 0.33920002
+        - 0.3436
+        - 0.34800002
+        - 0.3524
+        - 0.35680002
+        - 0.3612
+        - 0.3656
+        - 0.37
+        - 0.35458332
+        - 0.33916667
+        - 0.32375002
+        - 0.30833334
+        - 0.2929167
+        - 0.2775
+        - 0.26208335
+        - 0.24666667
+        - 0.23125
+        - 0.21583334
+        - 0.20041667
+        - 0.185
+        - 0.16958334
+        - 0.15416667
+        - 0.13875
+        - 0.12333333
+        - 0.107916676
+        - 0.0925
+        - 0.07708333
+        - 0.061666675
+        - 0.04625
+        - 0.030833326
+        - 0.015416674
+        - 0
+      Priority:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue: faffffff
+      PartsColor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      VertexCorrection:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      OffsetPivot:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionAnchor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      SizeForce:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RotationTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RadiusCollision:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      UserData:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Instance:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Effect:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1073741824
+          FrameStart: 0
+          RateTime: 1
+      Deform:
+        TypePack: 3
+        TableCodeValue:
+        - TableCode: 
+        TableValue: []
+        CountVertexMesh: 0
+        TableIndexVertex: 
+      Shader:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Signal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+    - StatusParts: 1075625984
+      Status:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1090514951
+      Cell:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Position:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 0, y: 0, z: 0}
+      Rotation:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 0, y: 0, z: 0}
+      Scaling:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 0.5, y: 0.5}
+      ScalingLocal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RateOpacity:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031000000
+        TableValue:
+        - 0
+        - 0.035000004
+        - 0.07000001
+        - 0.105000004
+        - 0.14000002
+        - 0.17500001
+        - 0.21000001
+        - 0.245
+        - 0.28000003
+        - 0.315
+        - 0.35000002
+        - 0.385
+        - 0.42000002
+        - 0.45499998
+        - 0.49
+        - 0.49423078
+        - 0.49846154
+        - 0.50269234
+        - 0.5069231
+        - 0.5111539
+        - 0.5153846
+        - 0.5196154
+        - 0.52384615
+        - 0.52807695
+        - 0.5323077
+        - 0.5365385
+        - 0.5407692
+        - 0.545
+        - 0.5492308
+        - 0.55346155
+        - 0.55769235
+        - 0.5619231
+        - 0.5661539
+        - 0.5703846
+        - 0.5746154
+        - 0.57884616
+        - 0.58307695
+        - 0.5873077
+        - 0.5915385
+        - 0.5957692
+        - 0.6
+        - 0.53333336
+        - 0.4666667
+        - 0.4
+        - 0.33333334
+        - 0.26666665
+        - 0.2
+        - 0.13333333
+        - 0.06666666
+      Priority:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: 
+      PartsColor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      VertexCorrection:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      OffsetPivot:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionAnchor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      SizeForce:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RotationTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RadiusCollision:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      UserData:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Instance:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Effect:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1073741824
+          FrameStart: 0
+          RateTime: 1
+      Deform:
+        TypePack: 3
+        TableCodeValue:
+        - TableCode: 
+        TableValue: []
+        CountVertexMesh: 0
+        TableIndexVertex: 
+      Shader:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Signal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+    - StatusParts: 1077723136
+      Status:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1090514950
+      Cell:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Position:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 0, y: 0, z: 0}
+      Rotation:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 0, y: 0, z: 0}
+      Scaling:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingLocal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RateOpacity:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800
+        TableValue:
+        - 0.26000002
+        - 0.2644
+        - 0.26880002
+        - 0.2732
+        - 0.27760002
+        - 0.282
+        - 0.28640002
+        - 0.2908
+        - 0.29520002
+        - 0.2996
+        - 0.30400002
+        - 0.3084
+        - 0.31280002
+        - 0.3172
+        - 0.32160002
+        - 0.326
+        - 0.33040002
+        - 0.3348
+        - 0.33920002
+        - 0.3436
+        - 0.34800002
+        - 0.3524
+        - 0.35680002
+        - 0.3612
+        - 0.3656
+        - 0.37
+        - 0.35458332
+        - 0.33916667
+        - 0.32375002
+        - 0.30833334
+        - 0.2929167
+        - 0.2775
+        - 0.26208335
+        - 0.24666667
+        - 0.23125
+        - 0.21583334
+        - 0.20041667
+        - 0.185
+        - 0.16958334
+        - 0.15416667
+        - 0.13875
+        - 0.12333333
+        - 0.107916676
+        - 0.0925
+        - 0.07708333
+        - 0.061666675
+        - 0.04625
+        - 0.030833326
+        - 0.015416674
+        - 0
+      Priority:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue: faffffff
+      PartsColor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      VertexCorrection:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      OffsetPivot:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionAnchor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      SizeForce:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RotationTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RadiusCollision:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      UserData:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Instance:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Effect:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1073741824
+          FrameStart: 0
+          RateTime: 1
+      Deform:
+        TypePack: 3
+        TableCodeValue:
+        - TableCode: 
+        TableValue: []
+        CountVertexMesh: 0
+        TableIndexVertex: 
+      Shader:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Signal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+    - StatusParts: 1077723136
+      Status:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1090514945
+      Cell:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Position:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 0, y: 0, z: 0}
+      Rotation:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 0, y: 0, z: 0}
+      Scaling:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingLocal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RateOpacity:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 000000000180000002000100038001000400020005800200060003000780030008000400098004000a0005000b8005000c0006000d8006000e0007000f8007001000080011800800120009001380090014000a0015800a0016000b0017800b0018000c0019800c001a000d001b800d001c000e001d800e001e000f001f800f00200010002180100022001100238011002400120025801200260013002780130028001400298014002a0015002b8015002c0016002d8016002e0017002f8017003000180031801800
+        TableValue:
+        - 0.26000002
+        - 0.2644
+        - 0.26880002
+        - 0.2732
+        - 0.27760002
+        - 0.282
+        - 0.28640002
+        - 0.2908
+        - 0.29520002
+        - 0.2996
+        - 0.30400002
+        - 0.3084
+        - 0.31280002
+        - 0.3172
+        - 0.32160002
+        - 0.326
+        - 0.33040002
+        - 0.3348
+        - 0.33920002
+        - 0.3436
+        - 0.34800002
+        - 0.3524
+        - 0.35680002
+        - 0.3612
+        - 0.3656
+        - 0.37
+        - 0.35458332
+        - 0.33916667
+        - 0.32375002
+        - 0.30833334
+        - 0.2929167
+        - 0.2775
+        - 0.26208335
+        - 0.24666667
+        - 0.23125
+        - 0.21583334
+        - 0.20041667
+        - 0.185
+        - 0.16958334
+        - 0.15416667
+        - 0.13875
+        - 0.12333333
+        - 0.107916676
+        - 0.0925
+        - 0.07708333
+        - 0.061666675
+        - 0.04625
+        - 0.030833326
+        - 0.015416674
+        - 0
+      Priority:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue: faffffff
+      PartsColor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      VertexCorrection:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      OffsetPivot:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionAnchor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      SizeForce:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RotationTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RadiusCollision:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      UserData:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Instance:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Effect:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1073741824
+          FrameStart: 0
+          RateTime: 1
+      Deform:
+        TypePack: 3
+        TableCodeValue:
+        - TableCode: 
+        TableValue: []
+        CountVertexMesh: 0
+        TableIndexVertex: 
+      Shader:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Signal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+    - StatusParts: 1075625984
+      Status:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - Flags: 1090519039
+      Cell:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - IndexCellMap: 1
+          IndexCell: 54
+      Position:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 0, y: 0, z: 0}
+      Rotation:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 0, y: 0, z: 0}
+      Scaling:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - {x: 1.8063725, y: 1.8109453}
+      ScalingLocal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RateOpacity:
+        TypePack: 1
+        TableCodeValue:
+        - TableCode: 00000000
+        TableValue:
+        - 1
+      Priority:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: 
+      PartsColor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      VertexCorrection:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      OffsetPivot:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionAnchor:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      SizeForce:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      PositionTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RotationTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      ScalingTexture:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      RadiusCollision:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      UserData:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Instance:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Effect:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Deform:
+        TypePack: 3
+        TableCodeValue:
+        - TableCode: 
+        TableValue: []
+        CountVertexMesh: 0
+        TableIndexVertex: 
+      Shader:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+      Signal:
+        TypePack: 1
+        TableCodeValue: []
+        TableValue: []
+  TableAnimationPartsSetup:
+  - UserData:
+      Flags: 0
+      NumberInt: 0
+      Rectangle:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      Coordinate: {x: 0, y: 0}
+      Text: 
+  - UserData:
+      Flags: 0
+      NumberInt: 0
+      Rectangle:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      Coordinate: {x: 0, y: 0}
+      Text: 
+  - UserData:
+      Flags: 0
+      NumberInt: 0
+      Rectangle:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      Coordinate: {x: 0, y: 0}
+      Text: 
+  - UserData:
+      Flags: 0
+      NumberInt: 0
+      Rectangle:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      Coordinate: {x: 0, y: 0}
+      Text: 
+  - UserData:
+      Flags: 0
+      NumberInt: 0
+      Rectangle:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      Coordinate: {x: 0, y: 0}
+      Text: 
+  - UserData:
+      Flags: 0
+      NumberInt: 0
+      Rectangle:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      Coordinate: {x: 0, y: 0}
+      Text: 
+  - UserData:
+      Flags: 0
+      NumberInt: 0
+      Rectangle:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      Coordinate: {x: 0, y: 0}
+      Text: 
+  - UserData:
+      Flags: 0
+      NumberInt: 0
+      Rectangle:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      Coordinate: {x: 0, y: 0}
+      Text: 
+  Dictionary_CPE_Flyweight:
+    TableValueInt: 
+    TableValueFloat: []
+    TableValueFloatVector: []
+    TableValueFloatCoordinate: []
+    TableValueColor: []

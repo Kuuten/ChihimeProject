@@ -78,16 +78,16 @@ public abstract class EventScene : MonoBehaviour
                 boss = bossObject.GetComponent<BossTsukumo>();
                 break;
             case BossType.Kuchinawa:
-                boss = bossObject.GetComponent<BossDouji>();
+                boss = bossObject.GetComponent<BossKuchinawa>();
                 break;
             case BossType.Kurama:
-                boss = bossObject.GetComponent<BossDouji>();
+                boss = bossObject.GetComponent<BossKurama>();
                 break;
             case BossType.Wadatsumi:
-                boss = bossObject.GetComponent<BossDouji>();
+                boss = bossObject.GetComponent<BossWadatsumi>();
                 break;
             case BossType.Hakumen:
-                boss = bossObject.GetComponent<BossDouji>();
+                boss = bossObject.GetComponent<BossHakumen>();
                 break;
             default:
                 Debug.LogError("存在しないBossTypeです！");
@@ -183,11 +183,11 @@ public abstract class EventScene : MonoBehaviour
         GameObject boss = EventSceneManager.Instance.GetBossObject();
         if(boss.GetComponent<BossDouji>())boss.GetComponent<BossDouji>().enabled = false;
         else if(boss.GetComponent<BossTsukumo>())boss.GetComponent<BossTsukumo>().enabled = false;
-        //else if(boss.GetComponent<BossTsukumo>())boss.GetComponent<BossTsukumo>().enabled = false;
-        //else if(boss.GetComponent<BossTsukumo>())boss.GetComponent<BossTsukumo>().enabled = false;
-        //else if(boss.GetComponent<BossTsukumo>())boss.GetComponent<BossTsukumo>().enabled = false;
-        //else if(boss.GetComponent<BossTsukumo>())boss.GetComponent<BossTsukumo>().enabled = false;
-        
+        else if (boss.GetComponent<BossKuchinawa>()) boss.GetComponent<BossKuchinawa>().enabled = false;
+        else if (boss.GetComponent<BossKurama>()) boss.GetComponent<BossKurama>().enabled = false;
+        else if (boss.GetComponent<BossWadatsumi>()) boss.GetComponent<BossWadatsumi>().enabled = false;
+        else if (boss.GetComponent<BossHakumen>()) boss.GetComponent<BossHakumen>().enabled = false;
+
         Debug.Log("***ボス戦モードになりました。***");
 
         //  ボス戦開始フラグTRUE
